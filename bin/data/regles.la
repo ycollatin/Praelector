@@ -1,0 +1,673 @@
+!           regles.la
+!
+!   Format :
+!
+! id:<chaîne> (sert d'étiquette de la branche)
+! lemmeSup:<lemme>,<lemme>,... Un lemme précédé de '-' entraine la nullité de la règle pour ce lemme
+! posSup:<pos>,<pos>,...
+! morphoSup:<traits>,<traits>,<traits>,...
+! sens:[desc,asc]
+! accord:cgnpk (entre 0 et tous les caractères)
+! conflit:<liste d'ids> si la règle est appliquée, le super ne peut avoir de subs par ces ids.
+! contig:<int> si les deux mots son contigus, la requête gagne un poids de <int> points.
+! lemmeSub:<lemme>,... Un lemme précédé de '-' entraine la nullité de la règle pour ce lemme
+! posSub:<pos>
+! morphoSub:<traits>,<traits>,<traits>,...
+! lsSup:<cle>,<cle>  le super doit avoir ces clés lexicosyntaxiques (fichier lexsynt.la)
+! lsSub:<cle>,<cle>  le sub doit avoir ces clés lexicosyntaxiques (fichier lexsynt.la)
+! filtre:contigu,multi,nom,virg
+!        contigu:les deux mots doivent se suivre
+!        multi:le noyau accepte plusieurs subs avec cet id   
+!        nom:le sub n'a que le pos nom, et ne peut être adjectif
+!        virg:sup et sub sont séparés par une virgule, et une seule
+! lienSub:<id>   : le sub, pour être accepté, doit être le super d'un lien d'id <id>
+! lienSup:<id>   : le super, pour être accepté, doit être le sub d'un lien d'id <id>
+! subEstSup:<id> : le sub, pour être accepté, doit être le super d'un lien d'id <id>
+! supEstSub:<id> : le super, pour être accepté, doit être le sub d'un lien d'id <id>
+! supEstSup:<id> : le super, pour être accepté, doit aussi être super d'un lien d'id <id>
+! x:<id> : si le lien est possible, il annule automatiquement le lien d'id <id>
+!
+
+include:loc.la
+
+id:abl
+doc:de nombreux verbes admettent l'ablatif direct pour exprimer la cause, le moyen, la manière
+posSup:v,w
+posSub:n
+morphoSub:ablatif
+lsSup:abl
+contig:5
+poids:75
+
+id:ablabs
+posSup:v,w
+morphoSup:indicatif,subjonctif
+posSub:n,p
+morphoSub:ablatif
+subEstSup:epitheteV
+contig:12
+filtre:multi
+poids:60
+
+id:ablAdj
+aff:abl
+doc:certains adjectifs admettent l'ablatif direct pour exprimer la cause, le moyen, la manière
+posSup:a
+posSub:n
+morphoSub:ablatif
+lsSup:abl
+contig:24
+poids:79
+
+id:adjQue
+aff:coord
+doc:Un mot terminé par le suffixe -que est l'équivalant de la conjonction "et" suivie de ce mot
+posSub:a
+posSup:a
+accord:cgn
+x:epithete,attrSA
+sens:>
+filtre:contigu,que
+poids:100
+
+id:adv
+doc:l'adverbe est lié au verbe et précise son sens
+posSup:v,w
+posSub:d
+lemmeSub:-nec,-non,-nec,-neque,-et,-quam
+filtre:multi
+poids:60
+
+id:advEt
+aff:adv
+doc:l'adverbe est lié au verbe et précise son sens
+posSup:n
+posSub:d
+lemmeSub:et
+filtre:contig
+sens:<
+poids:60
+
+id:antecedent
+doc:l'antécédent précède le relatif, qui s'accorde avec lui en genre et nombre
+posSup:n,p
+lemmeSup:-qui2,-quis
+lemmeSub:qui2
+posSub:p
+accord:gn
+sens:>
+poids:82
+
+id:app
+doc:l'apposition suit le nom et désigne la même réalité que lui
+posSup:n,p
+posSub:n
+accord:cgn
+sens:>
+filtre:multi
+contig:29
+poids:52
+
+id:attrO
+doc:L'attribut de l'objet est à l'accusatif, comme l'objet
+posSup:v
+morphoSup:actif
+lsSup:attro
+posSub:n,a
+morphoSub:accusatif
+supEstSup:objet
+poids:74
+
+id:attrSA
+aff:attrS
+doc:l'attribut du sujet n'existe que pour les sujets de certains verbes
+posSub:a
+morphoSub:nominatif
+posSup:w
+lemmeSub:-qui2,-quis
+morphoSup:indicatif actif,subjonctif actif,impératif actif,infinitif actif
+lsSup:attr
+contig:7
+supEstSup:sujet,sujetPr,sujetRel
+poids:77
+
+id:attrSInf
+aff:attrS
+doc:L'attribut du sujet d'une infinitive est ordinairement placé après le sujet.
+posSup:w
+morphoSup:infinitif
+posSub:a,n
+morphoSub:nominatif,accusatif
+lsSup:attr
+!supEstSup:sujetPropInf
+poids:77
+
+id:attrSN
+aff:attrS
+doc:l'attribut du sujet n'existe que pour les sujets de certains verbes
+posSub:n,p
+morphoSub:nominatif
+posSup:w
+morphoSup:indicatif actif,subjonctif actif,impératif actif
+lsSup:attr
+supEstSup:sujet,sujetPr,sujetRel
+poids:70
+
+id:attrSTu
+aff:attrS
+doc:le sujet des 1ère et 2ème personne est souvent omisx
+posSup:w
+morphoSup:2ème
+posSub:a,n,p
+morphoSub:nominatif
+poids:70
+
+id:attrAdjV
+aff:attrS
+doc:l'ajectif verbal se comporte comme un adjectif qualificatif
+posSub:v
+morphoSub:verbal nominatif
+posSup:w
+morphoSup:indicatif actif,subjonctif actif,impératif actif
+poids:50
+
+id:attrVideor
+aff:attrS
+doc:uideor peut être suivi d'un attribut du sujet
+lemmeSup:video,puto
+morphoSup:passif
+posSub:n,a
+morphoSub:nominatif
+!accord:n
+poids:70
+
+id:cadj
+doc:certains adjectifs admettent un complément au génitif
+posSup:a
+posSub:n
+morphoSub:génitif
+lsSup:gen
+poids:75
+
+id:ccompar
+doc:le complément du comparatif peut être à l'ablatif direct
+posSup:a
+morphoSup:comparatif
+posSub:n,p
+contig:50
+morphoSub:ablatif
+poids:70
+
+id:compQuam
+aff:adv
+doc:le complément du comparatif est souvent introduit par l'adv. quam
+posSup:a,d,p
+morphoSup:comparatif
+lemmeSub:quam
+!supEstSub:adv
+contig:40
+sens:>
+poids:87
+
+id:conjcoordAdv
+aff:coord1
+doc:Une conjonction de coordination coordonne deux groupes compatibles
+lemmeSup:-non,-et
+posSup:d
+posSub:c
+lsSub:coord
+!filtre:multi
+contig:10
+sens:>
+poids:62
+
+id:conjcoordN
+aff:coord1
+doc:Une conjonction de coordination coordonne deux groupes compatibles
+posSup:n,p
+posSub:c
+lsSub:coord
+contig:12
+sens:>
+poids:87
+
+id:conjcoordV
+aff:coord1
+doc:Une conjonction de coordination coordonne deux groupes compatibles
+posSup:v
+posSub:c
+lsSub:coord
+sens:>
+poids:62
+
+id:conjSub
+doc:Une conjonction de subordination est subornonnée à un verbe et introduit une subordonnée conjonctive
+posSup:v,w
+morphoSup:1ère,2ème,3ème
+posSub:s
+lsSub:conjsubj,conjind
+poids:80
+
+id:coordAdv
+aff:coord2
+doc:Une conjonction de coordination coordonne deux groupes compatibles
+posSup:c
+posSub:d
+lsSup:coord
+supEstSub:conjcoordAdv
+contig:10
+x:adv
+sens:>
+poids:60
+
+id:coordInit
+aff:coord2
+doc:La conj. /et/ en début de phrase coordonne la phrase avec la précédente.
+filtre:sup0
+lsSup:coord
+posSub:v,w
+morphoSub:indicatif,subjonctif
+sens:>
+poids:80
+
+id:coordN
+aff:coord2
+doc:Une conjonction de coordination coordonne deux groupes compatibles
+posSup:c
+posSub:n,p
+lsSup:coord
+supEstSub:conjcoordN
+sens:>
+accord:c
+contig:32
+poids:74
+
+id:coordV
+aff:coord2
+doc:Une conjonction de coordination coordonne deux groupes compatibles
+posSup:c
+posSub:v,w
+lsSup:coord
+supEstSub:conjcoordV
+accord:m
+sens:>
+poids:74
+
+id:cvgenitif
+aff:genitif
+doc:memini accepte un complément direct au génitif
+posSup:v,w
+morphoSup:indicatif,subjonctif
+posSub:n,p
+morphoSub:génitif
+lsSup:gen
+poids:69
+
+id:datif
+doc:De nombreux verbes et quelques adjectifs acceptent comme subordonné un datif qui indique un destinataire
+posSup:v,w,a
+lsSup:datif
+posSub:n,p
+morphoSub:datif
+poids:79
+
+id:datifP
+aff:datif
+doc:uideo et quelques autres verbes admettent un datif s'ils sont au passif
+posSup:v
+morphoSup:passif
+lsSup:datp
+posSub:n,p
+morphoSub:datif
+contig:12
+poids:70
+
+id:det
+doc:beaucoup de pronoms peuvent jouer le rôle de déterminants : is, suus, iste, etc
+posSup:n
+posSub:p,a
+accord:cgn
+lsSub:det
+contig:38
+x:epithete,datif
+poids:88
+
+id:epithete
+doc:l'adjectif épithète est accordé en cas, genre et nombre
+posSub:a
+posSup:n
+lemmeSub:-qui2,-quis
+accord:cgn
+filtre:multi,antep10
+contig:32
+conflit:epitheteV
+poids:81
+
+id:epitheteV
+aff:epithete
+doc:le participe et l'adjectif verbal ont le comportement d'un adjectif
+posSub:v,w
+morphoSub:participe,adjectif verbal
+posSup:n
+accord:cgn
+contig:10
+filtre:multi
+poids:78
+
+id:genitif
+doc:le complément du nom est au génitif
+posSup:n
+posSub:n,p
+morphoSub:génitif
+filtre:antep9
+contig:15
+poids:73
+
+id:genSum
+doc:sum + génitif contigu a le sens de "c'est le propre de"
+lemmeSup:sum
+morphoSup:3ème
+posSub:n
+morphoSub:génitif
+filtre:contigu
+poids:70
+
+id:gerondAd
+doc:ad + gérondif à l'accusatif pour le but
+lemmeSup:ad
+posSub:v,w
+morphoSub:gérondif accusatif
+conflit:regimeAcc
+sens:>
+poids:87
+
+id:gerondGen
+aff:genitif
+doc:Certains noms peuvent avoir comme subordonné un gérondif au génitif
+posSup:n
+posSub:v
+morphoSub:gérondif génitif
+lsSup:gergen
+poids:87
+
+id:gerondIn
+doc:id + gérondif à l'accusatif pour la simultanéité
+lemmeSup:in
+posSub:v,w
+morphoSub:gérondif ablatif
+conflit:regimeAbl,regimeAcc
+sens:>
+poids:87
+
+id:infObjet
+aff:objet
+doc:De nombreux verbes acceptent un ifinitif comme objet
+lsSup:infobj
+posSub:v,w
+morphoSub:infinitif
+contig:12
+poids:78
+
+id:isqui
+aff:antecedent
+doc:qui placé juste après is rend obligatoire le lien antécédent
+posSup:p
+lemmeSup:is,ille
+posSub:p
+lemmeSub:qui2
+!filtre:contigu
+accord:gn
+sens:>
+contig:20
+poids:80
+
+id:locatif
+doc:Le locatif est utilisé pour le question ubi
+filtre:loc
+posSup:v,w
+posSub:n
+morphoSub:locatif
+x:attrS,genitif,sujet
+poids:88
+
+id:negation
+doc:l'adv. 'non' se place habituellement avant le verbe
+posSup:v,w
+morphoSup:1ère,2ème,3ème
+sens:<
+lemmeSub:non,nondum,nunquam
+poids:100
+
+id:num
+aff:det
+doc:les adj. numéros peuvent servir de déterminant
+posSup:n
+lsSub:num
+poids:60
+
+id:nihil
+aff:genitif
+doc:nihil peut être suivi d'un adjectif au génitif : nihil boni, nihil mali
+lemmeSup:nihil
+lemmeSub:adversus,bonus,malus,novus
+posSub:a
+morphoSub:génitif neutre singulier
+sens:>
+poids:100
+
+id:nomQue
+aff:coord
+doc:Un nom terminé par le suffixe -que est l'équivalant de la conjonction "et" suivie de ce nom
+posSub:n
+posSup:n
+accord:c
+sens:>
+filtre:contigu,que
+poids:100
+
+id:inter
+doc:Certains adverbes en tête de phrase annoncent une interrogation
+lsSub:inter
+posSup:v,w
+morphoSup:indicatif
+filtre:tete
+sens:<
+poids:70
+
+id:objet
+doc:nom objet d'un verbe transitif
+posSub:n,p
+morphoSub:accusatif
+lemmeSub:-qui2,-quis
+posSup:v
+morphoSup:actif
+poids:75
+
+id:objetRel
+aff:objet
+doc:relatif objet d'un verbe transitif
+lemmeSub:qui2
+morphoSub:accusatif
+posSup:v
+morphoSup:indicatif actif,subjonctif actif
+accord:n
+sens:<
+poids:86
+
+id:prep
+doc:une préposition est subordonnée à un verbe, et introduit un groupe prépositionnel
+posSup:v,w
+posSub:r
+filtre:multi
+poids:75
+
+id:prepn
+aff:prep
+doc:Certains noms peuvent avoir un complément prépositionnel ex. pietas erga fratrem
+posSup:n
+lsSup:prep
+posSub:r
+poids:80
+
+id:ppp
+doc:le participe parfait passif est utilisé avec l'aux. sum pour les formes composées du passif
+lemmeSup:sum
+morphoSup:indicatif,subjonctif
+posSub:v
+filtre:antep8
+morphoSub:participe parfait nominatif
+accord:n
+contig:37;
+poids:87
+
+id:parFut
+doc:Le futur peut être exprimé par l'aux. sum et le participe futur
+lemmeSup:sum
+morphoSup:indicatif,subjonctif
+posSub:v,w
+morphoSub:participe futur
+contig:25
+poids:84
+
+id:propInf
+doc:les verbes de connaissance, d'opinion, de perception, de volonté peuvent avoir comme sub une proposition infinitive
+sens:>
+lsSup:propinf
+posSup:v
+morphoSub:infinitif
+!subEstSup:sujetPropInf
+poids:80
+
+id:quamCCompar
+doc:le complément du comparatif est souvent introduit par l'adv. quam
+lemmeSup:quam
+posSub:n,v,w
+supEstSub:compQuam
+contig:20
+sens:>
+poids:90
+
+id:regimeAbl
+doc:l'ablatif après une préposition indique la cause, le moyen, la manière, le lieu ou le temps unique
+sens:>
+lsSup:prepabl
+contig:26
+posSub:n,p
+morphoSub:ablatif
+conflit:regimeAcc
+poids:88
+
+id:regimeAcc
+doc:l'accusatif après une préposition indique que le procès verbal porte sur un autre lieu, un autre temps, un autre objet
+sens:>
+conflit:gerondAd,regimeAbl
+contig:50
+lsSup:prepacc
+posSub:n,p
+morphoSub:accusatif
+poids:87
+
+id:sujet
+doc:le sujet d'un verbe conjugué à l'indicatif ou au subjonctif est au nominatif
+posSub:n
+morphoSub:nominatif
+posSup:v,w
+morphoSup:3ème
+accord:np
+!conflit:sujetPr,sujetRel
+poids:88
+
+id:sujetEgo
+aff:sujet
+posSup:v,w
+morphoSup:1ère singulier
+lemmeSub:ego
+morphoSub:nominatif
+poids:80
+
+id:sujetInf
+doc:Un infinitif peut être le sujet d'un verbe conjugué
+posSub:v,w
+morphoSup:3ème
+posSup:v,w
+morphoSub:infinitif
+poids:60
+
+id:sujetPr
+aff:sujet
+doc:le sujet d'un verbe conjugué à l'indicatif ou au subjonctif est au nominatif
+posSup:v,w
+morphoSup:indicatif,subjonctif
+posSub:p
+lemmeSub:-qui2,-quis,-ego,-tu
+morphoSub:nominatif
+accord:np
+poids:87
+
+id:sujetPropInf
+doc:le sujet d'une proposition infinitive, à l'accusatif, est toujours en tête de proposition
+sens:<
+posSub:n,p
+morphoSub:accusatif
+morphoSup:infinitif
+supEstSub:propInf
+poids:78
+
+id:sujetRel
+aff:sujet
+doc:le relatif est toujours en tête de proposition. S'il est sujet, il est donc placé avant son verbe
+lemmeSub:qui2
+morphoSub:nominatif
+posSup:v,w
+morphoSup:indicatif,subjonctif
+accord:n
+sens:<
+conflit:sujet,sujetPr
+poids:87
+
+id:sujetTu
+aff:sujet
+posSup:v,w
+morphoSup:2ème singulier
+lemmeSub:tu
+morphoSub:nominatif
+contig:10
+poids:88
+
+id:tempsAbl
+aff:abl
+posSup:v,w
+posSub:n
+morphoSub:abl
+lsSub:tps
+poids:75
+
+
+id:topos
+aff:lieu
+posSup:v
+morphoSup:actif
+posSub:n
+morphoSub:accusatif
+lsSub:topo
+contig:30
+poids:80
+
+id:vInd
+doc:verbe d'une conjonctive à l'indicatif
+lsSup:conjind
+posSub:v,w
+morphoSub:indicatif
+sens:>
+conflit:vSubj
+poids:80
+
+id:vSubj
+doc:verbe d'une conjonctive au subjonctif
+lsSup:conjsubj
+morphoSub:subjonctif
+posSub:v,w
+sens:>
+conflit:vInd
+poids:80
+

@@ -1,0 +1,61 @@
+!        loc.la
+!  Locutions latines
+!  Pour utiliser, ajouter dans regles.la ligne
+!  include:loc.la
+!
+!  Même syntaxe que pour regles.la
+!
+!
+id:maiornatu
+aff:adv
+lemmeSup:magnus
+morphoSup:comparatif
+lemmeSub:natu
+filtre:contigu
+poids:80
+
+id:necesse
+aff:attrS
+lemmeSup:sum
+morphoSup:3ème
+lemmeSub:necesse
+contig:20
+poids:80
+
+id:nequidem
+aff:loc
+lemmeSup:ne
+lemmeSub:quidem
+contig:10
+poids:72
+
+id:obuiam
+aff:datif
+lemmeSup:obviam
+posSub:n
+morphoSub:datif
+contig:20
+poids:80
+
+id:paenitet
+aff:objet
+lemmeSup:paeniteo,misereo,pigeo,taedeo
+morphoSup:3ème
+lemmeSub:ego,tu,nos,vos
+morphoSub:accusatif
+poids:90
+
+id:pariterac
+aff:adv
+lemmeSup:ac,atque
+lemmeSub:pariter
+sens:<
+poids:80
+
+id:proculab
+aff:loc
+lemmeSup:procul
+lemmeSub:a,ab
+contig:35
+poids:75
+

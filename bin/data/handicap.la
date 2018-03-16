@@ -1,0 +1,55 @@
+!               handicap.la
+!   format :
+! <forme>:<lemme>:<handicap>     la forme <forme>, issue du lemme <lemme> reçoit le handicap <handicap>
+! <forme>:-<lemme>:<handicap>     la forme <forme>, non issue du lemme <lemme> reçoit le handicap <handicap>
+!
+aegre:aegreo:20
+aliena:alieno:30
+alieno:-alienus:20
+ante:-ante:20
+auium:-auis:23
+auro:auro:20
+comiter:-comiter:10
+diuina:-diuinum:10
+dolo:-dolor:10
+dolor:-dolor:20
+ego:-ego:20
+esse:-sum:30
+est:-sum:30
+exercitum:-exercitus:50
+forte:-forte:16
+fortuna:fortuno:30
+hostis:-hostis:30
+inani:-inanis:20
+inde:-inde:20
+is:-is:20
+ita:-ita:20
+!leo:leo3:10
+liber:libo:50
+libertas:-libertas:20
+marti:-Mars:30
+ne:-ne:40
+numitori:-Numitor:40
+oues:-ouis:40
+palam:-palam:20
+parentis:-parens:20
+potius:potior:30
+qui:-qui2:40
+responsa:respondeo:7
+sapientem:-sapiens:30
+sapiente:-sapiens:30
+sapienti:-sapiens:30
+satis:-satis:30
+sine:-sine:20
+solem:solo:14
+suam:-suus:24
+sui:-suus:24
+tenui:-tenuis:10
+tergo:-tergum:15
+uelis:-uolo:20
+uictus:-uinco:10
+uiro:-uir:20
+uis:uia:20
+uita:-uita:30
+uitia:-uitium:30
+unguento:unguento:5
