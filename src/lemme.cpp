@@ -257,6 +257,11 @@ QList<int> Lemme::clesR()
     return _radicaux.keys();
 }
 
+bool Lemme::estDeponent()
+{
+    return _pos.contains('v') && _gr.endsWith("or");
+}
+
 /**
  * \fn bool Lemme::estIrregExcl (int nm)
  * \param nm : numéro de morpho

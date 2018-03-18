@@ -85,6 +85,7 @@ class Lemme : public QObject
     QString             ambrogio();
     QString             cle();
     QList<int>          clesR();
+    bool                estDeponent();
     bool                estIrregExcl(int nm);
     int                 freq() const;
     QString             getHyphen (); // Accesseurs pour les césures étymologiques
