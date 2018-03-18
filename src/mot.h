@@ -22,7 +22,7 @@
 #include <QString>
 
 #include <lemmatiseur.h>
-#include <libflexfr.h>
+//#include <libflexfr.h>
 #include <motflechi.h>
 #include <phrase.h>
 
