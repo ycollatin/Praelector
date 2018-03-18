@@ -2650,7 +2650,7 @@ bool est_verbe(QString inf)
 
 QString pluriel(QString l, QString n)
 {
-    if (n == "singulier") return l;
+    if (!n.contains("plur")) return l;
     QString irregs[6] = {"bonhomme", "grand-mère",   "grand-père",
                          "madame",   "mademoiselle", "monsieur"};
     QString irregp[6] = {"bonshommes", "grands-mères",   "grands-pères",
