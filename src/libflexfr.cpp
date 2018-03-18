@@ -2168,11 +2168,39 @@ QString conjugue(QString inf, int P, int T, int M, int V, bool Pr, int g, int n)
 	return "";
 }
 
+/*
 QString conjnat(QString inf, QString P, QString T, QString M, QString V, bool Pr)
 {
-	/* comme conjugue(), mais avec des paramètres chaîne en langage naturel */
+	// comme conjugue(), mais avec des paramètres chaîne en langage naturel 
 	return conjugue(inf, index_t (personne, P, 6), index_t (temps, T, 8), index_t(mode, M, 7), index_t(voix, V, 2), Pr); 
 }		 
+*/
+
+QString conjnat(QString inf, QString morpho, bool pr)
+{
+    // personne
+    int p = 0;
+    if (morpho.contains("1")) p = 1;
+    else if (morpho.contains("2")) p = 2;
+    else if (morpho.contains("3")) p = 3;
+    // temps
+    int t = 0;
+    for (int i=0;i<9;++i)
+        if (morpho.contains(temps[i])) t = i;
+    // mode
+    int m = 0;
+    for (int i=0;i<8;++i)
+        if (morpho.contains(mode[i])) m = i;
+    // voix
+    int v = 0;
+    for (int i=0;i<3;++i)
+        if (morpho.contains(voix[i])) v = i;
+    // nombre
+    int n = 0;
+    for (int i=0;i<3;++i)
+        if (morpho.contains(nombre[i])) n = i;
+    return conjugue(inf, p*n, t, m, v, pr);
+}
 
 QString tableau (QString verbe, int voix)
 {

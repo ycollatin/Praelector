@@ -734,8 +734,7 @@ class TVbattre: public TVtir
 bool IsLast(QString chaine, QString mot);
 Verbe * verbe_m (QString inf);
 QString conjugue(QString inf, int P=1, int T=1, int M=1, int V=1, bool Pr=false, int g=0, int n=0);
-QString conjnat(QString inf="aimer", QString P="je", QString T="pr\303\251sent",
-					 QString M="indicatif", QString V="actif", bool Pr=false);
+QString conjnat(QString inf, QString morpho, bool pr=false);
 
 //QString tableau (QString verbe, int voix);
 
