@@ -191,11 +191,20 @@ QString Mot::gr()
     return _gr;
 }
 
+QString Mot::htmlMorphos()
+{
+    QString ret;
+    QTextStream fl(&ret);
+    for (int i=0;i<_flechis.count();++i)
+    {
+        MotFlechi* mf = _flechis.at(i);
+        fl << mf->morpho() << mf->lemme()->traduction("fr")<<"<br/>\n";
+    }
+    return ret;
+}
+
 void Mot::lance()
 {
-    bool debog = false;
-    //debog = _gr=="et";
-    if (debog) qDebug()<<"lance"<<_gr;
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* mf = _flechis.at(i);
@@ -342,7 +351,19 @@ QList<Requete*> Mot::reqSuper()
 
 void Mot::setMorphos(MapLem m)
 {
+    qDebug()<<_gr<<"setMorphos"<<m.count();
     _morphos = m;
+        // calcul de tous les fléchis de mc
+        for (int il=0;il<m.keys().count();++il)
+        {
+            Lemme *l = m.keys().at(il);
+            for (int im=0;im<m[l].count();++im)
+            {
+                QString morpho = m[l].at(im).morpho;
+                MotFlechi* mf = new MotFlechi(l, morpho, this);
+                ajFlechi(mf);
+            }
+        }
 }
 
 MotFlechi* Mot::super()
