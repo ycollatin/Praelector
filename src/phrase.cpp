@@ -1242,9 +1242,10 @@ void Phrase::lemmatise()
         for (int il=0;il<mc->morphos().keys().count();++il)
         {
             Lemme *l = mc->morphos().keys().at(il);
-            for (int im=0;im<mc->morphos()[l].count();++im)
+            QList<SLem> lsl = mc->morphos().value(l);
+            for (int im=0;im<lsl.count();++im)
             {
-                QString m = mc->morphos()[l].at(im).morpho;
+                QString m = lsl.at(im).morpho;
                 MotFlechi* mf = new MotFlechi(l, m, mc);
                 mc->ajFlechi(mf);
             }
