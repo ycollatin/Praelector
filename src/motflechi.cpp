@@ -1,16 +1,16 @@
 /*   MotFlechi.cpp  */
 /* Copyright (C) 2015 Yves Ouvrard
-   
+
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
@@ -34,6 +34,7 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
     _lemme = l;
     _morpho = m;
     _phrase = parent->phrase();
+    _traduction = l->traduction("fr");
 }
 
 void MotFlechi::ajReqSub(Requete* req)
@@ -80,97 +81,20 @@ QList<Requete*> MotFlechi::closes()
     return ret;
 }
 
-QString MotFlechi::conj(const QString l) //const QString _morpho)
+QString MotFlechi::conj()
 {
-	// pour les codes _morpho, cf bin/data/liens.la
-	if (_morpho.at (0) != 'v')
-	{
-		return l+": erreur, n'est pas un verbe";
-	}
-	int g;
-	switch (_morpho.at (6).unicode ()) // genre
-	{
-		case 'n':
-		case 'm': g=1; break;
-		case 'f': g=2; break;
-		default: g=0; break;
-	}
-	int n;
-	switch (_morpho.at (2).unicode ()) // nombre
-	{
-		case 's': n=1; break;
-		case 'p': n=2; break;
-		default : n=0;
-	}
-	int p;
-	switch (_morpho.at (1).unicode ()) // personne
-	{
-		case '1':
-		case '2':
-		case '3': p=_morpho.at(1).digitValue();break;
-		default : p=0;break;
-	}
-	if (n==2) p+=3;
-	int t;
-	switch (_morpho.at (3).unicode ()) // temps
-	{
-		/* passé composé ignoré */
-		case 'p': t=1;break;
-		case 'f': t=2;break;
-		case 'i': t=3;break;
-		case 'r': t=4;break;
-		case 't': t=6;break;
-		case 'l': t=7;break;
-		default : t=0;break;
-	}
-	int m;
-	ushort mode = _morpho.at (4).unicode ();
-	switch (mode)  // mode
-	{
-		case 'i': m=1;break;
-		case 's': m=2;break;
-		case 'm': m=4;break;
-        case 'n': m=5;break;
-		case 'p': m=6;break;
-		case 'g': m=7;break;
-		case 'd': m=6;_morpho[5]='p';t=4;break;
-		default : m=0;
-	}
-	int v;
-	switch (_morpho.at (5).unicode ())  // voix
-	{
-		case '-':
-		case 'a':
-			{
-				v = 1;
-				if (m==6) t=5; // participe passé actif = passé composé
-				break;
-			}
-		case 'p':
-            /*
-			if ((_lemme->est_deponent() || _lemme->gr()=="video")) //&& mode < 6 )
-				v = 1;
-			else v=2; 
-            */
-			break;
-		default : v=0;
-	}
-	/* S'il y a plusieurs mots, conjuguer le premier, et recoller les suivants */
+    QString gr = _lemme->gr();
+	QString ret = conjnat(_traduction, _morpho);
 	QString ajout = "";
-	QString lemme = l;
-	int x = lemme.indexOf (' ');
-	if ((x > -1) && !lemme.startsWith ("se "))
+	int x = gr.indexOf (' ');
+	if ((x > -1) && !gr.startsWith ("se "))
 	{
-		ajout = lemme.section (' ', 1);
+		ajout = gr.section (' ', 1);
 		ajout.prepend (" ");
-		lemme.chop (lemme.length()-x);
+		gr.chop (gr.length()-x);
 	}
-	/* on ajoute le pronom sujet seulement aux personnes 1 et 2 */
-	bool pron = p % 3 != 0;
-	QString ret = conjugue (lemme, p, t, m, v, pron, g, n);
-	ret.append (ajout);
 	// adjectif verbal
-	if (mode == 'd')
+	if (_morpho.contains("verbal"))
 		ret.prepend ("devant être ");
 	return ret;
 }
@@ -462,7 +386,7 @@ bool MotFlechi::resout(Requete* req)
         return false;
 
     // locatif
-    if (req->id()=="locatif" 
+    if (req->id()=="locatif"
         && ((req->subRequis() && !_lemme->synt("loc"))
             || (req->superRequis() && !req->sub()->lemme()->synt("loc"))))
         return false;
@@ -475,7 +399,7 @@ bool MotFlechi::resout(Requete* req)
     if (debog) qDebug()<<"   oke";
 
     // liens associés
-    if (!req->regle()->subEstSup().isEmpty() 
+    if (!req->regle()->subEstSup().isEmpty()
         && ((req->subRequis() && !estSuperParId(req->regle()->subEstSup()))
             || (req->superRequis() && !req->sub()->estSuperParId(req->regle()->subEstSup()))))
             return false;
@@ -575,7 +499,7 @@ void MotFlechi::setDet(bool f)
 {
     if (f) qDebug()<<"à écrire";
     /*
-    bool lelales = _traduction.startsWith ("l'") 
+    bool lelales = _traduction.startsWith ("l'")
 		|| _traduction.startsWith ("le ")
 		|| _traduction.startsWith ("la ")
 		|| _traduction.startsWith ("les ");
@@ -600,7 +524,7 @@ void MotFlechi::setDet(bool f)
 				if (initVoc) _traduction = "l'"+_trNue;
 				else _traduction = "la "+ _trNue;
 			}
-			else 
+			else
 				_traduction = "une "+_trNue;
 		}
 		else  // masculin singulier
@@ -610,7 +534,7 @@ void MotFlechi::setDet(bool f)
 				if (initVoc) _traduction = "l'"+_trNue;
 				else _traduction = "le " + _trNue;
 			}
-			else 
+			else
 			{
 				_traduction = "un "+ _trNue;
 			}
@@ -627,7 +551,7 @@ QString MotFlechi::trfl()
 	switch (pos.unicode())
 	{
 		case 'v': // verbe
-			retour = conj(_lemme->traduction("fr")); break;
+			retour = conj(); break;
 		case 'n': // nom
 		case 'p': // pronom
 			{

@@ -50,7 +50,7 @@ class MotFlechi: public QObject
         bool            aUnSuper();
         bool            auxiliaire();
         QList<Requete*> closes();
-        QString         conj(QString l);
+        QString         conj();
         bool            contigu(MotFlechi* mf);
         void            delSubs();
         void            delSups();
