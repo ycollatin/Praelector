@@ -48,9 +48,6 @@ bool Phrase::accord(MotFlechi* ma, MotFlechi* mb, QString cgn)
 {
     QString cma = ma->morpho();
     QString cmb = mb->morpho();
-    bool debog = false;
-    //debog = cma=="cursus nominatif singulier masculin" && cmb=="divinus nominatif féminin singulier" && cgn=="cgn";
-    if (debog) qDebug()<<"Phrase::accord"<<ma->morpho()<<mb->morpho()<<"cgn"<<cgn;
     // ajouter une personne si elle est requise par cgn
     if (cgn.contains('p'))
     {
@@ -74,9 +71,7 @@ bool Phrase::accord(MotFlechi* ma, MotFlechi* mb, QString cgn)
     for (int ich=0;ich<cgn.size();++ich)
     {
         QChar ch=cgn.at(ich);
-        if (debog) qDebug()<<"   ich"<<ich<<"ch"<<ch;
         int p = lch.indexOf(ch);
-        if (debog) qDebug()<<"   p"<<p<<ch;
         QStringList liste;
         switch(p)
         {
@@ -87,18 +82,14 @@ bool Phrase::accord(MotFlechi* ma, MotFlechi* mb, QString cgn)
             case 4: liste = Ch::modes;     break;
             default: break;
         }
-        if (debog) qDebug()<<"   liste"<<liste;
         for (int i=0;i<liste.count();++i)
         {
-            if (debog) qDebug()<<"   for i"<<i<<"/"<<liste.count();
             QString trait = liste.at(i);
             bool mac = cma.contains(trait);
             bool mbc = cmb.contains(trait);
-            if (debog) qDebug()<<"   trait"<<trait<<"cma"<<cma<<"cmb"<<cmb<<"mac"<<mac<<"mbc"<<mbc;
             if (mac && !mbc) return false;
             if (mbc && !mac) return false;
         }
-        if (debog) qDebug()<<"   passé";
     }
     return true;
 }
@@ -171,7 +162,6 @@ void Phrase::ajRequete(Requete* req)
 
 QString Phrase::arbre(QString format, bool trace)
 {
-    //qDebug().noquote()<<_gr;
     // signetArbre
     QString gv;
     QTextStream fl(&gv);
@@ -189,22 +179,18 @@ QString Phrase::arbre(QString format, bool trace)
     else if (format=="easy")
         fl << "["<<_gr<<"]\n";
         //fl << "["<<_num<<" "<<_gr<<"]\n";
-    bool debog = false;
 
     for (int i=0;i<_mots.count();++i)
     {
         Mot* mc = _mots.at(i);
         //debog = mc->gr() == "fuit";
-        if (debog) qDebug()<<"mot"<<i<<mc->gr()<<"format"<<format;
         // définition du nœud
         if (format=="dot")
             fl <<"N"<<mc->rang()<<" [label=\""<<mc->gr()<<"\"];\n";
         // lemmatisation et analyse morpho
-        if (debog) qDebug()<<"entete ok. lemmatiseur"<<_lemmatiseur;
         mc->setMorphos(_lemmatiseur->lemmatiseM(mc->gr()));
 
         // calcul de tous les fléchis de mc
-        if (debog) qDebug()<< "arbre"<<mc->gr()<<"nbmorphos"<<mc->morphos().count();
         for (int il=0;il<mc->morphos().keys().count();++il)
         {
             Lemme *l = mc->morphos().keys().at(il);
@@ -220,7 +206,6 @@ QString Phrase::arbre(QString format, bool trace)
         for (int im=0;im<mc->nbFlechis();++im)
         {
             MotFlechi* mf = mc->flechi(im);
-            if (debog) qDebug()<<"mf="<<mf->morpho();
             // copie de la liste des requêtes
             _listeR.clear();
             for (int ir=0;ir<_requetes.count();++ir)
@@ -233,25 +218,19 @@ QString Phrase::arbre(QString format, bool trace)
             while (!_listeR.empty()) 
             {
                 Requete *req = _listeR.takeFirst();
-                //debog = req->num()==19 && mf->morpho().contains("cresco infinitif");
-                if (debog) qDebug()<<"  first"<<req->humain()<<"mf"<<mf->morpho();
                 if (mf->resout(req))
                 {
-                    if (debog) qDebug()<<"   resout ok"<<req->debog();
                     // si la requête est close, il faut pouvoir la 
                     // filtrer sous un autre numéro.
                     if (req->close())
                     {
                         Requete* reqtemp = req->clone();
                         reqtemp->setRequis(mf, "requis de requête clonée sur la req. "+req->numc());
-                        if (debog) qDebug()<<"reqtemp:"<<reqtemp->humain();
                         filtre(reqtemp);
-                        if (debog) qDebug()<<" après filtre:"<<reqtemp->humain();
                         if (reqtemp->close())
                         {
                             req->setRequis(reqtemp->requisFl(), "requis pris sur la req. temporaire");
                             req->ajHist("CHANGEMENT de requis : "+mf->morpho());
-                            if (debog) qDebug()<<"req.setRequis(regemp->requis):"<<req->humain();
                         }
                     }
                     else
@@ -333,17 +312,13 @@ QString Phrase::arbre(QString format, bool trace)
 
 bool Phrase::boucle(Requete* req)
 {
-    bool debog = false;
     //debog = req->num()==82;
-    if (debog) qDebug()<<"boucle"<<req->debog();
     if (!req->close()) return false;
     Mot* msup = req->super()->mot();
     Requete* rmin = req;
     int poidsmin = req->poids();
     QList<Mot*> supers = supersDe(msup);
-    if (debog) qDebug()<<"boucle2"<<req->debog();
     if (supers.empty()) return false;
-    if (debog) qDebug()<<"boucle3"<<req->debog();
     Mot* ms = supers.at(0);
     // XXX dans la phrase
     // in omnem vitam unguento abstinemus, quoniam optimus odor in corpore est nullus.
@@ -351,7 +326,6 @@ bool Phrase::boucle(Requete* req)
     int iter = 0;
     while (ms != msup && iter<10)
     {
-        if (debog) qDebug()<<"ms"<<ms->gr()<<"msup"<<msup->gr();
         Requete* rm = montante(ms);
         if (rm == 0) return false;
         if (rm->poids() < poidsmin) 
@@ -362,7 +336,6 @@ bool Phrase::boucle(Requete* req)
         ms = rm->super()->mot();
         ++iter;
     } 
-    if (debog) qDebug()<<"boucle4"<<req->debog();
     rmin->annuleRequis("requête la plus faible de la boucle");
     return true;
 }
@@ -389,11 +362,6 @@ void Phrase::conflit(Requete* ra, Requete* rb, QString cause)
     // ne traiter que des requêtes complètes
     if (!ra->close() || !rb->close()) return;
 
-    bool debog = false;
-    debog = ra->num()==93 && rb->num() == 64;
-    if(debog) qDebug()<<"  Phrase::conflit ra"<<ra->debog();
-    if(debog) qDebug()<<"  Phrase::conflit rb"<<rb->debog();
-
     // initialisations
     // Poids des requêtes. l'avantage contiguïté
     // y est compté.
@@ -404,10 +372,6 @@ void Phrase::conflit(Requete* ra, Requete* rb, QString cause)
 
     ra->ajHist("---\nconflit RA\n"+h);
     rb->ajHist("---\nconflit RB\n"+h);
-
-    if (debog) qDebug()<<"poids des règles ra. "<<ra->regle()->poids()
-        <<"rb."<<rb->regle()->poids()<<"Des requêtes, rap"<<rap<<"rbp"<<rbp;
-    debog = false;
 
     // distance
     int distanceA = ra->distance();
@@ -444,23 +408,19 @@ void Phrase::conflit(Requete* ra, Requete* rb, QString cause)
         // distance 
         if (distanceA < distanceB) rap += (distanceB - distanceA);
         else if (distanceB < distanceA) rbp += (distanceA - distanceB);
-        if (debog) qDebug()<<"conflit distanceA"<<distanceA<<"distanceB"<<distanceB<<"rap, rbp"<<rap<<rbp;
     }
     
     // de la fréquence des lemmes :
     int freqa = ra->freq(); 
     int freqb = rb->freq();
-    if (debog) qDebug()<<"freqa"<<freqa<<"freqb"<<freqb<<"rap"<<rap<<"rbp"<<rbp;
     if (freqa < 8 && freqa - freqb > 2000) rap += 10;
     else if (freqb < 8 && freqb - freqa > 2000) rbp += 10;
-    if (debog) qDebug() << "fréquences rap"<<rap<<"rbp"<<rbp;
 
     // avantage si liens associés
     if (!ra->regle()->subEstSup().isEmpty())
         rap += 40;
     if (!rb->regle()->subEstSup().isEmpty())
         rbp += 40;
-    if (debog) qDebug()<<"conflit liens liés"<<rap<<rbp;
     // annulation du requis de la requête perdante
     if (rap > rbp)
     {
@@ -470,7 +430,6 @@ void Phrase::conflit(Requete* ra, Requete* rb, QString cause)
     }
     else if (rbp > rap)
     {
-        if (debog) qDebug()<<"rbp > rap";
         rb->ajHist("requête rb "+rb->numc()+" ANNULE la requête ra "+ra->numc()
                    +", poids rb "+QString::number(rbp)+" ra "+QString::number(rap));
         ra->annuleRequis("ra "+QString::number(rap)+" poids moindre que rb "+QString::number(rbp));
@@ -493,7 +452,6 @@ void Phrase::conflit(Requete* ra, Requete* rb, QString cause)
         ra->annuleRequis("ra annulée: Égalité, requête plus récente annulée");
         rb->ajHist("rb conservée: Égalité, requête plus ancienne conservée");
     }
-    if (debog) qDebug()<<"sortie";
 }
 
 bool Phrase::contigue(Requete* req)
@@ -537,7 +495,7 @@ QString Phrase::droite(Mot *m)
 
 void Phrase::ecoute (QString m)
 {
-	qDebug()<<m;
+    _reponse.clear();
 	if (m.isEmpty() || m == "-init")
 	{
 		majAffichage ();
@@ -549,7 +507,6 @@ void Phrase::ecoute (QString m)
 	{
 		++_imot;
 		if (_imot > _maxImot) _maxImot = _imot;
-		//syntaxe ();
 	}
 	else if (m == "-prec" && _imot > 0)
 	{
@@ -560,8 +517,6 @@ void Phrase::ecoute (QString m)
 	{
         _mots.clear();
         // TODO : repeupler la phrase.
-		majAffichage ();
-		emit (repondu (""));
 	}
 	else if (m.startsWith("-phr-"))
 	{
@@ -575,11 +530,10 @@ void Phrase::ecoute (QString m)
 				continue;
             //Mot::Mot(QString g, int d, int f, int r, QObject *parent) : QObject(parent)
 			Mot *nm = new Mot(liste.at (i), 0, 0, i, this);
-			_mots.append (nm);
+            nm->setMorphos(_lemmatiseur->lemmatiseM(nm->gr()));
+			_mots.append(nm);
 		}
 		_imot = 0;
-		majAffichage ();
-		emit (repondu (""));
 	}
 	else // mots et liens
 	{
@@ -643,7 +597,7 @@ void Phrase::ecoute (QString m)
 									  fl<<"Meilleure traduction pour " << cour->gr();
 									  Dialogue *dialogue = new Dialogue ();
 									  dialogue->setLabel (lt);
-									  dialogue->setText (cour->flechi(num)->traduction());
+									  dialogue->setText (cour->flechi(num)->trfl());
 									  int res = dialogue->exec ();
 									  if (res == QDialog::Accepted)
                                           qDebug()<<"où est le fléchi ?";
@@ -909,10 +863,8 @@ bool Phrase::isomorph(QString ma, QString mb)
 bool Phrase::filtre(Requete* req)
 {
     // signetFiltre
-    bool debog = false;
     // XXX  19 épith
     //debog = req->num()==59||req->num()==93 || req->num()==101;
-    if (debog) qDebug()<<req->num();
 
     // Une requête prep ou conj ne se résout pas tant que la prep n'a pas son régime,
     // ou tant que la conjonction n'a pas de verbe subordonné
@@ -923,7 +875,6 @@ bool Phrase::filtre(Requete* req)
         req->annuleRequis("préposition ou conjonction antéposée sans sub");
         return false;
     }
-    //if (debog) qDebug()<<"filtre, prep et conjSub";
 
     // un verbe conjugué ne doit pas séparer l'épithète du nom
     if ((req->aff() == "epithete" || req->aff()=="det")
@@ -939,7 +890,6 @@ bool Phrase::filtre(Requete* req)
         req->annuleRequis("un régime de préposition ne peut être objet");
         return false;
     }
-    //if (debog) qDebug()<<"   okj";
 
 
     //   Blocages de projectivité
@@ -952,7 +902,6 @@ bool Phrase::filtre(Requete* req)
     if (!mb.empty()) for (int ib=0;ib<_requetes.count();++ib)
     {
         Requete* rb = _requetes.at(ib);
-        //if (debog) qDebug().noquote()<<"req"<<req->debog()<<"\n rb"<<rb->debog();
         QString id = rb->id();
         QString af = rb->aff();
         bool crux = req->croise(rb);
@@ -982,7 +931,6 @@ bool Phrase::filtre(Requete* req)
                 bloci = true;
         }
     }
-    if (debog) qDebug()<<"   okk";
     if (blocc || blocr || blocq || bloci) // || bloce)
     {
         QString sb = "relative";
@@ -991,16 +939,13 @@ bool Phrase::filtre(Requete* req)
         //else if (bloce) sb = "coordination";
         else if (bloci) sb = "infinitive";
         req->annuleRequis("blocage "+sb);
-        if (debog) qDebug()<<"   blocage"<<sb;
         return false;
     }
-    if (debog) qDebug()<<"   okl";
 
     // conflit avec les requêtes closes
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* ri = _requetes.at(i);
-        if (debog) qDebug()<<"      "<<ri->num();
 
         if (ri == req || !ri->close()) continue;
 
@@ -1021,7 +966,6 @@ bool Phrase::filtre(Requete* req)
         // l'adj contigu avec un nom ne peut être attribut par un V si ce nom peut l'être aussi
         if (req->id() == "attrSA" && ri->id()=="attrSN" && contigus(req->sub()->mot(), ri->sub()->mot()))
         {
-            if (debog) qDebug()<<"okl attr";
             req->annuleRequis("épithète de son concurrent");
             return false;
         }
@@ -1033,19 +977,13 @@ bool Phrase::filtre(Requete* req)
         bool idSubFl   = req->sub()  == ri->sub();
         bool compat = false;
 
-        //if (debog) qDebug()<<"idSuper"<<idSuper<<", idSuperFl"<<idSuperFl<<", idSub"<<idSub<<", idSubFl"<<idSubFl;
-
         // départager d'abord les fléchis du même mot
         if ((idSuper && !idSuperFl) || (idSub && !idSubFl))
         {
-            //if (debog) qDebug()<< "conflit mot / motflechi("<<req->num()<<","<<ri->num()<<")";
             conflit(req, ri,"utilisation de formes différentes du même mot");
-            //if (debog) qDebug().noquote()<<" après conflit mot/motflechi,\nreq"<<req->debog()<<"\n ri"<<ri->debog();
             if (!req->close()) return false;
             if (!ri->close()) continue;
         }
-
-        if (debog) qDebug()<<"   okm "<<ri->num();
 
         // autres conflits
         if (idSuper) compat = compatible(req->super(), ri->super()) && req->regle()->compatibleSupSub(ri->regle());
@@ -1062,7 +1000,6 @@ bool Phrase::filtre(Requete* req)
             if (!req->close()) return false;
             if (!ri->close()) continue;
         }
-        if (debog) qDebug() << "   okn";
 
         // super et sub réciproques
         if ((ri->sub()->mot() == req->super()->mot()) && (ri->super()->mot() == req->sub()->mot()))
@@ -1074,7 +1011,6 @@ bool Phrase::filtre(Requete* req)
                 continue;
             }
         }
-        if (debog) qDebug()<<"  oko";
 
         // sub de ri = super de req
         if ((ri->sub()->mot() == req->super()->mot()) && req->aff() != "antecedent"
@@ -1087,7 +1023,6 @@ bool Phrase::filtre(Requete* req)
                 continue;
             }
         }
-        if (debog) qDebug()<<"  okp";
 
         // super de ri = sub de req
         if (ri->super()->mot() == req->sub()->mot()
@@ -1101,7 +1036,6 @@ bool Phrase::filtre(Requete* req)
                 continue;
             }
         }
-        if (debog) qDebug()<<"  okq idsuper"<<idSuper<<"idSub"<<idSub;
 
         // même super, subs différents.
         if (idSuper && !idSub)
@@ -1117,7 +1051,6 @@ bool Phrase::filtre(Requete* req)
             {
                 if (ri->sub()->estSubParId("det"))
                 {
-                    qDebug().noquote()<<"req"<<req->debog()<<"\n ri"<<ri->debog();
                     req->annuleRequis(ri->sub()->gr()+"le sub de ri est déterminant. Ce lien est prioritaire");
                     return false;
                 }
@@ -1128,12 +1061,10 @@ bool Phrase::filtre(Requete* req)
                 }
             }
             */
-            if (debog) qDebug()<<"   okr";
 
             // Champ aff identique, et un seul sub aff permis
             if (ri->aff() == req->aff() && !req->multi()) //&& compat)
             {
-                if (debog) qDebug()<< "   oks 1";
                 if (!req->close())
                 {
                     if (req->aff() == "coord2")
@@ -1144,7 +1075,6 @@ bool Phrase::filtre(Requete* req)
                     }
                     return false;
                 }
-                if (debog) qDebug()<<"   oks 1a";
                 /*
                 if (ri->close())
                 {
@@ -1157,12 +1087,10 @@ bool Phrase::filtre(Requete* req)
                 }
                 else*/ if (ri->aff() == "coord2")
                 {
-                    if (debog) qDebug()<<"   oks 1c";
                     if (ri->coord1() != 0)
                         ri->coord1()->annuleRequis("le second membre de la coordination a été annulé");
                     continue;
                 }
-                if (debog) qDebug()<<"   oks 1d";
                 conflit(req, ri, "même super, même id");
                 if (!req->close()) return false;
                 if (!ri->close()) continue;
@@ -1170,14 +1098,12 @@ bool Phrase::filtre(Requete* req)
             // champ conflit:<id> de regles.la
             else if (req->enConflit(ri->id()) && !req->multi() && compat)
             {
-                if (debog) qDebug()<< "oks 2";
                 conflit(req, ri, "même super, ids en conflit");
                 if (!req->close()) return false;
                 if (!ri->close())  continue;
             }
             else if (!req->regle()->compatibleSupSup(ri->regle()))
             {
-                if (debog) qDebug()<< "oks 3";
                 Mot* mis = req->super()->mot();
                 bool comp = false;
                 for (int is=0;is<mis->nbFlechis();++is)
@@ -1195,16 +1121,13 @@ bool Phrase::filtre(Requete* req)
                     }
                 }
             }
-            if (debog) qDebug()<<"   okt";
         }
-        if (debog) qDebug()<<"  oku";
 
         // même sub, supers différents
         if (idSub && !idSuper )
         {
             if (req->aff() != "antecedent" && ri->aff()!="antecedent" && ri->aff()!="coord1")
             {
-                if (debog) qDebug()<<"même sub, supers différents";
                 if (ri->regle()->exclut(req->regle()->id()))
                     req->annuleRequis(" par la requête prioritaire "+ri->debog());
                 else conflit(req, ri, "même sub");
@@ -1217,7 +1140,6 @@ bool Phrase::filtre(Requete* req)
             // antécédent
             else if (req->aff() == "antecedent" && ri->aff() == "antecedent")
             {
-                if (debog) qDebug()<<"okv";
                 conflit(req, ri, "2e antécédent");
                 if (!req->close()) return false;
                 if (!ri->close())
@@ -1228,9 +1150,7 @@ bool Phrase::filtre(Requete* req)
             else conflit(req, ri, "même sub, supers différents");
             if (!req->close()) return false;
         }
-        if (debog) qDebug()<<"   okw";
     }
-    if (debog) qDebug()<<"   filtre, réussi"<<req->debog();
     return true;
 } // filtre
 
@@ -1264,17 +1184,12 @@ QString Phrase::grLu()
 // Attention, _lemme et _lemmeExclu sont mal nommés
 int Phrase::handicap(MotFlechi* mf)
 {
-    bool debog = false;
-    //debog = mf->gr()=="uitia" && mf->lemme()->gr()=="vitium" && mf->lemme()->cle()=="uitium";
     QString gr = mf->gr().toLower();
     gr.replace('v','u');
     gr.replace('j','i');
-    if (debog) qDebug()<<"            Phrase::handicap. gr"<<gr<<"morpho"<<mf->morpho()<<"cle"<<mf->lemme()->cle();
     Handicap* h = _handicaps.value(gr, 0);
-    if (debog) qDebug()<<"            h="<<h;
     if (h == 0) return 0;
     QString mflem = mf->lemme()->cle();
-    if (debog) qDebug()<<"            mflem"<<mflem<<"h->lemme"<<h->lemme()<<"lemmeExclu"<<h->lemmeExclu()<<"hand"<<h->hand();
     if ((mflem != h->lemme()) || (mflem == h->lemmeExclu()))
         return h->hand();
     return 0;
@@ -1330,8 +1245,8 @@ void Phrase::majAffichage()
 	else _reponse = Chaines::affichage
 		.arg (Chaines::titrePraelector)
 		.arg (grLu())                            // %1
-		//.arg (motCourant()->htmlMorphos())       // %2
-		.arg ("motCourant()->htmlMorphos()")       // %2
+		.arg (motCourant()->htmlMorphos())       // %2
+		//.arg ("motCourant()->htmlMorphos()")       // %2
 		.arg ("htmlLiens()")                       // %3
 		.arg ("traduction()");                     // %4
 }
@@ -1478,22 +1393,6 @@ QList<Mot*> Phrase::portee(int a, int b)
     return ret;
 }
 
-// à la suite d'une annulation, un
-// mot a perdu son super.
-void Phrase::recase(Requete* req, MotFlechi* mf)
-{
-    if (mf->mot()->super() == 0)
-    {
-        for (int i=0;i<_requetes.count();++i)
-        {
-            Requete* reqi = _requetes.at(i);
-            if (req->aff() == "epithete" && !req->close() && reqi != req)
-                qDebug()<<req->debog();
-             //   _listeR.append(reqi);
-        }
-    }
-}
-
 Regle* Phrase::regle(int i)
 {
     return _regles.at(i);
@@ -1516,9 +1415,6 @@ void Phrase::relecture()
         Mot* m = _mots.at(i);
         if (estSommet(m))
         {
-            bool debog = false;
-            //debog = m->gr() == "suo";
-            if (debog) qDebug()<<"estSommet"<<m->gr();
             for (int ifl=0;ifl<m->nbFlechis();++ifl)
             {
                 MotFlechi* mf = m->flechi(ifl);
@@ -1532,7 +1428,6 @@ void Phrase::relecture()
                     if (req->aff() != "epithete" && req->aff() != "det") continue;
                     if (mf->resout(req))
                     {
-                        if (debog) qDebug()<<"relecture, cloture de"<<req->debog()<<" par "<<mf->morpho();
                         req->setRequis(mf,"validée en relecture");
                         req->ajHist("validée en RELECTURE");
                     }
