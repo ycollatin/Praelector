@@ -50,6 +50,7 @@ class MotFlechi: public QObject
         bool            aUnSuper();
         bool            auxiliaire();
         QList<Requete*> closes();
+        QString         conj(QString l);
         bool            contigu(MotFlechi* mf);
         void            delSubs();
         void            delSups();
@@ -80,7 +81,7 @@ class MotFlechi: public QObject
         bool            resout(Requete* req);
         void            setDet(bool f=false);
         void            setTraduction(QString t);
-        QString         traduction();
+        QString         trfl();
 };
 
 #endif
