@@ -14,7 +14,7 @@ OBJECTS_DIR = obj
 MOC_DIR = moc
 
 HEADERS  += src/dialogue.h \
-			src/libflexfr.h \
+			src/flexfr.h \
             src/ch.h \
             src/handicap.h \
             src/irregs.h \
@@ -29,7 +29,7 @@ HEADERS  += src/dialogue.h \
             src/requete.h
 
 SOURCES  += src/dialogue.cpp \
-			src/libflexfr.cpp \ 
+			src/flexfr.cpp \ 
             src/ch.cpp \
             src/handicap.cpp \
             src/irregs.cpp \
