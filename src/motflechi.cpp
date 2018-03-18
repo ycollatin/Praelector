@@ -17,7 +17,7 @@
 #include <QDebug>
 
 #include <ch.h>
-#include <libflexfr.h>
+#include <flexfr.h>
 #include <lemmatiseur.h>
 #include <motflechi.h>
 #include <regle.h>
@@ -545,63 +545,35 @@ void MotFlechi::setDet(bool f)
 
 QString MotFlechi::trfl()
 {
-	QString retour;
-    QChar pos = _lemme->pos().at(0);
-	/* passage de la morpho latine à la morpho française */
-	switch (pos.unicode())
-	{
-		case 'v': // verbe
-			retour = conj(); break;
-		case 'n': // nom
-		case 'p': // pronom
-			{
-				if (_lemme->gr() == "qui")
-					switch (_morpho.at (7).unicode())
-					{
-						case 'b':
-						case 'd':
-						case 'n': return "qui"; break;
-						case 'a': return "que"; break;
-						case 'g': return "dont"; break;
-					}
-			}
-		case 'a': // adjectif
-			{
-				int n;
-				switch (_morpho.at (2).unicode ())
-				{
-					case 'p': n=1; break;
-					default : n=0;
-				}
-				if (pos == 'a')
-				{
-					int g;
-					switch (_morpho.at (6).unicode ())
-					{
-						case 'f': g=1;break;
-						default:  g=0;
-					}
-					retour = Accorde (gr(), g, n);
-					if (_morpho.at (8) == 'c') // comparatif
-						retour.prepend ("plus ");
-				}
-				else if (pos == 'n')
-				{
-					if (n == 1)
-						retour =  Pluriel (gr());
-					else retour = gr();
-				}
-				else retour = gr();
-				break;
-			}
-		default:
-			retour = gr();
-			break;
-	}
-	return retour;
+    QString tr = _traduction;
+    tr.remove(QRegExp("[(\\[][^)^\\]]*[)\\]]"));
+    QStringList ll = tr.split(QRegExp("[,;]"));
+    QStringList lret;
+    for (int i=0;i<ll.count();++i)
+    {
+        QString ltr = ll.at(i).simplified();
+        QString ret;
+        switch (_lemme->pos().at(0).toLatin1())
+        {
+            case 'p':
+            case 'a': ret = accorde(ltr, _morpho); break;
+            case 'n':
+                      {
+                          if (_morpho.contains("plur")) ret = pluriel(ltr, _morpho);
+                          else ret = ltr;
+                          break;
+                      }
+            //case 'p': ret = _pronom->accorde(ltr, _morpho); break;
+            case 'v': ret = conjnat(ltr, _morpho); break;
+            default: ret = ltr;
+        }
+        if (!ret.isEmpty()) lret.append(ret);
+    }
+    return lret.join(", ");
 }
 
 void MotFlechi::setTraduction(QString t)
 {
     _traduction = t;
 }
+
