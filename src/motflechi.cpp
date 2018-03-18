@@ -35,6 +35,35 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
     _morpho = m;
     _phrase = parent->phrase();
     _traduction = l->traduction("fr");
+    // traduction fléchie
+    QString tr = _traduction;
+    tr.remove(QRegExp("[(\\[][^)^\\]]*[)\\]]"));
+    QStringList ll = tr.split(QRegExp("[,;]"));
+    QStringList ltr;
+    for (int i=0;i<ll.count();++i)
+    {
+        QString c = ll.at(i).simplified();
+        QString fl;
+        switch (_lemme->pos().at(0).toLatin1())
+        {
+            case 'p':
+            case 'a': fl = accorde(c, _morpho); break;
+            case 'n':
+                      {
+                          if (_morpho.contains("plur")) fl = pluriel(c, _morpho);
+                          else fl = c;
+                          break;
+                      }
+            //case 'p': ret = _pronom->accorde(c, _morpho); break;
+            case 'v':
+            case 'w':
+                      fl = conjnat(c, _morpho);
+                      break;
+            default: fl = c;
+        }
+        if (!fl.isEmpty()) ltr.append(fl);
+    }
+    _trfl = ltr.join(", ");
 }
 
 void MotFlechi::ajReqSub(Requete* req)
@@ -81,23 +110,26 @@ QList<Requete*> MotFlechi::closes()
     return ret;
 }
 
+/*
 QString MotFlechi::conj()
 {
-    QString gr = _lemme->gr();
-	QString ret = conjnat(_traduction, _morpho);
+    QString tr = _traduction;
+	QString ret = conjnat(_tr, _morpho);
+    qDebug()<<"Motflechi::conj, ret"<<ret;
 	QString ajout = "";
-	int x = gr.indexOf (' ');
-	if ((x > -1) && !gr.startsWith ("se "))
+	int x = _tr.indexOf (' ');
+	if ((x > -1) && !_tr.startsWith ("se "))
 	{
-		ajout = gr.section (' ', 1);
+		ajout = tr.section (' ', 1);
 		ajout.prepend (" ");
-		gr.chop (gr.length()-x);
+		//_tr.chop (tr.length()-x);
 	}
 	// adjectif verbal
 	if (_morpho.contains("verbal"))
 		ret.prepend ("devant être ");
 	return ret;
 }
+*/
 
 bool MotFlechi::contigu(MotFlechi* mf)
 {
@@ -545,31 +577,7 @@ void MotFlechi::setDet(bool f)
 
 QString MotFlechi::trfl()
 {
-    QString tr = _traduction;
-    tr.remove(QRegExp("[(\\[][^)^\\]]*[)\\]]"));
-    QStringList ll = tr.split(QRegExp("[,;]"));
-    QStringList lret;
-    for (int i=0;i<ll.count();++i)
-    {
-        QString ltr = ll.at(i).simplified();
-        QString ret;
-        switch (_lemme->pos().at(0).toLatin1())
-        {
-            case 'p':
-            case 'a': ret = accorde(ltr, _morpho); break;
-            case 'n':
-                      {
-                          if (_morpho.contains("plur")) ret = pluriel(ltr, _morpho);
-                          else ret = ltr;
-                          break;
-                      }
-            //case 'p': ret = _pronom->accorde(ltr, _morpho); break;
-            case 'v': ret = conjnat(ltr, _morpho); break;
-            default: ret = ltr;
-        }
-        if (!ret.isEmpty()) lret.append(ret);
-    }
-    return lret.join(", ");
+    return _trfl;
 }
 
 void MotFlechi::setTraduction(QString t)
