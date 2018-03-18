@@ -42,6 +42,7 @@ Phrase::Phrase(QString t)
     peupleRegles("regles.la");
     peupleHandicap();
     setGr(t);
+    lemmatise();
 }
 
 bool Phrase::accord(MotFlechi* ma, MotFlechi* mb, QString cgn)
@@ -524,20 +525,6 @@ void Phrase::ecoute (QString m)
 		_mots.clear();
         setGr(m);
         lemmatise();
-        /*
-		QStringList liste = m.split (" ");
-		for (int i=0;i<liste.count();++i)
-		{
-			QString lati = liste.at (i);
-			if (lati.length() == 1 && !lati.at(0).isLetter())
-				continue;
-            //Mot::Mot(QString g, int d, int f, int r, QObject *parent) : QObject(parent)
-			Mot *nm = new Mot(liste.at (i), 0, 0, i, this);
-            nm->setMorphos(_lemmatiseur->lemmatiseM(nm->gr(), i==0));
-            qDebug()<<"phrase::ecoute, nm"<<nm->gr()<<nm->morphos().count()<<"morphos";
-			_mots.append(nm);
-		}
-        */
 		_imot = 0;
 	}
 	else // mots et liens
