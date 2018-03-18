@@ -38,7 +38,7 @@
 
 Phrase::Phrase(QString t)
 {
-    _lemmatiseur = new Lemmat();
+    _lemmatiseur = new Lemmat(this);
     peupleRegles("regles.la");
     peupleHandicap();
     setGr(t);
@@ -503,7 +503,7 @@ void Phrase::ecoute (QString m)
 		return;
 	}
 	/* deux commandes de navigation */
-	if (m == "-suiv" && (_imot < _mots.count() -1))
+	else if (m == "-suiv" && (_imot < _mots.count() -1))
 	{
 		++_imot;
 		if (_imot > _maxImot) _maxImot = _imot;
@@ -521,7 +521,10 @@ void Phrase::ecoute (QString m)
 	else if (m.startsWith("-phr-"))
 	{
 		m.remove (0, 5);
-		_mots.clear ();
+		_mots.clear();
+        setGr(m);
+        lemmatise();
+        /*
 		QStringList liste = m.split (" ");
 		for (int i=0;i<liste.count();++i)
 		{
@@ -530,9 +533,11 @@ void Phrase::ecoute (QString m)
 				continue;
             //Mot::Mot(QString g, int d, int f, int r, QObject *parent) : QObject(parent)
 			Mot *nm = new Mot(liste.at (i), 0, 0, i, this);
-            nm->setMorphos(_lemmatiseur->lemmatiseM(nm->gr()));
+            nm->setMorphos(_lemmatiseur->lemmatiseM(nm->gr(), i==0));
+            qDebug()<<"phrase::ecoute, nm"<<nm->gr()<<nm->morphos().count()<<"morphos";
 			_mots.append(nm);
 		}
+        */
 		_imot = 0;
 	}
 	else // mots et liens
@@ -1238,6 +1243,28 @@ QList<Requete*> Phrase::homonymes(QString id)
     return ret;
 }
 
+void Phrase::lemmatise()
+{
+    for (int i=0;i<_mots.count();++i)
+    {
+        Mot* mc = _mots.at(i);
+        // lemmatisation et analyse morpho
+        mc->setMorphos(_lemmatiseur->lemmatiseM(mc->gr()));
+
+        // calcul de tous les fléchis de mc
+        for (int il=0;il<mc->morphos().keys().count();++il)
+        {
+            Lemme *l = mc->morphos().keys().at(il);
+            for (int im=0;im<mc->morphos()[l].count();++im)
+            {
+                QString m = mc->morphos()[l].at(im).morpho;
+                MotFlechi* mf = new MotFlechi(l, m, mc);
+                mc->ajFlechi(mf);
+            }
+        }
+    }
+}
+
 void Phrase::majAffichage()
 {
 	if (_mots.empty())
@@ -1548,3 +1575,4 @@ QList<Mot*> Phrase::supersDe(Mot* m)
     }
     return ret;
 }
+

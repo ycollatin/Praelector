@@ -81,6 +81,7 @@ class Phrase: public QObject
         QList<Requete*>   homonymes(QString id);
         void              initFeminins ();
         bool              isomorph(QString ma, QString mb);
+        void              lemmatise();
         Requete*          montante(Mot* m);
         Mot*              motCourant();
         Mot*              motNo(int i);
