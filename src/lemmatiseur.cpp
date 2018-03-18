@@ -773,7 +773,6 @@ QString Lemmat::lemmatiseT(QString t, bool alpha, bool cumVocibus,
             lRet.append(nr + nl);
     }
     // fin de la mesure :
-    // qDebug()<<"Eneide"<<timer.nsecsElapsed()<<"ns";
     return lRet.join("");
 }
 
@@ -1117,7 +1116,6 @@ void Lemmat::posCf()
                 l->setPos(lr->pos());
                 l->ajTrad(lr->traduction("fr"), "fr");
             }
-            //else qDebug()<<l->gr()<<"renvoi incorrect"<<l->indMorph();
         }
     }
 }
