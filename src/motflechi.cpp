@@ -158,12 +158,9 @@ void MotFlechi::delSups()
 // _lreqSup est la liste des requêtes dont le fléchi est super
 bool MotFlechi::estSubParAff(QString aff)
 {
-    bool debog = false;
-    //debog = gr()=="quem" && _lemme->gr()=="qui";
     for (int i=0;i<_lreqSub.count();++i)
     {
         Requete* req = _lreqSub.at(i);
-        if (debog && req->close()) qDebug()<<gr()<<"estSubPar"<<req->id();
         if (req->close() && req->aff() == aff)
             return true;
     }
@@ -172,13 +169,9 @@ bool MotFlechi::estSubParAff(QString aff)
 
 bool MotFlechi::estSubParId(QString id)
 {
-    bool debog = false;
-    //debog = gr()=="et" && id=="conjcoordN";
-    if (debog) qDebug()<<gr()<<"estSubParId"<<id;
     for (int i=0;i<_lreqSub.count();++i)
     {
         Requete* req = _lreqSub.at(i);
-        //if (debog) qDebug()<<"    req"<<req->debog();
         if (req->close() && req->id() == id)
             return true;
     }
@@ -236,12 +229,8 @@ QString MotFlechi::gr()
 
 int MotFlechi::handicap()
 {
-    bool debog = false;
-    //debog = gr()=="uitia" && _lemme->cle()=="uitium";
-    if (debog) qDebug()<<"        motflechi::handicap"<<_morpho;
     int ret = 0;
     ret += _phrase->handicap(this);
-    if (debog) qDebug()<<"        handicap _lemme->gr()"<<_lemme->gr()<<"ret"<<ret;
     // handicaps morpho
     if (_morpho.contains("vocatif")) ret += 50;
     else if (gr().endsWith("is"))
@@ -251,7 +240,6 @@ int MotFlechi::handicap()
     }
     int mfl = _mot->mfLies().count();
     ret -= mfl;
-    if (debog) qDebug()<<"        mfl"<<mfl<<"ret"<<ret;
     return ret;
 }
 
@@ -267,14 +255,9 @@ bool MotFlechi::intersect(QString a, QString b)
 
 void MotFlechi::lance()
 {
-    bool debog = false;
-    //debog = gr()=="Leo";
-    if (debog) qDebug()<<gr()<<"lance. nbRegles"<<_phrase->nbRegles();
     for (int i=0;i<_phrase->nbRegles();++i)
     {
         Regle* r = _phrase->regle(i);
-        //debog = gr()=="Vitelliorum" && r->id()=="genitif";
-        if (debog) qDebug()<<"  lance"<<_morpho<<"  règle"<<r->id()<<"estSub"<<r->estSub(this);
         if (r->estSuper(this) && r->sens() != '<') lanceReqSup(r);
         if (r->estSub(this) && r->sens() != '>') lanceReqSub(r);
     }
@@ -284,27 +267,22 @@ void MotFlechi::lance()
 // _lreqSup est la liste des requêtes dont le fléchi est super
 Requete* MotFlechi::lanceReqSub(Regle* r)
 {
-    bool debog = false;
-    //debog = gr()=="leo";
     Requete* nr = new Requete(0, this, r);
-    if (debog) qDebug()<<"lanceReqSub"<<nr->debog();
     _phrase->ajRequete(nr);
     _lreqSub.append(nr);
     nr->ajHist("\n------------------\nRequête numéro "+nr->numc());
     nr->ajHist(nr->humain());
-    nr->ajHist(nr->debog());
+    nr->ajHist(nr->doc());
     return nr;
 }
 
 Requete* MotFlechi::lanceReqSup(Regle* r)
 {
-    //debog = gr()=="et"; // && (mf->gr()=="maiores" || mf->gr()=="natu");
     Requete* nr = new Requete(this, 0, r);
     _phrase->ajRequete(nr);
     _lreqSup.append(nr);
     nr->ajHist("\n------------------\nRequête numéro "+nr->numc());
     nr->ajHist(nr->humain());
-    nr->ajHist(nr->debog());
     return nr;
 }
 
@@ -330,7 +308,6 @@ int MotFlechi::nbCloses()
         if (_lreqSub.at(i)->close()) ++ret;
     for (int i=0;i<_lreqSup.count();++i)
     {
-        //qDebug()<<i<<_lreqSup.at(i)->debog();
         if (_lreqSup.at(i)->close()) ++ret;
     }
     return ret;
@@ -358,7 +335,7 @@ void MotFlechi::nettoie()
             Requete* req = mf->reqSup(ir);
             if (req->close() && (req->aff() == "epithete"))
             {
-                req->annuleRequis("accord rompu par "+req->debog());
+                req->annuleRequis("accord rompu par "+req->doc());
             }
         }
     }
@@ -392,12 +369,9 @@ Requete* MotFlechi::reqSup(int i)
 
 bool MotFlechi::resout(Requete* req)
 {
-    bool debog = false;
-    if (debog) qDebug()<<"MotFlechi::resout. mot"<<gr()<<this->morpho()<<", req"<<req->debog();
     // signetResout
     // un mot ne peut être lié à lui-même.
     if (req->requerant() == _mot) return false;
-    if (debog) qDebug()<<"   oka";
 
     // pas de sujet séparé de son verbe par le seul mot /quam/
     if (this->rang() - req->requerant()->rang() == 2)
@@ -411,7 +385,6 @@ bool MotFlechi::resout(Requete* req)
                  <<"sunt"<<"fuerunt"<<"erant").contains(m->gr())) return false;
         }
     }
-    if (debog) qDebug()<<"   okb";
 
     // position initiale obligatoire
     if (req->regle()->filtre().contains("sup0") && req->subRequis() && req->super()->rang() != 0)
@@ -428,16 +401,13 @@ bool MotFlechi::resout(Requete* req)
         return false;
     if (req->regle()->filtre().contains("tete") && req->subRequis() && rang() > 0)
         return false;
-    if (debog) qDebug()<<"   oke";
 
     // liens associés
     if (!req->regle()->subEstSup().isEmpty()
         && ((req->subRequis() && !estSuperParId(req->regle()->subEstSup()))
             || (req->superRequis() && !req->sub()->estSuperParId(req->regle()->subEstSup()))))
             return false;
-    if (debog) qDebug()<<"   okf";
 
-    if (debog) qDebug()<<"   resout ok subestsup. supEstSub:"<<req->regle()->supEstSub()<<"listeR"<<_phrase->nbListeR();
     if (!req->regle()->supEstSub().isEmpty() && req->super() != 0)
     {
         if (!req->super()->estSubParId(req->regle()->supEstSub()))
@@ -445,7 +415,6 @@ bool MotFlechi::resout(Requete* req)
             return false;
         }
     }
-    if (debog) qDebug()<<"   resout ok supestsub"<<req->regle()->supEstSup()<<"listeR"<<_phrase->nbListeR();
     if (!req->regle()->supEstSup().empty() && req->super() != 0)
     {
         bool passe = false;
@@ -454,32 +423,25 @@ bool MotFlechi::resout(Requete* req)
         if (!passe) return false;
     }
 
-    if (debog) qDebug()<<"   resout okb"<<"listeR"<<_phrase->nbListeR();
     // Le super est requis
     QString accord = req->regle()->accord();
     if (req->superRequis() && req->sens() != '>')
     {
-        if (debog) qDebug()<<"   resout okc superRequis"<<"listeR"<<_phrase->nbListeR();
         // un super en -que ne peut avoir de sub qui le précède
         if (_mot->que() && rang() > req->sub()->rang())
             return false;
-        if (debog) qDebug()<<"   resout okd accord"<<req->gv()<<"accord"<<accord<<_morpho<<"avec"<<req->sub()->morpho()<<_phrase->accord(this, req->sub(), accord);
         if (!accord.isEmpty() && !_phrase->accord(this, req->sub(), accord))
         {
-            if (debog) qDebug()<<"   false!"<<"listeR"<<_phrase->nbListeR();
             return false;
         }
-        if (debog) qDebug()<<"   resout okd, règle"<<req->regle()->id()<<"estSuper("<<morpho()<<req->regle()->estSuper(this)<<"listeR"<<_phrase->nbListeR();
         if (req->regle()->estSuper(this))
         {
-            if (debog) qDebug()<<"   resout oke"<<"listeR"<<_phrase->nbListeR();
             return true;
         }
     }
     // le sub est requis
     else if (req->subRequis() && req->sens() != '<')
     {
-        if (debog) qDebug()<<"   resout okf subRequis"<<"listeR"<<_phrase->nbListeR();
         // un mot en -que (== et + mot) ne peut être que coordonné
         if  (_mot->que() && req->aff() != "coord") return false;
         // un super en -que ne peut avoir de sub qui le précède
@@ -490,19 +452,13 @@ bool MotFlechi::resout(Requete* req)
             if (req->aff() == "coord2")
             {
                 QList<Requete*> lrs = _phrase->reqCC(req->super()->mot());
-                if (debog) qDebug()<<"  resout coord2, requêtes reqCC"<<lrs.count()<<"listeR"<<_phrase->nbListeR();
                 bool ac = false;
                 for (int irs=0;irs<lrs.count();++irs)
                 {
                     Requete* rs = lrs.at(irs);
-                    if (debog) qDebug()<<"   lrs"<<irs<<".rs:"<<rs->debog();
-                    if (debog) qDebug()<<"   intersect"<<rs->super()->lemme()->pos()<<" et "<<_lemme->pos()
-                        <<(intersect(rs->super()->lemme()->pos(), _lemme->pos()));
-                    if (debog) qDebug()<<"   accord"<< _phrase->accord(this, rs->super(), accord);
                     if (intersect(rs->super()->lemme()->pos(), _lemme->pos())
                         && _phrase->accord(this, rs->super(), accord))
                     {
-                        if (debog) qDebug()<<"   coord2 accepté";
                         req->setCoord1(rs);
                         ac = true;
                     }
@@ -512,15 +468,12 @@ bool MotFlechi::resout(Requete* req)
             else if (!accord.isEmpty() && !(_phrase->accord(this, req->super(), accord)))
                 return false;
         }
-        if (debog) qDebug()<<"    resout okg, règle"<<req->id()<<"estSub "<<morpho()<<":"<<req->regle()->estSub(this);
         // règle
         if (req->regle()->estSub(this))
         {
-            if (debog) qDebug()<<"    resout okh, regle->estSub";
             // filtres
             if (req->regle()->filtre().contains("que") && !_mot->que())
                 return false;
-            if (debog) qDebug()<<"    resout, true pour la requête"<<req->num();
             return true;
         }
     }
