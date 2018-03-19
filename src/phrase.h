@@ -159,11 +159,11 @@ namespace Chaines {
 	const QString affichage = QString::fromUtf8
 		("%1<hr/>%2"
 		 "<hr/><a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a> d'un mot"
-		 "<hr/><strong>Morphologies et traductions du mot</strong><br>%3"
+		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>%3"
 		 "<hr/><strong>Nouveaux liens syntaxiques</strong><br/>%4"
 		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>%5"
 		 "<hr/><a href=\"-nouvPhr\">Saisir une phrase</a> "
-		 "<a href=\"-corpus\">choisir une phrase</a> "
+		 "<a href=\"-corpus\">choisir une phrase</a>"
 		 "&nbsp;&nbsp;<a href=\"-quitter\">quitter</a>");
 
 	const QString affSubAPrendre = QString::fromUtf8

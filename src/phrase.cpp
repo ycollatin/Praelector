@@ -801,7 +801,7 @@ void Phrase::ecoute (QString m)
 			default: std::cerr << qPrintable (m) << ", commande mal formée\n"; break;
 		}
 	}
-	majAffichage ();
+	majAffichage();
 	emit (repondu (_reponse));
 }
 
@@ -1265,9 +1265,8 @@ void Phrase::majAffichage()
 		.arg (Chaines::titrePraelector)
 		.arg (grLu())                            // %1
 		.arg (motCourant()->htmlMorphos())       // %2
-		//.arg ("motCourant()->htmlMorphos()")       // %2
-		.arg ("htmlLiens()")                       // %3
-		.arg ("traduction()");                     // %4
+		.arg (motCourant()->htmlLiens())         // %3
+		.arg ("traduction()");                   // %4
 }
 
 Requete* Phrase::montante(Mot* m)
