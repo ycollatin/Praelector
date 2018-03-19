@@ -107,18 +107,14 @@ void Requete::annuleRequis(QString cause)
 
 Requete* Requete::clone()
 {
-    bool debog = false;
-    if (debog) qDebug()<<"requete::clone"<<this->debog();
     Requete* nreq;
     if (!close())
     {
-        if (debog) qDebug()<<"  non close";
         if (_subRequis) nreq = new Requete(_super, 0, _regle);
         else nreq = new Requete(0, _sub, _regle);
     }
     else 
     {
-        if (debog) qDebug()<<"  close. _super"<<_super->gr()<<"_sub"<<_sub->gr();
         nreq = new Requete(_super, _sub, _regle);
     }
     if (_subRequis) nreq->setSubRequis();
@@ -144,16 +140,12 @@ Requete* Requete::coord1()
 
 bool Requete::croise(Requete* req)
 {
-    bool debog = false;
-    //debog = _num == 158 && req->num()==84;
-    if (debog) qDebug()<<"croise. close"<<this->close()<<"req.close"<<req->close();
     if (!close() || !req->close()) return false;
     int prim = prima()->rang();
     int ult = ultima()->rang();
     int reqprim = req->prima()->rang();
     int reqult = req->ultima()->rang();
     //if (req->aff()=="coord1") ++reqult;
-    if (debog) qDebug()<<"reqprim"<<reqprim<<"reqult"<<reqult<<"prim"<<prim<<"ult"<<ult;
     if (prim < reqprim && ult > reqprim && ult < reqult)
         return true;
     if (prim > reqprim && prim < reqult && ult > reqult)
@@ -166,21 +158,6 @@ bool Requete::homonyme(Requete* req)
     return id() == req->id() 
         && _super->mot() == req->super()->mot()
         && _sub->mot() == req->sub()->mot();
-}
-
-QString Requete::debog()
-{
-    QString ret;
-    QTextStream fl(&ret);
-    fl<<_num<<". ";
-    if (_subRequis) fl<<"subRequis ";
-    else fl<<"superRequis ";
-    if (_super == 0) fl << "?";
-    else fl << _super->mot()->gr()<<" "<<_super->lemme()->gr()<<" "<<_super->morpho();
-    fl << "-"<<id().toUpper()<<"->";
-    if (_sub == 0) fl << "?";
-    else fl << _sub->mot()->gr()<<" "<<_sub->lemme()->gr()<<" "<<_sub->morpho();
-    return ret;
 }
 
 /**
@@ -203,6 +180,21 @@ int Requete::distance(Mot* m)
 {
     if (m != 0) return m->rang() - _requerant->rang();
     return _phrase->nbMots();
+}
+
+QString Requete::doc()
+{
+    QString ret;
+    QTextStream fl(&ret);
+    fl<<_num<<". ";
+    if (_subRequis) fl<<"subRequis ";
+    else fl<<"superRequis ";
+    if (_super == 0) fl << "?";
+    else fl << _super->mot()->gr()<<" "<<_super->lemme()->gr()<<" "<<_super->morpho();
+    fl << "-"<<id().toUpper()<<"->";
+    if (_sub == 0) fl << "?";
+    else fl << _sub->mot()->gr()<<" "<<_sub->lemme()->gr()<<" "<<_sub->morpho();
+    return ret;
 }
 
 bool Requete::enConflit(QString id)
@@ -254,9 +246,6 @@ QString Requete::gv(QString format)
 
 int Requete::handicap()
 {
-    bool debog = false;
-    //debog = _num == 5;
-    if (debog) qDebug()<<"    requete::handicap"<<this->debog();
     if (!close()) return 500;
     // possum n'admet pas les noms et pronoms objet
     if (_super->lemme()->gr() == "possum" && id() == "objet"
@@ -271,7 +260,6 @@ int Requete::handicap()
         ret += 7;
     if (_regle->id() == "epithete" && _sub->mot()->nomAdj() && !contigue())
         ret += 10;
-    if (debog) qDebug()<<"    ret"<<ret;
     return ret;
 }
 
@@ -359,8 +347,6 @@ QString Requete::numc()
 
 int Requete::poids()
 {
-    bool debog = false;
-    if (debog) qDebug()<<this->debog();
     int ret = _regle->poids();
     if (!close()) return ret;
     ret -= handicap();
