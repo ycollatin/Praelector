@@ -191,16 +191,43 @@ QString Mot::gr()
     return _gr;
 }
 
+QString Mot::htmlLiens()
+{
+    return "htmlLiens "+_gr;
+}
+
 QString Mot::htmlMorphos()
 {
-    QString ret;
-    QTextStream fl(&ret);
+    if (_flechis.empty())
+		return "mot non reconnu <a href=\"m.a."
+			+ QString::number(_rang)
+			+ "\">ajouter une entrée</a>";
+
+    QStringList ret;
     for (int i=0;i<_flechis.count();++i)
     {
+        QString lin;
+        QTextStream fl(&lin);
         MotFlechi* mf = _flechis.at(i);
-        fl << mf->morpho() << " : " << mf->trfl() << "<br/>\n";
+		fl << "<span style=\"color:green;font-style:italic\"> "
+           << mf->morpho() << " : " << mf->trfl() ;
+        switch(mf->lemme()->pos().at(0).unicode())
+        {
+            case 'n': fl << " <a href=\"m.d."<<i<<"\">det.</a> "; break;
+            case 'v': if (mf->lemme()->pos().contains('3'))
+						  fl << " <a href=\"m.s."<<i<<"\">suj.</a> ";
+                      break;
+            default:break;
+        }
+		fl <<" <strong>"<<mf->trfl() << "</strong></span> "
+			<< "<a href=\"m.l."<<i<<"\">&#x25b2;</a> "
+			<< "<a href=\"m.e."<<i<<"\">&eacute;diter</a>"
+			<< " <a href=\"m.c."<<i<<"\">choisir</a> "
+			<< " <a href=\"m.r."<<i<<"\">rejeter</a> "
+			<< "<span style=\"color:#240B3B;font-style:italic\">tr.</span>";
+        ret.append(lin);
     }
-    return ret;
+    return ret.join("<br/>");
 }
 
 void Mot::lance()
