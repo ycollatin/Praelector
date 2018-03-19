@@ -17,7 +17,7 @@
 
 // textes :
 // ~/prof/latin/txt/catalogue.txt
-// ../corpus/marcus.txt
+// ../corpus/phrases.txt
 // TODO XXX FIXME 
 
 #include <QApplication>
@@ -152,7 +152,7 @@ void Phrase::ajRequete(Requete* req)
                 && ri->id() == req->id()
                 && ri->sub() == req->sub())
             {
-                ri->ajHist("réutilisée par "+req->debog());
+                ri->ajHist("réutilisée par "+req->doc());
                 return;
             }
         }
@@ -184,7 +184,6 @@ QString Phrase::arbre(QString format, bool trace)
     for (int i=0;i<_mots.count();++i)
     {
         Mot* mc = _mots.at(i);
-        //debog = mc->gr() == "fuit";
         // définition du nœud
         if (format=="dot")
             fl <<"N"<<mc->rang()<<" [label=\""<<mc->gr()<<"\"];\n";
@@ -293,7 +292,6 @@ QString Phrase::arbre(QString format, bool trace)
         else req->ajHist("REJETÉE "+req->humain());
         if (trace) qDebug().noquote()<<req->hist();
     }
-    // debog récapitulation
     if (trace) 
     {
         qDebug()<<"       =====";
@@ -301,10 +299,9 @@ QString Phrase::arbre(QString format, bool trace)
         for (int i=0;i<_requetes.count();++i)
         {
             Requete* req = _requetes.at(i);
-            if (req->close()) qDebug()<<_requetes.at(i)->debog();
+            if (req->close()) qDebug()<<_requetes.at(i)->doc();
         }
     }
-    // fin debog
     liens.removeDuplicates();
     fl<<liens.join("\n");
     if (format=="dot") fl << "}";
@@ -313,7 +310,6 @@ QString Phrase::arbre(QString format, bool trace)
 
 bool Phrase::boucle(Requete* req)
 {
-    //debog = req->num()==82;
     if (!req->close()) return false;
     Mot* msup = req->super()->mot();
     Requete* rmin = req;
@@ -369,7 +365,7 @@ void Phrase::conflit(Requete* ra, Requete* rb, QString cause)
     int rap = ra->poids();
     int rbp = rb->poids();
 
-    QString h = cause +"\nra:"+ra->debog() +"\nrb:"+rb->debog();
+    QString h = cause +"\nra:"+ra->doc() +"\nrb:"+rb->doc();
 
     ra->ajHist("---\nconflit RA\n"+h);
     rb->ajHist("---\nconflit RB\n"+h);
@@ -508,6 +504,8 @@ void Phrase::ecoute (QString m)
 	{
 		++_imot;
 		if (_imot > _maxImot) _maxImot = _imot;
+        if (_imot > 0) resous();
+        if (_imot < _mots.count()-1) lance();
 	}
 	else if (m == "-prec" && _imot > 0)
 	{
@@ -856,7 +854,6 @@ bool Phrase::filtre(Requete* req)
 {
     // signetFiltre
     // XXX  19 épith
-    //debog = req->num()==59||req->num()==93 || req->num()==101;
 
     // Une requête prep ou conj ne se résout pas tant que la prep n'a pas son régime,
     // ou tant que la conjonction n'a pas de verbe subordonné
@@ -985,9 +982,9 @@ bool Phrase::filtre(Requete* req)
         if (idSuper && idSub)
         {
             if (req->regle()->exclut(ri->regle()->id()))
-                ri->annuleRequis(" par la requête prioritaire "+req->debog());
+                ri->annuleRequis(" par la requête prioritaire "+req->doc());
             else if (ri->regle()->exclut(req->regle()->id()))
-                req->annuleRequis(" par la requête prioritaire "+ri->debog());
+                req->annuleRequis(" par la requête prioritaire "+ri->doc());
             else conflit(req, ri, "mêmes super et sub");
             if (!req->close()) return false;
             if (!ri->close()) continue;
@@ -1121,7 +1118,7 @@ bool Phrase::filtre(Requete* req)
             if (req->aff() != "antecedent" && ri->aff()!="antecedent" && ri->aff()!="coord1")
             {
                 if (ri->regle()->exclut(req->regle()->id()))
-                    req->annuleRequis(" par la requête prioritaire "+ri->debog());
+                    req->annuleRequis(" par la requête prioritaire "+ri->doc());
                 else conflit(req, ri, "même sub");
                 if (!req->close()) return false;
                 if (!ri->close())
@@ -1228,6 +1225,13 @@ QList<Requete*> Phrase::homonymes(QString id)
             ret.append(ri);
     }
     return ret;
+}
+
+void Phrase::lance()
+{
+    Mot* mc = _mots.at(_imot);
+    for (int i=0;i<mc->nbFlechis();++i)
+        mc->flechi(i)->lance();        
 }
 
 void Phrase::lemmatise()
@@ -1471,6 +1475,54 @@ QList<Requete*> Phrase::reqCC(Mot* m)
 Requete* Phrase::requete(int i)
 {
     return _requetes.at(i);
+}
+
+void Phrase::resous()
+{
+    Mot* mc = _mots.at(_imot);
+    // essai de résolution des requêtes en attente.
+    for (int im=0;im<mc->nbFlechis();++im)
+    {
+        MotFlechi* mf = mc->flechi(im);
+        // copie de la liste des requêtes
+        _listeR.clear();
+        for (int ir=0;ir<_requetes.count();++ir)
+        {
+            Requete* r = _requetes.at(ir);
+            //r->initExx();
+            ajListeR(r);
+        }
+
+        while (!_listeR.empty()) 
+        {
+            Requete *req = _listeR.takeFirst();
+            if (mf->resout(req))
+            {
+                // si la requête est close, il faut pouvoir la 
+                // filtrer sous un autre numéro.
+                if (req->close())
+                {
+                    Requete* reqtemp = req->clone();
+                    reqtemp->setRequis(mf, "requis de requête clonée sur la req. "+req->numc());
+                    filtre(reqtemp);
+                    if (reqtemp->close())
+                    {
+                        req->setRequis(reqtemp->requisFl(), "requis pris sur la req. temporaire");
+                        req->ajHist("CHANGEMENT de requis : "+mf->morpho());
+                    }
+                }
+                else
+                {
+                    // d'abord, fermer la requête
+                    req->setRequis(mf, "non close, résolue");
+                    filtre(req);
+                    if (req->close()) req->ajHist("FILTRÉE : "+req->humain());
+                }
+                // détection de boucle de liens
+                boucle(req);
+            }
+        }
+    }
 }
 
 void Phrase::rmListeR(Requete* req)
