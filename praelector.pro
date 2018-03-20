@@ -7,7 +7,8 @@ INCLUDEPATH += $$PWD/src
 
 QT += widgets
 
-CONFIG += release_binary
+# CONFIG += release_binary
+CONFIG += debug
 
 DESTDIR = bin
 OBJECTS_DIR = obj
