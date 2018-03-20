@@ -67,6 +67,7 @@ class Requete : public QObject
         bool        enConflit(QString id);
         bool        estEx(MotFlechi* mf);
         MotFlechi*  ex(int i);
+        QString     fonction();
         int         freq();
         QString     gv(QString format="dot");
         int         handicap();

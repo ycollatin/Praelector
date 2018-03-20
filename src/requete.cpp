@@ -212,6 +212,14 @@ MotFlechi* Requete::ex(int i)
     return _exx.at(i);
 }
 
+QString Requete::fonction()
+{
+    QString ret;
+    QTextStream fl(&ret);
+    fl<< _sub->gr()<<" "<<_regle->aff()<<" "<<_super->gr();
+    return ret;
+}
+
 int Requete::freq()
 {
     return _super->freq() + _sub->freq();
