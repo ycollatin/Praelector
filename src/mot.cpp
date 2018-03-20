@@ -193,7 +193,13 @@ QString Mot::gr()
 
 QString Mot::htmlLiens()
 {
-    return "htmlLiens "+_gr;
+    QStringList ll;
+    for (int i=0;i<_flechis.count();++i)
+    {
+        MotFlechi* mf = _flechis.at(i);
+        ll.append(mf->htmlLiens());
+    }
+    return ll.join("<br/>");
 }
 
 QString Mot::htmlMorphos()
