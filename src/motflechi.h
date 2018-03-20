@@ -64,6 +64,7 @@ class MotFlechi: public QObject
         int             freq();
         QString         gr();
         int             handicap();
+        QString         htmlLiens();
         bool static     intersect(QString a, QString b);
         void            lance();
         Requete*        lanceReqSub(Regle* r);

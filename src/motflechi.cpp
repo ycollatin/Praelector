@@ -115,7 +115,6 @@ QString MotFlechi::conj()
 {
     QString tr = _traduction;
 	QString ret = conjnat(_tr, _morpho);
-    qDebug()<<"Motflechi::conj, ret"<<ret;
 	QString ajout = "";
 	int x = _tr.indexOf (' ');
 	if ((x > -1) && !_tr.startsWith ("se "))
@@ -241,6 +240,30 @@ int MotFlechi::handicap()
     int mfl = _mot->mfLies().count();
     ret -= mfl;
     return ret;
+}
+
+QString MotFlechi::htmlLiens()
+{
+    // format : 
+    // 1. en noir, fonction 
+    // 2. en bleu, traduction
+    // 3. un triangle hyperlien vers doc
+    // 3. deux hyperliens : valider rejeter
+    QStringList ll;
+    // trier _lreqSup et _lreqSub en fonction de leur poids
+    // 1. liens dont le mot est sub :
+    for (int i=0;i<_lreqSub.count();++i)
+    {
+        Requete* req = _lreqSub.at(i);
+        if (req->close()) ll.append(req->fonction());
+    }
+    // 1. liens dont le mot est super :
+    for (int i=0;i<_lreqSup.count();++i)
+    {
+        Requete* req = _lreqSup.at(i);
+        if (req->close()) ll.append(req->fonction());
+    }
+    return ll.join("<br/>");
 }
 
 bool MotFlechi::intersect(QString a, QString b)
