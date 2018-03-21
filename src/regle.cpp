@@ -34,7 +34,7 @@
 QStringList const clesR = QStringList()
     <<"accord"<<"aff"<<"conflit"<<"contig"<<"doc"<<"id"<<"filtre"<<"lemmeSub"
     <<"lemmeSup"<<"lsSub"<<"lsSup"<<"morphoSub"<<"morphoSup"<<"poids"
-    <<"posSub"<<"posSup"<<"sens"<<"subEstSup"<<"supEstSub"<<"supEstSup"<<"x";
+    <<"posSub"<<"posSup"<<"sens"<<"subEstSup"<<"supEstSub"<<"supEstSup"<<"tr"<<"x";
 
 //////////////////////////////
 //   Classe Regle           //
@@ -42,16 +42,8 @@ QStringList const clesR = QStringList()
 
 Regle::Regle(QStringList ll)
 {
-    /*
-    <<"accord"<<"aff"<<"contig"<<"conflit"<<"doc"<<"id"<<"filtre"<<"lemmeSub"
-        0         1       2          3              5                  7
-    <<"lemmeSup"<<"lsSub"<<"lsSup"<<"morphoSub"<<"morphoSup"<<"poids"
-                              10
-    <<"posSub"<<"posSup"<<"sens"<<"subEstSup"<<"supEstSub"<<"supEstSup"<<"x";
-                   15                                                     20
-    */
-
     _contig = 0;
+    _traduction = "<sup> <sub>";
     //signetRegle
     for (int i=0;i<ll.count();++i)
     {
@@ -109,7 +101,8 @@ Regle::Regle(QStringList ll)
             case 17: _subEstSup = v; break;
             case 18: _supEstSub = v; break;
             case 19: _supEstSup = v.split(','); break;
-            case 20: _exclus = v.split(','); break;
+            case 20: _traduction  = v; break;
+            case 21: _exclus = v.split(','); break;
 
             default:
                      {
@@ -380,4 +373,9 @@ bool Regle::subExclu(QString s)
 bool Regle::supExclu(QString s)
 {
     return _lSupExclus.contains(s);
+}
+
+QString Regle::traduction()
+{
+    return _traduction;
 }

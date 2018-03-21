@@ -59,6 +59,7 @@ class Regle : public QObject
         QString     _posSub;
         QString     _posSup;
         QChar       _sens;
+        QString     _traduction;
        
     public:
         Regle(QStringList ll);
@@ -96,6 +97,7 @@ class Regle : public QObject
         QStringList  supEstSup();
         bool         subExclu(QString s);
         bool         supExclu(QString s);
+        QString      traduction();
 };
 
 # endif
