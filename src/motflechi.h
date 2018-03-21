@@ -46,8 +46,7 @@ class MotFlechi: public QObject
         QString         _trfl;
     public:
         MotFlechi(Lemme* l, QString m, Mot* parent);
-        void            ajReqSub(Requete* req);
-        void            ajReqSup(Requete* req);
+        void            ajReq(Requete* req);
         bool            aUnSuper();
         bool            auxiliaire();
         QList<Requete*> closes();

@@ -66,14 +66,10 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
     _trfl = ltr.join(", ");
 }
 
-void MotFlechi::ajReqSub(Requete* req)
+void MotFlechi::ajReq(Requete* req)
 {
-    _lreqSub.append(req);
-}
-
-void MotFlechi::ajReqSup(Requete* req)
-{
-    _lreqSup.append(req);
+    if (req->subRequis()) _lreqSub.append(req);
+    else _lreqSup.append(req);
 }
 
 bool MotFlechi::aUnSuper()
