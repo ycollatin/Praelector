@@ -107,6 +107,7 @@ sens:>
 filtre:multi
 contig:29
 poids:52
+tr:<sup>, <sub>
 
 id:attrO
 doc:L'attribut de l'objet est à l'accusatif, comme l'objet
@@ -310,6 +311,7 @@ lsSup:datif
 posSub:n,p
 morphoSub:datif
 poids:79
+tr:<sup> pour <sub>
 
 id:datifP
 aff:datif
@@ -321,6 +323,7 @@ posSub:n,p
 morphoSub:datif
 contig:12
 poids:70
+tr:<sup> pour <sub>
 
 id:det
 doc:beaucoup de pronoms peuvent jouer le rôle de déterminants : is, suus, iste, etc
