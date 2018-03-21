@@ -79,6 +79,7 @@ class Phrase: public QObject
         QList<Requete*>   homolexes(Requete* req);
         QList<Requete*>   homonymes(Requete* req);
         QList<Requete*>   homonymes(QString id);
+        QString           htmlLiens();
         void              initFeminins ();
         bool              isomorph(QString ma, QString mb);
         void              lance();
@@ -101,9 +102,9 @@ class Phrase: public QObject
         void              relecture();
         QList<Requete*>   reqCC(Mot* m);
         Requete*          requete(int i);
-        void              resous();
         void              rmListeR(Requete* req);
         void              setGr(QString t);
+        void              setLiens();
         void              setNum(int n);
         QList<Mot*>       supersDe(Mot* m);
     signals:

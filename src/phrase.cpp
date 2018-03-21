@@ -504,7 +504,7 @@ void Phrase::ecoute (QString m)
 	{
 		++_imot;
 		if (_imot > _maxImot) _maxImot = _imot;
-        if (_imot > 0) resous();
+        if (_imot > 0) setLiens();
         if (_imot < _mots.count()-1) lance();
 	}
 	else if (m == "-prec" && _imot > 0)
@@ -1227,6 +1227,28 @@ QList<Requete*> Phrase::homonymes(QString id)
     return ret;
 }
 
+QString Phrase::htmlLiens()
+{
+    Mot* mc = motCourant();
+    QString ret;
+    QTextStream fl(&ret);
+    for (int i=0;i<mc->nbFlechis();++i)
+    {
+        MotFlechi* mf = mc->flechi(i);
+        for (int ifl=0;ifl<mf->nbReqSub();++ifl)
+        {
+            Requete* req = mf->reqSub(ifl);
+            if (req->close()) fl << req->html()<<"<br/>";
+        }
+        for (int ifl=0;ifl<mf->nbReqSup();++ifl)
+        {
+            Requete* req = mf->reqSup(ifl);
+            if (req->close()) fl << req->html()<<"<br/>";
+        }
+    }
+    return ret;    
+}
+
 void Phrase::lance()
 {
     Mot* mc = _mots.at(_imot);
@@ -1265,7 +1287,7 @@ void Phrase::majAffichage()
 		.arg (Chaines::titrePraelector)
 		.arg (grLu())                            // %1
 		.arg (motCourant()->htmlMorphos())       // %2
-		.arg (motCourant()->htmlLiens())         // %3
+		.arg (htmlLiens())                       // %3
 		.arg ("traduction()");                   // %4
 }
 
@@ -1476,54 +1498,6 @@ Requete* Phrase::requete(int i)
     return _requetes.at(i);
 }
 
-void Phrase::resous()
-{
-    Mot* mc = _mots.at(_imot);
-    // essai de résolution des requêtes en attente.
-    for (int im=0;im<mc->nbFlechis();++im)
-    {
-        MotFlechi* mf = mc->flechi(im);
-        // copie de la liste des requêtes
-        _listeR.clear();
-        for (int ir=0;ir<_requetes.count();++ir)
-        {
-            Requete* r = _requetes.at(ir);
-            //r->initExx();
-            ajListeR(r);
-        }
-
-        while (!_listeR.empty()) 
-        {
-            Requete *req = _listeR.takeFirst();
-            if (mf->resout(req))
-            {
-                // si la requête est close, il faut pouvoir la 
-                // filtrer sous un autre numéro.
-                if (req->close())
-                {
-                    Requete* reqtemp = req->clone();
-                    reqtemp->setRequis(mf, "requis de requête clonée sur la req. "+req->numc());
-                    filtre(reqtemp);
-                    if (reqtemp->close())
-                    {
-                        req->setRequis(reqtemp->requisFl(), "requis pris sur la req. temporaire");
-                        req->ajHist("CHANGEMENT de requis : "+mf->morpho());
-                    }
-                }
-                else
-                {
-                    // d'abord, fermer la requête
-                    req->setRequis(mf, "non close, résolue");
-                    filtre(req);
-                    if (req->close()) req->ajHist("FILTRÉE : "+req->humain());
-                }
-                // détection de boucle de liens
-                boucle(req);
-            }
-        }
-    }
-}
-
 void Phrase::rmListeR(Requete* req)
 {
     _listeR.removeOne(req);
@@ -1597,6 +1571,56 @@ void Phrase::setGr(QString t)
         }
     }
 }
+
+void Phrase::setLiens()
+{
+    Mot* mc = _mots.at(_imot);
+    // essai de résolution des requêtes en attente.
+    for (int im=0;im<mc->nbFlechis();++im)
+    {
+        MotFlechi* mf = mc->flechi(im);
+        // copie de la liste des requêtes
+        _listeR.clear();
+        for (int ir=0;ir<_requetes.count();++ir)
+        {
+            Requete* r = _requetes.at(ir);
+            //r->initExx();
+            ajListeR(r);
+        }
+
+        while (!_listeR.empty()) 
+        {
+            Requete *req = _listeR.takeFirst();
+            if (mf->resout(req))
+            {
+                // si la requête est close, il faut pouvoir la 
+                // filtrer sous un autre numéro.
+                if (req->close())
+                {
+                    Requete* reqtemp = req->clone();
+                    reqtemp->setRequis(mf, "requis de requête clonée sur la req. "+req->numc());
+                    filtre(reqtemp);
+                    if (reqtemp->close())
+                    {
+                        req->setRequis(reqtemp->requisFl(), "requis pris sur la req. temporaire");
+                        req->ajHist("CHANGEMENT de requis : "+mf->morpho());
+                    }
+                }
+                else
+                {
+                    // d'abord, fermer la requête
+                    req->setRequis(mf, "non close, résolue");
+                    filtre(req);
+                    if (req->close()) req->ajHist("FILTRÉE : "+req->humain());
+                }
+                // détection de boucle de liens
+                boucle(req);
+                if (req->close()) mf->ajReq(req);
+            }
+        }
+    }
+}
+
 
 void Phrase::setNum(int n)
 {
