@@ -50,6 +50,7 @@ class Requete : public QObject
         MotFlechi*        _sub;
         bool              _subRequis;
         MotFlechi*        _super;
+        QString           _traduction;
     public:
         Requete(MotFlechi* sup, MotFlechi* sub, Regle* r);
         bool        activee();
@@ -75,6 +76,7 @@ class Requete : public QObject
         QString     hist();
         bool        homonyme(Requete* req);
         bool        homoSuper(MotFlechi* mf);
+        QString     html();
         bool        homoSub(MotFlechi* mf);
         QString     humain();
         QString     id();

@@ -31,6 +31,7 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
     _regle = r;
     _super = 0;
     _sub = 0;
+    _traduction = r->traduction();
     _activee = false;
     if (sup != 0)
     {
@@ -281,6 +282,25 @@ bool Requete::homoSub(MotFlechi* mf)
     return _sub->mot() == mf->mot();
 }
 
+QString Requete::html()
+{
+    QString ret;
+    QTextStream fl(&ret);
+    // En noir, fonction
+    fl << _sub->gr() << " "
+        << _regle->aff() << " "
+        << _super->gr() << " "
+        // En bleu italique, traduction
+        << "<span style=\"color:blue;font-style:italic\">"<<_traduction<<"</span> "
+        // Triangle bleu, doc de la règle
+        << "<a href=\"l.d\">doc</a> "
+        // lien valider
+        << "<a href=\"l.v"<<_num<<"\">valider</a> "
+        // lien rejeter
+        << "<a href=\"l.r\""<<_num<<">rejeter</a>";
+    return ret;
+}
+
 QString Requete::humain()
 {
     QString ret;
@@ -466,14 +486,18 @@ void Requete::setRequis(MotFlechi *m, QString cause)
         else setSuper(m);
     }
     if (nul) ajHist("ANNULATION du requis, "+cause);
-    else ajHist("REQUIS adopté ("+cause+") "+m->gr()+", "+m->morpho());
+    else 
+    {
+        _traduction.replace("<sup>", _super->trfl()).replace("<sub>", _sub->trfl());
+        ajHist("REQUIS adopté ("+cause+") "+m->gr()+", "+m->morpho());
+    }
 }
 
 void Requete::setSub(MotFlechi *m)
 {
     _sub = m;
     _activee = true;
-    _sub->ajReqSub(this);
+    _sub->ajReq(this);
 }
 
 void Requete::setSubRequis()
@@ -485,7 +509,7 @@ void Requete::setSuper(MotFlechi *m)
 {
     _super = m;
     _activee = true;
-    _super->ajReqSup(this);
+    _super->ajReq(this);
 }
 
 void Requete::setSuperRequis()
