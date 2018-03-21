@@ -64,7 +64,6 @@ class Mot : public QObject
         int               fin();
         MotFlechi*        flechi(int i);
         QString           gr();
-        QString           htmlLiens();
         QString           htmlMorphos();
         void              lance();
         QList<MotFlechi*> mfLies();
