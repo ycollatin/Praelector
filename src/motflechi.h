@@ -42,8 +42,10 @@ class MotFlechi: public QObject
         Phrase*         _phrase;
         QList<Requete*> _lreqSup;
         QList<Requete*> _lreqSub;
-        QString         _traduction;
-        QString         _trfl;
+        QStringList     _traductions;
+        QStringList     _trfl;
+        QString         _trNue;
+        QString         _tr;
     public:
         MotFlechi(Lemme* l, QString m, Mot* parent);
         void            ajReq(Requete* req);
@@ -81,8 +83,10 @@ class MotFlechi: public QObject
         Requete*        reqSup(int i);
         bool            resout(Requete* req);
         void            setDet(bool f=false);
-        void            setTraduction(QString t);
+        void            setTr(QString t);
         QString         trfl();
+        QString         tr();
+        QString         trNue();
 };
 
 #endif

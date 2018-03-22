@@ -44,6 +44,7 @@ class Mot : public QObject
         Phrase*             _phrase;
         int                 _rang;
         int                 _que;
+        QString             _tr;
 
     public:
         Mot(QString g, int d=-1, int f=-1, int r=-1, QObject *parent=0);
@@ -82,6 +83,7 @@ class Mot : public QObject
         QList<Requete*>   reqSuper();
         void              setMorphos(MapLem m);
         void              setPSup(int p);
+        void              setTr(QString t);
         MotFlechi*        super();
 };
 

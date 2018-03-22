@@ -34,15 +34,13 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
     _lemme = l;
     _morpho = m;
     _phrase = parent->phrase();
-    _traduction = l->traduction("fr");
     // traduction fléchie
-    QString tr = _traduction;
+    QString tr = l->traduction("fr");
     tr.remove(QRegExp("[(\\[][^)^\\]]*[)\\]]"));
-    QStringList ll = tr.split(QRegExp("[,;]"));
-    QStringList ltr;
-    for (int i=0;i<ll.count();++i)
+    _traductions = tr.split(QRegExp("[,;]"));
+    for (int i=0;i<_traductions.count();++i)
     {
-        QString c = ll.at(i).simplified();
+        QString c = _traductions.at(i).simplified();
         QString fl;
         switch (_lemme->pos().at(0).toLatin1())
         {
@@ -61,9 +59,9 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
                       break;
             default: fl = c;
         }
-        if (!fl.isEmpty()) ltr.append(fl);
+        if (!fl.isEmpty()) _trfl.append(fl);
     }
-    _trfl = ltr.join(", ");
+    if (!_trfl.empty()) _trNue = _trfl.at(0);
 }
 
 void MotFlechi::ajReq(Requete* req)
@@ -501,59 +499,65 @@ bool MotFlechi::resout(Requete* req)
 
 void MotFlechi::setDet(bool f)
 {
-    if (f) qDebug()<<"à écrire";
-    /*
-    bool lelales = _traduction.startsWith ("l'")
-		|| _traduction.startsWith ("le ")
-		|| _traduction.startsWith ("la ")
-		|| _traduction.startsWith ("les ");
+    bool defini = _tr.startsWith ("l'")
+		|| _tr.startsWith ("le ")
+		|| _tr.startsWith ("la ")
+		|| _tr.startsWith ("les ");
 	bool initVoc = QString ("aeiouâéêAEIOUÂÉÊ").contains (_trNue.at (0));
 	// déterminant
-	if (_postag.at (0) == 'n')
+	if (_lemme->pos().contains('n'))
 	{
-		if (lelales)
+		if (defini)
 		{
-			_traduction = _trNue;
+			_tr = _trNue;
 		}
-		else if (_postag.at (2) == 'p')
+		else if (_morpho.contains("plur"))
 		{
-			if (_traduction.startsWith ("des "))
-				_traduction = "les " + _trNue;
-			else _traduction = "des " + _trNue;
+			if (_tr.startsWith ("des "))
+				_tr = "les " + _trNue;
+			else _tr = "des " + _trNue;
 		}
 		else if (f) // féminin singulier
 		{
-			if (_traduction.startsWith ("une "))
+			if (_tr.startsWith ("une "))
 			{
-				if (initVoc) _traduction = "l'"+_trNue;
-				else _traduction = "la "+ _trNue;
+				if (initVoc) _tr = "l'"+_trNue;
+				else _tr = "la "+ _trNue;
 			}
 			else
-				_traduction = "une "+_trNue;
+				_tr = "une "+_trNue;
 		}
 		else  // masculin singulier
 		{
-			if (_traduction.startsWith ("un "))
+			if (_trfl.startsWith ("un "))
 			{
-				if (initVoc) _traduction = "l'"+_trNue;
-				else _traduction = "le " + _trNue;
+				if (initVoc) _tr = "l'"+_trNue;
+				else _tr = "le " + _trNue;
 			}
 			else
 			{
-				_traduction = "un "+ _trNue;
+				_tr = "un "+ _trNue;
 			}
 		}
 	}
-    */
+}
+
+void MotFlechi::setTr(QString t)
+{
+    _tr = t;
+}
+
+QString MotFlechi::tr()
+{
+    return _tr;
 }
 
 QString MotFlechi::trfl()
 {
-    return _trfl;
+    return _trfl.join(", ");
 }
 
-void MotFlechi::setTraduction(QString t)
+QString MotFlechi::trNue()
 {
-    _traduction = t;
+    return _trNue;
 }
-

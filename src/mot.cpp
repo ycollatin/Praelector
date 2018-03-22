@@ -220,7 +220,7 @@ QString Mot::html()
 			<< " <a href=\"m.c."<<i<<"\">choisir</a>"
 			<< " rejeter <a href=\"m.r.m"<<i<<"\">le mot</a> "
 			<< " <a href=\"m.r.f"<<i<<"\">la forme</a> "
-			<< " <span style=\"color:#240B3B;font-style:italic\">tr. "<<mf->trfl()<<"</span>";
+			<< " <span style=\"color:#240B3B;font-style:italic\">tr. "<<mf->tr()<<"</span>";
         ret.append(lin);
     }
     return ret.join("<br/>");
@@ -386,6 +386,11 @@ void Mot::setMorphos(MapLem m)
             ajFlechi(mf);
         }
     }
+}
+
+void Mot::setTr(QString t)
+{
+    _tr = t;
 }
 
 MotFlechi* Mot::super()

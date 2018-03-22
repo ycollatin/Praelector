@@ -39,6 +39,7 @@
 Phrase::Phrase(QString t)
 {
     _lemmatiseur = new Lemmat(this);
+    initFeminins();
     peupleRegles("regles.la");
     peupleHandicap();
     if (!t.isEmpty())
@@ -583,8 +584,9 @@ void Phrase::ecoute (QString m)
 								  break;
 							  case 'd': // rotation du déterminant
 								  {
-									  //MotFlechi *mm = cour->flechi(num);
-									  //mm->setDet(estFeminin(mm->trNue ()));
+                                      qDebug()<<"rotation du déterminant";
+									  MotFlechi *mm = cour->flechi(num);
+									  mm->setDet(estFeminin(mm->tr()));
 									  break;
 								  }
 							  case 'e':  // édition de la traduction
@@ -594,11 +596,10 @@ void Phrase::ecoute (QString m)
 									  fl<<"Meilleure traduction pour " << cour->gr();
 									  Dialogue *dialogue = new Dialogue ();
 									  dialogue->setLabel (lt);
-									  dialogue->setText (cour->flechi(num)->trfl());
+									  dialogue->setText (cour->flechi(num)->tr());
 									  int res = dialogue->exec ();
 									  if (res == QDialog::Accepted)
-                                          qDebug()<<"où est le fléchi ?";
-										  //cour->setTraduction(dialogue->getText ());
+										  cour->setTr(dialogue->getText ());
 									  delete dialogue;
 									  break;
 								  }
@@ -814,9 +815,9 @@ void Phrase::ecoute (QString m)
 
 bool Phrase::estFeminin (QString n)
 {
+    if (n.isEmpty()) return "?";
 	return _feminins.contains(n);
 }
-
 
 bool Phrase::estSommet(Mot* m)
 {
@@ -831,6 +832,7 @@ bool Phrase::estSommet(Mot* m)
 
 void Phrase::initFeminins ()
 {
+    // TODO : message d'erreur si le fichier n'est pas trouvé
 	QFile fp (qApp->applicationDirPath ()+"/data/feminin.fr");
 	fp.open (QIODevice::ReadOnly|QIODevice::Text);
 	QTextStream fluxD (&fp);
