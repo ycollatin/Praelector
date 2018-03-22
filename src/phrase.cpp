@@ -41,8 +41,11 @@ Phrase::Phrase(QString t)
     _lemmatiseur = new Lemmat(this);
     peupleRegles("regles.la");
     peupleHandicap();
-    setGr(t);
-    lemmatise();
+    if (!t.isEmpty())
+    {
+        setGr(t);
+        lemmatise();
+    }
 }
 
 bool Phrase::accord(MotFlechi* ma, MotFlechi* mb, QString cgn)
@@ -161,6 +164,7 @@ void Phrase::ajRequete(Requete* req)
     _requetes.append(req);
 }
 
+/*
 QString Phrase::arbre(QString format, bool trace)
 {
     // signetArbre
@@ -307,6 +311,7 @@ QString Phrase::arbre(QString format, bool trace)
     if (format=="dot") fl << "}";
     return gv;
 }
+*/
 
 bool Phrase::boucle(Requete* req)
 {
@@ -519,8 +524,10 @@ void Phrase::ecoute (QString m)
 	}
 	else if (m.startsWith("-phr-"))
 	{
-		m.remove (0, 5);
+        for (int i=0;i<_mots.count();++i)
+            delete _mots.at(i);
 		_mots.clear();
+		m.remove (0, 5);
         setGr(m);
         lemmatise();
 		_imot = 0;
@@ -1261,21 +1268,7 @@ void Phrase::lemmatise()
     for (int i=0;i<_mots.count();++i)
     {
         Mot* mc = _mots.at(i);
-        // lemmatisation et analyse morpho
         mc->setMorphos(_lemmatiseur->lemmatiseM(mc->gr()));
-
-        // calcul de tous les fléchis de mc
-        for (int il=0;il<mc->morphos().keys().count();++il)
-        {
-            Lemme *l = mc->morphos().keys().at(il);
-            QList<SLem> lsl = mc->morphos().value(l);
-            for (int im=0;im<lsl.count();++im)
-            {
-                QString m = lsl.at(im).morpho;
-                MotFlechi* mf = new MotFlechi(l, m, mc);
-                mc->ajFlechi(mf);
-            }
-        }
     }
 }
 
@@ -1286,7 +1279,7 @@ void Phrase::majAffichage()
 	else _reponse = Chaines::affichage
 		.arg (Chaines::titrePraelector)
 		.arg (grLu())                            // %1
-		.arg (motCourant()->htmlMorphos())       // %2
+		.arg (motCourant()->html())       // %2
 		.arg (htmlLiens())                       // %3
 		.arg ("traduction()");                   // %4
 }

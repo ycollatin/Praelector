@@ -113,6 +113,26 @@ class Phrase: public QObject
 
 namespace Chaines {
 
+	const QString affichage = QString::fromUtf8
+		("%1<hr/>%2"
+		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>%3"
+		 "<hr/><a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a> d'un mot "
+         "&nbsp;<a href=\"-quitter\">quitter</a>"
+		 "<hr/><strong>Nouveaux liens syntaxiques</strong><br/>%4"
+		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>%5"
+		 "<hr/><a href=\"-nouvPhr\">Saisir une phrase</a> "
+		 "<a href=\"-corpus\">choisir une phrase</a>&nbsp;<a href=\"-quitter\">quitter</a>");
+		 //"&nbsp;&nbsp;<a href=\"-quitter\">quitter</a>");
+
+	const QString affSubAPrendre = QString::fromUtf8
+		("%1 <span style=\"color:blue;font-style:italic\">%2</span> "
+		 "<a href=\"l.v.%3\">valider</a> <a href=\"l.r.%3\">rejeter</a>");
+
+	const QString affSubValide = QString::fromUtf8
+		("%1 <span style=\"color:green;font-style:italic;font-weight:bold\">%2</span> "
+		 "<a href=\"l.g.%3\">&larr;</a><a href=\"l.p.%3\">&#x21c6;</a><a href=\"l.d.%3\">&rarr;</a>"
+		 "<a href=\"l.r.%3\">rejeter</a>");
+
 	const QString documentation = QString::fromUtf8
 		(
 		 "<a href=\"-init\">Menu</a><br/>"
@@ -156,26 +176,6 @@ namespace Chaines {
 
 	const QString titrePraelector = 
 		"<h2 style=\"font-family:serif;letter-spacing:2em\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
-
-	const QString affichage = QString::fromUtf8
-		("%1<hr/>%2"
-		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>%3"
-		 "<hr/><a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a> d'un mot "
-         "&nbsp;<a href=\"-quitter\">quitter</a>"
-		 "<hr/><strong>Nouveaux liens syntaxiques</strong><br/>%4"
-		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>%5"
-		 "<hr/><a href=\"-nouvPhr\">Saisir une phrase</a> "
-		 "<a href=\"-corpus\">choisir une phrase</a>&nbsp;<a href=\"-quitter\">quitter</a>");
-		 //"&nbsp;&nbsp;<a href=\"-quitter\">quitter</a>");
-
-	const QString affSubAPrendre = QString::fromUtf8
-		("%1 <span style=\"color:blue;font-style:italic\">%2</span> "
-		 "<a href=\"l.v.%3\">valider</a> <a href=\"l.r.%3\">rejeter</a>");
-
-	const QString affSubValide = QString::fromUtf8
-		("%1 <span style=\"color:green;font-style:italic;font-weight:bold\">%2</span> "
-		 "<a href=\"l.g.%3\">&larr;</a><a href=\"l.p.%3\">&#x21c6;</a><a href=\"l.d.%3\">&rarr;</a>"
-		 "<a href=\"l.r.%3\">rejeter</a>");
 
 	const QString affSubGris = QString::fromUtf8
 		("%1 <span style=\"color:grey;font-style:italic\">%2</span> "
