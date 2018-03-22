@@ -37,6 +37,7 @@ class MotFlechi: public QObject
 
     private:
         Mot*            _mot;
+        int             _itr;
         Lemme*          _lemme;
         QString         _morpho;
         Phrase*         _phrase;
@@ -66,6 +67,7 @@ class MotFlechi: public QObject
         QString         gr();
         int             handicap();
         QString         htmlLiens();
+        void            incItr(); 
         bool static     intersect(QString a, QString b);
         void            lance();
         Requete*        lanceReqSub(Regle* r);

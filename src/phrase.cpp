@@ -485,6 +485,7 @@ QString Phrase::droite(Mot *m)
  *	   2. c = choisir et éliminer les concurrents,
  *        d = fixer le déterminant
  *        e = éditer
+ *        i = rotation de la traduction du fléchi
  *        r = rejeter
  *     3 : numéro de la morpho sur laquelle agir.
  *  si 1 == 'l' lien
@@ -584,7 +585,6 @@ void Phrase::ecoute (QString m)
 								  break;
 							  case 'd': // rotation du déterminant
 								  {
-                                      qDebug()<<"rotation du déterminant";
 									  MotFlechi *mm = cour->flechi(num);
 									  mm->setDet(estFeminin(mm->tr()));
 									  break;
@@ -603,6 +603,9 @@ void Phrase::ecoute (QString m)
 									  delete dialogue;
 									  break;
 								  }
+                              case 'i': // rotation de la traduction du fléchi
+                                  cour->flechi(num)->incItr();
+                                  break;
 							  case 'l': // affichage complet de l'entrée : lemme, indMorph, traductions
 								  {
                                       /*

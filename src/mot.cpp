@@ -217,6 +217,7 @@ QString Mot::html()
 		//fl <<" <strong>"<<mf->trfl() << "</strong></span> "
         fl	<< "<a href=\"m.l."<<i<<"\">&#x25b2;</a>"
 			<< " <a href=\"m.e."<<i<<"\">&eacute;diter</a>"
+            << " <a href=\"m.i."<<i<<"\">tr. suiv.</a>"
 			<< " <a href=\"m.c."<<i<<"\">choisir</a>"
 			<< " rejeter <a href=\"m.r.m"<<i<<"\">le mot</a> "
 			<< " <a href=\"m.r.f"<<i<<"\">la forme</a> "

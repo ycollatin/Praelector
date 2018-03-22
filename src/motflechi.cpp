@@ -61,7 +61,12 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
         }
         if (!fl.isEmpty()) _trfl.append(fl);
     }
-    if (!_trfl.empty()) _trNue = _trfl.at(0);
+    _itr = 0;
+    if (!_trfl.empty())
+    {
+        _trNue = _trfl.at(0);
+        _tr = _trNue;
+    }
 }
 
 void MotFlechi::ajReq(Requete* req)
@@ -258,6 +263,14 @@ QString MotFlechi::htmlLiens()
         if (req->close()) ll.append(req->fonction());
     }
     return ll.join("<br/>");
+}
+
+void MotFlechi::incItr()
+{
+    ++_itr;
+    if (_itr >= _trfl.count()) _itr = 0;
+    _trNue = _trfl.at(_itr);
+    _tr = _trNue;
 }
 
 bool MotFlechi::intersect(QString a, QString b)
@@ -499,46 +512,28 @@ bool MotFlechi::resout(Requete* req)
 
 void MotFlechi::setDet(bool f)
 {
-    bool defini = _tr.startsWith ("l'")
-		|| _tr.startsWith ("le ")
-		|| _tr.startsWith ("la ")
-		|| _tr.startsWith ("les ");
-	bool initVoc = QString ("aeiouâéêAEIOUÂÉÊ").contains (_trNue.at (0));
+    bool zero = _tr == _trNue;
+    bool indef = _tr.startsWith ("un ") || _tr.startsWith ("une ") || _tr.startsWith ("des ");
+	bool initVoc = QString ("aehiouâéêAEHIOUÂÉÊ").contains (_trNue.at (0));
+    bool plur = _morpho.contains("plur");
 	// déterminant
 	if (_lemme->pos().contains('n'))
 	{
-		if (defini)
+        if (zero) // passer à indef
+        {
+            if (plur) _tr.prepend("des ");
+            else if (f) _tr.prepend("une ");
+            else _tr.prepend("un ");
+        }
+		else if (indef) // passer à def
 		{
-			_tr = _trNue;
+            _tr = _trNue;
+		    if (plur) _tr.prepend("les ");
+            else if (initVoc) _tr.prepend("l'");
+            else if (f) _tr.prepend("la ");
+            else _tr.prepend("le ");
 		}
-		else if (_morpho.contains("plur"))
-		{
-			if (_tr.startsWith ("des "))
-				_tr = "les " + _trNue;
-			else _tr = "des " + _trNue;
-		}
-		else if (f) // féminin singulier
-		{
-			if (_tr.startsWith ("une "))
-			{
-				if (initVoc) _tr = "l'"+_trNue;
-				else _tr = "la "+ _trNue;
-			}
-			else
-				_tr = "une "+_trNue;
-		}
-		else  // masculin singulier
-		{
-			if (_trfl.startsWith ("un "))
-			{
-				if (initVoc) _tr = "l'"+_trNue;
-				else _tr = "le " + _trNue;
-			}
-			else
-			{
-				_tr = "un "+ _trNue;
-			}
-		}
+        else _tr = _trNue;
 	}
 }
 
