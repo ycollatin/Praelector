@@ -64,7 +64,7 @@ class Mot : public QObject
         int               fin();
         MotFlechi*        flechi(int i);
         QString           gr();
-        QString           htmlMorphos();
+        QString           html();
         void              lance();
         QList<MotFlechi*> mfLies();
         bool              monomorphe();

@@ -191,7 +191,7 @@ QString Mot::gr()
     return _gr;
 }
 
-QString Mot::htmlMorphos()
+QString Mot::html()
 {
     if (_flechis.empty())
 		return "mot non reconnu <a href=\"m.a."
