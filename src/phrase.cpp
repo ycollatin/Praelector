@@ -640,11 +640,11 @@ void Phrase::ecoute (QString m)
  		 			   */
 			case 'l':      // l == lien
 					  {
-                          /*
 						  QStringList lv;
 						  if (eclats.count() > 3)
-							  lv = eclats.at (3).split (',');       // liste des morphos affectées passées par m[3]
-						  LLienSub lsub;
+							  lv = eclats.at (3).split (',');
+                          // liste des morphos affectées passées par m[3]
+                          QList<Requete*> lreq;
 						  char gd = eclats.at(1).at(0).unicode();   // m[2] : opération à réaliser
 						  switch (gd)      // pos 1, idgp info et déplacement
 						  {
@@ -660,37 +660,51 @@ void Phrase::ecoute (QString m)
 									  {
 										  case 's': // le lien est un sub
 											  {
+                                                  /*
+										          for (int i=0;i<cour->subordonnes().count();++i)
+											          if (lv.contains (QString::number (i)))
+												          lreq.append (cour->subordonnes().at (i));
+                                                  */
 												  break;
 											  }
 										  case 'd': // le lien est un dep
 											  {
+                                                  /*
+												  for (int i=0;i<cour->dependDe().count();++i)
+													  if (lv.contains (QString::number (i)))
+														  lreq.append (cour->dependDe().at (i));
+                                                   */
 												  break;
 											  }
 										  default:break;
 									  }
-									  if (lsub.empty())
+									  if (lreq.empty())
 									  	  break;
 									  switch (gd)
 									  {
 										  case 'i':
 											  {
+                                                  /*
 											  	  QStringList info;
-												  foreach (LienSub *sub, lsub)
+												  foreach ( *sub, lreq)
 												  	  info.append (sub->lien()->doc());
 												  QMessageBox mb;
 												  info.removeDuplicates ();
 												  mb.setText (info.join ("<br/>"));
 												  mb.exec ();
+                                                  */
 												  break;
 											  }
 										  case 'p':  // permutation P F
 											  {
-												  foreach (LienSub *s, lsub)
+                                                  /*
+												  foreach (LienSub *s, lreq)
 													  s->swapG ();
+                                                  */
 												  break;
 											  }
 										  default:  // déplacement du groupe à g ou à d
-												  // foreach (LienSub *s, lsub) s->super()->deplaceFilsFr(s, droite);
+												  // foreach (LienSub *s, lreq) s->super()->deplaceFilsFr(s, droite);
 												  break;
 									  }
 									  break;
@@ -716,7 +730,7 @@ void Phrase::ecoute (QString m)
 								  // x y et z servent à éditer le gabarit du lien : avant, entre et après les 2 nœuds père et fils.
 							  case 'x':
 							  	  {
-								  	  //LienSub *sub = NULL;
+                                      /*
 									  LLienSub subs;
 								  	  switch (eclats.at (2).at(0).unicode ())
 								  	  {
@@ -736,11 +750,12 @@ void Phrase::ecoute (QString m)
 									  if (trav.isEmpty()) trav = "_";
 									  foreach (LienSub *sub, subs)
 									  	  sub->setTrAv (trav);
+                                      */
 								  	  break;
 								  }
 							  case 'y':
 								  {
-									  //LienSub *sub = NULL;
+                                      /*
 									  LLienSub subs;
 									  switch (eclats.at (2).at(0).unicode ())
 									  {
@@ -765,10 +780,12 @@ void Phrase::ecoute (QString m)
 									  	  foreach (LienSub *sub, subs)
 										  	  sub->setTrInter (trin);
 									  }
+                                      */
 									  break;
 								  }
 							  case 'z':
 							  	  {
+                                      /*
 								  	  LLienSub subs;
 								  	  switch (eclats.at (2).at(0).unicode ())
 								  	  {
@@ -790,15 +807,28 @@ void Phrase::ecoute (QString m)
 									  	  foreach (LienSub *sub, subs)
 										  	  sub->setTrSeq (trseq);
 									  }
+                                      */
 								  	  break;
 								  }
 							  case 'r':   // rejet d'un lien
 						  		  {
+                                      /*
+									  LLienSub lsub;
+							  		  switch (eclats.at (2).at(0).unicode ())
+							  		  {
+								  		  case 's': lsub = cour->subordonnes(); break;
+								  		  case 'd': lsub = cour->dependDe(); break;
+								  		  case 'a': lsub = cour->antecedents(); break;
+								  		  default: std::cerr << qPrintable (m) <<"erreur d'url rejet lien"<<"\n"; break;
+							  		  }
+									  for (int i=0;i<lsub.count();++i)
+										  if (lv.contains (QString::number (i)))
+											  lsub.at (i)->setEtat (LienSub::EtatGrise);
+                                       */
 									  break;
 						  		  }
 							  default: std::cerr << qPrintable (m)<<"erreur d'url lien"<<"\n"; break;
 						  }
-                          */
 						  break;
 					  }
 			default: std::cerr << qPrintable (m) << ", commande mal formée\n"; break;
@@ -1076,7 +1106,6 @@ bool Phrase::filtre(Requete* req)
                 /*
                 if (ri->close())
                 {
-                    if (debog) qDebug()<<"   oks 1b";
                     // si le super est indicatif et n'a pas de sujet, et que req pourrait être sujet
                     if (req->aff() != "sujet"
                         && req->sub()->mot()->estAu("nominatif")
@@ -1252,7 +1281,10 @@ QString Phrase::htmlLiens()
         for (int ifl=0;ifl<mf->nbReqSup();++ifl)
         {
             Requete* req = mf->reqSup(ifl);
-            if (req->close()) fl << req->html()<<"<br/>";
+            if (req->close())
+            {
+                fl << req->html()<<"<br/>";
+            }
         }
     }
     return ret;    
@@ -1278,12 +1310,15 @@ void Phrase::majAffichage()
 {
 	if (_mots.empty())
 		_reponse = Chaines::initAff.arg (Chaines::titrePraelector);
-	else _reponse = Chaines::affichage
+	else 
+    {
+        _reponse = Chaines::affichage
 		.arg (Chaines::titrePraelector)
 		.arg (grLu())                            // %1
 		.arg (motCourant()->html())              // %2
 		.arg (htmlLiens())                       // %3
-		.arg (traduction());                   // %4
+		.arg (traduction());                     // %4
+    }
 }
 
 Requete* Phrase::montante(Mot* m)
@@ -1610,7 +1645,6 @@ void Phrase::setLiens()
                 }
                 // détection de boucle de liens
                 boucle(req);
-                if (req->close()) mf->ajReq(req);
             }
         }
     }
