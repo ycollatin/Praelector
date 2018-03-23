@@ -195,72 +195,54 @@ bool Regle::estSub(MotFlechi* mf)
     // lemme
     Lemme* l = mf->lemme();
     QString cle = l->cle();
-    bool debog = false;
-    if (debog) qDebug().noquote()<<"----\ncle"<<cle;
-    if (debog) qDebug()<<"estSub, règle"<<_id<<"_lsSub"<<_lsSub<<"lemme"<<l->gr()<<l->pos()<<"morpho"<<mf->morpho();
     if (subExclu(cle)) return false;
     if (!_lemmeSub.empty() && !_lemmeSub.contains(cle)) return false;
     // pos
-    if (debog) qDebug()<<"   estSub, _posSub"<<_posSub<<", l->pos()"<<l->pos();
     if (!_posSub.isEmpty() && !intersect(_posSub, l->pos()))
         return false;
     // morpho
     QString m = mf->morpho();
     bool okm = _morphoSub.empty();
-    if (debog) qDebug()<<"   okm"<<okm<<"morphoSub"<<_morphoSub<<"morpho mf"<<m;
     if (!okm) for (int i=0;i<_morphoSub.count();++i)
         okm = okm || inclus(_morphoSub.at(i), m);
-    if (debog) qDebug()<<"   okm2"<<okm;
     if (!okm) return false;
-    if (debog) qDebug()<<"   estSub, boucle lsSub, l->synt _lsSub"<<_lsSub;
     // lexicosyntaxe
     if (!_lsSub.empty())
     {
         for (int i=0;i<_lsSub.count();++i)
             if (l->synt(_lsSub.at(i))) return true;
         return false;
-        if (debog) qDebug()<<"   retour false";
     }
-    if (debog) qDebug()<<"   retour true";
     return true;
 }
 
 bool Regle::estSuper(MotFlechi* mf)
 {
-    bool debog = false;
-    //debog = _id == "abl" && mf->morpho() == "satisfacio 1ère singulier indicatif présent actif";
-    if (debog) qDebug()<<"regle::estSuper id"<<_id<<"mf"<<mf->morpho();
     // lemme
     Lemme* l = mf->lemme();
     //QStringList ll = l->gr().split(',');
     QString cle = l->cle();
     if (!_lemmeSup.empty() && !_lemmeSup.contains(cle)) return false;
-    if (debog) qDebug()<<" estSuper lemmesup ok"<<_lemmeSup<<"possup:"<<_posSup<<l->pos();
     // pos
     if (!_posSup.isEmpty() && !intersect(_posSup, l->pos()))
     {
-        if (debog) qDebug()<<"insersect a échoué. _posSup"<<_posSup<<"l->pos"<<l->pos();
         return false;
     }
-    if (debog) qDebug()<<" estSuper possup ok morpho"<<mf->morpho()<<"_morphosup"<<_morphoSup;
     // morpho
     QString m = mf->morpho();
     bool okm = _morphoSup.empty();
     if (!okm) for (int i=0;i<_morphoSup.count();++i)
         okm = okm || inclus(_morphoSup.at(i), m);
     if (!okm) return false;
-    if (debog) qDebug()<<" estSuper morpho ok. _lsSup"<<_lsSup;
     // lexicosyntaxe
     if (!_lsSup.empty())
     {
         for (int i=0;i<_lsSup.count();++i)
         {
-            if (debog) qDebug()<<"estSuper, lsSup at"<<i<<"="<<l->synt(_lsSup.at(i));
             if (l->synt(_lsSup.at(i))) return true;
         }
         return false;
     }
-    if (debog) qDebug()<<"  estSuper, return true";
     return true;
 }
 
