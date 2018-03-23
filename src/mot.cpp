@@ -205,7 +205,7 @@ QString Mot::html()
         QTextStream fl(&lin);
         MotFlechi* mf = _flechis.at(i);
 		fl << "<span style=\"color:green;font-style:italic\"> "
-           << mf->morpho();
+           << mf->morpho() << "</span>";
         switch(mf->lemme()->pos().at(0).unicode())
         {
             case 'n': fl << " <a href=\"m.d."<<i<<"\">det.</a> "; break;
@@ -214,14 +214,12 @@ QString Mot::html()
                       break;
             default:break;
         }
-		//fl <<" <strong>"<<mf->trfl() << "</strong></span> "
-        fl	<< "<a href=\"m.l."<<i<<"\">&#x25b2;</a>"
-			<< " <a href=\"m.e."<<i<<"\">&eacute;diter</a>"
+        fl	<< " <a href=\"m.e."<<i<<"\">&eacute;diter</a>"
             << " <a href=\"m.i."<<i<<"\">tr. suiv.</a>"
-			<< " <a href=\"m.c."<<i<<"\">choisir</a>"
-			<< " rejeter <a href=\"m.r.m"<<i<<"\">le mot</a> "
+			<< " <a href=\"m.c."<<i<<"\">choisir</a> rejeter"
+			<< " <a href=\"m.r.m"<<i<<"\">le lemme</a> "
 			<< " <a href=\"m.r.f"<<i<<"\">la forme</a> "
-			<< " <span style=\"color:#240B3B;font-style:italic\">tr. "<<mf->tr()<<"</span>";
+			<< " tr. <span style=\"color:darkred;font-style:italic\">"<<mf->tr()<<"</span>";
         ret.append(lin);
     }
     return ret.join("<br/>");
