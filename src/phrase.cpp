@@ -522,7 +522,7 @@ void Phrase::ecoute (QString m)
 	else if (m == "-nouvPhr")
 	{
         _mots.clear();
-        // TODO : repeupler la phrase.
+        // TODO : repeupler la phrase ?
 	}
 	else if (m.startsWith("-phr-"))
 	{
@@ -533,6 +533,7 @@ void Phrase::ecoute (QString m)
         setGr(m);
         lemmatise();
 		_imot = 0;
+        lance();
 	}
 	else // mots et liens
 	{
@@ -606,15 +607,6 @@ void Phrase::ecoute (QString m)
                               case 'i': // rotation de la traduction du fléchi
                                   cour->flechi(num)->incItr();
                                   break;
-							  case 'l': // affichage complet de l'entrée : lemme, indMorph, traductions
-								  {
-                                      /*
-									  QMessageBox mb;
-									  mb.setText (cour->flechi(num)->definition ("fr"));
-									  mb.exec ();
-                                      */
-									  break;
-								  }
 							  case 'r': // ??
 								  break;
 							  case 's': // rotation du sujet
@@ -835,15 +827,17 @@ bool Phrase::estSommet(Mot* m)
 
 void Phrase::initFeminins ()
 {
-    // TODO : message d'erreur si le fichier n'est pas trouvé
 	QFile fp (qApp->applicationDirPath ()+"/data/feminin.fr");
-	fp.open (QIODevice::ReadOnly|QIODevice::Text);
-	QTextStream fluxD (&fp);
-	while (!fluxD.atEnd ())
-	{
-		_feminins.append (fluxD.readLine ());
-	}
-	fp.close ();
+	if (fp.open (QIODevice::ReadOnly|QIODevice::Text))
+    {
+	    QTextStream fluxD (&fp);
+	    while (!fluxD.atEnd ())
+	    {
+		    _feminins.append (fluxD.readLine ());
+	    }
+	    fp.close ();
+    }
+    else std::cerr << "fichier feminin.fr introuvable";
 }
 
 bool Phrase::isomorph(QString ma, QString mb)
@@ -1284,7 +1278,7 @@ void Phrase::majAffichage()
 	else _reponse = Chaines::affichage
 		.arg (Chaines::titrePraelector)
 		.arg (grLu())                            // %1
-		.arg (motCourant()->html())       // %2
+		.arg (motCourant()->html())              // %2
 		.arg (htmlLiens())                       // %3
 		.arg ("traduction()");                   // %4
 }
