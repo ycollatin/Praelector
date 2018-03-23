@@ -292,11 +292,11 @@ QString Requete::html()
         // En bleu italique, traduction
         << "<span style=\"color:blue;font-style:italic\">"<<tr()<<"</span> "
         // doc de la règle
-        << "<a href=\"l.d\">doc</a> "
+        << "<a href=\"l.d.\">doc</a> "
         // lien valider
-        << "<a href=\"l.v"<<_num<<"\">valider</a> "
+        << "<a href=\"l.v."<<_num<<"\">valider</a> "
         // lien rejeter
-        << "<a href=\"l.r\""<<_num<<">rejeter</a>";
+        << "<a href=\"l.r.\""<<_num<<">rejeter</a>";
     return ret;
 }
 
