@@ -53,7 +53,6 @@ class MotFlechi: public QObject
         bool            aUnSuper();
         bool            auxiliaire();
         QList<Requete*> closes();
-        //QString         conj();
         bool            contigu(MotFlechi* mf);
         void            delSubs();
         void            delSups();
@@ -86,8 +85,11 @@ class MotFlechi: public QObject
         bool            resout(Requete* req);
         void            setDet(bool f=false);
         void            setTr(QString t);
+        bool            sommet();
+        QString         sub(QString id);
         QString         trfl();
         QString         tr();
+        QString         trGroupe();
         QString         trNue();
 };
 

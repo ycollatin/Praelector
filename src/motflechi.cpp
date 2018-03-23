@@ -542,6 +542,28 @@ void MotFlechi::setTr(QString t)
     _tr = t;
 }
 
+bool MotFlechi::sommet()
+{
+    for (int i=0;i<_lreqSub.count();++i)
+    {
+        Requete* req = _lreqSub.at(i);
+        if (req->close()) return false;
+    }
+    return true;
+}
+
+QString MotFlechi::sub(QString id)
+{
+    QStringList lret;
+    for (int i=0;i<_lreqSub.count();++i)
+    {
+        Requete* req = _lreqSub.at(i);
+        if (req->id() == id)
+            lret.append(req->sub()->trGroupe());
+    }
+    return lret.join(' ');
+}
+
 QString MotFlechi::tr()
 {
     return _tr;
@@ -550,6 +572,17 @@ QString MotFlechi::tr()
 QString MotFlechi::trfl()
 {
     return _trfl.join(", ");
+}
+
+QString MotFlechi::trGroupe()
+{
+    QStringList subs;
+    subs << sub("det")
+        << _tr
+        << sub("epithete")
+        << sub("genitif")
+        << sub("antecedent");
+    return subs.join(' ');
 }
 
 QString MotFlechi::trNue()

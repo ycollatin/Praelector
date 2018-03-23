@@ -186,6 +186,16 @@ MotFlechi* Mot::flechi(int i)
     return _flechis.at(i);
 }
 
+MotFlechi* Mot::flValide()
+{
+    for (int i=0;i<_flechis.count();++i)
+    {
+        MotFlechi* mf = _flechis.at(i);
+        if (!mf->closes().empty()) return mf;
+    }
+    return 0;
+}
+
 QString Mot::gr()
 {
     return _gr;
@@ -392,6 +402,17 @@ void Mot::setTr(QString t)
     _tr = t;
 }
 
+bool Mot::sommet()
+{
+    for (int i=0;i<_flechis.count();++i)
+    {
+        MotFlechi* mf = _flechis.at(i);
+        if (!mf->sommet())
+            return false;
+    }
+    return true;
+}
+
 MotFlechi* Mot::super()
 {
     for (int i=0;i<_flechis.count();++i)
@@ -405,4 +426,11 @@ MotFlechi* Mot::super()
         }
     }
     return 0;
+}
+
+QString Mot::trGroupe()
+{
+    MotFlechi* mf = flValide();
+    if (mf == 0) return "";
+    return mf->trGroupe();
 }
