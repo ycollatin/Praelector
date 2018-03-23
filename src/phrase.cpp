@@ -1280,7 +1280,7 @@ void Phrase::majAffichage()
 		.arg (grLu())                            // %1
 		.arg (motCourant()->html())              // %2
 		.arg (htmlLiens())                       // %3
-		.arg ("traduction()");                   // %4
+		.arg (traduction());                   // %4
 }
 
 Requete* Phrase::montante(Mot* m)
@@ -1631,3 +1631,16 @@ QList<Mot*> Phrase::supersDe(Mot* m)
     return ret;
 }
 
+QString Phrase::traduction()
+{
+	QStringList retour;
+	for(int i=0;i<=_imot;++i)
+	{
+        Mot* m = _mots.at(i);
+		if (m->sommet())
+		{
+			retour.append (m->trGroupe ());
+		}
+	}
+	return retour.join ("<br/>");
+}

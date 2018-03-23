@@ -107,6 +107,7 @@ class Phrase: public QObject
         void              setLiens();
         void              setNum(int n);
         QList<Mot*>       supersDe(Mot* m);
+        QString           traduction();
     signals:
         void              repondu(const QString);
 };
