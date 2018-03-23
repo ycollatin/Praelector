@@ -31,7 +31,6 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
     _regle = r;
     _super = 0;
     _sub = 0;
-    _traduction = r->traduction();
     _activee = false;
     if (sup != 0)
     {
@@ -291,7 +290,7 @@ QString Requete::html()
         << _regle->aff() << " "
         << _super->gr() << " "
         // En bleu italique, traduction
-        << "<span style=\"color:blue;font-style:italic\">"<<_traduction<<"</span> "
+        << "<span style=\"color:blue;font-style:italic\">"<<tr()<<"</span> "
         // doc de la règle
         << "<a href=\"l.d\">doc</a> "
         // lien valider
@@ -488,7 +487,7 @@ void Requete::setRequis(MotFlechi *m, QString cause)
     if (nul) ajHist("ANNULATION du requis, "+cause);
     else 
     {
-        _traduction.replace("<sup>", _super->tr()).replace("<sub>", _sub->tr());
+        //_traduction.replace("<sup>", _super->tr()).replace("<sub>", _sub->tr());
         ajHist("REQUIS adopté ("+cause+") "+m->gr()+", "+m->morpho());
     }
 }
@@ -535,6 +534,14 @@ MotFlechi* Requete::super()
 bool Requete::superRequis()
 {
     return !_subRequis;
+}
+
+QString Requete::tr()
+{
+    QString ret = _regle->traduction();
+    ret.replace("<sup>", _super->tr());
+    ret.replace("<sub>", _sub->tr());
+    return ret;
 }
 
 MotFlechi* Requete::ultima()

@@ -50,7 +50,6 @@ class Requete : public QObject
         MotFlechi*        _sub;
         bool              _subRequis;
         MotFlechi*        _super;
-        QString           _traduction;
     public:
         Requete(MotFlechi* sup, MotFlechi* sub, Regle* r);
         bool        activee();
@@ -111,6 +110,7 @@ class Requete : public QObject
         bool        subRequis();
         MotFlechi*  super();
         bool        superRequis();
+        QString     tr();
         MotFlechi*  ultima();
 };
 

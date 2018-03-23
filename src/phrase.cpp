@@ -803,9 +803,12 @@ void Phrase::ecoute (QString m)
 					  }
 			default: std::cerr << qPrintable (m) << ", commande mal formée\n"; break;
 		}
+        majAffichage();
+        emit(repondu(_reponse));
+        return;
 	}
 	majAffichage();
-	emit (repondu (_reponse));
+	emit(repondu(_reponse));
 }
 
 bool Phrase::estFeminin (QString n)
