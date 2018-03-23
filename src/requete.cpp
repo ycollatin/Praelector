@@ -488,7 +488,7 @@ void Requete::setRequis(MotFlechi *m, QString cause)
     if (nul) ajHist("ANNULATION du requis, "+cause);
     else 
     {
-        _traduction.replace("<sup>", _super->trfl()).replace("<sub>", _sub->trfl());
+        _traduction.replace("<sup>", _super->tr()).replace("<sub>", _sub->tr());
         ajHist("REQUIS adopté ("+cause+") "+m->gr()+", "+m->morpho());
     }
 }
