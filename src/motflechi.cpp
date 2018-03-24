@@ -27,7 +27,6 @@
       Classe MotFlechi
  **********************/
 
-// signetMotFlechi
 MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
 {
     _mot = parent;
@@ -535,6 +534,27 @@ void MotFlechi::setDet(bool f)
 		}
         else _tr = _trNue;
 	}
+}
+
+/* rotation du sujet des formes v. à la 3ème pers */
+void MotFlechi::setSujet()
+{
+    bool zero = _tr == _trNue;
+    bool plur = _morpho.contains("plur");
+    if (plur)
+    {
+        if (zero) _tr.prepend("elles ");
+        else if (_tr.startsWith("elles "))
+            _tr = "ils " + _trNue;
+        else _tr = _trNue;
+    }
+    else
+    {
+        if (zero) _tr.prepend("elle ");
+        else if (_tr.startsWith("elle "))
+            _tr = "il " + _trNue;
+        else _tr = _trNue;
+    }
 }
 
 void MotFlechi::setTr(QString t)

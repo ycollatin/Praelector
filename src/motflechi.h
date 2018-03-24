@@ -84,6 +84,7 @@ class MotFlechi: public QObject
         Requete*        reqSup(int i);
         bool            resout(Requete* req);
         void            setDet(bool f=false);
+        void            setSujet();
         void            setTr(QString t);
         bool            sommet();
         QString         sub(QString id);

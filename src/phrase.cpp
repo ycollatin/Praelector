@@ -611,6 +611,8 @@ void Phrase::ecoute (QString m)
 								  break;
 							  case 's': // rotation du sujet
 								  {
+									  MotFlechi *mf = cour->flechi(num);
+									  mf->setSujet();
 									  break;
 								  }
 							  case 'v':
