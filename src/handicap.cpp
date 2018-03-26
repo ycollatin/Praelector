@@ -33,14 +33,12 @@ Handicap::Handicap(QStringList sl)
     {
         qDebug()<<"ligne mal formée"<<sl;
     }
-    bool debog = false;
     _forme = sl.at(0);
     QString lem = sl.at(1);
     if (lem.startsWith('-'))
         _lemme = lem.mid(1);
     else _lemmeExclu = lem;
     _hand = sl.at(2).toInt();
-    if (debog) qDebug()<<"lem"<<lem<<"_lemme"<<_lemme<<"_hand"<<_hand<<"_lemmeExclu"<<_lemmeExclu;
 }
 
 QString Handicap::forme()
