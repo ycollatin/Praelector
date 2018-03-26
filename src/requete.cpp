@@ -293,7 +293,7 @@ QString Requete::html()
         << "<span style=\"color:blue;font-style:italic\">"<<tr()<<"</span> "
         // doc de la règle
         << "<a href=\"l.d."<<_num<<"\">doc</a> "
-        // lien valider 
+        // lien valider
         << "<a href=\"l.v."<<_num<<"\">valider</a> "
         // lien rejeter
         << "<a href=\"l.r.\""<<_num<<">rejeter</a>";
