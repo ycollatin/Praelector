@@ -292,8 +292,8 @@ QString Requete::html()
         // En bleu italique, traduction
         << "<span style=\"color:blue;font-style:italic\">"<<tr()<<"</span> "
         // doc de la règle
-        << "<a href=\"l.d.\">doc</a> "
-        // lien valider
+        << "<a href=\"l.d."<<_num<<"\">doc</a> "
+        // lien valider 
         << "<a href=\"l.v."<<_num<<"\">valider</a> "
         // lien rejeter
         << "<a href=\"l.r.\""<<_num<<">rejeter</a>";
@@ -487,7 +487,6 @@ void Requete::setRequis(MotFlechi *m, QString cause)
     if (nul) ajHist("ANNULATION du requis, "+cause);
     else 
     {
-        //_traduction.replace("<sup>", _super->tr()).replace("<sub>", _sub->tr());
         ajHist("REQUIS adopté ("+cause+") "+m->gr()+", "+m->morpho());
     }
 }
@@ -539,8 +538,7 @@ bool Requete::superRequis()
 QString Requete::tr()
 {
     QString ret = _regle->traduction();
-    ret.replace("<sup>", _super->tr());
-    ret.replace("<sub>", _sub->tr());
+    ret.replace("<sub>", _sub->trGroupe());
     return ret;
 }
 
