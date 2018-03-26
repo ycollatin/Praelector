@@ -49,6 +49,11 @@ class Mot : public QObject
     public:
         Mot(QString g, int d=-1, int f=-1, int r=-1, QObject *parent=0);
         void              ajFlechi(MotFlechi* mf);
+        void              annuleFlechi(int f);
+        void              annuleLemme(int l);
+        void              choixFlechi(MotFlechi* mf);
+        void              choixSuper(Requete* req);
+        void              choixSub(Requete* req);
         QList<Requete*>   closes();
         int               debut();
         bool              estAu(QString t);
@@ -85,7 +90,6 @@ class Mot : public QObject
         void              setMorphos(MapLem m);
         void              setPSup(int p);
         void              setTr(QString t);
-        bool              sommet();
         MotFlechi*        super();
         QString           trGroupe();
 };
