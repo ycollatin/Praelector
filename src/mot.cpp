@@ -48,6 +48,76 @@ void Mot::ajFlechi(MotFlechi* mf)
         _flechis.append(mf);
 }
 
+void Mot::annuleFlechi(int f)
+{
+    MotFlechi* mf = _flechis.at(f);
+    for (int ir=0;ir<mf->nbReqSup();++ir)
+        mf->reqSup(ir)->annuleRequis("fléchi rejeté");
+    for (int ir=0;ir<mf->nbReqSub();++ir)
+        mf->reqSub(ir)->annuleRequis("fléchi rejeté");
+    _flechis.removeOne(mf);
+}
+
+void Mot::annuleLemme(int l)
+{
+    MotFlechi* fl = _flechis.at(l);
+    Lemme* lem = fl->lemme();
+    for (int i=0;i<_flechis.count();++i)
+    {
+        MotFlechi* mf = _flechis.at(i); 
+        if (mf->lemme() == lem)
+        {
+            for (int ir=0;ir<mf->nbReqSup();++ir)
+                mf->reqSup(ir)->annuleRequis("lemme rejeté");
+            for (int ir=0;ir<mf->nbReqSub();++ir)
+                mf->reqSub(ir)->annuleRequis("lemme rejeté");
+            _flechis.removeOne(mf);
+        }
+    }
+}
+
+void Mot::choixFlechi(MotFlechi* mf)
+{
+    // désactiver tous les liens des fléchis != req->sub
+    for (int i=0;i<_flechis.count();++i)
+    {
+        MotFlechi* mfl = _flechis.at(i); 
+        if (mfl == mf) continue;
+        for (int ir=0;ir<mf->nbReqSup();++ir)
+            mf->reqSup(ir)->annuleRequis("fléchi rejeté");
+        for (int ir=0;ir<mf->nbReqSub();++ir)
+            mf->reqSub(ir)->annuleRequis("fléchi rejeté");
+    }
+}
+
+void Mot::choixSub(Requete* req)
+{
+    // annuler toutes les autres super, sauf antécédent
+    MotFlechi* mf = req->sub();
+    for (int i=0;i<mf->nbReqSup();++i)
+    {
+        Requete* r = mf->reqSup(i);
+        if (r->close() && r != req && r->id() != "antecedent")
+            r->annuleRequis("Lien concurrent choisi");
+    }
+}
+
+void Mot::choixSuper(Requete* req)
+{
+    // annuler toutes les requêtes homonymes, sauf si req est multi
+    if (!req->multi())
+    {
+        // annuler toutes les requêtes homonymes, sauf si req est multi
+        MotFlechi* mf = req->super();
+        for (int i=0;i<mf->nbReqSub();++i)
+        {
+            Requete* r = mf->reqSub(i);
+            if (r->close() && r->aff() == req->aff())
+                r->annuleRequis("Lien concurrent choisi");
+        }
+    }
+}
+
 QList<Requete*> Mot::closes()
 {
     QList<Requete*> ret;
@@ -191,7 +261,8 @@ MotFlechi* Mot::flValide()
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* mf = _flechis.at(i);
-        if (!mf->closes().empty()) return mf;
+        if (mf->nbReqSupCloses() > 0)
+            return mf;
     }
     return 0;
 }
@@ -219,7 +290,7 @@ QString Mot::html()
         switch(mf->lemme()->pos().at(0).unicode())
         {
             case 'n': fl << " <a href=\"m.d."<<i<<"\">det.</a> "; break;
-            case 'v': if (mf->lemme()->pos().contains('3'))
+            case 'v': if (mf->morpho().contains('3'))
 						  fl << " <a href=\"m.s."<<i<<"\">suj.</a> ";
                       break;
             default:break;
@@ -227,8 +298,8 @@ QString Mot::html()
         fl	<< " <a href=\"m.e."<<i<<"\">&eacute;diter</a>"
             << " <a href=\"m.i."<<i<<"\">tr. suiv.</a>"
 			<< " <a href=\"m.c."<<i<<"\">choisir</a> rejeter"
-			<< " <a href=\"m.r.m"<<i<<"\">le lemme</a> "
-			<< " <a href=\"m.r.f"<<i<<"\">la forme</a> "
+			<< " <a href=\"m.r.m."<<i<<"\">le lemme</a> "
+			<< " <a href=\"m.r.f."<<i<<"\">la forme</a> "
 			<< " tr. <span style=\"color:darkred;font-style:italic\">"<<mf->tr()<<"</span>";
         ret.append(lin);
     }
@@ -400,17 +471,6 @@ void Mot::setMorphos(MapLem m)
 void Mot::setTr(QString t)
 {
     _tr = t;
-}
-
-bool Mot::sommet()
-{
-    for (int i=0;i<_flechis.count();++i)
-    {
-        MotFlechi* mf = _flechis.at(i);
-        if (!mf->sommet())
-            return false;
-    }
-    return true;
 }
 
 MotFlechi* Mot::super()
