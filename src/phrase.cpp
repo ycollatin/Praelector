@@ -20,6 +20,8 @@
 // ../corpus/phrases.txt
 // TODO XXX FIXME 
 
+// TODO : message d'erreur pour les données mal formées dans regles.la
+
 #include <QApplication>
 #include <QDir>
 #include <QFile>
@@ -607,10 +609,27 @@ void Phrase::ecoute (QString m)
                               case 'i': // rotation de la traduction du fléchi
                                   cour->flechi(num)->incItr();
                                   break;
-							  case 'r': // ??
+							  case 'r': // rejeter m.r.m = le lemme ; m.r.f la forme
+                                  if (eclats.count() > 3)
+                                  {
+                                      int n = eclats.at(3).toInt();
+                                      switch (eclats.at(2).at(0).unicode())
+                                      {
+                                          case 'm':
+                                              cour->annuleLemme(n);
+                                              break;
+                                          case 'f':
+                                              cour->annuleFlechi(n);
+                                              break;
+                                          default:
+                                              break;
+                                      }
+                                  }
 								  break;
 							  case 's': // rotation du sujet
 								  {
+									  MotFlechi *mf = cour->flechi(num);
+									  mf->setSujet();
 									  break;
 								  }
 							  case 'v':
@@ -711,20 +730,17 @@ void Phrase::ecoute (QString m)
 								  }
 							  case 'v':   // pos 1, valider
 								  {
-								  	  char sd = eclats.at (2).at(0).unicode ();
-									  switch (sd)
-									  {
-										  case 's':  // m[2] 2, cour est super du lien validé-> dans les sub
-											  {
-												  break;
-											  }
-										  case 'a':  // m[2], cour est un relatif
-										  case 'd':  // m[2], cour est fils du lien validé-> dans les deps
-											  {
-												  break;
-											  }
-										  default: std::cerr <<qPrintable (m) <<", erreur d'url validation lien"<<"\n";
-									  }
+                                      Requete* req = _requetes.at(eclats.at(2).toInt());
+                                      if (req->super()->mot() == cour)
+                                      {
+                                          cour->choixFlechi(req->super());
+                                          cour->choixSuper(req);
+                                      }
+                                      else 
+                                      {
+                                          cour->choixFlechi(req->sub());
+                                          cour->choixSub(req);
+                                      }
 									  break;
 								  }
 								  // x y et z servent à éditer le gabarit du lien : avant, entre et après les 2 nœuds père et fils.
@@ -1267,6 +1283,7 @@ QList<Requete*> Phrase::homonymes(QString id)
 
 QString Phrase::htmlLiens()
 {
+    // TODO : trier les requêtes par points
     Mot* mc = motCourant();
     QString ret;
     QTextStream fl(&ret);
@@ -1281,10 +1298,7 @@ QString Phrase::htmlLiens()
         for (int ifl=0;ifl<mf->nbReqSup();++ifl)
         {
             Requete* req = mf->reqSup(ifl);
-            if (req->close())
-            {
-                fl << req->html()<<"<br/>";
-            }
+            if (req->close()) fl << req->html()<<"<br/>";
         }
     }
     return ret;    
@@ -1308,16 +1322,17 @@ void Phrase::lemmatise()
 
 void Phrase::majAffichage()
 {
+    // TODO - ajouter un texte d'accueil et d'aide
 	if (_mots.empty())
 		_reponse = Chaines::initAff.arg (Chaines::titrePraelector);
 	else 
     {
         _reponse = Chaines::affichage
-		.arg (Chaines::titrePraelector)
-		.arg (grLu())                            // %1
-		.arg (motCourant()->html())              // %2
-		.arg (htmlLiens())                       // %3
-		.arg (traduction());                     // %4
+		    .arg (Chaines::titrePraelector)
+		    .arg (grLu())                            // %1
+		    .arg (motCourant()->html())              // %2
+		    .arg (htmlLiens())                       // %3
+		    .arg (traduction());                     // %4
     }
 }
 
@@ -1674,9 +1689,9 @@ QString Phrase::traduction()
 	for(int i=0;i<=_imot;++i)
 	{
         Mot* m = _mots.at(i);
-		if (m->sommet())
+		if (estSommet(m))
 		{
-			retour.append (m->trGroupe ());
+			retour.append (m->trGroupe());
 		}
 	}
 	return retour.join ("<br/>");
