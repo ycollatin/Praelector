@@ -27,7 +27,6 @@
       Classe MotFlechi
  **********************/
 
-// signetMotFlechi
 MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
 {
     _mot = parent;
@@ -246,10 +245,10 @@ QString MotFlechi::htmlLiens()
     // format : 
     // 1. en noir, fonction 
     // 2. en bleu, traduction
-    // 3. un triangle hyperlien vers doc
+    // 3. un hyperlien vers doc
     // 3. deux hyperliens : valider rejeter
     QStringList ll;
-    // trier _lreqSup et _lreqSub en fonction de leur poids
+    // TODO trier _lreqSup et _lreqSub en fonction de leur poids
     // 1. liens dont le mot est sub :
     for (int i=0;i<_lreqSub.count();++i)
     {
@@ -351,6 +350,14 @@ int MotFlechi::nbReqSub()
 int MotFlechi::nbReqSup()
 {
     return _lreqSup.count();
+}
+
+int MotFlechi::nbReqSupCloses()
+{
+    int ret = 0;
+    for (int i=0;i<_lreqSup.count();++i)
+        if (_lreqSup.at(i)->close()) ++ret;
+    return ret;
 }
 
 void MotFlechi::nettoie()
@@ -537,6 +544,27 @@ void MotFlechi::setDet(bool f)
 	}
 }
 
+/* rotation du sujet des formes v. à la 3ème pers */
+void MotFlechi::setSujet()
+{
+    bool zero = _tr == _trNue;
+    bool plur = _morpho.contains("plur");
+    if (plur)
+    {
+        if (zero) _tr.prepend("elles ");
+        else if (_tr.startsWith("elles "))
+            _tr = "ils " + _trNue;
+        else _tr = _trNue;
+    }
+    else
+    {
+        if (zero) _tr.prepend("elle ");
+        else if (_tr.startsWith("elle "))
+            _tr = "il " + _trNue;
+        else _tr = _trNue;
+    }
+}
+
 void MotFlechi::setTr(QString t)
 {
     _tr = t;
@@ -552,16 +580,15 @@ bool MotFlechi::sommet()
     return true;
 }
 
-QString MotFlechi::sub(QString id)
+Requete* MotFlechi::sub(QString id)
 {
-    QStringList lret;
-    for (int i=0;i<_lreqSub.count();++i)
+    for (int i=0;i<_lreqSup.count();++i)
     {
-        Requete* req = _lreqSub.at(i);
-        if (req->id() == id)
-            lret.append(req->sub()->trGroupe());
+        Requete* req = _lreqSup.at(i);
+        if (req->close() && req->id() == id)
+            return req;
     }
-    return lret.join(' ');
+    return 0;
 }
 
 QString MotFlechi::tr()
@@ -574,15 +601,47 @@ QString MotFlechi::trfl()
     return _trfl.join(", ");
 }
 
-QString MotFlechi::trGroupe()
+QString MotFlechi::trGroupe(Requete* req)
 {
-    QStringList subs;
-    subs << sub("det")
-        << _tr
-        << sub("epithete")
-        << sub("genitif")
-        << sub("antecedent");
-    return subs.join(' ');
+    qDebug()<<"Motflechi"<<this->gr()<<_tr;
+    if (req  != 0) qDebug()<<req->doc();
+    QStringList lgr;
+    QString lp = _lemme->pos();
+    if (lp.contains("n")) lgr
+            << "det"
+            << "-" 
+            << "epithete"
+            << "genitif"
+            << "datif"
+            << "antecedent"
+            << "nomQue";
+    else if (lp.contains("v")) lgr
+            << "sujet"
+            << "-" 
+            << "objet"
+            << "abl"
+            << "datif"
+            << "prep";
+    else if (lp.contains("a")) lgr 
+            << "-"
+            << "genitif"
+            << "datif";
+    QStringList ret; // pour le retour
+    for (int i = 0;i<lgr.count();++i)
+    {
+        QString el = lgr.at(i);
+        if (el == "-") ret.append(_tr);
+        else 
+        {
+            Requete* r = sub(el);
+            if (r != 0) ret.append(r->sub()->trGroupe(r));
+        }
+        qDebug()<<i<<ret;
+    }
+    QString retour = ret.join(" ").simplified();
+    if (req != 0) retour = req->tr().replace("<sup>", retour);
+    qDebug()<<"   req"<<req<<retour;
+    return retour;
 }
 
 QString MotFlechi::trNue()
