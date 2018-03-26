@@ -199,9 +199,6 @@ QString Ch::deramise(QString r)
  */
 void Ch::elide(QString *mp)
 {
-    //"Tāntāene"
-    //bool debog = (*mp == "Tāntāene");
-    //if (debog) qDebug() << "tantaene" << *mp;
     int taille = mp->size();
     if ((taille > 1) && ((mp->endsWith('m') || mp->endsWith("\u0101e")) ||
                          mp->endsWith("\u0306")) &&
