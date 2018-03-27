@@ -107,7 +107,7 @@ class Lemme : public QObject
     void                setLexSynt(QStringList m);
     void                setPos(QString p);
     bool                synt(QString s);
-    QString             traduction(QString l);
+    QString             traduction(QString l="fr");
     QString             traduction(QString l, QString pos);
     QString             traduction(QString l, QChar pos);
 };
