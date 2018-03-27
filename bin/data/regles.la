@@ -38,6 +38,7 @@ morphoSub:ablatif
 lsSup:abl
 contig:5
 poids:75
+tr:<sup> <sub>
 
 id:ablabs
 posSup:v,w
@@ -448,6 +449,7 @@ doc:les adj. numéros peuvent servir de déterminant
 posSup:n
 lsSub:num
 poids:60
+tr:<sub> <sup>
 
 id:nihil
 aff:genitif
@@ -458,6 +460,7 @@ posSub:a
 morphoSub:génitif neutre singulier
 sens:>
 poids:100
+tr:<sup> de <sub>
 
 id:nomQue
 aff:coord
@@ -468,6 +471,7 @@ accord:c
 sens:>
 filtre:contigu,que
 poids:100
+tr:<sup> et <sub>
 
 id:inter
 doc:Certains adverbes en tête de phrase annoncent une interrogation
