@@ -256,15 +256,16 @@ MotFlechi* Mot::flechi(int i)
     return _flechis.at(i);
 }
 
-MotFlechi* Mot::flValide()
+QList<MotFlechi*> Mot::flValide()
 {
+    QList<MotFlechi*> lmf;
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* mf = _flechis.at(i);
         if (mf->nbReqSupCloses() > 0)
-            return mf;
+            lmf.append(mf);
     }
-    return 0;
+    return lmf;
 }
 
 QString Mot::gr()
@@ -490,7 +491,17 @@ MotFlechi* Mot::super()
 
 QString Mot::trGroupe()
 {
-    MotFlechi* mf = flValide();
-    if (mf == 0) return "";
-    return mf->trGroupe();
+    QList<MotFlechi*> lmf = flValide();
+    if (lmf.count() == 1) return lmf.at(0)->trGroupe();
+    return trs(); 
+}
+
+QString Mot::trs()
+{
+    QStringList ret;
+    if (_flechis.count() == 1) return _flechis.at(0)->tr();
+    for (int i=0;i<_flechis.count();++i)
+        ret.append(_flechis.at(i)->trfl());
+    ret.removeDuplicates();
+    return ret.join(" / ");
 }

@@ -297,16 +297,12 @@ QString Phrase::arbre(QString format, bool trace)
             liens.append(req->gv(format));
         }
         else req->ajHist("REJETÉE "+req->humain());
-        if (trace) qDebug().noquote()<<req->hist();
     }
     if (trace) 
     {
-        qDebug()<<"       =====";
-        qDebug()<<"   Requêtes closes:";
         for (int i=0;i<_requetes.count();++i)
         {
             Requete* req = _requetes.at(i);
-            if (req->close()) qDebug()<<_requetes.at(i)->doc();
         }
     }
     liens.removeDuplicates();
@@ -1665,7 +1661,6 @@ void Phrase::setLiens()
     }
 }
 
-
 void Phrase::setNum(int n)
 {
     _num = n;
@@ -1686,7 +1681,7 @@ QList<Mot*> Phrase::supersDe(Mot* m)
 QString Phrase::traduction()
 {
 	QStringList retour;
-	for(int i=0;i<=_imot;++i)
+	for(int i=0;i<_imot;++i)
 	{
         Mot* m = _mots.at(i);
 		if (estSommet(m))
@@ -1694,5 +1689,7 @@ QString Phrase::traduction()
 			retour.append (m->trGroupe());
 		}
 	}
+    // le nouveau mot est sommet tant qu'un lien n'a pas été validé
+    if (estSommet(motCourant())) retour.append(motCourant()->trs());
 	return retour.join ("<br/>");
 }

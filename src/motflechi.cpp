@@ -593,20 +593,28 @@ Requete* MotFlechi::sub(QString id)
 
 QString MotFlechi::tr()
 {
-    return _tr;
+    if (!_tr.isEmpty()) return _tr;
+    return trfl();
 }
 
 QString MotFlechi::trfl()
 {
-    return _trfl.join(", ");
+    if (_trfl.count() == 1)
+        return _trfl.at(0);
+    QStringList l = _trfl;
+    QString ret = l.takeFirst()+" (";
+    ret += l.join(", ");
+    ret += ")";
+    return ret;
 }
 
 QString MotFlechi::trGroupe(Requete* req)
 {
-    qDebug()<<"Motflechi"<<this->gr()<<_tr;
-    if (req  != 0) qDebug()<<req->doc();
-    QStringList lgr;
+    QString sup;
+    if (req == 0 || !req->close()) sup = _tr;
+    else sup = req->tr().replace("<sup>", _tr);
     QString lp = _lemme->pos();
+    QStringList lgr;
     if (lp.contains("n")) lgr
             << "det"
             << "-" 
@@ -630,17 +638,14 @@ QString MotFlechi::trGroupe(Requete* req)
     for (int i = 0;i<lgr.count();++i)
     {
         QString el = lgr.at(i);
-        if (el == "-") ret.append(_tr);
+        if (el == "-") ret.append(sup);
         else 
         {
             Requete* r = sub(el);
             if (r != 0) ret.append(r->sub()->trGroupe(r));
         }
-        qDebug()<<i<<ret;
     }
     QString retour = ret.join(" ").simplified();
-    if (req != 0) retour = req->tr().replace("<sup>", retour);
-    qDebug()<<"   req"<<req<<retour;
     return retour;
 }
 

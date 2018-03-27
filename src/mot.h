@@ -69,7 +69,7 @@ class Mot : public QObject
         bool              estSuperParId(QString id);
         int               fin();
         MotFlechi*        flechi(int i);
-        MotFlechi*        flValide();
+        QList<MotFlechi*> flValide();
         QString           gr();
         QString           html();
         void              lance();
@@ -92,6 +92,7 @@ class Mot : public QObject
         void              setTr(QString t);
         MotFlechi*        super();
         QString           trGroupe();
+        QString           trs();
 };
 
 #endif
