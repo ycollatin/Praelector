@@ -501,7 +501,7 @@ QString Mot::trs()
     QStringList ret;
     if (_flechis.count() == 1) return _flechis.at(0)->tr();
     for (int i=0;i<_flechis.count();++i)
-        ret.append(_flechis.at(i)->trfl());
+        ret.append(_flechis.at(i)->tr());
     ret.removeDuplicates();
     return ret.join(" / ");
 }

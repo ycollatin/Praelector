@@ -1685,12 +1685,11 @@ QString Phrase::tr()
     int isup = _imot;
     bool somcour = estSommet(motCourant());
     if (!somcour) ++isup;
-	for(int i=0;i<_imot;++i)
+	for(int i=0;i<=_imot;++i)
 	{
         Mot* m = _mots.at(i);
 		if (estSommet(m)) fl << m->trGroupe() << "<br/>";
 	}
     // le nouveau mot est sommet tant qu'un lien n'a pas été validé
-    if (somcour) retour.append(motCourant()->trs());
 	return retour;
 }

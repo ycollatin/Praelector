@@ -60,7 +60,7 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
         }
         if (!fl.isEmpty()) _trfl.append(fl);
     }
-    _itr = 0;
+    _itr = -1;
     if (!_trfl.empty())
     {
         _trNue = _trfl.at(0);
@@ -266,7 +266,12 @@ QString MotFlechi::htmlLiens()
 
 void MotFlechi::incItr()
 {
-    ++_itr;
+    if (_itr < 0) 
+    {
+        if (_trfl.count() == 1) _itr = 0;
+        else _itr = 1;
+    }
+    else ++_itr;
     if (_itr >= _trfl.count()) _itr = 0;
     _trNue = _trfl.at(_itr);
     _tr = _trNue;
