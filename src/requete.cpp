@@ -291,7 +291,7 @@ QString Requete::html()
         << _super->gr() << " "
         // En bleu italique, traduction
         //<< "<span style=\"color:blue;font-style:italic\">regle:"<<_regle->traduction()<<"</span> ";
-        << "<span style=\"color:blue;font-style:italic\">regle:"<<tr()<<"</span> "
+        << "<span style=\"color:blue;font-style:italic\">"<<tr()<<"</span> "
         // doc de la règle
         << "<a href=\"l.d."<<_num<<"\">doc</a> "
         // lien valider
@@ -538,12 +538,20 @@ bool Requete::superRequis()
 
 QString Requete::tr()
 {
-    QString ret = _regle->traduction();
+    QString ret = _regle->tr();
     if (_super != 0) ret.replace("<sup>", _super->tr());
     //if (_super != 0) ret.replace("<sup>", _super->trGroupe());
-    if (_sub != 0) ret.replace("<sub>", _sub->tr());
-    //if (_sub != 0) ret.replace("<sub>", _sub->trGroupe());
+    //if (_sub != 0) ret.replace("<sub>", _sub->tr());
+    if (_sub != 0) ret.replace("<sub>", _sub->trGroupe());
     return ret;
+}
+
+QString Requete::trSub()
+{
+    if (_sub == 0) return "erreur, sub manquant";
+    QString ret = _regle->tr(); 
+    ret.remove("<sup>");
+    return ret.replace("<sub>", _sub->trGroupe());
 }
 
 MotFlechi* Requete::ultima()

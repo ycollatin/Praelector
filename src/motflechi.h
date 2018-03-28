@@ -91,7 +91,7 @@ class MotFlechi: public QObject
         Requete*        sub(QString id);
         QString         trfl();
         QString         tr();
-        QString         trGroupe(Requete* req=0);
+        QString         trGroupe();
         QString         trNue();
 };
 

@@ -43,7 +43,7 @@ QStringList const clesR = QStringList()
 Regle::Regle(QStringList ll)
 {
     _contig = 0;
-    _traduction = "<sup> <sub>";
+    _tr = "<sup> <sub>";
     //signetRegle
     for (int i=0;i<ll.count();++i)
     {
@@ -101,7 +101,7 @@ Regle::Regle(QStringList ll)
             case 17: _subEstSup = v; break;
             case 18: _supEstSub = v; break;
             case 19: _supEstSup = v.split(','); break;
-            case 20: _traduction  = v; break;
+            case 20: _tr = v; break;
             case 21: _exclus = v.split(','); break;
 
             default:
@@ -357,7 +357,7 @@ bool Regle::supExclu(QString s)
     return _lSupExclus.contains(s);
 }
 
-QString Regle::traduction()
+QString Regle::tr()
 {
-    return _traduction;
+    return _tr;
 }

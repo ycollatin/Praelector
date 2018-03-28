@@ -111,6 +111,7 @@ class Requete : public QObject
         MotFlechi*  super();
         bool        superRequis();
         QString     tr();
+        QString     trSub(); // traduction 
         MotFlechi*  ultima();
 };
 

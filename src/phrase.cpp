@@ -1328,7 +1328,7 @@ void Phrase::majAffichage()
 		    .arg (grLu())                            // %1
 		    .arg (motCourant()->html())              // %2
 		    .arg (htmlLiens())                       // %3
-		    .arg (traduction());                     // %4
+		    .arg (tr());                     // %4
     }
 }
 
@@ -1678,18 +1678,19 @@ QList<Mot*> Phrase::supersDe(Mot* m)
     return ret;
 }
 
-QString Phrase::traduction()
+QString Phrase::tr()
 {
-	QStringList retour;
+	QString retour;
+    QTextStream fl(&retour);
+    int isup = _imot;
+    bool somcour = estSommet(motCourant());
+    if (!somcour) ++isup;
 	for(int i=0;i<_imot;++i)
 	{
         Mot* m = _mots.at(i);
-		if (estSommet(m))
-		{
-			retour.append (m->trGroupe());
-		}
+		if (estSommet(m)) fl << m->trGroupe() << "<br/>";
 	}
     // le nouveau mot est sommet tant qu'un lien n'a pas été validé
-    if (estSommet(motCourant())) retour.append(motCourant()->trs());
-	return retour.join ("<br/>");
+    if (somcour) retour.append(motCourant()->trs());
+	return retour;
 }

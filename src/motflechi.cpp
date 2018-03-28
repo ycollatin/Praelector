@@ -608,12 +608,12 @@ QString MotFlechi::trfl()
     return ret;
 }
 
-QString MotFlechi::trGroupe(Requete* req)
+QString MotFlechi::trGroupe()
 {
-    QString sup;
-    if (req == 0 || !req->close()) sup = _tr;
-    else sup = req->tr().replace("<sup>", _tr);
+    qDebug()<<"MotFlechi::trGroupe pour"<<gr()<<_morpho;
     QString lp = _lemme->pos();
+    QString ret;
+    QTextStream fl(&ret);
     QStringList lgr;
     if (lp.contains("n")) lgr
             << "det"
@@ -634,19 +634,22 @@ QString MotFlechi::trGroupe(Requete* req)
             << "-"
             << "genitif"
             << "datif";
-    QStringList ret; // pour le retour
     for (int i = 0;i<lgr.count();++i)
     {
         QString el = lgr.at(i);
-        if (el == "-") ret.append(sup);
+        if (el == "-") 
+        {
+            fl << _tr << " ";
+        }
         else 
         {
             Requete* r = sub(el);
-            if (r != 0) ret.append(r->sub()->trGroupe(r));
+            if (r != 0) fl << r->trSub() << " ";
         }
+        qDebug()<<"MotFlechi::trGroupe"<<i<<ret;
     }
-    QString retour = ret.join(" ").simplified();
-    return retour;
+    qDebug()<<"retour:"<<ret;
+    return ret.simplified();
 }
 
 QString MotFlechi::trNue()
