@@ -615,8 +615,8 @@ QString MotFlechi::trfl()
 
 QString MotFlechi::trGroupe()
 {
-    qDebug()<<"MotFlechi::trGroupe pour"<<gr()<<_morpho;
     QString lp = _lemme->pos();
+    qDebug()<<"      MoFlechi::trGroupe()"<<gr()<<"lp"<<lp;
     QString ret;
     QTextStream fl(&ret);
     QStringList lgr;
@@ -639,25 +639,41 @@ QString MotFlechi::trGroupe()
             << "-"
             << "genitif"
             << "datif";
+    else if (lp.contains("r")) lgr
+            << "-"
+            << "regimeAbl"
+            << "regimeAcc";
+
     for (int i = 0;i<lgr.count();++i)
     {
         QString el = lgr.at(i);
         if (el == "-") 
         {
+            qDebug()<<"    -,tr"<<_tr;
             fl << _tr << " ";
         }
         else 
         {
             Requete* r = sub(el);
-            if (r != 0) fl << r->trSub() << " ";
+            if (r != 0)
+            {
+                fl << r->trSub() << " ";
+            }
         }
-        qDebug()<<"MotFlechi::trGroupe"<<i<<ret;
     }
-    qDebug()<<"retour:"<<ret;
+    qDebug()<<"      retour"<<ret.simplified();
     return ret.simplified();
 }
 
 QString MotFlechi::trNue()
 {
     return _trNue;
+}
+
+void MotFlechi::videReq()
+{
+    for (int i=0;i<_lreqSub.count();++i)
+        _lreqSub.at(i)->annuleRequis("fléchi rejeté");
+    for (int i=0;i<_lreqSup.count();++i)
+        _lreqSup.at(i)->annuleRequis("fléchi rejeté");
 }

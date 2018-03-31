@@ -341,6 +341,16 @@ bool Phrase::boucle(Requete* req)
     return true;
 }
 
+void Phrase::choixFlechi(MotFlechi* mf)
+{
+    for (int i=0;i<_requetes.count();++i)
+    {
+        Requete* req = _requetes.at(i);
+        if (req->super() == mf || req->sub() == mf)
+            _requetes.removeOne(req);
+    }
+}
+
 // Le MotFlechi mf est-il compatible avec toute requête close
 // où figure m ?
 bool Phrase::compatible(MotFlechi* mf, Mot* m)
@@ -697,17 +707,12 @@ void Phrase::ecoute (QString m)
 									  	  break;
 									  switch (gd)
 									  {
-										  case 'i':
+										  case 'i':  // demande de doc sur le lien
 											  {
-                                                  /*
-											  	  QStringList info;
-												  foreach ( *sub, lreq)
-												  	  info.append (sub->lien()->doc());
+                                                  Requete* req = _requetes.at(eclats.at(2).toInt());
 												  QMessageBox mb;
-												  info.removeDuplicates ();
-												  mb.setText (info.join ("<br/>"));
+												  mb.setText (req->doc());
 												  mb.exec ();
-                                                  */
 												  break;
 											  }
 										  case 'p':  // permutation P F
@@ -726,20 +731,24 @@ void Phrase::ecoute (QString m)
 								  }
 							  case 'v':   // pos 1, valider
 								  {
+                                      // FIXME : ad + régime non traduit
                                       Requete* req = _requetes.at(eclats.at(2).toInt());
                                       if (req->super()->mot() == cour)
                                       {
                                           cour->choixFlechi(req->super());
+                                          choixFlechi(req->super());
                                           cour->choixSuper(req);
                                       }
                                       else 
                                       {
                                           cour->choixFlechi(req->sub());
+                                          choixFlechi(req->sub());
                                           cour->choixSub(req);
                                       }
 									  break;
 								  }
-								  // x y et z servent à éditer le gabarit du lien : avant, entre et après les 2 nœuds père et fils.
+								  // x y et z servent à éditer le gabarit du lien : 
+                                  // avant, entre et après les 2 nœuds père et fils.
 							  case 'x':
 							  	  {
                                       /*
@@ -864,6 +873,7 @@ bool Phrase::estSommet(Mot* m)
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
+        if (req->num()==3) qDebug()<<"estSommet"<<req->humain();
         if (req->close() && req->sub()->mot() == m)
             return false;
     }
@@ -1682,14 +1692,16 @@ QString Phrase::tr()
 {
 	QString retour;
     QTextStream fl(&retour);
-    int isup = _imot;
-    bool somcour = estSommet(motCourant());
-    if (!somcour) ++isup;
 	for(int i=0;i<=_imot;++i)
 	{
         Mot* m = _mots.at(i);
-		if (estSommet(m)) fl << m->trGroupe() << "<br/>";
+        qDebug()<<"Phrase::tr, estSommet"<<m->gr()<<estSommet(m);
+		if (estSommet(m)) 
+        {
+            fl << m->trGroupe() << "<br/>";
+        }
 	}
     // le nouveau mot est sommet tant qu'un lien n'a pas été validé
+    qDebug()<<"Phrase::tr(), retour"<<retour;
 	return retour;
 }

@@ -63,6 +63,7 @@ class Phrase: public QObject
         void              ajRequete(Requete* req);
         QString           arbre(QString format="dot", bool trace=false);
         bool              boucle(Requete* req);
+        void              choixFlechi(MotFlechi* mf);
         bool              compatible(MotFlechi* mf, Mot* m);
         bool              compatible(MotFlechi* ma, MotFlechi* mb);
         void              conflit(Requete* ra, Requete* rb, QString cause);
@@ -115,7 +116,7 @@ class Phrase: public QObject
 namespace Chaines {
 
 	const QString affichage = QString::fromUtf8
-		("%1<hr/>%2"
+		( "%1<hr/>%2"
 		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>%3"
 		 "<hr/><a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a> d'un mot "
          "&nbsp;<a href=\"-quitter\">quitter</a>"
@@ -123,7 +124,6 @@ namespace Chaines {
 		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>%5"
 		 "<hr/><a href=\"-nouvPhr\">Saisir une phrase</a> "
 		 "<a href=\"-corpus\">choisir une phrase</a>&nbsp;<a href=\"-quitter\">quitter</a>");
-		 //"&nbsp;&nbsp;<a href=\"-quitter\">quitter</a>");
 
 	const QString affSubAPrendre = QString::fromUtf8
 		("%1 <span style=\"color:blue;font-style:italic\">%2</span> "

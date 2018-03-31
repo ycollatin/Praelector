@@ -93,6 +93,7 @@ class MotFlechi: public QObject
         QString         tr();
         QString         trGroupe();
         QString         trNue();
+        void            videReq();
 };
 
 #endif

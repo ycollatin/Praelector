@@ -78,22 +78,26 @@ void Mot::annuleLemme(int l)
 
 void Mot::choixFlechi(MotFlechi* mf)
 {
-    // désactiver tous les liens des fléchis != req->sub
+    QList<Requete*> lr = closes();
     for (int i=0;i<_flechis.count();++i)
     {
-        MotFlechi* mfl = _flechis.at(i); 
-        if (mfl == mf) continue;
-        for (int ir=0;ir<mf->nbReqSup();++ir)
-            mf->reqSup(ir)->annuleRequis("fléchi rejeté");
-        for (int ir=0;ir<mf->nbReqSub();++ir)
-            mf->reqSub(ir)->annuleRequis("fléchi rejeté");
+        MotFlechi* f = _flechis.at(i);
+        if (f == mf) continue;
+        f->videReq();
     }
+    // ne laisser que le fléchi mf
+    _flechis.clear();
+    _flechis.append(mf);
 }
 
 void Mot::choixSub(Requete* req)
 {
     // annuler toutes les autres super, sauf antécédent
     MotFlechi* mf = req->sub();
+    if (mf==0)
+    {
+        return;
+    }
     for (int i=0;i<mf->nbReqSup();++i)
     {
         Requete* r = mf->reqSup(i);
@@ -492,7 +496,11 @@ MotFlechi* Mot::super()
 QString Mot::trGroupe()
 {
     QList<MotFlechi*> lmf = flValide();
-    if (lmf.count() == 1) return lmf.at(0)->trGroupe();
+    if (lmf.count() == 1)
+    {
+        qDebug()<<"   Mot::trGroupe,"<<lmf.at(0)->morpho()<<"   appel de trGroupe";
+        return lmf.at(0)->trGroupe();
+    }
     return trs(); 
 }
 
