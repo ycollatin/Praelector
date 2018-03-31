@@ -222,6 +222,7 @@ lsSub:coord
 contig:10
 sens:>
 poids:62
+tr:<sup> <sub>
 
 id:conjcoordN
 aff:coord1
@@ -232,6 +233,7 @@ lsSub:coord
 contig:12
 sens:>
 poids:87
+tr:<sup> <sub>
 
 id:conjcoordV
 aff:coord1
@@ -241,6 +243,7 @@ posSub:c
 lsSub:coord
 sens:>
 poids:62
+tr:<sup> <sub>
 
 id:conjSub
 doc:Une conjonction de subordination est subornonnée à un verbe et introduit une subordonnée conjonctive
@@ -508,6 +511,7 @@ posSup:v,w
 posSub:r
 filtre:multi
 poids:75
+tr:<sup> <sub>
 
 id:prepn
 aff:prep
@@ -516,6 +520,7 @@ posSup:n
 lsSup:prep
 posSub:r
 poids:80
+tr:<sup> <sub>
 
 id:ppp
 doc:le participe parfait passif est utilisé avec l'aux. sum pour les formes composées du passif
@@ -564,6 +569,7 @@ posSub:n,p
 morphoSub:ablatif
 conflit:regimeAcc
 poids:88
+tr:<sup> <sub>
 
 id:regimeAcc
 doc:l'accusatif après une préposition indique que le procès verbal porte sur un autre lieu, un autre temps, un autre objet
@@ -574,6 +580,7 @@ lsSup:prepacc
 posSub:n,p
 morphoSub:accusatif
 poids:87
+tr:<sup> <sub>
 
 id:sujet
 doc:le sujet d'un verbe conjugué à l'indicatif ou au subjonctif est au nominatif
