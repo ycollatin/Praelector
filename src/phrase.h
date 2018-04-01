@@ -72,7 +72,6 @@ class Phrase: public QObject
         QString           droite(Mot* m);
         void              ecoute (QString m);
         bool              estFeminin(QString n);
-        bool              estSommet(Mot* m);
         bool              filtre(Requete* req);
         QString           gauche(Mot *m);
         QString           grLu();
@@ -100,7 +99,7 @@ class Phrase: public QObject
         QList<Mot*>       portee(int a, int b);
         Regle*            regle(int i);
         Regle*            regle(QString id);
-        void              relecture();
+        //void              relecture();
         QList<Requete*>   reqCC(Mot* m);
         Requete*          requete(int i);
         void              rmListeR(Requete* req);

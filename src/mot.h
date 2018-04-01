@@ -62,6 +62,7 @@ class Mot : public QObject
         Lemme*            estPosDe(QString pr);
         bool              estPrep();
         bool              estRelatif();
+        bool              estSommet();
         bool              estSubParAff(QString aff);
         bool              estSubParId(QString id);
         //bool              estSuperDe(Mot* m);

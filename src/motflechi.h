@@ -56,6 +56,7 @@ class MotFlechi: public QObject
         bool            contigu(MotFlechi* mf);
         void            delSubs();
         void            delSups();
+        bool            estSub();
         bool            estSubParAff(QString aff);
         bool            estSubParId(QString id);
         bool            estSuperDe(MotFlechi* m);

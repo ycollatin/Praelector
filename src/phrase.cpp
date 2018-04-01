@@ -868,18 +868,6 @@ bool Phrase::estFeminin (QString n)
 	return _feminins.contains(n);
 }
 
-bool Phrase::estSommet(Mot* m)
-{
-    for (int i=0;i<_requetes.count();++i)
-    {
-        Requete* req = _requetes.at(i);
-        if (req->num()==3) qDebug()<<"estSommet"<<req->humain();
-        if (req->close() && req->sub()->mot() == m)
-            return false;
-    }
-    return true;
-}
-
 void Phrase::initFeminins ()
 {
 	QFile fp (qApp->applicationDirPath ()+"/data/feminin.fr");
@@ -1499,6 +1487,7 @@ Regle* Phrase::regle(QString id)
     return 0;
 }
 
+/*
 void Phrase::relecture()
 {
     for (int i=0;i<_mots.count();++i)
@@ -1527,6 +1516,7 @@ void Phrase::relecture()
         }
     }
 }
+*/
 
 QList<Requete*> Phrase::reqCC(Mot* m)
 {
@@ -1695,13 +1685,11 @@ QString Phrase::tr()
 	for(int i=0;i<=_imot;++i)
 	{
         Mot* m = _mots.at(i);
-        qDebug()<<"Phrase::tr, estSommet"<<m->gr()<<estSommet(m);
-		if (estSommet(m)) 
+		if (m->estSommet()) 
         {
             fl << m->trGroupe() << "<br/>";
         }
 	}
     // le nouveau mot est sommet tant qu'un lien n'a pas été validé
-    qDebug()<<"Phrase::tr(), retour"<<retour;
 	return retour;
 }

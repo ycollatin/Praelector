@@ -78,16 +78,15 @@ void Mot::annuleLemme(int l)
 
 void Mot::choixFlechi(MotFlechi* mf)
 {
+    qDebug()<<_gr<<"choixFlechi"<<mf->morpho();
     QList<Requete*> lr = closes();
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* f = _flechis.at(i);
         if (f == mf) continue;
         f->videReq();
+        _flechis.removeOne(f);
     }
-    // ne laisser que le fléchi mf
-    _flechis.clear();
-    _flechis.append(mf);
 }
 
 void Mot::choixSub(Requete* req)
@@ -208,6 +207,16 @@ bool Mot::estRelatif()
         if (mf->nbCloses() > 0) return true;
     }
     return false;
+}
+
+bool Mot::estSommet()
+{
+    for (int i=0;i<_flechis.count();++i)
+    {
+        MotFlechi* mf = _flechis.at(i);
+        if (mf->estSub()) return false;
+    }
+    return true;
 }
 
 bool Mot::estSubParAff(QString aff)
@@ -498,7 +507,6 @@ QString Mot::trGroupe()
     QList<MotFlechi*> lmf = flValide();
     if (lmf.count() == 1)
     {
-        qDebug()<<"   Mot::trGroupe,"<<lmf.at(0)->morpho()<<"   appel de trGroupe";
         return lmf.at(0)->trGroupe();
     }
     return trs(); 

@@ -153,6 +153,17 @@ void MotFlechi::delSups()
 
 // _lreqSub est la liste des requêtes dont le fléchi est sub
 // _lreqSup est la liste des requêtes dont le fléchi est super
+
+bool MotFlechi::estSub()
+{
+    for (int i=0;i<_lreqSub.count();++i)
+    {
+        Requete* req = _lreqSub.at(i);
+        if (req->close()) return true;
+    }
+    return false;
+}
+
 bool MotFlechi::estSubParAff(QString aff)
 {
     for (int i=0;i<_lreqSub.count();++i)
@@ -327,7 +338,7 @@ Lemme* MotFlechi::lemme()
 
 QString MotFlechi::morpho()
 {
-    return _lemme->gr()+" "+_morpho;
+    return _lemme->gr()+" "+_lemme->pos()+" "+_morpho;
 }
 
 Mot* MotFlechi::mot()
@@ -616,7 +627,6 @@ QString MotFlechi::trfl()
 QString MotFlechi::trGroupe()
 {
     QString lp = _lemme->pos();
-    qDebug()<<"      MoFlechi::trGroupe()"<<gr()<<"lp"<<lp;
     QString ret;
     QTextStream fl(&ret);
     QStringList lgr;
@@ -649,7 +659,6 @@ QString MotFlechi::trGroupe()
         QString el = lgr.at(i);
         if (el == "-") 
         {
-            qDebug()<<"    -,tr"<<_tr;
             fl << _tr << " ";
         }
         else 
@@ -661,7 +670,6 @@ QString MotFlechi::trGroupe()
             }
         }
     }
-    qDebug()<<"      retour"<<ret.simplified();
     return ret.simplified();
 }
 
