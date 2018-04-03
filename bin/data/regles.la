@@ -252,6 +252,7 @@ morphoSup:1ère,2ème,3ème
 posSub:s
 lsSub:conjsubj,conjind
 poids:80
+tr:<sup> <sub>
 
 id:coordAdv
 aff:coord2
@@ -264,6 +265,7 @@ contig:10
 x:adv
 sens:>
 poids:60
+tr:<sup> <sub>
 
 id:coordInit
 aff:coord2
@@ -274,6 +276,7 @@ posSub:v,w
 morphoSub:indicatif,subjonctif
 sens:>
 poids:80
+tr:<sup> <sub>
 
 id:coordN
 aff:coord2
@@ -286,6 +289,7 @@ sens:>
 accord:c
 contig:32
 poids:74
+tr:<sup> <sub>
 
 id:coordV
 aff:coord2
@@ -297,6 +301,7 @@ supEstSub:conjcoordV
 accord:m
 sens:>
 poids:74
+tr:<sup> <sub>
 
 id:cvgenitif
 aff:genitif

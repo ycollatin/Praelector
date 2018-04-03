@@ -34,7 +34,7 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
     _morpho = m;
     _phrase = parent->phrase();
     // traduction fléchie
-    QString tr = l->traduction("fr");
+    QString tr = l->traduction("fr", l->pos().at(0));
     tr.remove(QRegExp("[(\\[][^)^\\]]*[)\\]]"));
     _traductions = tr.split(QRegExp("[,;]"));
     for (int i=0;i<_traductions.count();++i)
@@ -637,7 +637,8 @@ QString MotFlechi::trGroupe()
             << "genitif"
             << "datif"
             << "antecedent"
-            << "nomQue";
+            << "nomQue"
+            << "conjcoordN";
     else if (lp.contains("v")) lgr
             << "sujet"
             << "-" 
@@ -653,6 +654,12 @@ QString MotFlechi::trGroupe()
             << "-"
             << "regimeAbl"
             << "regimeAcc";
+    else if (lp.contains("c")) lgr
+            << "-"
+            << "coordAdv"
+            << "coordN"
+            << "coordInit"
+            << "coordV";
 
     for (int i = 0;i<lgr.count();++i)
     {

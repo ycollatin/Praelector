@@ -78,7 +78,6 @@ void Mot::annuleLemme(int l)
 
 void Mot::choixFlechi(MotFlechi* mf)
 {
-    qDebug()<<_gr<<"choixFlechi"<<mf->morpho();
     QList<Requete*> lr = closes();
     for (int i=0;i<_flechis.count();++i)
     {
