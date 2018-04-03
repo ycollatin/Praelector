@@ -78,7 +78,6 @@ void Mot::annuleLemme(int l)
 
 void Mot::choixFlechi(MotFlechi* mf)
 {
-    QList<Requete*> lr = closes();
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* f = _flechis.at(i);
@@ -102,6 +101,7 @@ void Mot::choixSub(Requete* req)
         if (r->close() && r != req && r->id() != "antecedent")
             r->annuleRequis("Lien concurrent choisi");
     }
+    // annuler tous les lemmes autres que req->sub()->lemme();
 }
 
 void Mot::choixSuper(Requete* req)

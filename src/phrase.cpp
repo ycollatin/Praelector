@@ -346,7 +346,8 @@ void Phrase::choixFlechi(MotFlechi* mf)
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if (req->super() == mf || req->sub() == mf)
+        if ((req->super() !=0 && req->super()->mot() == mf->mot() && req->super() != mf)
+            || (req->sub() != 0 && req->sub()->mot() == mf->mot() && req->sub() != mf))
             _requetes.removeOne(req);
     }
 }
@@ -731,19 +732,25 @@ void Phrase::ecoute (QString m)
 								  }
 							  case 'v':   // pos 1, valider
 								  {
-                                      // FIXME : ad + régime non traduit
+                                      qDebug()<<"v";
                                       Requete* req = _requetes.at(eclats.at(2).toInt());
+                                      qDebug()<<"  req"<<req->doc();
+                                      if (!req->close()) return;
                                       if (req->super()->mot() == cour)
                                       {
-                                          cour->choixFlechi(req->super());
                                           choixFlechi(req->super());
+                                          cour->choixFlechi(req->super());
                                           cour->choixSuper(req);
                                       }
                                       else 
                                       {
-                                          cour->choixFlechi(req->sub());
+                                          qDebug()<<"sub1";
                                           choixFlechi(req->sub());
+                                          qDebug()<<"sub2";
+                                          cour->choixFlechi(req->sub());
+                                          qDebug()<<"sub3";
                                           cour->choixSub(req);
+                                          qDebug()<<"sub4";
                                       }
 									  break;
 								  }
