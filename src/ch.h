@@ -51,12 +51,6 @@ namespace Ch
     void              elide(QString *mp);
     QStringList const nombres = QStringList()
         << "singulier" << "pluriel";
-    QStringList const prenoms = QStringList()
-        << "Agr."<< "Ap."<< "A."<< "K."<< "D."<< "F."<< "C."
-        << "Cn."<< "L."<< "Mam."<< "M\'"<< "M."<< "N."<< "Oct."
-        << "Opet."<< "Post."<< "Pro."<< "P."<< "Q."<< "Sert."
-        << "Ser."<< "Sex."<< "S."<< "St."<< "Ti."<< "T."<< "V."
-        << "Vol."<< "Vop."<< "Pl.";
     const QRegExp     reAlphas("(\\w+)");
     const QRegExp     reEspace("\\s+");
     const QRegExp     reLettres("\\w");
