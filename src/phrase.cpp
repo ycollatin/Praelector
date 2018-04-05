@@ -167,180 +167,6 @@ void Phrase::ajRequete(Requete* req)
     _requetes.append(req);
 }
 
-/*
-QString Phrase::arbre(QString format, bool trace)
-{
-    // signetArbre
-    QString gv;
-    QTextStream fl(&gv);
-    // en-tête du graphe
-    QString grlabel = _gr.simplified();
-    grlabel.replace("\"", "\\""");
-    if (format == "dot")
-        fl  << "digraph arbre {\n"
-            << "graph [ordering=\"out\"];\n"
-            << "labelloc=\"t\";\n"
-            << "label=\""<<grlabel<<"\";\n"
-            //<< "label=\""<<_num<<". "<<_grlabel<<"\";\n"
-            << "rotate=90;\n"
-            << "node [shape=box];\n";
-    else if (format=="easy")
-        fl << "["<<_gr<<"]\n";
-        //fl << "["<<_num<<" "<<_gr<<"]\n";
-
-    for (int i=0;i<_mots.count();++i)
-    {
-        Mot* mc = _mots.at(i);
-        // définition du nœud
-        if (format=="dot")
-            fl <<"N"<<mc->rang()<<" [label=\""<<mc->gr()<<"\"];\n";
-        // lemmatisation et analyse morpho
-        mc->setMorphos(_lemmatiseur->lemmatiseM(mc->gr()));
-
-        // calcul de tous les fléchis de mc
-        for (int il=0;il<mc->morphos().keys().count();++il)
-        {
-            Lemme *l = mc->morphos().keys().at(il);
-            for (int im=0;im<mc->morphos()[l].count();++im)
-            {
-                QString m = mc->morphos()[l].at(im).morpho;
-                MotFlechi* mf = new MotFlechi(l, m, mc);
-                mc->ajFlechi(mf);
-            }
-        }
-
-        // essai de résolution des requêtes en attente.
-        for (int im=0;im<mc->nbFlechis();++im)
-        {
-            MotFlechi* mf = mc->flechi(im);
-            // copie de la liste des requêtes
-            _listeR.clear();
-            for (int ir=0;ir<_requetes.count();++ir)
-            {
-                Requete* r = _requetes.at(ir);
-                //r->initExx();
-                ajListeR(r);
-            }
-
-            while (!_listeR.empty()) 
-            {
-                Requete *req = _listeR.takeFirst();
-                if (mf->resout(req))
-                {
-                    // si la requête est close, il faut pouvoir la 
-                    // filtrer sous un autre numéro.
-                    if (req->close())
-                    {
-                        Requete* reqtemp = req->clone();
-                        reqtemp->setRequis(mf, "requis de requête clonée sur la req. "+req->numc());
-                        filtre(reqtemp);
-                        if (reqtemp->close())
-                        {
-                            req->setRequis(reqtemp->requisFl(), "requis pris sur la req. temporaire");
-                            req->ajHist("CHANGEMENT de requis : "+mf->morpho());
-                        }
-                    }
-                    else
-                    {
-                        // d'abord, fermer la requête
-                        req->setRequis(mf, "non close, résolue");
-                        filtre(req);
-                        if (req->close()) req->ajHist("FILTRÉE : "+req->humain());
-                    }
-                    // détection de boucle de liens
-                    boucle(req);
-                }
-            }
-        }
-        // lancement de nouvelles requêtes si mc n'est pas le dernier mot
-        if (i < _mots.count()-1) mc->lance();
-    }
-
-    // suppression des coord1 restées sans coord2
-    for (int i=0;i<_requetes.count();++i)
-    {
-        Requete* req = _requetes.at(i);
-        if (req->close() && req->aff()=="coord2")
-        {
-            for (int irc=0;irc<req->super()->nbReqSub();++irc)
-            {
-                Requete* rcc = req->super()->reqSub(irc);
-                if (rcc->close() && !accord(req->sub(), rcc->super(), req->regle()->accord()))
-                    rcc->annuleRequis("ne s'accorde pas avec le 2d membre de la coordination");
-            }
-        }
-    }
-
-    nettoieHomonymes("conjcoordAdv");
-    nettoieHomonymes("conjcoordN");
-    nettoieHomonymes("conjcoordV");
-    // supprimer les coord1 sans coord2
-    for (int i=0;i<_requetes.count();++i)
-    {
-        Requete* req = _requetes.at(i);
-        if (req->close() && req->aff()=="coord1"
-            && !req->sub()->estSuperParAff("coord2"))
-            req->annuleRequis("coordination sans second membre");
-    }
-
-    // relecture pour raccrocher les mots perdus
-    //relecture();
-
-    // ajout des liens syntaxiques dans le source GraphViz
-    QStringList liens;
-    for (int i=0;i<_requetes.count();++i)
-    {
-        Requete* req = _requetes.at(i);
-        // signetArbre
-        if (req->close())
-        {
-            liens.append(req->gv(format));
-        }
-        else req->ajHist("REJETÉE "+req->humain());
-    }
-    if (trace) 
-    {
-        for (int i=0;i<_requetes.count();++i)
-        {
-            Requete* req = _requetes.at(i);
-        }
-    }
-    liens.removeDuplicates();
-    fl<<liens.join("\n");
-    if (format=="dot") fl << "}";
-    return gv;
-}
-*/
-
-bool Phrase::boucle(Requete* req)
-{
-    if (!req->close()) return false;
-    Mot* msup = req->super()->mot();
-    Requete* rmin = req;
-    int poidsmin = req->poids();
-    QList<Mot*> supers = supersDe(msup);
-    if (supers.empty()) return false;
-    Mot* ms = supers.at(0);
-    // XXX dans la phrase
-    // in omnem vitam unguento abstinemus, quoniam optimus odor in corpore est nullus.
-    // boucle infinie. Provisoire : int iter
-    int iter = 0;
-    while (ms != msup && iter<10)
-    {
-        Requete* rm = montante(ms);
-        if (rm == 0) return false;
-        if (rm->poids() < poidsmin) 
-        {
-            poidsmin = rm->poids();
-            rmin = rm;
-        }
-        ms = rm->super()->mot();
-        ++iter;
-    } 
-    rmin->annuleRequis("requête la plus faible de la boucle");
-    return true;
-}
-
 void Phrase::choixFlechi(MotFlechi* mf)
 {
     for (int i=0;i<_requetes.count();++i)
@@ -349,6 +175,25 @@ void Phrase::choixFlechi(MotFlechi* mf)
         if ((req->super() !=0 && req->super()->mot() == mf->mot() && req->super() != mf)
             || (req->sub() != 0 && req->sub()->mot() == mf->mot() && req->sub() != mf))
             _requetes.removeOne(req);
+    }
+}
+
+void Phrase::choixReq(Requete* req)
+{
+    for (int i=0;i<_requetes.count();++i)
+    {
+        Requete* r = _requetes.at(i);
+        if (r == req || r->close()) continue;
+        if (r->aff() == req->aff() 
+            && !req->multi()
+            && r->super()->mot() == req->super()->mot())
+        {
+            qDebug()<<"avant suppr"<<_requetes.count()<<"i"<<i;
+            _requetes.removeAt(i);
+            qDebug()<<"après suppr"<<_requetes.count()<<"i"<<i;
+            --i;
+            //delete r;
+        }
     }
 }
 
@@ -746,6 +591,8 @@ void Phrase::ecoute (QString m)
                                           cour->choixFlechi(req->sub());
                                           cour->choixSub(req);
                                       }
+                                      // élimination des requêtes concurrentes
+                                      choixReq(req);
 								      break;
 							      }
 							      // x y et z servent à éditer le gabarit du lien : 
@@ -1488,37 +1335,6 @@ Regle* Phrase::regle(QString id)
     return 0;
 }
 
-/*
-void Phrase::relecture()
-{
-    for (int i=0;i<_mots.count();++i)
-    {
-        Mot* m = _mots.at(i);
-        if (estSommet(m))
-        {
-            for (int ifl=0;ifl<m->nbFlechis();++ifl)
-            {
-                MotFlechi* mf = m->flechi(ifl);
-                for (int ir=_requetes.count()-1;ir>=0;--ir)
-                {
-                    Requete* req = _requetes.at(ir);
-                    if (req->close()) continue;
-                    if (req->subRequis() && req->super()->mot() == m) continue;
-                    if (req->superRequis() && req->sub() != mf) continue;
-                    if (req->requerantFl()->nbCloses() == 0) continue;
-                    if (req->aff() != "epithete" && req->aff() != "det") continue;
-                    if (mf->resout(req))
-                    {
-                        req->setRequis(mf,"validée en relecture");
-                        req->ajHist("validée en RELECTURE");
-                    }
-                }
-            }
-        }
-    }
-}
-*/
-
 QList<Requete*> Phrase::reqCC(Mot* m)
 {
     QList<Requete*> ret;
@@ -1633,30 +1449,12 @@ void Phrase::setLiens()
         while (!_listeR.empty()) 
         {
             Requete *req = _listeR.takeFirst();
-            if (mf->resout(req))
+            if (!req->close() && mf->resout(req))
             {
-                // si la requête est close, il faut pouvoir la 
-                // filtrer sous un autre numéro.
-                if (req->close())
-                {
-                    Requete* reqtemp = req->clone();
-                    reqtemp->setRequis(mf, "requis de requête clonée sur la req. "+req->numc());
-                    filtre(reqtemp);
-                    if (reqtemp->close())
-                    {
-                        req->setRequis(reqtemp->requisFl(), "requis pris sur la req. temporaire");
-                        req->ajHist("CHANGEMENT de requis : "+mf->morpho());
-                    }
-                }
-                else
-                {
-                    // d'abord, fermer la requête
-                    req->setRequis(mf, "non close, résolue");
-                    filtre(req);
-                    if (req->close()) req->ajHist("FILTRÉE : "+req->humain());
-                }
-                // détection de boucle de liens
-                boucle(req);
+                if (req->multi()) _requetes.append(req->clone());
+                req->setRequis(mf, "non close, résolue");
+                filtre(req);
+                if (req->close()) req->ajHist("FILTRÉE : "+req->humain());
             }
         }
     }

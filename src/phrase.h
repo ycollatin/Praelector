@@ -1,16 +1,16 @@
 /* phrase.h */
 /* Copyright (C) 2015 Yves Ouvrard
-   
+
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -36,7 +36,7 @@ class Phrase: public QObject
     Q_OBJECT
 
     private:
-        QStringList             entreMots; 
+        QStringList             entreMots;
 	    QString                 _chAdditions;
         Dialogue*               _dialogue;
         QStringList             _feminins;
@@ -61,9 +61,8 @@ class Phrase: public QObject
         void              additions();
         void              ajListeR(Requete* req);
         void              ajRequete(Requete* req);
-        QString           arbre(QString format="dot", bool trace=false);
-        bool              boucle(Requete* req);
         void              choixFlechi(MotFlechi* mf);
+        void              choixReq(Requete* req);
         bool              compatible(MotFlechi* mf, Mot* m);
         bool              compatible(MotFlechi* ma, MotFlechi* mb);
         void              conflit(Requete* ra, Requete* rb, QString cause);
@@ -99,7 +98,6 @@ class Phrase: public QObject
         QList<Mot*>       portee(int a, int b);
         Regle*            regle(int i);
         Regle*            regle(QString id);
-        //void              relecture();
         QList<Requete*>   reqCC(Mot* m);
         Requete*          requete(int i);
         void              rmListeR(Requete* req);
@@ -110,7 +108,7 @@ class Phrase: public QObject
         QString           tr();
     signals:
         void              repondu(const QString);
-    public slots:     
+    public slots:
         void              trace();
 };
 
@@ -176,7 +174,7 @@ namespace Chaines {
 		 "<a href=\"-aide\">Documentation</a> "
 		 "<a href=\"-quitter\">Quitter</a>");
 
-	const QString titrePraelector = 
+	const QString titrePraelector =
 		"<h2 style=\"font-family:serif;letter-spacing:2em\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
 
 	const QString affSubGris = QString::fromUtf8
