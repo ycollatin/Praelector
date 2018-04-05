@@ -128,7 +128,7 @@ QString MainWindow::choixPhr (QString c)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    //phrase->trace();
+    phrase->trace();
     QMainWindow::closeEvent(event);
 }
 
