@@ -79,15 +79,15 @@ lemmeSub:-nec,-non,-nec,-neque,-et,-quam
 filtre:multi
 poids:60
 
-id:advEt
-aff:adv
-doc:l'adverbe est lié au verbe et précise son sens
-posSup:n
-posSub:d
-lemmeSub:et
-filtre:contig
-sens:<
-poids:60
+!id:advEt
+!aff:adv
+!doc:l'adverbe est lié au verbe et précise son sens
+!posSup:n
+!posSub:d
+!lemmeSub:et
+!filtre:contig
+!sens:<
+!poids:60
 
 id:antecedent
 doc:l'antécédent précède le relatif, qui s'accorde avec lui en genre et nombre
