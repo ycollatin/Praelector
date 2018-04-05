@@ -110,6 +110,8 @@ class Phrase: public QObject
         QString           tr();
     signals:
         void              repondu(const QString);
+    public slots:     
+        void              trace();
 };
 
 namespace Chaines {

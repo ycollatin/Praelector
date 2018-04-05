@@ -81,10 +81,11 @@ void Mot::choixFlechi(MotFlechi* mf)
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* f = _flechis.at(i);
-        if (f == mf) continue;
-        f->videReq();
-        _flechis.removeOne(f);
+        if (f != mf || f->morpho() != mf->morpho())
+            f->videReq();
     }
+    _flechis.clear();
+    _flechis.append(mf);
 }
 
 void Mot::choixSub(Requete* req)
