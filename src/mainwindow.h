@@ -45,6 +45,7 @@ class MainWindow : public QMainWindow
 
 	private slots:
 		void calcul (QUrl url);
+        void closeEvent(QCloseEvent* event);
 		void parle (QString m);
 };
 

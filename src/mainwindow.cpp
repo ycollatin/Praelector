@@ -39,8 +39,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     //retranslateUi(MainWindow);
 
 	phrase = new Phrase("");
-	connect (phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
-	connect (textBrowser, SIGNAL(anchorClicked(QUrl)),this, SLOT(calcul(QUrl)));
+	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
+	connect(textBrowser, SIGNAL(anchorClicked(QUrl)),this, SLOT(calcul(QUrl)));
 	textBrowser->setOpenLinks(false);
 	phrase->ecoute ("");
 }
@@ -124,6 +124,12 @@ QString MainWindow::choixPhr (QString c)
 	f.close ();
 	lp.append (menu);
 	return lp.join ("<br/>");
+}
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    //phrase->trace();
+    QMainWindow::closeEvent(event);
 }
 
 void MainWindow::parle (QString m)
