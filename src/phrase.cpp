@@ -17,10 +17,11 @@
 
 // textes :
 // ~/prof/latin/txt/catalogue.txt
-// ../corpus/phrases.txt
-// TODO XXX FIXME 
+// bin/corpus/phrases.txt
 
+// FIXME : Des fléchis qui devraient rester sont supprimés. ph. 5, uitia acc. pl.
 // TODO : message d'erreur pour les données mal formées dans regles.la
+// XXX : La validation d'un lien ne valide qu'une morpho de chaque membre.
 
 #include <QApplication>
 #include <QDir>
@@ -180,21 +181,20 @@ void Phrase::choixFlechi(MotFlechi* mf)
 
 void Phrase::choixReq(Requete* req)
 {
+    if (!req->close()) return;
+    QString h = req->humain();
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
-        if (r == req || r->close()) continue;
-        if (r->aff() == req->aff() 
-            && !req->multi()
-            && r->super()->mot() == req->super()->mot())
+        if (r->humain() != req->humain() && !req->multi())
         {
-            qDebug()<<"avant suppr"<<_requetes.count()<<"i"<<i;
             _requetes.removeAt(i);
-            qDebug()<<"après suppr"<<_requetes.count()<<"i"<<i;
             --i;
-            //delete r;
         }
     }
+    // màj chez les membres
+    req->sub()->choixReq(req);
+    req->super()->choixReq(req);
 }
 
 // Le MotFlechi mf est-il compatible avec toute requête close
@@ -577,20 +577,13 @@ void Phrase::ecoute (QString m)
 							      }
 						      case 'v':   // pos 1, valider
 							      {
+                                      int rang = eclats.at(2).toInt();
+                                      if (rang >= _requetes.count())
+                                      {
+                                          qDebug()<<"Phrase::ecoute, index trop grand";
+                                          return;
+                                      }
                                       Requete* req = _requetes.at(eclats.at(2).toInt());
-                                      if (!req->close()) return;
-                                      if (req->super()->mot() == cour)
-                                      {
-                                          choixFlechi(req->super());
-                                          cour->choixFlechi(req->super());
-                                          cour->choixSuper(req);
-                                      }
-                                      else 
-                                      {
-                                          choixFlechi(req->sub());
-                                          cour->choixFlechi(req->sub());
-                                          cour->choixSub(req);
-                                      }
                                       // élimination des requêtes concurrentes
                                       choixReq(req);
 								      break;
