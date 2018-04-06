@@ -92,6 +92,29 @@ bool MotFlechi::auxiliaire()
     return false;
 }
 
+void MotFlechi::choixReq(Requete* req)
+{
+    QString h = req->humain();
+    for (int i=0;i<_lreqSup.count();++i)
+    {
+        Requete* r = _lreqSup.at(i);
+        if (r->humain() != h)
+        {
+            _lreqSup.removeAt(i);
+            --i;
+        }
+    }
+    for (int i=0;i<_lreqSub.count();++i)
+    {
+        Requete* r = _lreqSub.at(i);
+        if (r->humain() != h)
+        {
+            _lreqSub.removeAt(i);
+            --i;
+        }
+    }
+}
+
 QList<Requete*> MotFlechi::closes()
 {
     QList<Requete*> ret;

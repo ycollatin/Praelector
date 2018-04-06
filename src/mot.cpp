@@ -72,6 +72,7 @@ void Mot::annuleLemme(int l)
             for (int ir=0;ir<mf->nbReqSub();++ir)
                 mf->reqSub(ir)->annuleRequis("lemme rejeté");
             _flechis.removeOne(mf);
+            --i;
         }
     }
 }
@@ -86,6 +87,15 @@ void Mot::choixFlechi(MotFlechi* mf)
     }
     _flechis.clear();
     _flechis.append(mf);
+}
+
+void Mot::choixReq(Requete* req)
+{
+    for (int i=0;i<_flechis.count();++i)
+    {
+        MotFlechi* mf = _flechis.at(i);
+        mf->choixReq(req);
+    }
 }
 
 void Mot::choixSub(Requete* req)

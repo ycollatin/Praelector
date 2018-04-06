@@ -52,6 +52,7 @@ class MotFlechi: public QObject
         void            ajReq(Requete* req);
         bool            aUnSuper();
         bool            auxiliaire();
+        void            choixReq(Requete* req);
         QList<Requete*> closes();
         bool            contigu(MotFlechi* mf);
         void            delSubs();

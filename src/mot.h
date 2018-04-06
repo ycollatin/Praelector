@@ -52,6 +52,7 @@ class Mot : public QObject
         void              annuleFlechi(int f);
         void              annuleLemme(int l);
         void              choixFlechi(MotFlechi* mf);
+        void              choixReq(Requete* req);
         void              choixSuper(Requete* req);
         void              choixSub(Requete* req);
         QList<Requete*>   closes();
