@@ -1,6 +1,9 @@
 /*   MotFlechi.cpp  */
 /* Copyright (C) 2015 Yves Ouvrard
 
+    QList<Requete*> lreqSub = _phrase->lReqSub(this, true);
+    QList<Requete*> lreqSup = _phrase->lReqSup(this, true);
+
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
@@ -13,6 +16,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
+
 
 #include <QDebug>
 
@@ -68,134 +72,24 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
     }
 }
 
-void MotFlechi::ajReq(Requete* req)
-{
-    if (req->subRequis()) _lreqSub.append(req);
-    else _lreqSup.append(req);
-}
-
-void MotFlechi::annuleReqs()
-{
-    for (int i=0;i<_lreqSup.count();++i)
-    {
-        Requete* req = _lreqSup.at(i);
-        if (req->requerantFl() == this)
-        {
-            _lreqSup.removeAt(i);
-            --i;
-        }
-        else req->annuleRequis("Fléchi désactivé");
-    }
-}
-
-bool MotFlechi::aUnSuper()
-{
-    for (int i=0;i<_lreqSub.count();++i)
-        if (_lreqSub.at(i)->close()) return true;
-    return false;
-}
-
-bool MotFlechi::auxiliaire()
-{
-    for (int i=0;i<_lreqSup.count();++i)
-    {
-        Requete* req = _lreqSup.at(i);
-        if (req->close() && (req->id() == "ppp" || req->id() == "parFut"))
-            return true;
-    }
-    return false;
-}
-
-void MotFlechi::choixReq(Requete* req)
-{
-    QString h = req->humain();
-    for (int i=0;i<_lreqSup.count();++i)
-    {
-        Requete* r = _lreqSup.at(i);
-        if (r->humain() != h)
-        {
-            _lreqSup.removeAt(i);
-            --i;
-        }
-    }
-    for (int i=0;i<_lreqSub.count();++i)
-    {
-        Requete* r = _lreqSub.at(i);
-        if (r->humain() != h)
-        {
-            _lreqSub.removeAt(i);
-            --i;
-        }
-    }
-}
-
 QList<Requete*> MotFlechi::closes()
 {
-    QList<Requete*> ret;
-    for (int i=0;i<_lreqSup.count();++i)
-    {
-        Requete* req = _lreqSup.at(i);
-        if (req->close()) ret.append(req);
-    }
-    for (int i=0;i<_lreqSub.count();++i)
-    {
-        Requete* req = _lreqSub.at(i);
-        if (req->close()) ret.append(req);
-    }
+    QList<Requete*> ret = _phrase->lReqSup(this, true);
+    ret.append(_phrase->lReqSub(this, true));
     return ret;
 }
-
-/*
-QString MotFlechi::conj()
-{
-    QString tr = _traduction;
-	QString ret = conjnat(_tr, _morpho);
-	QString ajout = "";
-	int x = _tr.indexOf (' ');
-	if ((x > -1) && !_tr.startsWith ("se "))
-	{
-		ajout = tr.section (' ', 1);
-		ajout.prepend (" ");
-		//_tr.chop (tr.length()-x);
-	}
-	// adjectif verbal
-	if (_morpho.contains("verbal"))
-		ret.prepend ("devant être ");
-	return ret;
-}
-*/
 
 bool MotFlechi::contigu(MotFlechi* mf)
 {
     return abs(rang() - mf->rang()) == 1;
 }
 
-void MotFlechi::delSubs()
-{
-    for (int i=0;i<_lreqSub.count();++i)
-    {
-        Requete* req = _lreqSub.at(i);
-        if (req->close()) req->annuleRequis("sub ANNULÉ");
-    }
-}
-
-void MotFlechi::delSups()
-{
-    for (int i=0;i<_lreqSup.count();++i)
-    {
-        Requete* req = _lreqSup.at(i);
-        if (req->close()) req->annuleRequis("sub ANNULÉ");
-    }
-}
-
-// _lreqSub est la liste des requêtes dont le fléchi est sub
-// _lreqSup est la liste des requêtes dont le fléchi est super
-
 bool MotFlechi::estSub()
 {
-    for (int i=0;i<_lreqSub.count();++i)
+    QList<Requete*> lreqSub = _phrase->lReqSub(this);
+    for (int i=0;i<lreqSub.count();++i)
     {
-        Requete* req = _lreqSub.at(i);
+        Requete* req = lreqSub.at(i);
         if (req->close()) return true;
     }
     return false;
@@ -203,9 +97,10 @@ bool MotFlechi::estSub()
 
 bool MotFlechi::estSubParAff(QString aff)
 {
-    for (int i=0;i<_lreqSub.count();++i)
+    QList<Requete*> lreqSub = _phrase->lReqSub(this);
+    for (int i=0;i<lreqSub.count();++i)
     {
-        Requete* req = _lreqSub.at(i);
+        Requete* req = lreqSub.at(i);
         if (req->close() && req->aff() == aff)
             return true;
     }
@@ -214,9 +109,10 @@ bool MotFlechi::estSubParAff(QString aff)
 
 bool MotFlechi::estSubParId(QString id)
 {
-    for (int i=0;i<_lreqSub.count();++i)
+    QList<Requete*> lreqSub = _phrase->lReqSub(this);
+    for (int i=0;i<lreqSub.count();++i)
     {
-        Requete* req = _lreqSub.at(i);
+        Requete* req = lreqSub.at(i);
         if (req->close() && req->id() == id)
             return true;
     }
@@ -225,9 +121,10 @@ bool MotFlechi::estSubParId(QString id)
 
 bool MotFlechi::estSuperDe(MotFlechi* m)
 {
-    for (int i=0;i<_lreqSup.count();++i)
+    QList<Requete*> lreqSup = _phrase->lReqSup(this);
+    for (int i=0;i<lreqSup.count();++i)
     {
-        Requete* req = _lreqSup.at(i);
+        Requete* req = lreqSup.at(i);
         if (req->close() && req->sub() == m)
             return true;
     }
@@ -236,9 +133,10 @@ bool MotFlechi::estSuperDe(MotFlechi* m)
 
 bool MotFlechi::estSuperParAff(QString aff)
 {
-    for (int i=0;i<_lreqSup.count();++i)
+    QList<Requete*> lreqSup = _phrase->lReqSup(this);
+    for (int i=0;i<lreqSup.count();++i)
     {
-        Requete* req = _lreqSup.at(i);
+        Requete* req = lreqSup.at(i);
         if (req->close() && req->aff() == aff)
             return true;
     }
@@ -247,9 +145,10 @@ bool MotFlechi::estSuperParAff(QString aff)
 
 bool MotFlechi::estSuperParId(QString id)
 {
-    for (int i=0;i<_lreqSup.count();++i)
+    QList<Requete*> lreqSup = _phrase->lReqSup(this);
+    for (int i=0;i<lreqSup.count();++i)
     {
-        Requete* req = _lreqSup.at(i);
+        Requete* req = lreqSup.at(i);
         if (req->close() && req->id() == id)
             return true;
     }
@@ -298,15 +197,17 @@ QString MotFlechi::htmlLiens()
     QStringList ll;
     // TODO trier _lreqSup et _lreqSub en fonction de leur poids
     // 1. liens dont le mot est sub :
-    for (int i=0;i<_lreqSub.count();++i)
+    QList<Requete*> lreqSub = _phrase->lReqSub(this);
+    for (int i=0;i<lreqSub.count();++i)
     {
-        Requete* req = _lreqSub.at(i);
+        Requete* req = lreqSub.at(i);
         if (req->close()) ll.append(req->fonction());
     }
-    // 1. liens dont le mot est super :
-    for (int i=0;i<_lreqSup.count();++i)
+    // 2. liens dont le mot est super :
+    QList<Requete*> lreqSup = _phrase->lReqSup(this);
+    for (int i=0;i<lreqSup.count();++i)
     {
-        Requete* req = _lreqSup.at(i);
+        Requete* req = lreqSup.at(i);
         if (req->close()) ll.append(req->fonction());
     }
     return ll.join("<br/>");
@@ -351,7 +252,6 @@ Requete* MotFlechi::lanceReqSub(Regle* r)
 {
     Requete* nr = new Requete(0, this, r);
     _phrase->ajRequete(nr);
-    _lreqSub.append(nr);
     nr->ajHist("\n------------------\nRequête numéro "+nr->numc());
     nr->ajHist(nr->humain());
     nr->ajHist(nr->doc());
@@ -362,7 +262,6 @@ Requete* MotFlechi::lanceReqSup(Regle* r)
 {
     Requete* nr = new Requete(this, 0, r);
     _phrase->ajRequete(nr);
-    _lreqSup.append(nr);
     nr->ajHist("\n------------------\nRequête numéro "+nr->numc());
     nr->ajHist(nr->humain());
     return nr;
@@ -385,32 +284,23 @@ Mot* MotFlechi::mot()
 
 int MotFlechi::nbCloses()
 {
-    int ret = 0;
-    for (int i=0;i<_lreqSub.count();++i)
-        if (_lreqSub.at(i)->close()) ++ret;
-    for (int i=0;i<_lreqSup.count();++i)
-    {
-        if (_lreqSup.at(i)->close()) ++ret;
-    }
-    return ret;
+    return _phrase->lReqSub(this, true).count()
+        + _phrase->lReqSup(this, true).count();
 }
 
 int MotFlechi::nbReqSub()
 {
-    return _lreqSub.count();
+    return _phrase->lReqSub(this).count();
 }
 
 int MotFlechi::nbReqSup()
 {
-    return _lreqSup.count();
+    return _phrase->lReqSup(this).count();
 }
 
 int MotFlechi::nbReqSupCloses()
 {
-    int ret = 0;
-    for (int i=0;i<_lreqSup.count();++i)
-        if (_lreqSup.at(i)->close()) ++ret;
-    return ret;
+    return _phrase->lReqSup(this).count();
 }
 
 void MotFlechi::nettoie()
@@ -438,15 +328,16 @@ int MotFlechi::rang()
 
 Requete* MotFlechi::reqSub(int i)
 {
-    return _lreqSub.at(i);
+    return _phrase->lReqSub(this).at(i);
 }
 
 Requete* MotFlechi::reqSub(QString id)
 {
-    for (int i=0;i<_lreqSub.count();++i)
+    QList<Requete*> lreqSub = _phrase->lReqSub(this, true);
+    for (int i=0;i<lreqSub.count();++i)
     {
-        Requete* req = _lreqSub.at(i);
-        if (req->close() && req->id() == id)
+        Requete* req = lreqSub.at(i);
+        if (req->id() == id)
             return req;
     }
     return 0;
@@ -454,7 +345,7 @@ Requete* MotFlechi::reqSub(QString id)
 
 Requete* MotFlechi::reqSup(int i)
 {
-    return _lreqSup.at(i);
+    return _phrase->lReqSup(this).at(i);
 }
 
 bool MotFlechi::resout(Requete* req)
@@ -625,9 +516,10 @@ void MotFlechi::setTr(QString t)
 
 bool MotFlechi::sommet()
 {
-    for (int i=0;i<_lreqSub.count();++i)
+    QList<Requete*> lreqSub = _phrase->lReqSub(this, true);
+    for (int i=0;i<lreqSub.count();++i)
     {
-        Requete* req = _lreqSub.at(i);
+        Requete* req = lreqSub.at(i);
         if (req->close()) return false;
     }
     return true;
@@ -635,9 +527,10 @@ bool MotFlechi::sommet()
 
 Requete* MotFlechi::sub(QString id)
 {
-    for (int i=0;i<_lreqSup.count();++i)
+    QList<Requete*> lreqSup = _phrase->lReqSup(this, true);
+    for (int i=0;i<lreqSup.count();++i)
     {
-        Requete* req = _lreqSup.at(i);
+        Requete* req = lreqSup.at(i);
         if (req->close() && req->id() == id)
             return req;
     }
@@ -722,6 +615,7 @@ QString MotFlechi::trNue()
     return _trNue;
 }
 
+/*
 void MotFlechi::videReq()
 {
     for (int i=0;i<_lreqSub.count();++i)
@@ -729,3 +623,4 @@ void MotFlechi::videReq()
     for (int i=0;i<_lreqSup.count();++i)
         _lreqSup.at(i)->annuleRequis("fléchi rejeté");
 }
+*/

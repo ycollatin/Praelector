@@ -41,23 +41,16 @@ class MotFlechi: public QObject
         Lemme*          _lemme;
         QString         _morpho;
         Phrase*         _phrase;
-        QList<Requete*> _lreqSup;
-        QList<Requete*> _lreqSub;
         QStringList     _traductions;
         QStringList     _trfl;
         QString         _trNue;
         QString         _tr;
     public:
         MotFlechi(Lemme* l, QString m, Mot* parent);
-        void            ajReq(Requete* req);
-        void            annuleReqs();
         bool            aUnSuper();
         bool            auxiliaire();
-        void            choixReq(Requete* req);
         QList<Requete*> closes();
         bool            contigu(MotFlechi* mf);
-        void            delSubs();
-        void            delSups();
         bool            estSub();
         bool            estSubParAff(QString aff);
         bool            estSubParId(QString id);
