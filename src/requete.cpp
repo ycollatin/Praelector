@@ -495,7 +495,6 @@ void Requete::setRequis(MotFlechi *m, QString cause)
 void Requete::setSub(MotFlechi *m)
 {
     _sub = m;
-    _activee = true;
     _sub->ajReq(this);
 }
 
@@ -507,7 +506,6 @@ void Requete::setSubRequis()
 void Requete::setSuper(MotFlechi *m)
 {
     _super = m;
-    _activee = true;
     _super->ajReq(this);
 }
 
