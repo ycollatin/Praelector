@@ -61,6 +61,7 @@ class Phrase: public QObject
         void              additions();
         void              ajListeR(Requete* req);
         void              ajRequete(Requete* req);
+        void              annuleLemme(Mot* m, Lemme* l);
         void              choixFlechi(MotFlechi* mf);
         void              choixReq(Requete* req);
         bool              compatible(MotFlechi* mf, Mot* m);

@@ -168,6 +168,23 @@ void Phrase::ajRequete(Requete* req)
     _requetes.append(req);
 }
 
+void Phrase::annuleLemme(Mot* m, Lemme* l)
+{
+    m->annuleLemme(l);
+    // supprimer les requêtes utilisant m et l
+    for (int i=0;i<_requetes.count();++i)
+    {
+        Requete* req = _requetes.at(i);
+        if (req->requerant() == m && req->requerantFl()->lemme() == l)
+        {
+            _requetes.removeAt(i);
+            --i;
+        }
+        else if (req->requis() == m && req->requisFl()->lemme() == l)
+            req->annuleRequis("lemme rejeté");
+    }
+}
+
 void Phrase::choixFlechi(MotFlechi* mf)
 {
     for (int i=0;i<_requetes.count();++i)
@@ -468,8 +485,11 @@ void Phrase::ecoute (QString m)
                                       switch (eclats.at(2).at(0).unicode())
                                       {
                                           case 'm':
-                                              cour->annuleLemme(n);
-                                              break;
+                                              {
+                                                  Lemme* l = cour->flechi(n)->lemme();
+                                                  annuleLemme(cour, l);
+                                                  break;
+                                              }
                                           case 'f':
                                               cour->annuleFlechi(n);
                                               break;
@@ -674,19 +694,15 @@ void Phrase::ecoute (QString m)
 							      }
 						      case 'r':   // rejet d'un lien
 					      	      {
-                                      /*
-								      LLienSub lsub;
-						      	      switch (eclats.at (2).at(0).unicode ())
-						      	      {
-							      	      case 's': lsub = cour->subordonnes(); break;
-							      	      case 'd': lsub = cour->dependDe(); break;
-							      	      case 'a': lsub = cour->antecedents(); break;
-							      	      default: std::cerr << qPrintable (m) <<"erreur d'url rejet lien"<<"\n"; break;
-						      	      }
-								      for (int i=0;i<lsub.count();++i)
-									      if (lv.contains (QString::number (i)))
-										      lsub.at (i)->setEtat (LienSub::EtatGrise);
-                                       */
+                                      int n = eclats.at(2).toInt();
+                                      if (n >= _requetes.count())
+                                      {
+                                          qDebug()<<"index de requête trop grand";
+                                          return;
+                                      }
+                                      Requete* req = _requetes.at(n);
+                                      qDebug()<<"   de la req."<<req->humain();
+                                      if (req->requerant() == cour) _requetes.removeAt(n);
 								      break;
 					      	      }
 						      default: std::cerr << qPrintable (m)<<"erreur d'url lien"<<"\n"; break;
