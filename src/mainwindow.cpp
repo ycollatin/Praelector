@@ -86,11 +86,11 @@ void MainWindow::calcul (QUrl url)
 	}
 	else if (cmd.startsWith("@"))
 	{
-		textBrowser->setHtml (choixPhr (cmd));
+		textBrowser->setHtml(choixPhr(cmd));
 	}
 	else 
 	{
-		phrase->ecoute (cmd);
+		phrase->ecoute(cmd);
 	}
 }
 
