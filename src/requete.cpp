@@ -32,6 +32,7 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
     _super = 0;
     _sub = 0;
     _activee = false;
+    _num = -1;
     if (sup != 0)
     {
         _super = sup;
@@ -51,6 +52,7 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
         _subRequis = false;
     }
     _coord1 = 0;
+    _num = _phrase->getNumReq();
     _morte = false;
 }
 
@@ -283,6 +285,7 @@ bool Requete::homoSub(MotFlechi* mf)
 
 QString Requete::html()
 {
+    if (!close()) return doc();
     QString ret;
     QTextStream fl(&ret);
     // En noir, fonction
@@ -297,7 +300,7 @@ QString Requete::html()
         // lien valider
         << "<a href=\"l.v."<<_num<<"\">valider</a> "
         // lien rejeter
-        << "<a href=\"l.r.\""<<_num<<">rejeter</a>";
+        << "<a href=\"l.r."<<_num<<"\">rejeter</a>";
     return ret;
 }
 
@@ -495,7 +498,7 @@ void Requete::setRequis(MotFlechi *m, QString cause)
 void Requete::setSub(MotFlechi *m)
 {
     _sub = m;
-    _sub->ajReq(this);
+    //_sub->ajReq(this);
 }
 
 void Requete::setSubRequis()
@@ -506,7 +509,7 @@ void Requete::setSubRequis()
 void Requete::setSuper(MotFlechi *m)
 {
     _super = m;
-    _super->ajReq(this);
+    //_super->ajReq(this);
 }
 
 void Requete::setSuperRequis()

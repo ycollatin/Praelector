@@ -48,6 +48,7 @@ class Phrase: public QObject
         int                     _maxImot;
         QList<Mot*>             _mots;
         int                     _num;
+        int                     _numReq;
         QList<Regle*>           _regles;
         QString                 _reponse;
         QList<Requete*>         _requetes;
@@ -74,6 +75,7 @@ class Phrase: public QObject
         bool              estFeminin(QString n);
         bool              filtre(Requete* req);
         QString           gauche(Mot *m);
+        int               getNumReq();
         QString           grLu();
         int               handicap(MotFlechi* mf);
         QList<Requete*>   homolexes(Requete* req);
@@ -84,6 +86,8 @@ class Phrase: public QObject
         bool              isomorph(QString ma, QString mb);
         void              lance();
         void              lemmatise();
+        QList<Requete*>   lReqSub(MotFlechi* mf, bool closes=false);
+        QList<Requete*>   lReqSup(MotFlechi* mf, bool closes=false);
         Requete*          montante(Mot* m);
         Mot*              motCourant();
         Mot*              motNo(int i);
@@ -100,7 +104,7 @@ class Phrase: public QObject
         Regle*            regle(int i);
         Regle*            regle(QString id);
         QList<Requete*>   reqCC(Mot* m);
-        Requete*          requete(int i);
+        Requete*          requete(int n);
         void              rmListeR(Requete* req);
         void              setGr(QString t);
         void              setLiens();

@@ -45,6 +45,7 @@ Phrase::Phrase(QString t)
     initFeminins();
     peupleRegles("regles.la");
     peupleHandicap();
+    _numReq = -1;
     if (!t.isEmpty())
     {
         setGr(t);
@@ -147,24 +148,6 @@ void Phrase::ajListeR(Requete* req)
 
 void Phrase::ajRequete(Requete* req)
 {
-    // s'assurer que la requête n'est pas redondante
-    if (req->close())
-    {
-        for (int i=0;i<_requetes.count();++i)
-        {
-            Requete* ri = _requetes.at(i);
-            if (!ri->close()) continue;
-            //if (ri->super()->egale(req->super())
-            if (ri->super() == req->super()
-                && ri->id() == req->id()
-                && ri->sub() == req->sub())
-            {
-                ri->ajHist("réutilisée par "+req->doc());
-                return;
-            }
-        }
-    }
-    req->setNum(_requetes.count());
     _requetes.append(req);
 }
 
@@ -209,9 +192,11 @@ void Phrase::choixReq(Requete* req)
             --i;
         }
     }
+    /*
     // màj chez les membres
     req->sub()->choixReq(req);
     req->super()->choixReq(req);
+    */
 }
 
 // Le MotFlechi mf est-il compatible avec toute requête close
@@ -700,9 +685,9 @@ void Phrase::ecoute (QString m)
                                           qDebug()<<"index de requête trop grand";
                                           return;
                                       }
-                                      Requete* req = _requetes.at(n);
-                                      qDebug()<<"   de la req."<<req->humain();
-                                      if (req->requerant() == cour) _requetes.removeAt(n);
+                                      Requete* req = requete(n);
+                                      req->annuleRequis("rejet demandé");
+                                      if (req->requerant() == cour) _requetes.removeOne(req);
 								      break;
 					      	      }
 						      default: std::cerr << qPrintable (m)<<"erreur d'url lien"<<"\n"; break;
@@ -1054,6 +1039,11 @@ QString Phrase::gauche(Mot *m)
     return entreMots.at(m->rang());
 }
 
+int Phrase::getNumReq()
+{
+    return ++_numReq;
+}
+
 QString Phrase::grLu()
 {
 	if (_mots.empty())
@@ -1138,21 +1128,17 @@ QString Phrase::htmlLiens()
     Mot* mc = motCourant();
     QString ret;
     QTextStream fl(&ret);
-    for (int i=0;i<mc->nbFlechis();++i)
+    for (int i=0;i<_requetes.count();++i)
     {
-        MotFlechi* mf = mc->flechi(i);
-        for (int ifl=0;ifl<mf->nbReqSub();++ifl)
+        Requete* req = _requetes.at(i);
+        if (req->close()
+            && (req->requerant() == mc
+                || req->requis() == mc))
         {
-            Requete* req = mf->reqSub(ifl);
-            if (req->close()) fl << req->html()<<"<br/>";
-        }
-        for (int ifl=0;ifl<mf->nbReqSup();++ifl)
-        {
-            Requete* req = mf->reqSup(ifl);
-            if (req->close()) fl << req->html()<<"<br/>";
+            fl << req->html() << "<br/>";
         }
     }
-    return ret;    
+    return ret;
 }
 
 void Phrase::lance()
@@ -1160,6 +1146,30 @@ void Phrase::lance()
     Mot* mc = _mots.at(_imot);
     for (int i=0;i<mc->nbFlechis();++i)
         mc->flechi(i)->lance();        
+}
+
+QList<Requete*> Phrase::lReqSub(MotFlechi* mf, bool closes)
+{
+    QList<Requete*> ret;
+    for (int i=0;i<_requetes.count();++i)
+    {
+        Requete* req = _requetes.at(i);
+        if ((!closes || req->close()) && req->sub() == mf)
+            ret.append(req);
+    }
+    return ret;
+}
+
+QList<Requete*> Phrase::lReqSup(MotFlechi* mf, bool closes)
+{
+    QList<Requete*> ret;
+    for (int i=0;i<_requetes.count();++i)
+    {
+        Requete* req = _requetes.at(i);
+        if ((!closes || req->close()) && req->super() == mf)
+            ret.append(req);
+    }
+    return ret;
 }
 
 void Phrase::lemmatise()
@@ -1360,9 +1370,14 @@ QList<Requete*> Phrase::reqCC(Mot* m)
     return ret;
 }
 
-Requete* Phrase::requete(int i)
+Requete* Phrase::requete(int n)
 {
-    return _requetes.at(i);
+    for (int i=0;i<_requetes.count();++i)
+    {
+        Requete* req = _requetes.at(i);
+        if (req->num() == n) return req;
+    }
+    return 0;
 }
 
 void Phrase::rmListeR(Requete* req)
