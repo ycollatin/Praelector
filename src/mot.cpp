@@ -77,16 +77,6 @@ void Mot::choixFlechi(MotFlechi* mf)
     _flechis.append(mf);
 }
 
-/*
-void Mot::choixReq(Requete* req)
-{
-    for (int i=0;i<_flechis.count();++i)
-    {
-        MotFlechi* mf = _flechis.at(i);
-    }
-}
-*/
-
 void Mot::choixSub(Requete* req)
 {
     // annuler toutes les autres super, sauf antécédent
@@ -101,7 +91,6 @@ void Mot::choixSub(Requete* req)
         if (r->close() && r != req && r->id() != "antecedent")
             r->annuleRequis("Lien concurrent choisi");
     }
-    // annuler tous les lemmes autres que req->sub()->lemme();
 }
 
 void Mot::choixSuper(Requete* req)
@@ -118,17 +107,6 @@ void Mot::choixSuper(Requete* req)
                 r->annuleRequis("Lien concurrent choisi");
         }
     }
-}
-
-QList<Requete*> Mot::closes()
-{
-    QList<Requete*> ret;
-    for (int i=0;i<_flechis.count();++i)
-    {
-        MotFlechi* mf = _flechis.at(i);
-        ret.append(mf->closes());
-    }
-    return ret;
 }
 
 int Mot::debut()
@@ -326,23 +304,6 @@ void Mot::lance()
         MotFlechi* mf = _flechis.at(i);
         mf->lance();
     }
-}
-
-// liste de requêtes closes dont le mot est super ou sub
-QList<MotFlechi*> Mot::mfLies()
-{
-    QList<MotFlechi*> liste;
-    QList<Requete*> lreq = closes();
-    for (int i=0;i<lreq.count();++i)
-    {
-        Requete* req = lreq.at(i);
-        if (!req->close()) continue;
-        if (req->super()->mot() == this && !liste.contains(req->super()))
-            liste.append(req->super());
-        else if (!liste.contains(req->sub()))
-            liste.append(req->sub());
-    }
-    return liste;
 }
 
 bool Mot::monomorphe()
