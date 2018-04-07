@@ -38,7 +38,6 @@ class Requete : public QObject
     private:
         Requete*          _coord1;
         bool              _activee;
-        QList<MotFlechi*> _exx;
         QStringList       _hist;
         Lemme*            _lemme;
         QString           _morpho;
@@ -79,7 +78,6 @@ class Requete : public QObject
         bool        homoSub(MotFlechi* mf);
         QString     humain();
         QString     id();
-        void        initExx();
         int         largeur();
         void        meurt();
         bool        morte();

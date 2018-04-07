@@ -66,13 +66,6 @@ QString Requete::aff()
     return _regle->aff();
 }
 
-/*
-void Requete::ajEx(MotFlechi* mf)
-{
-    _exx.append(mf);
-}
-*/
-
 void Requete::ajHist(QString h)
 {
     _hist.append(h);
@@ -85,25 +78,7 @@ void Requete::annuleRequis(QString cause)
         ajHist("Erreur - Requête déjà annulée");
         return;
     }
-    MotFlechi *mf = requisFl();
-    //if (!_exx.empty())
-    bool inex = true;
-    // essai de récupération des mots non liés
-    for (int i=_exx.count()-1;i>=0;--i)
-    {
-        MotFlechi* mex = _exx.takeLast();
-        if (mex->nbCloses() == 0)
-        {
-            setRequis(mex, cause);
-            inex = false;
-            break;
-        }
-    }
-    if (inex)
-    {
-        setRequis(0, cause);
-    }
-    _exx.append(mf);
+    setRequis(0, cause);
     ajHist("ANNULÉE "+cause);
 }
 
@@ -202,16 +177,6 @@ QString Requete::doc()
 bool Requete::enConflit(QString id)
 {
     return _regle->conflit(id);
-}
-
-bool Requete::estEx(MotFlechi* mf)
-{
-    return _exx.contains(mf);
-}
-
-MotFlechi* Requete::ex(int i)
-{
-    return _exx.at(i);
 }
 
 QString Requete::fonction()
@@ -329,11 +294,6 @@ QString Requete::id()
     return _regle->id();
 }
 
-void Requete::initExx()
-{
-    _exx.clear();
-}
-
 int Requete::largeur()
 {
     if (!close()) return 1000;
@@ -353,11 +313,6 @@ bool Requete::morte()
 bool Requete::multi()
 {
     return _regle->filtre().contains("multi");
-}
-
-int Requete::nbEx()
-{
-    return _exx.count();
 }
 
 int Requete::nbPonct(QChar c)
