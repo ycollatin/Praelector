@@ -50,7 +50,7 @@ class Mot : public QObject
         Mot(QString g, int d=-1, int f=-1, int r=-1, QObject *parent=0);
         void              ajFlechi(MotFlechi* mf);
         void              annuleFlechi(int f);
-        void              annuleLemme(int l);
+        void              annuleLemme(Lemme* lem);
         void              choixFlechi(MotFlechi* mf);
         void              choixReq(Requete* req);
         void              choixSuper(Requete* req);

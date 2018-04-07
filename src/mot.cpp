@@ -58,19 +58,14 @@ void Mot::annuleFlechi(int f)
     _flechis.removeOne(mf);
 }
 
-void Mot::annuleLemme(int l)
+void Mot::annuleLemme(Lemme* lem)
 {
-    MotFlechi* fl = _flechis.at(l);
-    Lemme* lem = fl->lemme();
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* mf = _flechis.at(i); 
         if (mf->lemme() == lem)
         {
-            for (int ir=0;ir<mf->nbReqSup();++ir)
-                mf->reqSup(ir)->annuleRequis("lemme rejeté");
-            for (int ir=0;ir<mf->nbReqSub();++ir)
-                mf->reqSub(ir)->annuleRequis("lemme rejeté");
+            mf->annuleReqs();
             _flechis.removeOne(mf);
             --i;
         }
