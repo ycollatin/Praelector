@@ -74,6 +74,20 @@ void MotFlechi::ajReq(Requete* req)
     else _lreqSup.append(req);
 }
 
+void MotFlechi::annuleReqs()
+{
+    for (int i=0;i<_lreqSup.count();++i)
+    {
+        Requete* req = _lreqSup.at(i);
+        if (req->requerantFl() == this)
+        {
+            _lreqSup.removeAt(i);
+            --i;
+        }
+        else req->annuleRequis("Fléchi désactivé");
+    }
+}
+
 bool MotFlechi::aUnSuper()
 {
     for (int i=0;i<_lreqSub.count();++i)

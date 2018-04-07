@@ -50,6 +50,7 @@ class MotFlechi: public QObject
     public:
         MotFlechi(Lemme* l, QString m, Mot* parent);
         void            ajReq(Requete* req);
+        void            annuleReqs();
         bool            aUnSuper();
         bool            auxiliaire();
         void            choixReq(Requete* req);
