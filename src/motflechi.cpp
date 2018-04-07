@@ -1,9 +1,6 @@
 /*   MotFlechi.cpp  */
 /* Copyright (C) 2015 Yves Ouvrard
 
-    QList<Requete*> lreqSub = _phrase->lReqSub(this, true);
-    QList<Requete*> lreqSup = _phrase->lReqSup(this, true);
-
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
@@ -70,13 +67,6 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
         _trNue = _trfl.at(0);
         _tr = _trNue;
     }
-}
-
-QList<Requete*> MotFlechi::closes()
-{
-    QList<Requete*> ret = _phrase->lReqSup(this, true);
-    ret.append(_phrase->lReqSub(this, true));
-    return ret;
 }
 
 bool MotFlechi::contigu(MotFlechi* mf)
@@ -182,8 +172,6 @@ int MotFlechi::handicap()
         if (_morpho.contains("accusatif pluriel")) ret += 22;
         else if (_lemme->gr().endsWith("ia")) ret += 20;
     }
-    int mfl = _mot->mfLies().count();
-    ret -= mfl;
     return ret;
 }
 
