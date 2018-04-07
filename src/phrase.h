@@ -108,7 +108,6 @@ class Phrase: public QObject
         void              rmListeR(Requete* req);
         void              setGr(QString t);
         void              setLiens();
-        void              setNum(int n);
         QList<Mot*>       supersDe(Mot* m);
         QString           tr();
     signals:

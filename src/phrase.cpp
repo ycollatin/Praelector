@@ -175,7 +175,9 @@ void Phrase::choixFlechi(MotFlechi* mf)
         Requete* req = _requetes.at(i);
         if ((req->super() !=0 && req->super()->mot() == mf->mot() && req->super() != mf)
             || (req->sub() != 0 && req->sub()->mot() == mf->mot() && req->sub() != mf))
+        {
             _requetes.removeOne(req);
+        }
     }
 }
 
@@ -183,20 +185,18 @@ void Phrase::choixReq(Requete* req)
 {
     if (!req->close()) return;
     QString h = req->humain();
+    Mot* cour = motCourant();
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
-        if (r->humain() != req->humain() && !req->multi())
-        {
-            _requetes.removeAt(i);
-            --i;
-        }
+        if ((req->super()->mot() == cour
+            || req->sub()->mot() == cour)
+            &&  h != req->humain() && !req->multi())
+            {
+                _requetes.removeAt(i);
+                --i;
+            }
     }
-    /*
-    // màj chez les membres
-    req->sub()->choixReq(req);
-    req->super()->choixReq(req);
-    */
 }
 
 // Le MotFlechi mf est-il compatible avec toute requête close
@@ -588,7 +588,7 @@ void Phrase::ecoute (QString m)
                                           qDebug()<<"Phrase::ecoute, index trop grand";
                                           return;
                                       }
-                                      Requete* req = _requetes.at(eclats.at(2).toInt());
+                                      Requete* req = requete(rang);
                                       // élimination des requêtes concurrentes
                                       choixReq(req);
 								      break;
@@ -687,7 +687,10 @@ void Phrase::ecoute (QString m)
                                       }
                                       Requete* req = requete(n);
                                       req->annuleRequis("rejet demandé");
-                                      if (req->requerant() == cour) _requetes.removeOne(req);
+                                      if (req->requerant() == cour)
+                                      {
+                                          _requetes.removeOne(req);
+                                      }
 								      break;
 					      	      }
 						      default: std::cerr << qPrintable (m)<<"erreur d'url lien"<<"\n"; break;
@@ -1482,11 +1485,6 @@ void Phrase::setLiens()
             }
         }
     }
-}
-
-void Phrase::setNum(int n)
-{
-    _num = n;
 }
 
 QList<Mot*> Phrase::supersDe(Mot* m)
