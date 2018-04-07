@@ -65,7 +65,6 @@ void Mot::annuleLemme(Lemme* lem)
         MotFlechi* mf = _flechis.at(i); 
         if (mf->lemme() == lem)
         {
-            mf->annuleReqs();
             _flechis.removeOne(mf);
             --i;
         }
@@ -74,24 +73,19 @@ void Mot::annuleLemme(Lemme* lem)
 
 void Mot::choixFlechi(MotFlechi* mf)
 {
-    for (int i=0;i<_flechis.count();++i)
-    {
-        MotFlechi* f = _flechis.at(i);
-        if (f != mf || f->morpho() != mf->morpho())
-            f->videReq();
-    }
     _flechis.clear();
     _flechis.append(mf);
 }
 
+/*
 void Mot::choixReq(Requete* req)
 {
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* mf = _flechis.at(i);
-        mf->choixReq(req);
     }
 }
+*/
 
 void Mot::choixSub(Requete* req)
 {
