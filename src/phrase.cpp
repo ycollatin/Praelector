@@ -19,9 +19,11 @@
 // ~/prof/latin/txt/catalogue.txt
 // bin/corpus/phrases.txt
 
-// FIXME : Des fléchis qui devraient rester sont supprimés. ph. 5, uitia acc. pl.
-// TODO : message d'erreur pour les données mal formées dans regles.la
-// XXX : La validation d'un lien ne valide qu'une morpho de chaque membre.
+// FIXME : suppression de bonnes requêtes  
+// TODO : - message d'erreur pour les données mal formées dans regles.la
+//        - différencier lien possible - lien validé
+//        - accorder la traduction de l'épithète
+// XXX :   
 
 #include <QApplication>
 #include <QDir>
@@ -184,18 +186,24 @@ void Phrase::choixFlechi(MotFlechi* mf)
 void Phrase::choixReq(Requete* req)
 {
     if (!req->close()) return;
-    QString h = req->humain();
     Mot* cour = motCourant();
+    // affectation des lemmes super et sub
+    Lemme* lsup = req->super()->lemme();
+    Lemme* lsub = req->sub()->lemme();
+    // éliminer les lemmes implicitement rejetés
+    req->super()->mot()->choixLemme(req->super()->lemme());
+    req->sub()->mot()->choixLemme(req->sub()->lemme());
+    // éliminer les requêtes qui attribuent à cour un autre lemme
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
-        if ((req->super()->mot() == cour
-            || req->sub()->mot() == cour)
-            &&  h != req->humain() && !req->multi())
-            {
-                _requetes.removeAt(i);
-                --i;
-            }
+        if (r == req) continue;
+        if ((r->sub() != 0 && r->sub()->mot() == cour && r->sub()->lemme() != lsub)
+           || (r->super() != 0 && r->super()->mot() == cour && r->super()->lemme() != lsup))
+        {
+            _requetes.removeAt(i);
+            --i;
+        }
     }
 }
 
@@ -401,9 +409,10 @@ void Phrase::ecoute (QString m)
 			case 'i': _imot = eclats.at(1).toInt(); break;  // retour rapide vers le mot de rang m[1]
 			/* PREMIÈRE SECTION : MORPHOS DU NOUVEAU MOT*/
 			case 'm':  // m[0] : opération sur les morphos.
-			         {
-				         /* Calculer le numéro de la morpho sur laquelle agir */
-				         int num = eclats.at (2).toInt ();
+			          {
+				          /* Calculer le numéro de la morpho sur laquelle agir */
+				          int num = eclats.at (2).toInt ();
+                          MotFlechi* mf = cour->flechi(num);
 					      switch (eclats.at (1).at(0).unicode())
 					      {
 						      case 'a':  // ajout d'une entrée dans les additions
@@ -442,11 +451,11 @@ void Phrase::ecoute (QString m)
 							      break;
 						      case 'd': // rotation du déterminant
 							      {
-								      MotFlechi *mm = cour->flechi(num);
-								      mm->setDet(estFeminin(mm->tr()));
+								      //MotFlechi *mm = cour->flechi(num);
+								      mf->setDet(estFeminin(mf->tr()));
 								      break;
 							      }
-						      case 'e':  // édition de la traduction
+						      case 'e':  // éditer de la traduction
 							      {
 								      QString lt;
 								      QTextStream fl (&lt);
@@ -456,7 +465,7 @@ void Phrase::ecoute (QString m)
 								      dialogue->setText (cour->flechi(num)->tr());
 								      int res = dialogue->exec ();
 								      if (res == QDialog::Accepted)
-									      cour->setTr(dialogue->getText ());
+									      mf->setTr(dialogue->getText());
 								      delete dialogue;
 								      break;
 							      }
@@ -583,12 +592,12 @@ void Phrase::ecoute (QString m)
 						      case 'v':   // pos 1, valider
 							      {
                                       int rang = eclats.at(2).toInt();
-                                      if (rang >= _requetes.count())
+                                      Requete* req = requete(rang);
+                                      if (req == 0)
                                       {
-                                          qDebug()<<"Phrase::ecoute, index trop grand";
+                                          qDebug()<<"requête introuvable";
                                           return;
                                       }
-                                      Requete* req = requete(rang);
                                       // élimination des requêtes concurrentes
                                       choixReq(req);
 								      break;
@@ -680,12 +689,12 @@ void Phrase::ecoute (QString m)
 						      case 'r':   // rejet d'un lien
 					      	      {
                                       int n = eclats.at(2).toInt();
-                                      if (n >= _requetes.count())
+                                      Requete* req = requete(n);
+                                      if (req == 0)
                                       {
-                                          qDebug()<<"index de requête trop grand";
+                                          qDebug()<<"Requête introuvable";
                                           return;
                                       }
-                                      Requete* req = requete(n);
                                       req->annuleRequis("rejet demandé");
                                       if (req->requerant() == cour)
                                       {
