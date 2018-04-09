@@ -77,6 +77,19 @@ void Mot::choixFlechi(MotFlechi* mf)
     _flechis.append(mf);
 }
 
+void Mot::choixLemme(Lemme* l)
+{
+    for (int i=0;i<_flechis.count();++i)
+    {
+        MotFlechi* mf = _flechis.at(i); 
+        if (mf->lemme() != l)
+        {
+            _flechis.removeOne(mf);
+            --i;
+        }
+    }
+}
+
 void Mot::choixSub(Requete* req)
 {
     // annuler toutes les autres super, sauf antécédent
@@ -444,6 +457,7 @@ void Mot::setMorphos(MapLem m)
 
 void Mot::setTr(QString t)
 {
+    qDebug()<<"setTr mot"<<_gr<<t;
     _tr = t;
 }
 
