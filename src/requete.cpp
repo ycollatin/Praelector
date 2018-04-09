@@ -269,11 +269,11 @@ QString Requete::html()
     return ret;
 }
 
-QString Requete::humain()
+QString Requete::humain(bool num)
 {
     QString ret;
     QTextStream fl(&ret);
-    fl << _num <<". ";
+    if (num) fl << _num <<". ";
     if (_super == 0)
         fl << "?";
     else fl << _super->gr();

@@ -76,7 +76,7 @@ class Requete : public QObject
         bool        homoSuper(MotFlechi* mf);
         QString     html();
         bool        homoSub(MotFlechi* mf);
-        QString     humain();
+        QString     humain(bool num=false);
         QString     id();
         int         largeur();
         void        meurt();
