@@ -559,6 +559,7 @@ QString MotFlechi::trGroupe()
             << "conjcoordN";
     else if (lp.contains("v")) lgr
             << "sujet"
+            << "objetPr"
             << "-" 
             << "objet"
             << "abl"
