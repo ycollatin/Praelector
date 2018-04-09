@@ -419,6 +419,7 @@ posSub:v,w
 morphoSub:infinitif
 contig:12
 poids:78
+tr:<sup> <sub>
 
 id:isqui
 aff:antecedent
@@ -492,12 +493,23 @@ poids:70
 
 id:objet
 doc:nom objet d'un verbe transitif
-posSub:n,p
+posSub:n
 morphoSub:accusatif
 lemmeSub:-qui2,-quis
 posSup:v
 morphoSup:actif
 poids:75
+tr:<sup> <sub>
+
+id:objetPr
+doc:pronom objet d'un verbe transitif
+posSub:p
+morphoSub:accusatif
+lemmeSub:-qui2,-quis
+posSup:v
+morphoSup:actif
+poids:75
+tr:<sub> <sup>
 
 id:objetRel
 aff:objet
@@ -509,6 +521,7 @@ morphoSup:indicatif actif,subjonctif actif
 accord:n
 sens:<
 poids:86
+tr:<sub> <sup>
 
 id:prep
 doc:une préposition est subordonnée à un verbe, et introduit un groupe prépositionnel
