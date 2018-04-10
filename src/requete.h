@@ -37,11 +37,9 @@ class Requete : public QObject
 
     private:
         Requete*          _coord1;
-        bool              _activee;
         QStringList       _hist;
         Lemme*            _lemme;
         QString           _morpho;
-        bool              _morte;
         int               _num;
         Phrase*           _phrase;
         Regle*            _regle;
@@ -49,9 +47,9 @@ class Requete : public QObject
         MotFlechi*        _sub;
         bool              _subRequis;
         MotFlechi*        _super;
+        bool              _valide;
     public:
         Requete(MotFlechi* sup, MotFlechi* sub, Regle* r);
-        bool        activee();
         QString     aff();
         void        ajHist(QString h);
         void        annuleRequis(QString cause);
@@ -79,8 +77,6 @@ class Requete : public QObject
         QString     humain(bool num=false);
         QString     id();
         int         largeur();
-        void        meurt();
-        bool        morte();
         bool        multi();
         int         nbEx();
         int         nbPonct(QChar c);
@@ -104,6 +100,7 @@ class Requete : public QObject
         void        setSubRequis();
         void        setSuper(MotFlechi *m);
         void        setSuperRequis();
+        void        setValide(bool v);
         MotFlechi*  sub();
         bool        subRequis();
         MotFlechi*  super();
@@ -111,6 +108,7 @@ class Requete : public QObject
         QString     tr();
         QString     trSub(); // traduction 
         MotFlechi*  ultima();
+        bool        valide();
 };
 
 # endif

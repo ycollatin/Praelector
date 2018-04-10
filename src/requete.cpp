@@ -31,7 +31,6 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
     _regle = r;
     _super = 0;
     _sub = 0;
-    _activee = false;
     _num = -1;
     if (sup != 0)
     {
@@ -53,12 +52,7 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
     }
     _coord1 = 0;
     _num = _phrase->getNumReq();
-    _morte = false;
-}
-
-bool Requete::activee()
-{
-    return _activee;
+    _valide = false;
 }
 
 QString Requete::aff()
@@ -253,13 +247,15 @@ QString Requete::html()
     if (!close()) return doc();
     QString ret;
     QTextStream fl(&ret);
+    QString color;
+    if (_valide) color = "darkred";
+    else color = "black";
     // En noir, fonction
     fl << _sub->gr() << " "
         << _regle->aff() << " "
         << _super->gr() << " "
-        // En bleu italique, traduction
-        //<< "<span style=\"color:blue;font-style:italic\">regle:"<<_regle->traduction()<<"</span> ";
-        << "<span style=\"color:darkred;font-style:italic\">"<<tr()<<"</span> "
+        // En ocre italique, traduction
+        << "<span style=\"color:"<<color<<";font-style:italic\">"<<tr()<<"</span> "
         // doc de la règle
         << "<a href=\"l.d."<<_num<<"\">doc</a> "
         // lien valider
@@ -298,16 +294,6 @@ int Requete::largeur()
 {
     if (!close()) return 1000;
     return abs(_super->rang() - _sub->rang());
-}
-
-void Requete::meurt()
-{
-    _morte = true;
-}
-
-bool Requete::morte()
-{
-    return _morte;
 }
 
 bool Requete::multi()
@@ -472,6 +458,11 @@ void Requete::setSuperRequis()
     _subRequis = false;
 }
 
+void Requete::setValide(bool v)
+{
+    _valide = v;
+}
+
 MotFlechi* Requete::sub()
 {
     return _sub;
@@ -517,3 +508,7 @@ MotFlechi* Requete::ultima()
     return _sub;
 }
 
+bool Requete::valide()
+{
+    return _valide;
+}
