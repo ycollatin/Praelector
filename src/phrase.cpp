@@ -19,11 +19,12 @@
 // ~/prof/latin/txt/catalogue.txt
 // bin/corpus/phrases.txt
 
-// FIXME : suppression de bonnes requêtes  
+// FIXME : la validation d'un lien provoque une requête QObject(0x0).
 // TODO : - message d'erreur pour les données mal formées dans regles.la
 //        - différencier lien possible - lien validé
 //        - accorder la traduction de l'épithète
-// XXX :   
+// XXX :  Pour valider un fléchi, donc éliminer ses concurrents, il faut
+//        que l'autre fléchi de la requête soit lui-même validé.
 
 #include <QApplication>
 #include <QDir>
@@ -48,6 +49,7 @@ Phrase::Phrase(QString t)
     peupleRegles("regles.la");
     peupleHandicap();
     _numReq = -1;
+    _maxImot = 1000;
     if (!t.isEmpty())
     {
         setGr(t);
@@ -172,34 +174,22 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
 
 void Phrase::choixFlechi(MotFlechi* mf)
 {
-    for (int i=0;i<_requetes.count();++i)
-    {
-        Requete* req = _requetes.at(i);
-        if ((req->super() !=0 && req->super()->mot() == mf->mot() && req->super() != mf)
-            || (req->sub() != 0 && req->sub()->mot() == mf->mot() && req->sub() != mf))
-        {
-            _requetes.removeOne(req);
-        }
-    }
+    Mot* m = mf->mot();
+    m->choixFlechi(mf);
 }
 
 void Phrase::choixReq(Requete* req)
 {
     if (!req->close()) return;
-    Mot* cour = motCourant();
-    // affectation des lemmes super et sub
-    Lemme* lsup = req->super()->lemme();
-    Lemme* lsub = req->sub()->lemme();
-    // éliminer les lemmes implicitement rejetés
-    req->super()->mot()->choixLemme(req->super()->lemme());
-    req->sub()->mot()->choixLemme(req->sub()->lemme());
-    // éliminer les requêtes qui attribuent à cour un autre lemme
+    Mot* msub = req->sub()->mot();
+    Mot* msup = req->super()->mot();
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
-        if (r == req) continue;
-        if ((r->sub() != 0 && r->sub()->mot() == cour && r->sub()->lemme() != lsub)
-           || (r->super() != 0 && r->super()->mot() == cour && r->super()->lemme() != lsup))
+        if (!r->close() || r == req) continue;
+        if (r->sub()->mot() == msub
+            && r->id() != "antecedent"
+            && r->super()->mot() != msup)
         {
             _requetes.removeAt(i);
             --i;
@@ -213,7 +203,9 @@ bool Phrase::compatible(MotFlechi* mf, Mot* m)
 {
     if (!m->estLie()) return false;
     for (int i=0;i<m->nbFlechis();++i)
+    {
         if (compatible(mf, m->flechi(i))) return true;
+    }
     return false;
 }
 
@@ -323,7 +315,7 @@ void Phrase::conflit(Requete* ra, Requete* rb, QString cause)
 
 bool Phrase::contigue(Requete* req)
 {
-    return (req->close() && !req->morte() && contigus(req->super()->mot(), req->sub()->mot()));
+    return (req->close() && contigus(req->super()->mot(), req->sub()->mot()));
 }
 
 bool Phrase::contigus(Mot *a, Mot *b)
@@ -451,8 +443,7 @@ void Phrase::ecoute (QString m)
 							      break;
 						      case 'd': // rotation du déterminant
 							      {
-								      //MotFlechi *mm = cour->flechi(num);
-								      mf->setDet(estFeminin(mf->tr()));
+								      mf->setDet(estFeminin(mf->trNue()));
 								      break;
 							      }
 						      case 'e':  // éditer de la traduction
@@ -595,7 +586,7 @@ void Phrase::ecoute (QString m)
                                       Requete* req = requete(rang);
                                       if (req == 0)
                                       {
-                                          qDebug()<<"requête introuvable";
+                                          std::cerr << qPrintable("requête introuvable");
                                           return;
                                       }
                                       // élimination des requêtes concurrentes
@@ -692,7 +683,7 @@ void Phrase::ecoute (QString m)
                                       Requete* req = requete(n);
                                       if (req == 0)
                                       {
-                                          qDebug()<<"Requête introuvable";
+                                          std::cerr << qPrintable("Requête introuvable");
                                           return;
                                       }
                                       req->annuleRequis("rejet demandé");
@@ -719,7 +710,7 @@ void Phrase::ecoute (QString m)
 bool Phrase::estFeminin (QString n)
 {
     if (n.isEmpty()) return "?";
-	return _feminins.contains(n);
+	return _feminins.contains(n.toLower());
 }
 
 void Phrase::initFeminins ()
@@ -756,8 +747,6 @@ bool Phrase::isomorph(QString ma, QString mb)
 bool Phrase::filtre(Requete* req)
 {
     // signetFiltre
-    // XXX  19 épith
-
     // Une requête prep ou conj ne se résout pas tant que la prep n'a pas son régime,
     // ou tant que la conjonction n'a pas de verbe subordonné
     if ((req->super()->rang() > req->sub()->rang())
@@ -782,6 +771,7 @@ bool Phrase::filtre(Requete* req)
         req->annuleRequis("un régime de préposition ne peut être objet");
         return false;
     }
+
 
 
     //   Blocages de projectivité
@@ -1502,7 +1492,7 @@ QList<Mot*> Phrase::supersDe(Mot* m)
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if (!req->morte() && req->close() && req->sub()->mot() == m)
+        if (req->close() && req->sub()->mot() == m)
             ret.append(req->super()->mot());
     }
     return ret;
@@ -1529,6 +1519,6 @@ void Phrase::trace()
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        qDebug().noquote() << req->hist();
+        std::cout << qPrintable(req->hist());
     }
 }
