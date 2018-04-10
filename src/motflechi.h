@@ -45,6 +45,7 @@ class MotFlechi: public QObject
         QStringList     _trfl;
         QString         _trNue;
         QString         _tr;
+        bool            _valide;
     public:
         MotFlechi(Lemme* l, QString m, Mot* parent);
         bool            aUnSuper();
@@ -83,12 +84,14 @@ class MotFlechi: public QObject
         void            setDet(bool f=false);
         void            setSujet();
         void            setTr(QString t);
+        void            setValide(bool v);
         bool            sommet();
         Requete*        sub(QString id);
         QString         trfl();
         QString         tr();
         QString         trGroupe();
         QString         trNue();
+        bool            valide();
         void            videReq();
 };
 

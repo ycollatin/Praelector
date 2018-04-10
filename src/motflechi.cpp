@@ -37,6 +37,7 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
     // traduction fléchie
     QString tr = l->traduction("fr", l->pos().at(0));
     tr.remove(QRegExp("[(\\[][^)^\\]]*[)\\]]"));
+    _valide = false;
     _traductions = tr.split(QRegExp("[,;]"));
     for (int i=0;i<_traductions.count();++i)
     {
@@ -502,6 +503,11 @@ void MotFlechi::setTr(QString t)
     _tr = t;
 }
 
+void MotFlechi::setValide(bool v)
+{
+    _valide = v;
+}
+
 bool MotFlechi::sommet()
 {
     QList<Requete*> lreqSub = _phrase->lReqSub(this, true);
@@ -604,12 +610,7 @@ QString MotFlechi::trNue()
     return _trNue;
 }
 
-/*
-void MotFlechi::videReq()
+bool MotFlechi::valide()
 {
-    for (int i=0;i<_lreqSub.count();++i)
-        _lreqSub.at(i)->annuleRequis("fléchi rejeté");
-    for (int i=0;i<_lreqSup.count();++i)
-        _lreqSup.at(i)->annuleRequis("fléchi rejeté");
+    return _valide;
 }
-*/
