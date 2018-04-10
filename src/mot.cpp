@@ -157,7 +157,7 @@ bool Mot::estLie()
     for (int i=0;i<_phrase->nbRequetes();++i)
     {
         Requete* req = _phrase->requete(i);
-        if (req->close() && !req->morte() && ((req->super()->mot() == this) || (req->sub()->mot() == this)))
+        if (req != 0 && req->close() && ((req->super()->mot() == this) || (req->sub()->mot() == this)))
             return true;
     }
     return false;
@@ -457,7 +457,6 @@ void Mot::setMorphos(MapLem m)
 
 void Mot::setTr(QString t)
 {
-    qDebug()<<"setTr mot"<<_gr<<t;
     _tr = t;
 }
 
