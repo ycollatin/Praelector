@@ -1498,7 +1498,7 @@ QList<Mot*> Phrase::supersDe(Mot* m)
     return ret;
 }
 
-QString Phrase::tr()
+QString Phrase::tr(Requete* req)
 {
     QString retour;
     QTextStream fl(&retour);
@@ -1507,7 +1507,7 @@ QString Phrase::tr()
         Mot* m = _mots.at(i);
 		if (m->estSommet()) 
         {
-            fl << m->trGroupe() << "<br/>";
+            fl << m->trGroupe(req) << "<br/>";
         }
 	}
     // le nouveau mot est sommet tant qu'un lien n'a pas été validé

@@ -109,7 +109,7 @@ class Phrase: public QObject
         void              setGr(QString t);
         void              setLiens();
         QList<Mot*>       supersDe(Mot* m);
-        QString           tr();
+        QString           tr(Requete* req=0);
     signals:
         void              repondu(const QString);
     public slots:

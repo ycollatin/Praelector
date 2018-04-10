@@ -475,12 +475,12 @@ MotFlechi* Mot::super()
     return 0;
 }
 
-QString Mot::trGroupe()
+QString Mot::trGroupe(Requete* req)
 {
     QList<MotFlechi*> lmf = flValide();
     if (lmf.count() == 1)
     {
-        return lmf.at(0)->trGroupe();
+        return lmf.at(0)->trGroupe(req);
     }
     return trs(); 
 }

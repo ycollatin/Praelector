@@ -525,7 +525,7 @@ Requete* MotFlechi::sub(QString id)
     for (int i=0;i<lreqSup.count();++i)
     {
         Requete* req = lreqSup.at(i);
-        if (req->close() && req->id() == id)
+        if (req != 0 && req->close() && req->id() == id)
             return req;
     }
     return 0;
@@ -548,7 +548,7 @@ QString MotFlechi::trfl()
     return ret;
 }
 
-QString MotFlechi::trGroupe()
+QString MotFlechi::trGroupe(Requete* req)
 {
     QString lp = _lemme->pos();
     QString ret;
@@ -596,7 +596,7 @@ QString MotFlechi::trGroupe()
         else 
         {
             Requete* r = sub(el);
-            if (r != 0)
+            if (r != 0 && (r->valide() || r == req))
             {
                 fl << r->trSub() << " ";
             }

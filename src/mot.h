@@ -94,7 +94,7 @@ class Mot : public QObject
         void              setPSup(int p);
         void              setTr(QString t);
         MotFlechi*        super();
-        QString           trGroupe();
+        QString           trGroupe(Requete* req=0);
         QString           trs();
 };
 
