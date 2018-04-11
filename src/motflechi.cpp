@@ -242,7 +242,6 @@ Requete* MotFlechi::lanceReqSub(Regle* r)
     Requete* nr = new Requete(0, this, r);
     _phrase->ajRequete(nr);
     nr->ajHist("\n------------------\nRequête numéro "+nr->numc());
-    nr->ajHist(nr->humain());
     nr->ajHist(nr->doc());
     return nr;
 }
@@ -252,7 +251,7 @@ Requete* MotFlechi::lanceReqSup(Regle* r)
     Requete* nr = new Requete(this, 0, r);
     _phrase->ajRequete(nr);
     nr->ajHist("\n------------------\nRequête numéro "+nr->numc());
-    nr->ajHist(nr->humain());
+    nr->ajHist(nr->doc());
     return nr;
 }
 
@@ -290,6 +289,18 @@ int MotFlechi::nbReqSup()
 int MotFlechi::nbReqSupCloses()
 {
     return _phrase->lReqSup(this).count();
+}
+
+int MotFlechi::nbReqSupValides()
+{
+    int ret = 0;
+    for (int i=0;i<_phrase->nbRequetes();++i)
+    {
+        Requete* req = _phrase->requete(i);
+        if (req != 0 && req->close() && req->valide() && req->super() == this)
+            ++ret;
+    }
+    return ret;
 }
 
 void MotFlechi::nettoie()
@@ -548,7 +559,7 @@ QString MotFlechi::trfl()
     return ret;
 }
 
-QString MotFlechi::trGroupe(Requete* req)
+QString MotFlechi::trGroupe()
 {
     QString lp = _lemme->pos();
     QString ret;
@@ -596,7 +607,7 @@ QString MotFlechi::trGroupe(Requete* req)
         else 
         {
             Requete* r = sub(el);
-            if (r != 0 && (r->valide() || r == req))
+            if (r != 0 && (r->close()))
             {
                 fl << r->trSub() << " ";
             }
