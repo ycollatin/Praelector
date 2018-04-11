@@ -877,7 +877,7 @@ void Lemmat::lisFichierLexique(QString filepath)
         QStringList eclats = lin.split('|');
         if (eclats.count() < 6)
         {
-            qDebug()<<"ligne mal formée:"<<lin;
+            std::cerr << qPrintable ("ligne mal formée:"+lin);
             continue;
         }
         Lemme *l = new Lemme(lin, orig, this);
@@ -1016,7 +1016,7 @@ void Lemmat::lisTraductions(bool base, bool extension)
             if (l != 0) l->ajTrad(lin.section(':', 1), suff);
 #ifdef DEBOG
             else
-                qDebug() << "traduction, erreur dans la ligne" << lin
+                std::cerr << "traduction, erreur dans la ligne" << lin
                          << "\n  clé" << Ch::deramise(lin.section(':', 0, 0));
 #endif
         }
