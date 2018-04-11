@@ -24,6 +24,7 @@
 #include <QString>
 #include <QStringList>
 #include "ch.h"
+#include <iostream>
 #include "lemmatiseur.h"
 #include "modele.h"
 
@@ -115,7 +116,7 @@ Lemme::Lemme(QString linea, int origin, QObject *parent)
     _origin = origin;
     if (eclats.count() < 6)
     {
-        qDebug()<<"lemmes.la, ligne mal formée:"<<linea;
+        std::cerr << qPrintable("lemmes.la, ligne mal formée:"+linea);
         return;
     }
     // lecture des radicaux, champs 2 et 3

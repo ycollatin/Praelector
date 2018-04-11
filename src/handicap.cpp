@@ -20,6 +20,7 @@
  */
 
 #include <handicap.h>
+#include <iostream>
 #include <QDebug>
 
 /**********************
@@ -31,7 +32,7 @@ Handicap::Handicap(QStringList sl)
     // contôle
     if (sl.count() < 3)
     {
-        qDebug()<<"ligne mal formée"<<sl;
+        std::cerr << qPrintable("ligne mal formée"+sl.join(":"));
     }
     _forme = sl.at(0);
     QString lem = sl.at(1);

@@ -22,6 +22,7 @@
 #include <QDebug>
 
 #include "ch.h"
+#include <iostream>
 #include "lemmatiseur.h"
 #include "modele.h"
 
@@ -231,7 +232,7 @@ Modele::Modele(QStringList ll, Lemmat *parent)
                 break;
             }
             default:
-                qDebug() << "Modèle, erreur" << l;
+            std::cerr << qPrintable("Modèle, erreur:" + l);
         }
 
     }  // fin de l'interprétation des lignes
