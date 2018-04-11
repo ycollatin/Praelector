@@ -256,7 +256,7 @@ QString Requete::html()
         << _super->gr() << " "
         // En ocre italique, traduction
         //<< "<span style=\"color:"<<color<<";font-style:italic\">"<<tr()<<"</span> "
-        << "<span style=\"color:"<<color<<";font-style:italic\">"<<_super->trGroupe(this)<<"</span> "
+        << "<span style=\"color:"<<color<<";font-style:italic\">"<<_super->trGroupe()<<"</span> "
         // doc de la règle
         << "<a href=\"l.d."<<_num<<"\">doc</a> "
         // lien valider
