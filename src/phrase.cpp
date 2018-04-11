@@ -181,6 +181,7 @@ void Phrase::choixFlechi(MotFlechi* mf)
 void Phrase::choixReq(Requete* req)
 {
     if (!req->close()) return;
+    req->setValide(true);
     Mot* msub = req->sub()->mot();
     Mot* msup = req->super()->mot();
     for (int i=0;i<_requetes.count();++i)
@@ -589,7 +590,6 @@ void Phrase::ecoute (QString m)
                                           std::cerr << qPrintable("requête introuvable");
                                           return;
                                       }
-                                      // élimination des requêtes concurrentes
                                       choixReq(req);
 								      break;
 							      }
@@ -1195,7 +1195,7 @@ void Phrase::majAffichage()
 	        .arg (grLu())                            // %1
 	        .arg (motCourant()->html())              // %2
 	        .arg (htmlLiens())                       // %3
-	        .arg (tr());                     // %4
+	        .arg (tr());                             // %4
     }
 }
 
@@ -1498,7 +1498,7 @@ QList<Mot*> Phrase::supersDe(Mot* m)
     return ret;
 }
 
-QString Phrase::tr(Requete* req)
+QString Phrase::tr()
 {
     QString retour;
     QTextStream fl(&retour);
@@ -1507,7 +1507,7 @@ QString Phrase::tr(Requete* req)
         Mot* m = _mots.at(i);
 		if (m->estSommet()) 
         {
-            fl << m->trGroupe(req) << "<br/>";
+            fl << m->trGroupe() << "<br/>";
         }
 	}
     // le nouveau mot est sommet tant qu'un lien n'a pas été validé
