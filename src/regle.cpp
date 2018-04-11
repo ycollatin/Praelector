@@ -28,6 +28,7 @@
  *  © Yves Ouvrard, 2009 - 2017
  */
 
+#include <iostream>
 #include <lemme.h>
 #include <regle.h>
 
@@ -106,7 +107,7 @@ Regle::Regle(QStringList ll)
 
             default:
                      {
-                         qDebug()<<"regles.la, "<<ecl.at(0)<<"erreur de clé";
+                         std::cerr << qPrintable("regles.la:"+ecl.at(0)+"erreur de clé");
                          break;
                      }
         }
