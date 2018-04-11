@@ -56,7 +56,6 @@ class Mot : public QObject
         void              choixReq(Requete* req);
         void              choixSuper(Requete* req);
         void              choixSub(Requete* req);
-        QList<Requete*>   closes();
         int               debut();
         bool              estAu(QString t);
         Lemme*            estLemDe(QStringList lr);
@@ -67,15 +66,15 @@ class Mot : public QObject
         bool              estSommet();
         bool              estSubParAff(QString aff);
         bool              estSubParId(QString id);
-        //bool              estSuperDe(Mot* m);
         bool              estSuperParAff(QString aff);
         bool              estSuperParId(QString id);
         int               fin();
         MotFlechi*        flechi(int i);
-        QList<MotFlechi*> flValide();
+        QList<MotFlechi*> flValides(Requete* rtest);
         QString           gr();
         QString           html();
         void              lance();
+        QList<Requete*>   lReqSupCloses();
         QList<MotFlechi*> mfLies();
         bool              monomorphe();
         MapLem            morphos();
@@ -94,7 +93,7 @@ class Mot : public QObject
         void              setPSup(int p);
         void              setTr(QString t);
         MotFlechi*        super();
-        QString           trGroupe(Requete* req=0);
+        QString           trGroupe(Requete* rtest=0);
         QString           trs();
 };
 

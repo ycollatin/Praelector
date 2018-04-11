@@ -52,9 +52,9 @@ void Mot::annuleFlechi(int f)
 {
     MotFlechi* mf = _flechis.at(f);
     for (int ir=0;ir<mf->nbReqSup();++ir)
-        mf->reqSup(ir)->annuleRequis("fléchi rejeté");
+        mf->reqSup(ir)->annuleRequis(mf->morpho()+", fléchi rejeté");
     for (int ir=0;ir<mf->nbReqSub();++ir)
-        mf->reqSub(ir)->annuleRequis("fléchi rejeté");
+        mf->reqSub(ir)->annuleRequis(mf->morpho()+", fléchi rejeté");
     _flechis.removeOne(mf);
 }
 
@@ -259,13 +259,15 @@ MotFlechi* Mot::flechi(int i)
     return _flechis.at(i);
 }
 
-QList<MotFlechi*> Mot::flValide()
+QList<MotFlechi*> Mot::flValides(Requete* rtest)
 {
     QList<MotFlechi*> lmf;
+    if (rtest != 0 && rtest->super()->mot() == this)
+        lmf.append(rtest->super());
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* mf = _flechis.at(i);
-        if (mf->nbReqSupCloses() > 0)
+        if (mf->nbReqSupValides() > 0)
             lmf.append(mf);
     }
     return lmf;
@@ -317,6 +319,18 @@ void Mot::lance()
         MotFlechi* mf = _flechis.at(i);
         mf->lance();
     }
+}
+
+QList<Requete*> Mot::lReqSupCloses()
+{
+    QList<Requete*> liste;
+    for (int i=0;i<_phrase->nbRequetes();++i)
+    {
+        Requete* req = _phrase->requete(i);
+        if (req->close() && req->super()->mot() == this)
+            liste.append(req);
+    }
+    return liste;
 }
 
 bool Mot::monomorphe()
@@ -475,12 +489,15 @@ MotFlechi* Mot::super()
     return 0;
 }
 
-QString Mot::trGroupe(Requete* req)
+QString Mot::trGroupe(Requete* rtest)
 {
-    QList<MotFlechi*> lmf = flValide();
-    if (lmf.count() == 1)
+    QList<MotFlechi*> lmf = flValides(rtest);
+    if (!lmf.isEmpty() || rtest != 0)
     {
-        return lmf.at(0)->trGroupe(req);
+        QStringList lret;
+        for (int i=0;i<lmf.count();++i)
+            lret.append(lmf.at(i)->trGroupe());
+        return lret.join("\n");
     }
     return trs(); 
 }
