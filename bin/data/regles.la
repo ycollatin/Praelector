@@ -38,7 +38,7 @@ morphoSub:ablatif
 lsSup:abl
 contig:5
 poids:75
-tr:<sup> <sub>
+tr:<sup> par/à cause de/grâce à/de <sub>
 
 id:ablabs
 posSup:v,w
@@ -49,6 +49,7 @@ subEstSup:epitheteV
 contig:12
 filtre:multi
 poids:60
+tr:<sup> <sub>
 
 id:ablAdj
 aff:abl
@@ -119,6 +120,7 @@ posSub:n,a
 morphoSub:accusatif
 supEstSup:objet
 poids:74
+tr:<sup> <sub>
 
 id:attrSA
 aff:attrS
@@ -374,6 +376,7 @@ morphoSub:génitif
 filtre:antep9
 contig:15
 poids:73
+tr:<sup> de <sub>
 
 id:genSum
 doc:sum + génitif contigu a le sens de "c'est le propre de"
@@ -383,6 +386,7 @@ posSub:n
 morphoSub:génitif
 filtre:contigu
 poids:70
+tr:c'<sup> le propre de <sub>
 
 id:gerondAd
 doc:ad + gérondif à l'accusatif pour le but
@@ -607,7 +611,6 @@ morphoSub:nominatif
 posSup:v,w
 morphoSup:3ème
 accord:np
-!conflit:sujetPr,sujetRel
 poids:88
 tr:<sub> <sup>
 
@@ -618,6 +621,7 @@ morphoSup:1ère singulier
 lemmeSub:ego
 morphoSub:nominatif
 poids:80
+tr:<sup> <sub>
 
 id:sujetInf
 doc:Un infinitif peut être le sujet d'un verbe conjugué
@@ -626,6 +630,7 @@ morphoSup:3ème
 posSup:v,w
 morphoSub:infinitif
 poids:60
+tr:<sup> <sub>
 
 id:sujetPr
 aff:sujet
