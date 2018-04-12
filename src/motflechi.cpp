@@ -579,12 +579,19 @@ QString MotFlechi::trGroupe()
             << "objetPr"
             << "-" 
             << "objet"
+            << "attrSTu"
+            << "attrSA"
+            << "attrSN"
+            << "attrSAdjV"
+            << "attrSInf"
+            << "attrVideor"
+            << "attrO"
             << "abl"
             << "datif"
             << "prep";
     else if (lp.contains("a")) lgr 
             << "-"
-            << "genitif"
+            << "cadj"
             << "datif";
     else if (lp.contains("r")) lgr
             << "-"
