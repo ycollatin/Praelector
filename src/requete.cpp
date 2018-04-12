@@ -53,6 +53,7 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
     _coord1 = 0;
     _num = _phrase->getNumReq();
     _valide = false;
+    _itr = 0;
 }
 
 QString Requete::aff()
@@ -255,10 +256,11 @@ QString Requete::html()
         << _regle->aff() << " "
         << _super->gr() << " "
         // En ocre italique, traduction
-        //<< "<span style=\"color:"<<color<<";font-style:italic\">"<<tr()<<"</span> "
         << "<span style=\"color:"<<color<<";font-style:italic\">"<<_super->trGroupe()<<"</span> "
         // doc de la règle
         << "<a href=\"l.d."<<_num<<"\">doc</a> "
+        // rotation de la traduction
+        << "<a href=\"l.t."<<_num<<"\">tr. suiv</a> "
         // lien valider
         << "<a href=\"l.v."<<_num<<"\">valider</a> "
         // lien rejeter
@@ -289,6 +291,13 @@ bool Requete::homoSuper(MotFlechi* mf)
 QString Requete::id()
 {
     return _regle->id();
+}
+
+void Requete::incItr()
+{
+    ++_itr;
+    if (_itr >= _regle->nbTr())
+        _itr = 0;
 }
 
 int Requete::largeur()
@@ -497,7 +506,7 @@ QString Requete::tr()
 QString Requete::trSub()
 {
     if (_sub == 0) return "erreur, sub manquant";
-    QString ret = _regle->tr(); 
+    QString ret = _regle->tr(_itr); 
     ret.remove("<sup>");
     return ret.replace("<sub>", _sub->trGroupe());
 }

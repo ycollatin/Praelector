@@ -581,6 +581,12 @@ void Phrase::ecoute (QString m)
 								      }
 								      break;
 							      }
+                              case 't':
+                                  {
+                                      int rang = eclats.at(2).toInt();
+                                      Requete* req = requete(rang);
+                                      req->incItr();
+                                  }
 						      case 'v':   // pos 1, valider
 							      {
                                       int rang = eclats.at(2).toInt();
@@ -1283,6 +1289,7 @@ void Phrase::peupleRegles(QString nf)
 {
     QStringList lr = _lemmatiseur->lignesFichier(qApp->applicationDirPath() + "/data/"+nf);
     QStringList ll;
+    QMap<QString,QString> vars;
     for (int i=0;i<lr.count();++i)
     {
         QString lin = lr.at (i).simplified();
@@ -1290,6 +1297,12 @@ void Phrase::peupleRegles(QString nf)
         {
             peupleRegles(lin.section(":",1));
         }
+        else if (lin.startsWith("$"))
+        {
+            lin.remove(0,1);
+            QStringList ecl = lin.split('=');
+            vars[ecl.at(0)] = ecl.at(1);
+        }         
         else 
         {
             if (lin.startsWith("id:") || i==lr.count()-1)

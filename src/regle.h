@@ -59,7 +59,7 @@ class Regle : public QObject
         QString     _posSub;
         QString     _posSup;
         QChar       _sens;
-        QString     _tr;
+        QStringList _tr;
        
     public:
         Regle(QStringList ll);
@@ -88,6 +88,7 @@ class Regle : public QObject
         QStringList  morphoSup();
         int          nbLsSub();
         int          nbLsSup();
+        int          nbTr();
         int          poids();
         QString      posSub();
         QString      posSup();
@@ -97,7 +98,7 @@ class Regle : public QObject
         QStringList  supEstSup();
         bool         subExclu(QString s);
         bool         supExclu(QString s);
-        QString      tr();
+        QString      tr(int i=0);
 };
 
 # endif

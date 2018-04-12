@@ -38,6 +38,7 @@ class Requete : public QObject
     private:
         Requete*          _coord1;
         QStringList       _hist;
+        int               _itr;
         Lemme*            _lemme;
         QString           _morpho;
         int               _num;
@@ -76,6 +77,7 @@ class Requete : public QObject
         bool        homoSub(MotFlechi* mf);
         QString     humain(bool num=false);
         QString     id();
+        void        incItr();
         int         largeur();
         bool        multi();
         int         nbEx();

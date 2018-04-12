@@ -44,8 +44,8 @@ QStringList const clesR = QStringList()
 Regle::Regle(QStringList ll)
 {
     _contig = 0;
-    _tr = "<sup> <sub>";
     //signetRegle
+    QString tr = "<sup> <sub>";
     for (int i=0;i<ll.count();++i)
     {
         QString lin = ll.at(i).simplified();
@@ -102,7 +102,7 @@ Regle::Regle(QStringList ll)
             case 17: _subEstSup = v; break;
             case 18: _supEstSub = v; break;
             case 19: _supEstSup = v.split(','); break;
-            case 20: _tr = v; break;
+            case 20: tr = v; break;
             case 21: _exclus = v.split(','); break;
 
             default:
@@ -120,6 +120,19 @@ Regle::Regle(QStringList ll)
        if (f.startsWith("antep"))
            _antepos = f.mid(5).toInt();
     }
+    // analyse des traductions
+    QString prem = "<sup> ";
+    QString der = " <sub>";
+    tr.remove("<sup>");
+    if (tr.contains("<sup>"))
+    {
+        prem = "<sub> ";
+        der = " <sup>";
+    }
+    tr.remove("<sub>");
+    QStringList trInter = tr.split('/');
+    for (int i=0;i<trInter.count();++i)
+        _tr.append(prem+trInter.at(i)+der);
 }
 
 QString Regle::accord()
@@ -328,6 +341,11 @@ int Regle::nbLsSup()
     return _lsSup.count();
 }
 
+int Regle::nbTr()
+{
+    return _tr.count();
+}
+
 int Regle::poids()
 {
     return _poids;
@@ -358,7 +376,7 @@ bool Regle::supExclu(QString s)
     return _lSupExclus.contains(s);
 }
 
-QString Regle::tr()
+QString Regle::tr(int i)
 {
-    return _tr;
+    return _tr.at(i); 
 }
