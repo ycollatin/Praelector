@@ -75,7 +75,7 @@ class MotFlechi: public QObject
         int             nbReqSub();
         int             nbReqSup();
         int             nbReqSupCloses();
-        int             nbReqSupValides();
+        int             nbReqSupValides(Requete* rtest=0);
         void            nettoie();
         int             rang();
         Requete*        reqSub(int i);
@@ -87,10 +87,10 @@ class MotFlechi: public QObject
         void            setTr(QString t);
         void            setValide(bool v);
         bool            sommet();
-        Requete*        sub(QString id);
+        Requete*        sub(QString id, Requete* rtest=0);
         QString         trfl();
         QString         tr();
-        QString         trGroupe();
+        QString         trGroupe(Requete* rtest=0);
         QString         trNue();
         bool            valide();
         void            videReq();

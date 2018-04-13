@@ -105,7 +105,7 @@ class Phrase: public QObject
         Regle*            regle(QString id);
         QList<Requete*>   reqCC(Mot* m);
         Requete*          requete(int n);
-        void              rmListeR(Requete* req);
+        Requete*          requeteNum(int n);
         void              setGr(QString t);
         void              setLiens();
         QList<Mot*>       supersDe(Mot* m);

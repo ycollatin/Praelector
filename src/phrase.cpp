@@ -584,13 +584,13 @@ void Phrase::ecoute (QString m)
                               case 't':
                                   {
                                       int rang = eclats.at(2).toInt();
-                                      Requete* req = requete(rang);
+                                      Requete* req = requeteNum(rang);
                                       req->incItr();
                                   }
 						      case 'v':   // pos 1, valider
 							      {
                                       int rang = eclats.at(2).toInt();
-                                      Requete* req = requete(rang);
+                                      Requete* req = requeteNum(rang);
                                       if (req == 0)
                                       {
                                           std::cerr << qPrintable("requête introuvable");
@@ -686,7 +686,7 @@ void Phrase::ecoute (QString m)
 						      case 'r':   // rejet d'un lien
 					      	      {
                                       int n = eclats.at(2).toInt();
-                                      Requete* req = requete(n);
+                                      Requete* req = requeteNum(n);
                                       if (req == 0)
                                       {
                                           std::cerr << qPrintable("Requête introuvable");
@@ -1387,17 +1387,19 @@ QList<Requete*> Phrase::reqCC(Mot* m)
 
 Requete* Phrase::requete(int n)
 {
+    if (n < _requetes.count())
+        return _requetes.at(n);
+    return 0;
+}
+
+Requete* Phrase::requeteNum(int n)
+{
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
         if (req->num() == n) return req;
     }
     return 0;
-}
-
-void Phrase::rmListeR(Requete* req)
-{
-    _listeR.removeOne(req);
 }
 
 /*

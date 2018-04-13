@@ -278,7 +278,7 @@ int MotFlechi::nbCloses()
 
 int MotFlechi::nbReqSub()
 {
-    return _phrase->lReqSub(this).count();
+    return _phrase->lReqSub(this, true).count();
 }
 
 int MotFlechi::nbReqSup()
@@ -291,13 +291,13 @@ int MotFlechi::nbReqSupCloses()
     return _phrase->lReqSup(this).count();
 }
 
-int MotFlechi::nbReqSupValides()
+int MotFlechi::nbReqSupValides(Requete* rtest)
 {
     int ret = 0;
     for (int i=0;i<_phrase->nbRequetes();++i)
     {
         Requete* req = _phrase->requete(i);
-        if (req != 0 && req->close() && req->valide() && req->super() == this)
+        if (req != 0 && (req->valide() || req == rtest) && req->super() == this)
             ++ret;
     }
     return ret;
@@ -530,14 +530,16 @@ bool MotFlechi::sommet()
     return true;
 }
 
-Requete* MotFlechi::sub(QString id)
+Requete* MotFlechi::sub(QString id, Requete* rtest)
 {
     QList<Requete*> lreqSup = _phrase->lReqSup(this, true);
     for (int i=0;i<lreqSup.count();++i)
     {
         Requete* req = lreqSup.at(i);
-        if (req != 0 && req->close() && req->id() == id)
+        if (req != 0 && (req->valide() || req == rtest) && req->id() == id)
+        {
             return req;
+        }
     }
     return 0;
 }
@@ -559,7 +561,7 @@ QString MotFlechi::trfl()
     return ret;
 }
 
-QString MotFlechi::trGroupe()
+QString MotFlechi::trGroupe(Requete* rtest)
 {
     QString lp = _lemme->pos();
     QString ret;
@@ -576,6 +578,11 @@ QString MotFlechi::trGroupe()
             << "conjcoordN";
     else if (lp.contains("v")) lgr
             << "sujet"
+            << "sujetRel"
+            << "sujetInf"
+            << "sujetPr"
+            << "sujetEgo"
+            << "sujetTu"
             << "objetPr"
             << "-" 
             << "objet"
@@ -613,8 +620,8 @@ QString MotFlechi::trGroupe()
         }
         else 
         {
-            Requete* r = sub(el);
-            if (r != 0 && (r->close()))
+            Requete* r = sub(el, rtest);
+            if (r != 0)
             {
                 fl << r->trSub() << " ";
             }

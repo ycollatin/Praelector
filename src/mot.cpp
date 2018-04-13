@@ -267,8 +267,10 @@ QList<MotFlechi*> Mot::flValides(Requete* rtest)
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* mf = _flechis.at(i);
-        if (mf->nbReqSupValides() > 0)
+        if (mf->nbReqSupValides(rtest) > 0)
+        {
             lmf.append(mf);
+        }
     }
     return lmf;
 }
@@ -492,11 +494,13 @@ MotFlechi* Mot::super()
 QString Mot::trGroupe(Requete* rtest)
 {
     QList<MotFlechi*> lmf = flValides(rtest);
-    if (!lmf.isEmpty() || rtest != 0)
+    if (!lmf.isEmpty())
     {
         QStringList lret;
         for (int i=0;i<lmf.count();++i)
+        {
             lret.append(lmf.at(i)->trGroupe());
+        }
         return lret.join("\n");
     }
     return trs(); 

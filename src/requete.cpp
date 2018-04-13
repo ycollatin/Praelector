@@ -256,7 +256,7 @@ QString Requete::html()
         << _regle->aff() << " "
         << _super->gr() << " "
         // En ocre italique, traduction
-        << "<span style=\"color:"<<color<<";font-style:italic\">"<<_super->trGroupe()<<"</span> "
+        << "<span style=\"color:"<<color<<";font-style:italic\">"<<_super->trGroupe(this)<<"</span> "
         // doc de la règle
         << "<a href=\"l.d."<<_num<<"\">doc</a> "
         // rotation de la traduction
@@ -471,6 +471,8 @@ void Requete::setSuperRequis()
 void Requete::setValide(bool v)
 {
     _valide = v;
+    if (v) ajHist("VALIDÉE");
+    else ajHist("INVALIDÉE");
 }
 
 MotFlechi* Requete::sub()
@@ -507,6 +509,9 @@ QString Requete::trSub()
 {
     if (_sub == 0) return "erreur, sub manquant";
     QString ret = _regle->tr(_itr); 
+    //if (_super != 0)
+    //    ret.replace("<sup>", _super->tr());
+    //else
     ret.remove("<sup>");
     return ret.replace("<sub>", _sub->trGroupe());
 }
