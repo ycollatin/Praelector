@@ -134,6 +134,7 @@ lsSup:attr
 contig:7
 supEstSup:sujet,sujetPr,sujetRel
 poids:77
+tr:<sup> <sub>
 
 id:attrSInf
 aff:attrS
@@ -145,6 +146,7 @@ morphoSub:nominatif,accusatif
 lsSup:attr
 !supEstSup:sujetPropInf
 poids:77
+tr:<sup> <sub>
 
 id:attrSN
 aff:attrS
@@ -156,6 +158,7 @@ morphoSup:indicatif actif,subjonctif actif,impératif actif
 lsSup:attr
 supEstSup:sujet,sujetPr,sujetRel
 poids:70
+tr:<sup> <sub>
 
 id:attrSTu
 aff:attrS
@@ -165,6 +168,7 @@ morphoSup:2ème
 posSub:a,n,p
 morphoSub:nominatif
 poids:70
+tr:<sup> <sub>
 
 id:attrAdjV
 aff:attrS
@@ -174,6 +178,7 @@ morphoSub:verbal nominatif
 posSup:w
 morphoSup:indicatif actif,subjonctif actif,impératif actif
 poids:50
+tr:<sup> <sub>
 
 id:attrVideor
 aff:attrS
@@ -184,6 +189,7 @@ posSub:n,a
 morphoSub:nominatif
 !accord:n
 poids:70
+tr:<sup> <sub>
 
 id:cadj
 doc:certains adjectifs admettent un complément au génitif
@@ -192,6 +198,7 @@ posSub:n
 morphoSub:génitif
 lsSup:gen
 poids:75
+tr:<sup> <sub>
 
 id:ccompar
 doc:le complément du comparatif peut être à l'ablatif direct
@@ -201,6 +208,7 @@ posSub:n,p
 contig:50
 morphoSub:ablatif
 poids:70
+tr:<sup> que <sub>
 
 id:compQuam
 aff:adv
@@ -212,6 +220,7 @@ lemmeSub:quam
 contig:40
 sens:>
 poids:87
+tr:<sup> <sub>
 
 id:conjcoordAdv
 aff:coord1
@@ -314,6 +323,7 @@ posSub:n,p
 morphoSub:génitif
 lsSup:gen
 poids:69
+tr:<sup> de <sub>
 
 id:datif
 doc:De nombreux verbes et quelques adjectifs acceptent comme subordonné un datif qui indique un destinataire
@@ -345,6 +355,7 @@ lsSub:det
 contig:38
 x:epithete,datif
 poids:88
+tr:<sub> <sup>
 
 id:epithete
 doc:l'adjectif épithète est accordé en cas, genre et nombre
@@ -356,6 +367,7 @@ filtre:multi,antep10
 contig:32
 conflit:epitheteV
 poids:81
+tr:<sup> <sub>
 
 id:epitheteV
 aff:epithete
@@ -367,6 +379,7 @@ accord:cgn
 contig:10
 filtre:multi
 poids:78
+tr:<sup> <sub>
 
 id:genitif
 doc:le complément du nom est au génitif
@@ -396,6 +409,7 @@ morphoSub:gérondif accusatif
 conflit:regimeAcc
 sens:>
 poids:87
+tr:<sup> pour <sub>
 
 id:gerondGen
 aff:genitif
@@ -405,6 +419,7 @@ posSub:v
 morphoSub:gérondif génitif
 lsSup:gergen
 poids:87
+tr:<sup> de <sub>
 
 id:gerondIn
 doc:id + gérondif à l'accusatif pour la simultanéité
@@ -414,6 +429,7 @@ morphoSub:gérondif ablatif
 conflit:regimeAbl,regimeAcc
 sens:>
 poids:87
+tr:<sup=en> <sub>
 
 id:infObjet
 aff:objet
@@ -437,6 +453,7 @@ accord:gn
 sens:>
 contig:20
 poids:80
+tr:<sup> <sub>
 
 id:locatif
 doc:Le locatif est utilisé pour le question ubi
@@ -446,6 +463,7 @@ posSub:n
 morphoSub:locatif
 x:attrS,genitif,sujet
 poids:88
+tr:<sup> à <sub>
 
 id:negation
 doc:l'adv. 'non' se place habituellement avant le verbe
@@ -454,7 +472,7 @@ morphoSup:1ère,2ème,3ème
 sens:<
 lemmeSub:non,nondum,nunquam
 poids:100
-tr:ne <sup> <sub>
+tr:ne <sup> <sub=pas>
 
 id:num
 aff:det
@@ -494,6 +512,7 @@ morphoSup:indicatif
 filtre:tete
 sens:<
 poids:70
+tr:<sup> <sub>
 
 id:objet
 doc:nom objet d'un verbe transitif
@@ -554,6 +573,7 @@ morphoSub:participe parfait nominatif
 accord:n
 contig:37;
 poids:87
+tr:<sup> <sub>
 
 id:parFut
 doc:Le futur peut être exprimé par l'aux. sum et le participe futur
@@ -563,6 +583,7 @@ posSub:v,w
 morphoSub:participe futur
 contig:25
 poids:84
+tr:<sup> <sub>
 
 id:propInf
 doc:les verbes de connaissance, d'opinion, de perception, de volonté peuvent avoir comme sub une proposition infinitive
@@ -572,15 +593,7 @@ posSup:v
 morphoSub:infinitif
 !subEstSup:sujetPropInf
 poids:80
-
-id:quamCCompar
-doc:le complément du comparatif est souvent introduit par l'adv. quam
-lemmeSup:quam
-posSub:n,v,w
-supEstSub:compQuam
-contig:20
-sens:>
-poids:90
+tr:<sup> <sub>
 
 id:regimeAbl
 doc:l'ablatif après une préposition indique la cause, le moyen, la manière, le lieu ou le temps unique
@@ -621,16 +634,16 @@ morphoSup:1ère singulier
 lemmeSub:ego
 morphoSub:nominatif
 poids:80
-tr:<sup> <sub>
+tr:<sub> <sup>
 
 id:sujetInf
 doc:Un infinitif peut être le sujet d'un verbe conjugué
-posSub:v,w
 morphoSup:3ème
 posSup:v,w
+posSub:v,w
 morphoSub:infinitif
 poids:60
-tr:<sup> <sub>
+tr:<sub> <sup>
 
 id:sujetPr
 aff:sujet
@@ -642,6 +655,7 @@ lemmeSub:-qui2,-quis,-ego,-tu
 morphoSub:nominatif
 accord:np
 poids:87
+tr:<sub> <sup>
 
 id:sujetPropInf
 doc:le sujet d'une proposition infinitive, à l'accusatif, est toujours en tête de proposition
@@ -651,6 +665,7 @@ morphoSub:accusatif
 morphoSup:infinitif
 supEstSub:propInf
 poids:78
+tr:<sub> <sup>
 
 id:sujetRel
 aff:sujet
@@ -663,6 +678,7 @@ accord:n
 sens:<
 conflit:sujet,sujetPr
 poids:87
+tr:<sub> <sup>
 
 id:sujetTu
 aff:sujet
@@ -672,6 +688,7 @@ lemmeSub:tu
 morphoSub:nominatif
 contig:10
 poids:88
+tr:<sub> <sup>
 
 id:tempsAbl
 aff:abl
@@ -680,6 +697,7 @@ posSub:n
 morphoSub:abl
 lsSub:tps
 poids:75
+tr:<sup> <sub>
 
 
 id:topos
@@ -691,6 +709,7 @@ morphoSub:accusatif
 lsSub:topo
 contig:30
 poids:80
+tr:<sup> <sub>
 
 id:vInd
 doc:verbe d'une conjonctive à l'indicatif
@@ -700,6 +719,7 @@ morphoSub:indicatif
 sens:>
 conflit:vSubj
 poids:80
+tr:<sup> <sub>
 
 id:vSubj
 doc:verbe d'une conjonctive au subjonctif
@@ -709,4 +729,5 @@ posSub:v,w
 sens:>
 conflit:vInd
 poids:80
+tr:<sup> <sub>
 
