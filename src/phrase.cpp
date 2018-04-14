@@ -699,7 +699,7 @@ void Phrase::ecoute (QString m)
                                       }
 								      break;
 					      	      }
-						      default: std::cerr << qPrintable (m)<<"erreur d'url lien"<<"\n"; break;
+						      default: std::cerr << qPrintable(m)<<", erreur d'url lien"<<"\n"; break;
 					      }
 					      break;
 				      }
@@ -1151,9 +1151,9 @@ QString Phrase::htmlLiens()
 
 void Phrase::lance()
 {
-    Mot* mc = _mots.at(_imot);
+    Mot* mc = motCourant();
     for (int i=0;i<mc->nbFlechis();++i)
-        mc->flechi(i)->lance();        
+        if (mc != 0) mc->flechi(i)->lance();        
 }
 
 QList<Requete*> Phrase::lReqSub(MotFlechi* mf, bool closes)
@@ -1483,7 +1483,6 @@ void Phrase::setLiens()
         for (int ir=0;ir<_requetes.count();++ir)
         {
             Requete* r = _requetes.at(ir);
-            //r->initExx();
             ajListeR(r);
         }
 
