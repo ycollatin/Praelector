@@ -638,12 +638,12 @@ tr:<sub> <sup>
 
 id:sujetInf
 doc:Un infinitif peut être le sujet d'un verbe conjugué
-morphoSup:3ème
 posSup:v,w
+morphoSup:3ème
 posSub:v,w
 morphoSub:infinitif
 poids:60
-tr:<sub> <sup>
+tr:<sup> <sub> 
 
 id:sujetPr
 aff:sujet
