@@ -861,10 +861,10 @@ bool Phrase::filtre(Requete* req)
         // conflits
         bool idSuper = req->super()->mot() == ri->super()->mot();
         bool idSub   = req->sub()->mot()   == ri->sub()->mot();
-        bool idSuperFl = req->super() == ri->super();
-        bool idSubFl   = req->sub()  == ri->sub();
-        bool compat = false;
+        //bool idSuperFl = req->super() == ri->super();
+        //bool idSubFl   = req->sub()  == ri->sub();
 
+        /*
         // départager d'abord les fléchis du même mot
         if ((idSuper && !idSuperFl) || (idSub && !idSubFl))
         {
@@ -872,11 +872,14 @@ bool Phrase::filtre(Requete* req)
             if (!req->close()) return false;
             if (!ri->close()) continue;
         }
+        */
 
         // autres conflits
+        bool compat = false;
         if (idSuper) compat = compatible(req->super(), ri->super()) && req->regle()->compatibleSupSub(ri->regle());
         if (idSub) compat = compatible(req->sub(), ri->sub()) && req->regle()->compatibleSubSub(ri->regle());
 
+        /*
         // même super, même sub
         if (idSuper && idSub)
         {
@@ -888,6 +891,7 @@ bool Phrase::filtre(Requete* req)
             if (!req->close()) return false;
             if (!ri->close()) continue;
         }
+        */
 
         // super et sub réciproques
         if ((ri->sub()->mot() == req->super()->mot()) && (ri->super()->mot() == req->sub()->mot()))
@@ -1010,6 +1014,7 @@ bool Phrase::filtre(Requete* req)
             }
         }
 
+        /*
         // même sub, supers différents
         if (idSub && !idSuper )
         {
@@ -1037,6 +1042,7 @@ bool Phrase::filtre(Requete* req)
             else conflit(req, ri, "même sub, supers différents");
             if (!req->close()) return false;
         }
+        */
     }
     return true;
 } // filtre
@@ -1483,13 +1489,13 @@ void Phrase::setLiens()
         for (int ir=0;ir<_requetes.count();++ir)
         {
             Requete* r = _requetes.at(ir);
-            ajListeR(r);
+            if (!r->valide()) ajListeR(r);
         }
 
         while (!_listeR.empty()) 
         {
             Requete *req = _listeR.takeFirst();
-            if (!req->close() && mf->resout(req))
+            if (mf->resout(req))
             {
                 if (req->multi()) _requetes.append(req->clone());
                 req->setRequis(mf, "non close, résolue");
