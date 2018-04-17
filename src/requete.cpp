@@ -254,9 +254,14 @@ QString Requete::html()
     if (_valide) color = "darkred";
     else color = "black";
     // En noir, fonction
+    /*
     fl << _sub->gr() << " "
         << _regle->aff() << " "
         << _super->gr() << " "
+    */
+    fl  << _sub->morpho() << " "
+        << _regle->aff() << " "
+        << _super->morpho() << " "
         // En ocre italique, traduction
         << "<span style=\"color:"<<color<<";font-style:italic\">"<<_super->trGroupe(this)<<"</span> "
         // doc de la règle
