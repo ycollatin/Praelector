@@ -19,7 +19,12 @@
 // ~/prof/latin/txt/catalogue.txt
 // bin/corpus/phrases.txt
 
-// FIXME : la validation d'un lien provoque une requête QObject(0x0).
+// FIXME : Un même Lemme du même mot peut fournir plusieurs réponses à la
+//         même requête. Seule la traduction change. Il faut donc 
+//         - une classe TrLemme(Requete* req, MotFlechi* fl)
+//           et une liste QList<TrLemme*> à ranger dans Mot ou dans Requete,
+//           ou d'une manière provisoire, dans phrase, puisque entre deux
+//           fléchis, il n'y aura qu'une solution (sûr ?).
 // TODO : - message d'erreur pour les données mal formées dans regles.la
 //        - différencier lien possible - lien validé
 //        - accorder la traduction de l'épithète
@@ -237,38 +242,8 @@ void Phrase::conflit(Requete* ra, Requete* rb, QString cause)
     int distanceA = ra->distance();
     int distanceB = rb->distance();
 
-    // conflits de sujets
-    if (ra->aff() == "sujet" && rb->aff() == "sujet")
-    {
-        // l'ordre le plus courant est sujet attribut verbe
-        // ra est le premier lien sujet détecté, elle a la
-        // priorité.
-        if (ra->id() == "sujet" && rb->id() == "sujet")
-        {
-            rap += 20;
-            /*
-            int pra = ra->largeur();
-            int prb = rb->largeur();
-            int diff = abs(pra - prb);
-            if (diff > 0 && diff < 5)
-            {
-                if (pra < prb) rbp += 5;
-                else if (prb < pra) rap += 5;
-            }
-            else
-            {
-                if (pra < prb) rap += 5;
-                else if (prb < pra) rbp += 5;
-            }
-            */
-        }
-    }
-    else
-    {
-        // distance 
-        if (distanceA < distanceB) rap += (distanceB - distanceA);
-        else if (distanceB < distanceA) rbp += (distanceA - distanceB);
-    }
+    if (distanceA < distanceB) rap += (distanceB - distanceA);
+    else if (distanceB < distanceA) rbp += (distanceA - distanceB);
     
     // de la fréquence des lemmes :
     int freqa = ra->freq(); 
@@ -750,304 +725,6 @@ bool Phrase::isomorph(QString ma, QString mb)
     return true;
 }
 
-bool Phrase::filtre(Requete* req)
-{
-    // signetFiltre
-    // Une requête prep ou conj ne se résout pas tant que la prep n'a pas son régime,
-    // ou tant que la conjonction n'a pas de verbe subordonné
-    if ((req->super()->rang() > req->sub()->rang())
-       && (((req->id() == "prep") && !(req->sub()->estSuperParId("regimeAbl") || req->sub()->estSuperParId("regimeAcc")))
-      || (((req->id() == "conjSub") && (!req->sub()->estSuperParId("vInd") || req->sub()->estSuperParId("vSubj"))))))
-    {
-        req->annuleRequis("préposition ou conjonction antéposée sans sub");
-        return false;
-    }
-
-    // un verbe conjugué ne doit pas séparer l'épithète du nom
-    if ((req->aff() == "epithete" || req->aff()=="det")
-        && req->sub()->morpho().contains("nominatif") && req->separeparVConj())
-    {
-        req->annuleRequis("un verbe entre nom et "+req->id());
-        return false;
-    }
-
-    // un accusatif suivant immédiatement une prép+acc ne peut être objet
-    if (req->aff()=="objet" && req->sub()->estSubParId("regimeAcc"))
-    {
-        req->annuleRequis("un régime de préposition ne peut être objet");
-        return false;
-    }
-
-
-
-    //   Blocages de projectivité
-    bool blocr = false; // blocage après préposition
-    bool blocc = false; // blocage après conjonction
-    //bool bloce = false; // blocage après coordination
-    bool blocq = false; // blocage après relatif
-    bool bloci = false; // blocage après le sujet de l'infinitive
-    QList<Mot*> mb = req->portee();
-    if (!mb.empty()) for (int ib=0;ib<_requetes.count();++ib)
-    {
-        Requete* rb = _requetes.at(ib);
-        QString id = rb->id();
-        QString af = rb->aff();
-        bool crux = req->croise(rb);
-        if (!rb->close() || rb == req) continue;
-        // blocage conjonctive
-        if ((id=="conjSub" || id=="vInd" || id=="vConj") && crux)
-            blocc = true;
-        else if ((id=="regimeAbl" || id=="regimeAcc" || id=="gerondAd") && crux)
-        {
-            blocr = true;
-        }
-        else if (id.contains("Inf") && req->super()->lemme()->synt("propinf"))
-            bloci = true;
-        else for (int i=0;i<mb.count();++i)
-        {
-            Mot* m = mb.at(i);
-            // échec du lemmatiseur
-            if (m->morphos().empty()) continue;
-            // la préposition est sub d'un lien prep
-            if (m->estPrep() && crux
-                && !(m->estSuperParId("regimeAbl")
-                     || m->estSuperParId("regimeAcc")
-                     || m->estSuperParId("gerondAd")))
-                blocr = true;
-            else if (m->estRelatif()) blocq = true;
-            if (req->super()->lemme()->synt("propinf") && (!req->id().contains("Inf")))
-                bloci = true;
-        }
-    }
-    if (blocc || blocr || blocq || bloci) // || bloce)
-    {
-        QString sb = "relative";
-        if (blocr) sb = "préposition";
-        else if (blocc) sb = "conjonctive";
-        //else if (bloce) sb = "coordination";
-        else if (bloci) sb = "infinitive";
-        req->annuleRequis("blocage "+sb);
-        return false;
-    }
-
-    // conflit avec les requêtes closes
-    for (int i=0;i<_requetes.count();++i)
-    {
-        Requete* ri = _requetes.at(i);
-
-        if (ri == req || !ri->close()) continue;
-
-        // Une proposition infinitive commence toujours par son sujet. Voir si le lien req ou ri
-        // n'est pas contraire à la projectivité
-        if (req->id()=="sujetPropInf")
-        {
-            int risr = ri->sub()->rang();
-            int rsr = req->sub()->rang();
-            if (ri->super()->rang() < req->sub()->rang()
-                && risr > rsr && risr < req->super()->rang())
-            {
-                ri->annuleRequis("le sub du lien est à l'intérieur d'une infinitive");
-                continue;
-            }
-        }
-
-        // l'adj contigu avec un nom ne peut être attribut par un V si ce nom peut l'être aussi
-        if (req->id() == "attrSA" && ri->id()=="attrSN" && contigus(req->sub()->mot(), ri->sub()->mot()))
-        {
-            req->annuleRequis("épithète de son concurrent");
-            return false;
-        }
-
-        // conflits
-        bool idSuper = req->super()->mot() == ri->super()->mot();
-        bool idSub   = req->sub()->mot()   == ri->sub()->mot();
-        //bool idSuperFl = req->super() == ri->super();
-        //bool idSubFl   = req->sub()  == ri->sub();
-
-        /*
-        // départager d'abord les fléchis du même mot
-        if ((idSuper && !idSuperFl) || (idSub && !idSubFl))
-        {
-            conflit(req, ri,"utilisation de formes différentes du même mot");
-            if (!req->close()) return false;
-            if (!ri->close()) continue;
-        }
-        */
-
-        // autres conflits
-        bool compat = false;
-        if (idSuper) compat = compatible(req->super(), ri->super()) && req->regle()->compatibleSupSub(ri->regle());
-        if (idSub) compat = compatible(req->sub(), ri->sub()) && req->regle()->compatibleSubSub(ri->regle());
-
-        /*
-        // même super, même sub
-        if (idSuper && idSub)
-        {
-            if (req->regle()->exclut(ri->regle()->id()))
-                ri->annuleRequis(" par la requête prioritaire "+req->doc());
-            else if (ri->regle()->exclut(req->regle()->id()))
-                req->annuleRequis(" par la requête prioritaire "+ri->doc());
-            else conflit(req, ri, "mêmes super et sub");
-            if (!req->close()) return false;
-            if (!ri->close()) continue;
-        }
-        */
-
-        // super et sub réciproques
-        if ((ri->sub()->mot() == req->super()->mot()) && (ri->super()->mot() == req->sub()->mot()))
-        {
-            conflit(req, ri, "réciproques");
-            if (!req->close()) return false;
-            if (!ri->close())
-            {
-                continue;
-            }
-        }
-
-        // sub de ri = super de req
-        if ((ri->sub()->mot() == req->super()->mot()) && req->aff() != "antecedent"
-            && (!compatible(req->super(), ri->sub()->mot()) || !req->regle()->compatibleSupSub(ri->regle())))
-        {
-            conflit(req, ri, "sub=super");
-            if (!req->close()) return false;
-            if (!ri->close())
-            {
-                continue;
-            }
-        }
-
-        // super de ri = sub de req
-        if (ri->super()->mot() == req->sub()->mot()
-            && (!compatible(req->sub(), ri->super()->mot()) || !req->regle()->compatibleSubSup(ri->regle()))
-            && ri->aff() != "antecedent")
-        {
-            conflit(req, ri, "super=sub, morphos incompatibles");
-            if (!req->close()) return false;
-            if (!ri->close())
-            {
-                continue;
-            }
-        }
-
-        // même super, subs différents.
-        if (idSuper && !idSub)
-        {
-            // conflit défini dans la règle de req
-            if (req->regle()->conflit(ri->id()))
-                conflit(req, ri, "subs incompatibles pour le meme super");
-            if (!req->close()) return false;
-            if (!ri->close())  continue;
-            /*
-            // le sub de req est déterminant du sub de ri
-            if (req->id() == "det" || ri->id()=="det")
-            {
-                if (ri->sub()->estSubParId("det"))
-                {
-                    req->annuleRequis(ri->sub()->gr()+"le sub de ri est déterminant. Ce lien est prioritaire");
-                    return false;
-                }
-                else if (req->sub()->estSubParId("det"))
-                {
-                    ri->annuleRequis("le lien det de req"+req->sub()->gr()+" est prioritaire");
-                    continue;
-                }
-            }
-            */
-
-            // Champ aff identique, et un seul sub aff permis
-            if (ri->aff() == req->aff() && !req->multi()) //&& compat)
-            {
-                if (!req->close())
-                {
-                    if (req->aff() == "coord2")
-                    {
-                        req->ajHist("ANNULÉE par la req."+ri->numc());
-                        if (req->coord1() != 0)
-                            req->coord1()->annuleRequis("le second membre de la coordination a été annulé");
-                    }
-                    return false;
-                }
-                /*
-                if (ri->close())
-                {
-                    // si le super est indicatif et n'a pas de sujet, et que req pourrait être sujet
-                    if (req->aff() != "sujet"
-                        && req->sub()->mot()->estAu("nominatif")
-                        && !req->super()->estSuperParAff("sujet"))
-                        return false;
-                }
-                else*/ if (ri->aff() == "coord2")
-                {
-                    if (ri->coord1() != 0)
-                        ri->coord1()->annuleRequis("le second membre de la coordination a été annulé");
-                    continue;
-                }
-                conflit(req, ri, "même super, même id");
-                if (!req->close()) return false;
-                if (!ri->close()) continue;
-            }
-            // champ conflit:<id> de regles.la
-            else if (req->enConflit(ri->id()) && !req->multi() && compat)
-            {
-                conflit(req, ri, "même super, ids en conflit");
-                if (!req->close()) return false;
-                if (!ri->close())  continue;
-            }
-            else if (!req->regle()->compatibleSupSup(ri->regle()))
-            {
-                Mot* mis = req->super()->mot();
-                bool comp = false;
-                for (int is=0;is<mis->nbFlechis();++is)
-                {
-                    MotFlechi* mfi = mis->flechi(is);
-                    comp = comp || mfi == ri->super();
-                }
-                if (!comp)
-                {
-                    conflit(req, ri, "même super - non egaux ");
-                    if (!req->close()) return false;
-                    if (!ri->close())
-                    {
-                        continue;
-                    }
-                }
-            }
-        }
-
-        /*
-        // même sub, supers différents
-        if (idSub && !idSuper )
-        {
-            if (req->aff() != "antecedent" && ri->aff()!="antecedent" && ri->aff()!="coord1")
-            {
-                if (ri->regle()->exclut(req->regle()->id()))
-                    req->annuleRequis(" par la requête prioritaire "+ri->doc());
-                else conflit(req, ri, "même sub");
-                if (!req->close()) return false;
-                if (!ri->close())
-                {
-                    continue;
-                }
-            }
-            // antécédent
-            else if (req->aff() == "antecedent" && ri->aff() == "antecedent")
-            {
-                conflit(req, ri, "2e antécédent");
-                if (!req->close()) return false;
-                if (!ri->close())
-                {
-                    continue;
-                }
-            }
-            else conflit(req, ri, "même sub, supers différents");
-            if (!req->close()) return false;
-        }
-        */
-    }
-    return true;
-} // filtre
-
-
 QString Phrase::gauche(Mot *m)
 {
     return entreMots.at(m->rang());
@@ -1497,10 +1174,8 @@ void Phrase::setLiens()
             Requete *req = _listeR.takeFirst();
             if (mf->resout(req))
             {
-                if (req->multi()) _requetes.append(req->clone());
+                _requetes.append(req->clone());
                 req->setRequis(mf, "non close, résolue");
-                filtre(req);
-                if (req->close()) req->ajHist("FILTRÉE : "+req->humain());
             }
         }
     }
