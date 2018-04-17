@@ -60,6 +60,7 @@ morphoSub:ablatif
 lsSup:abl
 contig:24
 poids:79
+tr:<sup> à,de <sub>
 
 id:adjQue
 aff:coord
@@ -71,6 +72,7 @@ x:epithete,attrSA
 sens:>
 filtre:contigu,que
 poids:100
+tr:<sup> <sub>
 
 id:adv
 doc:l'adverbe est lié au verbe et précise son sens
@@ -79,6 +81,7 @@ posSub:d
 lemmeSub:-nec,-non,-nec,-neque,-et,-quam
 filtre:multi
 poids:60
+tr:<sup> <sub>
 
 !id:advEt
 !aff:adv
@@ -99,6 +102,7 @@ posSub:p
 accord:gn
 sens:>
 poids:82
+tr:<sup> <sub>
 
 id:app
 doc:l'apposition suit le nom et désigne la même réalité que lui
