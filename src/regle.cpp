@@ -50,6 +50,11 @@ Regle::Regle(QStringList ll)
     {
         QString lin = ll.at(i).simplified();
         QStringList ecl=lin.split(':', QString::KeepEmptyParts);
+        if (ecl.count() < 2)
+        {
+            std::cerr << "regles.la, ligne mal formée :"<<qPrintable(lin);
+            continue;
+        }
         int p = clesR.indexOf(ecl.at(0));
         QString v = ecl.at(1);
         switch(p)
