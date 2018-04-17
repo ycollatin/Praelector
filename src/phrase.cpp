@@ -19,14 +19,10 @@
 // ~/prof/latin/txt/catalogue.txt
 // bin/corpus/phrases.txt
 
-// FIXME : Un même Lemme du même mot peut fournir plusieurs réponses à la
-//         même requête. Seule la traduction change. Il faut donc 
-//         - une classe TrLemme(Requete* req, MotFlechi* fl)
-//           et une liste QList<TrLemme*> à ranger dans Mot ou dans Requete,
-//           ou d'une manière provisoire, dans phrase, puisque entre deux
-//           fléchis, il n'y aura qu'une solution (sûr ?).
-// TODO : - message d'erreur pour les données mal formées dans regles.la
-//        - différencier lien possible - lien validé
+// FIXME : - lors de reculs et avances successifs, les liens deviennent surnuméraires. 
+// TODO : - éliminer, lors du passage au mot suivant, les 
+//          requêtes clonées si l'une d'elles est validée
+//        - En général, mieux supprimer les fléchis et les requêtes obsolètes
 //        - accorder la traduction de l'épithète
 // XXX :  Pour valider un fléchi, donc éliminer ses concurrents, il faut
 //        que l'autre fléchi de la requête soit lui-même validé.
