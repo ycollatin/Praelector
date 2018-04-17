@@ -563,9 +563,7 @@ QString MotFlechi::trfl()
 
 QString MotFlechi::trGroupe(Requete* rtest)
 {
-    bool debog = _lemme->gr()=="sum";
     QString lp = _lemme->pos();
-    if (debog) qDebug()<<"Motflechi::trGroupe"<<morpho()<<"lp"<<lp<<"contains"<<lp.contains('w');
     QString ret;
     QTextStream fl(&ret);
     QStringList lgr;
@@ -613,7 +611,6 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "coordInit"
             << "coordV";
 
-    if (debog) qDebug()<<"MotFlechi::trGroupe, lgr"<<lgr;
     for (int i = 0;i<lgr.count();++i)
     {
         QString el = lgr.at(i);
