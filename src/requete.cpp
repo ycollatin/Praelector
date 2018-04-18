@@ -32,6 +32,7 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
     _super = 0;
     _sub = 0;
     _num = -1;
+    _cloneeDe = -1;
     if (sup != 0)
     {
         _super = sup;
@@ -91,7 +92,13 @@ Requete* Requete::clone()
     }
     if (_subRequis) nreq->setSubRequis();
     else nreq->setSuperRequis();
+    nreq->setCloneeDe(_num);
     return nreq;
+}
+
+bool Requete::clonee()
+{
+    return _cloneeDe > -1;
 }
 
 bool Requete::close()
@@ -419,6 +426,11 @@ bool Requete::separeparVConj()
         }
     }
     return v;
+}
+
+void Requete::setCloneeDe(int c)
+{
+    _cloneeDe = c;
 }
 
 void Requete::setCoord1(Requete* req)
