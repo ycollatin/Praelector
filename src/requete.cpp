@@ -166,8 +166,6 @@ QString Requete::doc()
     fl << "-"<<id().toUpper()<<"->";
     if (_sub == 0) fl << "?";
     else fl << _sub->mot()->gr()<<" "<<_sub->lemme()->gr()<<" "<<_sub->morpho();
-    if (!_valide) fl << " non";
-    fl << " valide";
     return ret;
 }
 
