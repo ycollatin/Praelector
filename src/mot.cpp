@@ -58,6 +58,11 @@ void Mot::annuleFlechi(int f)
     _flechis.removeOne(mf);
 }
 
+void Mot::annuleFlechi(MotFlechi* mf)
+{
+    _flechis.removeOne(mf);
+}
+
 void Mot::annuleLemme(Lemme* lem)
 {
     for (int i=0;i<_flechis.count();++i)
@@ -453,6 +458,12 @@ QList<Requete*> Mot::reqSuper()
         }
     }
     return ret;
+}
+
+void Mot::rmFlechi(MotFlechi* mf)
+{
+    if (mf == 0 || !_flechis.contains(mf)) return;
+    _flechis.removeOne(mf);
 }
 
 void Mot::setMorphos(MapLem m)

@@ -50,6 +50,7 @@ class Mot : public QObject
         Mot(QString g, int d=-1, int f=-1, int r=-1, QObject *parent=0);
         void              ajFlechi(MotFlechi* mf);
         void              annuleFlechi(int f);
+        void              annuleFlechi(MotFlechi* mf);
         void              annuleLemme(Lemme* lem);
         void              choixFlechi(MotFlechi* mf);
         void              choixLemme(Lemme* lem);
@@ -89,6 +90,7 @@ class Mot : public QObject
         int               rang();
         Requete*          reqSub(QString id);
         QList<Requete*>   reqSuper();
+        void              rmFlechi(MotFlechi* mf);
         void              setMorphos(MapLem m);
         void              setPSup(int p);
         void              setTr(QString t);
