@@ -81,7 +81,7 @@ bool MotFlechi::estSub()
     for (int i=0;i<lreqSub.count();++i)
     {
         Requete* req = lreqSub.at(i);
-        if (req->valide()) return true;
+        if (req != 0 && req->valide()) return true;
     }
     return false;
 }
