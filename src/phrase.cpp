@@ -153,6 +153,16 @@ void Phrase::ajListeR(Requete* req)
 
 void Phrase::ajRequete(Requete* req)
 {
+    // vérifier que la requête n'existe pas
+    for (int i=0;i<_requetes.count();++i)
+    {
+        Requete* r = _requetes.at(i);
+        if (r != 0 
+            && r->super() == req->super()
+            && r->sub() == req->sub()
+            && r->id() == req->id())
+            return;
+    }
     _requetes.append(req);
 }
 
@@ -179,19 +189,39 @@ void Phrase::choixFlechi(MotFlechi* mf)
     m->choixFlechi(mf);
 }
 
+/* Validation de la requête req, élimination des concurrentes */
 void Phrase::choixReq(Requete* req)
 {
     if (!req->close()) return;
     req->setValide(true);
+    Mot *cour = motCourant();
     Mot* msub = req->sub()->mot();
-    Mot* msup = req->super()->mot();
+    MotFlechi* mfsup = req->super();
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
-        if (!r->close() || r == req) continue;
-        if (r->sub()->mot() == msub
+        if (r == 0 
+            || !r->close() 
+            || r->valide()
+            || r == req 
+            || r->aff() == req->aff())
+            continue;
+        if (r->superRequis() && r->super()->mot() == cour)
+        {
+            if (r->super() != req->super())
+                cour->annuleFlechi(r->super());
+        }
+        else if (r->subRequis() && r->sub()->mot() == cour)
+        {
+            if (r->sub() != req->sub())
+                cour->annuleFlechi(r->sub());
+        }
+        // élimination des reqs dont le super est différent,
+        // et 
+        if (r != req 
+            && r->sub()->mot() == msub
             && r->id() != "antecedent"
-            && r->super()->mot() != msup)
+            && r->super() != mfsup)
         {
             _requetes.removeAt(i);
             --i;
@@ -813,8 +843,7 @@ QString Phrase::htmlLiens()
 {
     // TODO : trier les requêtes par points
     Mot* mc = motCourant();
-    QString ret;
-    QTextStream fl(&ret);
+    QStringList ll;
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
@@ -822,10 +851,11 @@ QString Phrase::htmlLiens()
             && (req->requerant() == mc
                 || req->requis() == mc))
         {
-            fl << req->html() << "<br/>";
+            ll << req->html();
         }
     }
-    return ret;
+    ll.removeDuplicates();
+    return ll.join("<br/>");
 }
 
 void Phrase::lance()
@@ -1170,8 +1200,9 @@ void Phrase::setLiens()
             Requete *req = _listeR.takeFirst();
             if (mf->resout(req))
             {
-                _requetes.append(req->clone());
+                ajRequete(req->clone());
                 req->setRequis(mf, "non close, résolue");
+                
             }
         }
     }
