@@ -19,7 +19,7 @@
 // ~/prof/latin/txt/catalogue.txt
 // bin/corpus/phrases.txt
 
-// FIXME : - lors de reculs et avances successifs, les liens deviennent surnuméraires. 
+// FIXME : 
 // TODO : - éliminer, lors du passage au mot suivant, les 
 //          requêtes clonées si l'une d'elles est validée
 //        - En général, mieux supprimer les fléchis et les requêtes obsolètes
@@ -227,6 +227,11 @@ void Phrase::choixReq(Requete* req)
             --i;
         }
     }
+    if (req->regle()->aff() != "epithete" && req->regle()->aff() != "app")
+    {
+        if (req->super()->mot() == cour) cour->choixFlechi(req->super());
+        else if (req->sub()->mot() == cour) cour->choixFlechi(req->sub());
+    }
 }
 
 // Le MotFlechi mf est-il compatible avec toute requête close
@@ -369,8 +374,21 @@ void Phrase::ecoute (QString m)
 	{
 		++_imot;
 		if (_imot > _maxImot) _maxImot = _imot;
-        if (_imot > 0) setLiens();
-        if (_imot < _mots.count()-1) lance();
+        else
+        {
+            if (_imot > 0) setLiens();
+            if (_imot < _mots.count()-1) lance();
+            // supprimer les requêtes clonées
+            for (int i=0;i<_requetes.count();)
+            {
+                Requete* req = _requetes.at(i);
+                if (req != 0 && !req->multi() && req->clonee())
+                {
+                    _requetes.removeOne(req);
+                }
+                else ++i;
+            } 
+        }
 	}
 	else if (m == "-prec" && _imot > 0)
 	{
@@ -1202,7 +1220,6 @@ void Phrase::setLiens()
             {
                 ajRequete(req->clone());
                 req->setRequis(mf, "non close, résolue");
-                
             }
         }
     }
