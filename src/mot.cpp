@@ -114,6 +114,7 @@ void Mot::choixSub(Requete* req)
 void Mot::choixSuper(Requete* req)
 {
     // annuler toutes les requêtes homonymes, sauf si req est multi
+    // TODO : tenir compte de l'antécédent ?
     if (!req->multi())
     {
         // annuler toutes les requêtes homonymes, sauf si req est multi
