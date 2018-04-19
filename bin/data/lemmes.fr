@@ -1049,7 +1049,7 @@ alienatio:aliénation, éloignement, désaffection
 alienigena:venu de l'étranger
 alienigenus:étranger, hétérogène
 alieno:aliéner; éloigner, rendre étranger (alienatus,a, um : hostile, ennemi)
-alienum:le bien d'autrui.
+alienum:le bien d'autrui
 alienus2:étranger
 Alienus3:Alienus (v. Allienus.)
 alienus:d'autrui, étranger ; éloigné, déplacé, désavantageux
