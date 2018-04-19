@@ -17,11 +17,12 @@
 
 // textes :
 // ~/prof/latin/txt/catalogue.txt
+// bin/data/regles.la
 // bin/corpus/phrases.txt
 
 // FIXME : 
-// TODO : - éliminer, lors du passage au mot suivant, les 
-//          requêtes clonées si l'une d'elles est validée
+// TODO : - Après validation, éliminer les requêtes de même super et de même aff,
+//          sauf celles qui sont multi.
 //        - En général, mieux supprimer les fléchis et les requêtes obsolètes
 //        - accorder la traduction de l'épithète
 // XXX :  Pour valider un fléchi, donc éliminer ses concurrents, il faut
@@ -192,7 +193,7 @@ void Phrase::choixFlechi(MotFlechi* mf)
 /* Validation de la requête req, élimination des concurrentes */
 void Phrase::choixReq(Requete* req)
 {
-    if (!req->close()) return;
+    if (req == 0 || !req->close()) return;
     req->setValide(true);
     Mot *cour = motCourant();
     Mot* msub = req->sub()->mot();
@@ -200,12 +201,18 @@ void Phrase::choixReq(Requete* req)
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
-        if (r == 0 
-            || !r->close() 
-            || r->valide()
-            || r == req 
-            || r->aff() == req->aff())
+        if (r == 0 || r == req || r->valide())
             continue;
+        // élimination des reqs de même super, et de sub de même aff, sauf multi
+        if (r->super() != 0 && r->super()->mot() == req->super()->mot()
+            && r->aff() == req->aff()
+            && !req->multi())
+        {
+            _requetes.removeAt(i);
+            --i;
+            continue;
+        }
+        if (!r->close()) continue;
         if (r->superRequis() && r->super()->mot() == cour)
         {
             if (r->super() != req->super())
@@ -217,7 +224,6 @@ void Phrase::choixReq(Requete* req)
                 cour->annuleFlechi(r->sub());
         }
         // élimination des reqs dont le super est différent,
-        // et 
         if (r != req 
             && r->sub()->mot() == msub
             && r->id() != "antecedent"
@@ -370,14 +376,13 @@ void Phrase::ecoute (QString m)
 		return;
 	}
 	/* deux commandes de navigation */
+    // passage au mot suivant
 	else if (m == "-suiv" && (_imot < _mots.count() -1))
 	{
 		++_imot;
 		if (_imot > _maxImot) _maxImot = _imot;
         else
         {
-            if (_imot > 0) setLiens();
-            if (_imot < _mots.count()-1) lance();
             // supprimer les requêtes clonées
             for (int i=0;i<_requetes.count();)
             {
@@ -388,16 +393,23 @@ void Phrase::ecoute (QString m)
                 }
                 else ++i;
             } 
+            // résolution des requêtes
+            if (_imot > 0) setLiens();
+            // lancement des nouvelles requêtes
+            if (_imot < _mots.count()-1) lance();
         }
 	}
+    // retour au mot précédent
 	else if (m == "-prec" && _imot > 0)
 	{
+
 		--_imot;
 	}
 	/* Nouvelle phrase */
 	else if (m == "-nouvPhr")
 	{
         _mots.clear();
+        _requetes.clear();
         // TODO : repeupler la phrase ?
 	}
 	else if (m.startsWith("-phr-"))
