@@ -173,6 +173,7 @@ QString Requete::doc()
     fl << "-"<<id().toUpper()<<"->";
     if (_sub == 0) fl << "?";
     else fl << _sub->mot()->gr()<<" "<<_sub->lemme()->gr()<<" "<<_sub->morpho();
+    if (clonee()) fl <<" clonée de "<<_cloneeDe;
     return ret;
 }
 
