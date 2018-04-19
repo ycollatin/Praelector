@@ -600,6 +600,7 @@ poids:80
 tr:<sup> <sub>
 
 id:regimeAbl
+aff:regime
 doc:l'ablatif après une préposition indique la cause, le moyen, la manière, le lieu ou le temps unique
 sens:>
 lsSup:prepabl
@@ -611,6 +612,7 @@ poids:88
 tr:<sup> <sub>
 
 id:regimeAcc
+aff:regime
 doc:l'accusatif après une préposition indique que le procès verbal porte sur un autre lieu, un autre temps, un autre objet
 sens:>
 conflit:gerondAd,regimeAbl
