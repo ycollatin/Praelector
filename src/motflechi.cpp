@@ -546,8 +546,8 @@ Requete* MotFlechi::sub(QString id, Requete* rtest)
 
 QString MotFlechi::tr()
 {
-    if (!_tr.isEmpty()) return _tr;
-    return trfl();
+    if (_tr.isEmpty()) return trfl();
+    return _tr;
 }
 
 QString MotFlechi::trfl()
@@ -555,6 +555,8 @@ QString MotFlechi::trfl()
     if (_trfl.count() == 1)
         return _trfl.at(0);
     QStringList l = _trfl;
+    if (_trfl.isEmpty())
+        return "traduction manquante pour "+_lemme->gr();
     QString ret = l.takeFirst()+" (";
     ret += l.join(", ");
     ret += ")";
@@ -567,15 +569,33 @@ QString MotFlechi::trGroupe(Requete* rtest)
     QString ret;
     QTextStream fl(&ret);
     QStringList lgr;
-    if (lp.contains("n")) lgr
+    if (lp.contains("a")) lgr 
+            << "-"
+            << "cadj"
+            << "datif";
+    else if (lp.contains("c")) lgr
+            << "-"
+            << "coordAdv"
+            << "coordN"
+            << "coordInit"
+            << "coordV";
+    else if (lp.contains("n") || lp.contains("p")) lgr 
             << "det"
-            << "-" 
+            << "num"
+            << "-"
+            << "prepn"
             << "epithete"
+            << "epitheteV"
             << "genitif"
-            << "datif"
+            << "gerondGen"
             << "antecedent"
+            << "app"
             << "nomQue"
             << "conjcoordN";
+    else if (lp.contains("r")) lgr
+            << "-"
+            << "regimeAbl"
+            << "regimeAcc";
     else if (lp.contains('v') || lp.contains('w')) lgr
             << "sujet"
             << "sujetRel"
@@ -585,6 +605,8 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "sujetTu"
             << "objetPr"
             << "-" 
+            << "negation"
+            << "adv"
             << "objet"
             << "attrSTu"
             << "attrSA"
@@ -595,21 +617,12 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "attrO"
             << "abl"
             << "datif"
-            << "prep";
-    else if (lp.contains("a")) lgr 
+            << "prep"
+            << "conjSub";
+    else if (lp.contains("s")) lgr
             << "-"
-            << "cadj"
-            << "datif";
-    else if (lp.contains("r")) lgr
-            << "-"
-            << "regimeAbl"
-            << "regimeAcc";
-    else if (lp.contains("c")) lgr
-            << "-"
-            << "coordAdv"
-            << "coordN"
-            << "coordInit"
-            << "coordV";
+            << "vInd"
+            << "vSubj";
 
     for (int i = 0;i<lgr.count();++i)
     {
