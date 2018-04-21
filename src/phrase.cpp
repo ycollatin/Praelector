@@ -20,13 +20,12 @@
 // bin/data/regles.la
 // bin/corpus/phrases.txt
 
-// FIXME : 
-// TODO : - Après validation, éliminer les requêtes de même super et de même aff,
-//          sauf celles qui sont multi.
-//        - En général, mieux supprimer les fléchis et les requêtes obsolètes
+// FIXME : - Éliminer les liens circulaires après validation : ad ista concitari
+//         - des lemmes exclus continuent d'être utilisés
+// TODO : - En vert : fonction des liens proposés
 //        - accorder la traduction de l'épithète
-// XXX :  Pour valider un fléchi, donc éliminer ses concurrents, il faut
-//        que l'autre fléchi de la requête soit lui-même validé.
+//        - équivalents clavier des liens ?
+// XXX :  Anaxagoras dixit niuem nigram esse
 
 #include <QApplication>
 #include <QDir>
@@ -169,19 +168,40 @@ void Phrase::ajRequete(Requete* req)
 
 void Phrase::annuleLemme(Mot* m, Lemme* l)
 {
-    m->annuleLemme(l);
-    // supprimer les requêtes utilisant m et l
-    for (int i=0;i<_requetes.count();++i)
+    for (int i=0;i<_requetes.count();)
     {
         Requete* req = _requetes.at(i);
-        if (req->requerant() == m && req->requerantFl()->lemme() == l)
+        if (req == 0) continue;
+        if (req->subRequis()) 
         {
-            _requetes.removeAt(i);
-            --i;
+            if (req->sub() != 0 
+                && req->sub()->mot() == m && req->sub()->lemme() == l)
+            {
+                req->annuleRequis("lemme rejeté");
+                ++i;
+            }
+            else if (req->super()->mot() == m && req->super()->lemme() == l)
+            {
+                _requetes.removeAt(i);
+            }
+            else ++i;
         }
-        else if (req->requis() == m && req->requisFl()->lemme() == l)
-            req->annuleRequis("lemme rejeté");
+        else
+        {
+            if (req->super() != 0 
+                && req->super()->mot() == m && req->super()->lemme() == l)
+            {
+                req->annuleRequis("lemme rejeté");
+                ++i;
+            }
+            else if (req->sub()->mot() == m && req->sub()->lemme() == l)
+            {
+                _requetes.removeAt(i);
+            }
+            else ++i;
+        }
     }
+    m->annuleLemme(l);
 }
 
 void Phrase::choixFlechi(MotFlechi* mf)
@@ -940,7 +960,7 @@ void Phrase::majAffichage()
 	        .arg (grLu())                            // %1
 	        .arg (motCourant()->html())              // %2
 	        .arg (htmlLiens())                       // %3
-	        .arg (tr());                             // %4
+	        .arg (tr());
     }
 }
 
