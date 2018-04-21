@@ -23420,6 +23420,7 @@ vertex: sommet
 vertigo:mouvement de rotation, tournoiement, pirouette, révolution, vertige
 verto:tourner, changer, traduire
 Vertumnus2:Vertumne (divinité qui présidait aux changements des saisons; sa statue)
+vero:vraiment, en fait, quant à
 veru:broche
 Verulamium:Verulamium (municipe de Bretagne)
 Verulana:Verulana (nom de femme)
