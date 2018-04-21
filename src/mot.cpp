@@ -65,14 +65,14 @@ void Mot::annuleFlechi(MotFlechi* mf)
 
 void Mot::annuleLemme(Lemme* lem)
 {
-    for (int i=0;i<_flechis.count();++i)
+    for (int i=0;i<_flechis.count();)
     {
         MotFlechi* mf = _flechis.at(i); 
         if (mf->lemme() == lem)
         {
             _flechis.removeOne(mf);
-            --i;
         }
+        else ++i;
     }
 }
 
@@ -84,14 +84,14 @@ void Mot::choixFlechi(MotFlechi* mf)
 
 void Mot::choixLemme(Lemme* l)
 {
-    for (int i=0;i<_flechis.count();++i)
+    for (int i=0;i<_flechis.count();)
     {
         MotFlechi* mf = _flechis.at(i); 
         if (mf->lemme() != l)
         {
             _flechis.removeOne(mf);
-            --i;
         }
+        else ++i;
     }
 }
 
@@ -523,7 +523,9 @@ QString Mot::trs()
     QStringList ret;
     if (_flechis.count() == 1) return _flechis.at(0)->tr();
     for (int i=0;i<_flechis.count();++i)
+    {
         ret.append(_flechis.at(i)->tr());
+    }
     ret.removeDuplicates();
     return ret.join(" / ");
 }
