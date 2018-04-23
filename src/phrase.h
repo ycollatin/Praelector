@@ -61,13 +61,12 @@ class Phrase: public QObject
         bool static       accord(MotFlechi* ma, MotFlechi* mb, QString cgn);
         void              additions();
         void              ajListeR(Requete* req);
-        void              ajRequete(Requete* req);
+        void              ajRequete(Requete* req, bool force=false);
         void              annuleLemme(Mot* m, Lemme* l);
         void              choixFlechi(MotFlechi* mf);
         void              choixReq(Requete* req);
         bool              compatible(MotFlechi* mf, Mot* m);
         bool              compatible(MotFlechi* ma, MotFlechi* mb);
-        void              conflit(Requete* ra, Requete* rb, QString cause);
         bool              contigue(Requete* req);
         bool              contigus(Mot *a, Mot *b);
         QString           droite(Mot* m);
@@ -75,7 +74,6 @@ class Phrase: public QObject
         bool              estFeminin(QString n);
         bool              filtre(Requete* req);
         QString           gauche(Mot *m);
-        int               getNumReq();
         QString           grLu();
         int               handicap(MotFlechi* mf);
         QList<Requete*>   homolexes(Requete* req);
