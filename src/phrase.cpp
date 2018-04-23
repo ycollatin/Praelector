@@ -151,18 +151,31 @@ void Phrase::ajListeR(Requete* req)
     }
 }
 
-void Phrase::ajRequete(Requete* req)
+void Phrase::ajRequete(Requete* req, bool force)
 {
     // vérifier que la requête n'existe pas
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
         if (r != 0 
+            && !force
             && r->super() == req->super()
             && r->sub() == req->sub()
             && r->id() == req->id())
+        {
             return;
+        }
     }
+    // attribuer un numéro
+    // trouver le numéro le plus élevé
+    int nn = 0;
+    for (int i=0;i<_requetes.count();++i)
+    {
+        Requete* req = _requetes.at(i);
+        if (req != 0 && req->num() > nn) nn = req->num();
+    }
+    ++nn;
+    req->setNum(nn);
     _requetes.append(req);
 }
 
@@ -275,75 +288,6 @@ bool Phrase::compatible(MotFlechi* mf, Mot* m)
 bool Phrase::compatible(MotFlechi* ma, MotFlechi* mb)
 {
     return ma->lemme() == mb->lemme() && isomorph(ma->morpho(), mb->morpho());
-}
-
-// conflit : ra doit être plus ancienne que rb.
-void Phrase::conflit(Requete* ra, Requete* rb, QString cause)
-{
-    // signetConflit
-    // ne traiter que des requêtes complètes
-    if (!ra->close() || !rb->close()) return;
-
-    // initialisations
-    // Poids des requêtes. l'avantage contiguïté
-    // y est compté.
-    int rap = ra->poids();
-    int rbp = rb->poids();
-
-    QString h = cause +"\nra:"+ra->doc() +"\nrb:"+rb->doc();
-
-    ra->ajHist("---\nconflit RA\n"+h);
-    rb->ajHist("---\nconflit RB\n"+h);
-
-    // distance
-    int distanceA = ra->distance();
-    int distanceB = rb->distance();
-
-    if (distanceA < distanceB) rap += (distanceB - distanceA);
-    else if (distanceB < distanceA) rbp += (distanceA - distanceB);
-    
-    // de la fréquence des lemmes :
-    int freqa = ra->freq(); 
-    int freqb = rb->freq();
-    if (freqa < 8 && freqa - freqb > 2000) rap += 10;
-    else if (freqb < 8 && freqb - freqa > 2000) rbp += 10;
-
-    // avantage si liens associés
-    if (!ra->regle()->subEstSup().isEmpty())
-        rap += 40;
-    if (!rb->regle()->subEstSup().isEmpty())
-        rbp += 40;
-    // annulation du requis de la requête perdante
-    if (rap > rbp)
-    {
-        ra->ajHist("requête ra "+ra->numc()+" ANNULE la requête rb "+rb->numc()
-                   +", poids ra "+QString::number(rap)+" rb "+QString::number(rbp));
-        rb->annuleRequis("rb "+QString::number(rbp)+" poids moindre que ra "+QString::number(rap));
-    }
-    else if (rbp > rap)
-    {
-        rb->ajHist("requête rb "+rb->numc()+" ANNULE la requête ra "+ra->numc()
-                   +", poids rb "+QString::number(rbp)+" ra "+QString::number(rap));
-        ra->annuleRequis("ra "+QString::number(rap)+" poids moindre que rb "+QString::number(rbp));
-    }
-    // égalité de poids, avantage à l'antéposition
-    else if (ra->superRequis() && rb->subRequis() && rb->sens() != '>')
-    {
-        ra->ajHist("requête "+ra->numc()+" ANNULE la requête "
-                   +rb->numc()+" : antéposition");
-        rb->annuleRequis(" par la requête " +ra->numc()+" : antéposition");
-    }
-    else if (rb->superRequis() && ra->subRequis() && ra->sens() != '>')
-    {
-        rb->ajHist("requête "+rb->numc()+" ANNULE la requête "
-                   +ra->numc()+" : antéposition");
-        ra->annuleRequis(" par la requête " +rb->numc()+" : antéposition");
-    }
-    else
-    {
-        ra->annuleRequis("ra annulée: Égalité, requête plus récente annulée");
-        rb->ajHist("rb conservée: Égalité, requête plus ancienne conservée");
-    }
 }
 
 bool Phrase::contigue(Requete* req)
@@ -612,7 +556,7 @@ void Phrase::ecoute (QString m)
 								      {
 									      case 'i':  // demande de doc sur le lien
 										      {
-                                                  Requete* req = _requetes.at(eclats.at(2).toInt());
+                                                  Requete* req = requete(eclats.at(2).toInt());
 											      QMessageBox mb;
 											      mb.setText (req->doc());
 											      mb.exec ();
@@ -804,11 +748,6 @@ bool Phrase::isomorph(QString ma, QString mb)
 QString Phrase::gauche(Mot *m)
 {
     return entreMots.at(m->rang());
-}
-
-int Phrase::getNumReq()
-{
-    return ++_numReq;
 }
 
 QString Phrase::grLu()
@@ -1242,7 +1181,7 @@ void Phrase::setLiens()
         for (int ir=0;ir<_requetes.count();++ir)
         {
             Requete* r = _requetes.at(ir);
-            if (!r->valide()) ajListeR(r);
+            if (!r->close()) ajListeR(r);
         }
 
         while (!_listeR.empty()) 
@@ -1250,7 +1189,8 @@ void Phrase::setLiens()
             Requete *req = _listeR.takeFirst();
             if (mf->resout(req))
             {
-                ajRequete(req->clone());
+                Requete* nr = req->clone();
+                ajRequete(nr, true);
                 req->setRequis(mf, "non close, résolue");
             }
         }
