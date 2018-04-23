@@ -23,6 +23,7 @@
 // FIXME : - Éliminer les liens circulaires après validation : ad ista concitari
 //         - des lemmes exclus continuent d'être utilisés
 // TODO : - En vert : fonction des liens proposés
+//        - Traduction multiple du lien : plusieurs lignes tr:<etc.
 //        - accorder la traduction de l'épithète
 //        - équivalents clavier des liens ?
 // XXX :  Anaxagoras dixit niuem nigram esse
@@ -326,6 +327,7 @@ QString Phrase::droite(Mot *m)
  *        d = déplacer le fils de ce lien à g. ou à d.
  *        e = éditer la traduction de ce lien
  *        r = rejeter ce lien
+ *        t = traduction suivante du lien
  *     3. entre virgules, toutes les morphos du mot courant
  *        affectées par le lien
  */
@@ -504,6 +506,7 @@ void Phrase::ecoute (QString m)
 				       *        d : lien dont le mot courant est fils
 				       *        i : demande de doc sur le lien
 				       *        p : permutation fils-père dans l'ordre de la traduction : homme grand / grand homme
+                       *        t : traduction suivante du lien
  	     		       *     2. d = déplacer le fils de ce lien vers la g ou la d
  	     		       *        e = éditer la traduction de ce lien
  	     		       *        r = rejeter ce lien
@@ -581,6 +584,7 @@ void Phrase::ecoute (QString m)
                                       int rang = eclats.at(2).toInt();
                                       Requete* req = requeteNum(rang);
                                       req->incItr();
+                                      break;
                                   }
 						      case 'v':   // pos 1, valider
 							      {
