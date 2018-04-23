@@ -36,7 +36,6 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
     if (sup != 0)
     {
         _super = sup;
-        _requerant = _super->mot();
         _lemme = sup->lemme();
         _morpho = sup->morpho();
         _phrase = sup->mot()->phrase();
@@ -45,14 +44,14 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
     if (sub != 0)
     {
         _sub = sub;
-        _requerant = _sub->mot();
         _lemme = sub->lemme();
         _morpho = sub->morpho();
         _phrase = sub->mot()->phrase();
         _subRequis = false;
     }
+    if (_super == 0) _requerant = _sub->mot();
+    else if (_sub == 0) _requerant = _super->mot();
     _coord1 = 0;
-    _num = _phrase->getNumReq();
     _valide = false;
     _itr = 0;
 }
@@ -432,6 +431,7 @@ bool Requete::separeparVConj()
 void Requete::setCloneeDe(int c)
 {
     _cloneeDe = c;
+    ajHist(" clonée de la req "+QString::number(c));
 }
 
 void Requete::setCoord1(Requete* req)
