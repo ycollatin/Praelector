@@ -607,6 +607,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "-" 
             << "negation"
             << "adv"
+            << "ablabs"
             << "objet"
             << "attrSTu"
             << "attrSA"
