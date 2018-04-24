@@ -335,7 +335,7 @@ lsSup:datif
 posSub:n,p
 morphoSub:datif
 poids:79
-tr:<sup> pour <sub>
+tr:<sup> pour/à <sub>
 
 id:datifP
 aff:datif
@@ -479,10 +479,11 @@ tr:ne <sup> <sub>
 
 id:num
 aff:det
-doc:les adj. numéros peuvent servir de déterminant
+doc:les adj. numéraux peuvent servir de déterminant
 posSup:n
 lsSub:num
 poids:60
+accord:cgn
 tr:<sub> <sup>
 
 id:nihil
