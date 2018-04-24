@@ -592,6 +592,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "app"
             << "nomQue"
             << "conjcoordN";
+    else if (lp.contains("m")) lgr << "-";
     else if (lp.contains("r")) lgr
             << "-"
             << "regimeAbl"
