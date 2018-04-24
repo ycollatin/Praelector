@@ -20,9 +20,11 @@
 // bin/data/regles.la
 // bin/corpus/phrases.txt
 
-// FIXME : - Éliminer les liens circulaires après validation : ad ista concitari
+// FIXME : - 13 tres legatos : tres non traduit
+//         - Éliminer les liens circulaires après validation : ad ista concitari
 //         - des lemmes exclus continuent d'être utilisés
-// TODO : - En vert : fonction des liens proposés
+// TODO : - Ordonner les formes et liens par fréquence
+//        - En vert : fonction des liens proposés
 //        - Traduction multiple du lien : plusieurs lignes tr:<etc.
 //        - accorder la traduction de l'épithète
 //        - équivalents clavier des liens ?
