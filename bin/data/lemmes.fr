@@ -5520,7 +5520,7 @@ cras:demain
 crasse:grossièrement, confusément
 Crassicius:Crassitius (grammairien latin).
 crassitudo:épaisseur, grosseur
-Crassus2:Crassus2 (surnom de la famille Licinia)
+Crassus2:Crassus (surnom de la famille Licinia)
 crassus:épais, grossier ; [subst. m.] Crassus
 crastinum:le lendemain
 Crastinus2:Crastinus (surnom).
@@ -6012,7 +6012,7 @@ decenter:convenablement, avec bienséance
 decentia:convenance
 deceptorius:trompeur, décevant
 deceptor:trompeur
-decerno:décréter, décider
+decerno:décréter, décider, choisir
 decerpo:cueillir, recueillir, retrancher
 decertatio:décision d'un combat, décision
 decerto:décider par un combat, combattre, vider une querelle
