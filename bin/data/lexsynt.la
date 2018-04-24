@@ -7158,7 +7158,7 @@ duodequadraginta:
 duodesexagesimus:
 duodetriciens:
 duodetriginta:
-duo:
+duo:num
 duodeuicensimus:
 duodeuicenus:
 duodeuicesimus:
@@ -20152,7 +20152,7 @@ septemdecim:
 septemgeminus:
 septempedalis:
 septemplex:
-septem:
+septem:num
 septemtrio:
 septemuiratus:
 septemuiri:
@@ -20315,7 +20315,7 @@ sexennis:
 sexennium:
 sexiens:
 sexies:
-sex:
+sex:num
 sextadecimani:
 sextans:
 sextarius:
@@ -22507,7 +22507,7 @@ trepidatio:
 trepide:
 trepido:
 trepidus:
-tres:
+tres:num
 tresuiri:
 Treuericus:
 Treuiri:
