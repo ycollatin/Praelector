@@ -5184,7 +5184,7 @@ contendo:tendre, aller vers ; chercher à obtenir ; affirmer ; comparer ; faire 
 contente:avec effort, avec fougue; avec rigueur
 contentio:effort, lutte, rivalité, conflit, tension, comparaison
 contentiosus:chicaneur, processif, opiniâtre
-contentus:content de, satisfait de
+contentus:content (de), satisfait (de)
 conterminum:limite
 conterminus:contigu, limitrophe
 contero:user ; (tempus - : passer sa vie ; au passif : se consacrer)
@@ -6784,7 +6784,7 @@ discordia:discorde, désaccord, désunion
 discordiosus:porté à la discorde, discordant
 discordo:être en désaccord
 discors:qui est en désaccord, divisé, ennemi
-disco:(tr.) apprendre (une leçon, une nouvelle) (abs.) s'instruire, faire des études, étudier
+disco:(tr.) apprendre (une leçon, une nouvelle), apprendre à (+inf), (abs.) s'instruire, faire des études, étudier
 discrepantia:désaccord
 discrepito:être absolument différent
 discrepo:ne pas s'accorder, différer (imp. : discrepat = il y a désaccord)
