@@ -571,6 +571,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
     QStringList lgr;
     if (lp.contains("a")) lgr 
             << "-"
+            << "ablAdj"
             << "cadj"
             << "datif";
     else if (lp.contains("c")) lgr
@@ -620,6 +621,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "abl"
             << "datif"
             << "prep"
+            << "infObjet"
             << "conjSub";
     else if (lp.contains("s")) lgr
             << "-"
