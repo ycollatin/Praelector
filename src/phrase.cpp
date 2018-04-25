@@ -20,8 +20,7 @@
 // bin/data/regles.la
 // bin/corpus/phrases.txt
 
-// FIXME : - 13 tres legatos : tres non traduit
-//         - Éliminer les liens circulaires après validation : ad ista concitari
+// FIXME : - Éliminer les liens circulaires après validation : ad ista concitari
 //         - des lemmes exclus continuent d'être utilisés
 // TODO : - Ordonner les formes et liens par fréquence
 //        - En vert : fonction des liens proposés
@@ -355,7 +354,7 @@ void Phrase::ecoute (QString m)
             for (int i=0;i<_requetes.count();)
             {
                 Requete* req = _requetes.at(i);
-                if (req != 0 && !req->multi() && req->clonee())
+                if (req != 0 && !req->multi() && (req->clonee() && !req->valide()))
                 {
                     _requetes.removeOne(req);
                 }
@@ -1193,11 +1192,14 @@ void Phrase::setLiens()
         while (!_listeR.empty()) 
         {
             Requete *req = _listeR.takeFirst();
+            bool debog = req->num()==4;
+            if (debog) qDebug()<<req->doc();
             if (mf->resout(req))
             {
                 Requete* nr = req->clone();
                 ajRequete(nr, true);
                 req->setRequis(mf, "non close, résolue");
+                if (debog) qDebug()<<"nr"<<nr->doc();
             }
         }
     }
