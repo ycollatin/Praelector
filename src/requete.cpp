@@ -169,7 +169,7 @@ QString Requete::doc()
     else fl<<"superRequis ";
     if (_super == 0) fl << "?";
     else fl << _super->mot()->gr()<<" "<<_super->lemme()->gr()<<" "<<_super->morpho();
-    fl << "-"<<id().toUpper()<<"->";
+    fl << "-" <<id() <<"->";
     if (_sub == 0) fl << "?";
     else fl << _sub->mot()->gr()<<" "<<_sub->lemme()->gr()<<" "<<_sub->morpho();
     if (clonee()) fl <<" clonée de "<<_cloneeDe;
