@@ -178,8 +178,8 @@ int MotFlechi::handicap()
 
 QString MotFlechi::htmlLiens()
 {
-    // format : 
-    // 1. en noir, fonction 
+    // format :
+    // 1. en noir, fonction
     // 2. en bleu, traduction
     // 3. un hyperlien vers doc
     // 3. deux hyperliens : valider rejeter
@@ -204,7 +204,7 @@ QString MotFlechi::htmlLiens()
 
 void MotFlechi::incItr()
 {
-    if (_itr < 0) 
+    if (_itr < 0)
     {
         if (_trfl.count() == 1) _itr = 0;
         else _itr = 1;
@@ -556,7 +556,9 @@ QString MotFlechi::trfl()
         return _trfl.at(0);
     QStringList l = _trfl;
     if (_trfl.isEmpty())
+    {
         return "traduction manquante pour "+_lemme->gr();
+    }
     QString ret = l.takeFirst()+" (";
     ret += l.join(", ");
     ret += ")";
@@ -569,7 +571,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
     QString ret;
     QTextStream fl(&ret);
     QStringList lgr;
-    if (lp.contains("a")) lgr 
+    if (lp.contains("a")) lgr
             << "-"
             << "ablAdj"
             << "cadj"
@@ -580,7 +582,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "coordN"
             << "coordInit"
             << "coordV";
-    else if (lp.contains("n") || lp.contains("p")) lgr 
+    else if (lp.contains("n") || lp.contains("p")) lgr
             << "det"
             << "num"
             << "-"
@@ -606,15 +608,17 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "sujetEgo"
             << "sujetTu"
             << "objetPr"
-            << "-" 
+            << "-"
             << "negation"
             << "adv"
             << "ablabs"
             << "objet"
             << "attrSTu"
+            << "attrSInf"
             << "attrSA"
             << "attrSN"
-            << "attrSAdjV"
+            << "attrAdjV"
+            << "attrPpp"
             << "attrSInf"
             << "attrVideor"
             << "attrO"
@@ -631,11 +635,11 @@ QString MotFlechi::trGroupe(Requete* rtest)
     for (int i = 0;i<lgr.count();++i)
     {
         QString el = lgr.at(i);
-        if (el == "-") 
+        if (el == "-")
         {
             fl << _tr << " ";
         }
-        else 
+        else
         {
             Requete* r = sub(el, rtest);
             if (r != 0)
