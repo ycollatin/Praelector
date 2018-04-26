@@ -22,7 +22,8 @@
 
 // FIXME : - Éliminer les liens circulaires après validation : ad ista concitari
 //         - des lemmes exclus continuent d'être utilisés
-// TODO : - Ordonner les formes et liens par fréquence
+// TODO : - Lexique personnel
+//        - Ordonner les formes et liens par fréquence
 //        - En vert : fonction des liens proposés
 //        - Traduction multiple du lien : plusieurs lignes tr:<etc.
 //        - accorder la traduction de l'épithète
@@ -126,7 +127,7 @@ void Phrase::additions()
 		_lemmatiseur->lisFichierLexique(_chAdditions+"/lemmata.la");
 		QFile flang (_chAdditions+"/lemmata.fr");
 		flang.open (QIODevice::ReadOnly|QIODevice::Text);
-       QTextStream flux (&flang);
+        QTextStream flux (&flang);
 		QString linea;
 		while (!flux.atEnd ())
 		{
@@ -354,7 +355,9 @@ void Phrase::ecoute (QString m)
             for (int i=0;i<_requetes.count();)
             {
                 Requete* req = _requetes.at(i);
-                if (req != 0 && !req->multi() && (req->clonee() && !req->valide()))
+                if (req->clonee() && req->valide())
+                    req->setCloneeDe(-1);
+                if (req != 0 && !req->multi() && req->clonee())
                 {
                     _requetes.removeOne(req);
                 }
@@ -409,7 +412,7 @@ void Phrase::ecoute (QString m)
 						      case 'a':  // ajout d'une entrée dans les additions
 							      {
                                       // TODO à implémenter
-								      QString nm = saisie (Chaines::ajTrEntree, "");
+								      QString nm = saisie(Chaines::ajTrEntree, "");
 								      if (nm.isEmpty()) break;
 								      QStringList eclats = nm.split (':');
 								      QString la = eclats.at (0);
