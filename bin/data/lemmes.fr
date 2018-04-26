@@ -11780,6 +11780,7 @@ jejune:sèchement, maigrement, sans développement
 jejuniosus:à jeun, affamé
 jejunium:jeûne, faim
 jejunus:à jeun, altéré, sec ; [en parl. du sol] maigre, pauvre
+jentaculum:déjeuner, petit déjeuner
 Jesus:Jésus
 joca:plaisanterie
 jocatio:badinage, plaisanterie
