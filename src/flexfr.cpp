@@ -2313,6 +2313,8 @@ QString conjnat(QString inf, QString morpho)
 
     if (morpho.contains("adjectif verbal"))
         return "à "+inf;
+    else if (morpho.contains("supin"))
+        return "pour "+inf;
 
     QStringList lm = morpho.split(' ');
 
