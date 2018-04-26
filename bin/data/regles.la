@@ -183,6 +183,16 @@ morphoSup:indicatif actif,subjonctif actif,impératif actif
 poids:50
 tr:<sup> <sub>
 
+id:attrPpp
+aff:attrS
+doc:le participe parfait peut être attribut du sujet
+posSup:w
+posSub:v
+morphoSub:participe parfait nominatif,participe parfait accusatif
+lsSup:attr
+poids:60
+tr:<sup> <sub>
+
 id:attrVideor
 aff:attrS
 doc:uideor peut être suivi d'un attribut du sujet
