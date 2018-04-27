@@ -23,12 +23,8 @@
  * \file ch.cpp
  * \brief constantes et utilitaires de traitement
  *        des chaînes de caractères
-
  *
  */
-
-
-
 
 #include "ch.h"
 #include <QRegExp>
