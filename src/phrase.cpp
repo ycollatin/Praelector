@@ -28,7 +28,7 @@
 //        - Traduction multiple du lien : plusieurs lignes tr:<etc.
 //        - accorder la traduction de l'épithète
 //        - équivalents clavier des liens ?
-// XXX :  Anaxagoras dixit niuem nigram esse
+// XXX :  
 
 #include <QApplication>
 #include <QDir>
@@ -271,8 +271,8 @@ void Phrase::choixReq(Requete* req)
     }
     if (req->regle()->aff() != "epithete" && req->regle()->aff() != "app")
     {
-        if (req->super()->mot() == cour) cour->choixFlechi(req->super());
-        else if (req->sub()->mot() == cour) cour->choixFlechi(req->sub());
+        req->super()->mot()->choixFlechi(req->super());
+        req->sub()->mot()->choixFlechi(req->sub());
     }
 }
 
@@ -1195,14 +1195,11 @@ void Phrase::setLiens()
         while (!_listeR.empty()) 
         {
             Requete *req = _listeR.takeFirst();
-            bool debog = req->num()==4;
-            if (debog) qDebug()<<req->doc();
             if (mf->resout(req))
             {
                 Requete* nr = req->clone();
                 ajRequete(nr, true);
                 req->setRequis(mf, "non close, résolue");
-                if (debog) qDebug()<<"nr"<<nr->doc();
             }
         }
     }
