@@ -22,7 +22,8 @@
 
 // FIXME : - Éliminer les liens circulaires après validation : ad ista concitari
 //         - des lemmes exclus continuent d'être utilisés
-// TODO : - Lexique personnel
+// TODO : - Deux retours en arrière : sans effacer, ou en effaçant toutes les données acquises.
+//        - Lexique personnel
 //        - Ordonner les formes et liens par fréquence
 //        - En vert : fonction des liens proposés
 //        - Traduction multiple du lien : plusieurs lignes tr:<etc.
@@ -223,6 +224,16 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
 void Phrase::choixFlechi(MotFlechi* mf)
 {
     Mot* m = mf->mot();
+    for (int i=0;i<_requetes.count();)
+    {
+        Requete* req = _requetes.at(i);
+        MotFlechi* msup = req->super();
+        MotFlechi* msub = req->sub();
+        if ((msup->mot() == m && msup != mf)
+            || (msub->mot() == m && msub != mf))
+            _requetes.removeAt(i);
+        else ++i;
+    }
     m->choixFlechi(mf);
 }
 
@@ -836,11 +847,16 @@ QList<Requete*> Phrase::homonymes(QString id)
     return ret;
 }
 
+bool Phrase::sortR(Requete* ra, Requete* rb)
+{
+    if (ra->poids() > rb->poids()) return true;
+    return false;
+}
+
 QString Phrase::htmlLiens()
 {
-    // TODO : trier les requêtes par points
     Mot* mc = motCourant();
-    QStringList ll;
+    QList<Requete*> lr;
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
@@ -848,9 +864,13 @@ QString Phrase::htmlLiens()
             && (req->requerant() == mc
                 || req->requis() == mc))
         {
-            ll << req->html();
+            lr.append(req);
         }
     }
+    qSort(lr.begin(), lr.end(), sortR);
+    QStringList ll;
+    for (int i=0;i<lr.count();++i)
+        ll.append(lr.at(i)->html());
     ll.removeDuplicates();
     return ll.join("<br/>");
 }

@@ -53,8 +53,9 @@ class Phrase: public QObject
         QString                 _reponse;
         QList<Requete*>         _requetes;
 
-        QString                 saisie (QString l, QString s);
         void                    majAffichage();
+        QString                 saisie (QString l, QString s);
+        bool static             sortR(Requete* ra, Requete* rb);
 
     public:
         Phrase(QString t);
