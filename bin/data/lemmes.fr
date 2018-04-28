@@ -10046,13 +10046,13 @@ huc:ici (question quo)
 hucine:est-ce à ce point que [... ?]
 hujuscemodi:de cette sorte
 hujusmodi:de cette sorte
-humana:les choses humaines, les événements humains, aimable, affable, sociable, cultivé, policé, civilisé
+humana:les choses humaines, les événements humains
 humane:humainement, civilement, bienveillamment
 humani:les hommes, les mortes
 humanitas:humanité, nature humaine
 humanitus:humainement, avec douceur
 humanum:l'humain
-humanus:humain ; [subst. n.] les choses humaines
+humanus:humain, aimable, affable, sociable, cultivé, policé, civilisé
 humerus:épaule
 humesco:devenir humide, s'humecter, se mouiller
 humi:à terre
