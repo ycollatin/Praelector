@@ -366,13 +366,16 @@ void Phrase::ecoute (QString m)
             for (int i=0;i<_requetes.count();)
             {
                 Requete* req = _requetes.at(i);
-                if (req->clonee() && req->valide())
-                    req->setCloneeDe(-1);
-                if (req != 0 && !req->multi() && req->clonee())
+                if (req != 0 && !req->multi() && req->clonee() && req->origine()->valide())
                 {
                     _requetes.removeOne(req);
                 }
-                else ++i;
+                else 
+                {
+                    if (req->clonee() && req->valide())
+                        req->setCloneeDe(-1);
+                    ++i;
+                }
             } 
             // résolution des requêtes
             if (_imot > 0) setLiens();

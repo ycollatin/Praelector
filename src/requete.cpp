@@ -33,6 +33,7 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
     _sub = 0;
     _num = -1;
     _cloneeDe = -1;
+    _origine = 0;
     if (sup != 0)
     {
         _super = sup;
@@ -92,6 +93,7 @@ Requete* Requete::clone()
     if (_subRequis) nreq->setSubRequis();
     else nreq->setSuperRequis();
     nreq->setCloneeDe(_num);
+    nreq->setOrigine(this);
     return nreq;
 }
 
@@ -339,6 +341,11 @@ QString Requete::numc()
     return QString::number(_num);
 }
 
+Requete* Requete::origine()
+{
+    return _origine;
+}
+
 int Requete::poids()
 {
     int ret = _regle->poids();
@@ -442,6 +449,11 @@ void Requete::setCoord1(Requete* req)
 void Requete::setNum(int n)
 {
     _num = n;
+}
+
+void Requete::setOrigine(Requete* req)
+{
+    _origine = req;
 }
 
 void Requete::setRequis(MotFlechi *m, QString cause)

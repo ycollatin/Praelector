@@ -43,6 +43,7 @@ class Requete : public QObject
         Lemme*            _lemme;
         QString           _morpho;
         int               _num;
+        Requete*          _origine;
         Phrase*           _phrase;
         Regle*            _regle;
         Mot*              _requerant;
@@ -86,6 +87,7 @@ class Requete : public QObject
         int         nbPonct(QChar c);
         int         num();
         QString     numc();
+        Requete*    origine();
         int         poids();
         QList<Mot*> portee();
         MotFlechi*  prima();
@@ -100,6 +102,7 @@ class Requete : public QObject
         void        setCloneeDe(int c);
         void        setCoord1(Requete* req);
         void        setNum(int n);
+        void        setOrigine(Requete* req);
         void        setRequis(MotFlechi* m, QString cause="cause inconnue");
         void        setSub(MotFlechi *m);
         void        setSubRequis();
