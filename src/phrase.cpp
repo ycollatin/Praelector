@@ -1222,7 +1222,7 @@ void Phrase::setLiens()
             {
                 Requete* nr = req->clone();
                 ajRequete(nr, true);
-                req->setRequis(mf, "non close, résolue");
+                req->setRequis(mf, "résolue");
             }
         }
     }
