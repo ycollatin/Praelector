@@ -626,6 +626,7 @@ doc:l'accusatif après une préposition indique que le procès verbal porte sur 
 sens:>
 conflit:gerondAd,regimeAbl
 contig:50
+posSup:r
 lsSup:prepacc
 posSub:n,p
 morphoSub:accusatif
