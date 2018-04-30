@@ -136,7 +136,7 @@ lemmeSub:-qui2,-quis
 morphoSup:indicatif actif,subjonctif actif,impératif actif,infinitif actif
 lsSup:attr
 contig:7
-supEstSup:sujet,sujetPr,sujetRel
+!supEstSup:sujet,sujetPr,sujetRel
 poids:77
 tr:<sup> <sub>
 
