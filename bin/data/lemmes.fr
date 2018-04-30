@@ -2895,7 +2895,7 @@ breve:liste abrégée, sommaire
 breviarium:abrégé, sommaire
 breviculus:un peu court
 brevi:d'ici peu, bientôt, en peu de temps
-brevis:court (espace ou temps)
+brevis:court (espace ou temps), petit (taille)
 brevitas:brièveté
 breviter:brièvement
 Briareus:Briarée
@@ -14571,7 +14571,7 @@ nondum:pas encore
 nongenti:neuf cents, un des neuf cents
 Nonius:M. Nonius Suffénas [propréteur de Crète et de Cyrène]
 nonne:est-ce que … ne pas
-non:(ne ...) pas
+non:[ne] pas
 nonnulli:(presque toujours au pluriel) certains
 nonnullus:quelque
 nonnumquam:parfois
@@ -18293,7 +18293,7 @@ putris:pourri, vermoulu
 pycta:pugiliste
 pygargus:pygargue (sorte d'aigle, espèce de gazelle)
 pygesiacus:relatif au croupion
-Pygmaeus:de Pygmées
+Pygmaeus:Pygmée, de Pygmée
 Pygmalion:Pygmalion (frère de Didon; statuaire)
 Pylades:Pylade
 Pylae2:les Thermopyles, Pylae (îles près de la Troglodytique, ville d'Arcadie)
