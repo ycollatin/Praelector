@@ -304,6 +304,7 @@ QString Mot::html()
         switch(mf->lemme()->pos().at(0).unicode())
         {
             case 'n': fl << " <a href=\"m.d."<<i<<"\">det.</a> "; break;
+            case 'w':
             case 'v': if (mf->morpho().contains('3'))
 						  fl << " <a href=\"m.s."<<i<<"\">suj.</a> ";
                       break;
