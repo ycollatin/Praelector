@@ -38,7 +38,10 @@ morphoSub:ablatif
 lsSup:abl
 contig:5
 poids:75
-tr:<sup> par/à cause de/grâce à/de <sub>
+tr:<sup> par <sub>
+tr:<sup> à cause de <sub>
+tr:<sup> grâce à <sub>
+tr:<sup> de <sub>
 
 id:ablabs
 posSup:v,w
@@ -60,7 +63,8 @@ morphoSub:ablatif
 lsSup:abl
 contig:24
 poids:79
-tr:<sup> à/de <sub>
+tr:<sup> de <sub>
+tr:<sup> à <sub>
 
 id:adjQue
 aff:coord
@@ -149,6 +153,7 @@ posSub:a,n
 morphoSub:nominatif,accusatif
 lsSup:attr
 poids:77
+x:atrSA
 tr:<sup> <sub>
 
 id:attrSN
@@ -211,7 +216,8 @@ posSub:n
 morphoSub:génitif
 lsSup:gen
 poids:75
-tr:<sup> de/à <sub>
+tr:<sup> de <sub>
+tr:<sup> à <sub>
 
 id:ccompar
 doc:le complément du comparatif peut être à l'ablatif direct
@@ -345,7 +351,8 @@ lsSup:datif
 posSub:n,p
 morphoSub:datif
 poids:79
-tr:<sup> pour/à <sub>
+tr:<sup> à <sub>
+tr:<sup> pour <sub>
 
 id:datifP
 aff:datif
@@ -453,6 +460,7 @@ morphoSub:infinitif
 contig:12
 poids:78
 tr:<sup> <sub>
+tr:<sup> de <sub>
 
 id:isqui
 aff:antecedent
@@ -485,7 +493,7 @@ morphoSup:1ère,2ème,3ème
 sens:<
 lemmeSub:non,nondum,nunquam
 poids:100
-tr:ne <sup> <sub>
+tr:<sup> <sub>
 
 id:num
 aff:det
@@ -714,7 +722,6 @@ morphoSub:abl
 lsSub:tps
 poids:75
 tr:<sup> <sub>
-
 
 id:topos
 aff:lieu
