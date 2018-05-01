@@ -569,7 +569,8 @@ QString MotFlechi::trGroupe(Requete* rtest)
 {
     QString lp = _lemme->pos();
     QString ret;
-    QTextStream fl(&ret);
+    //QTextStream fl(&ret);
+    QStringList lret;
     QStringList lgr;
     if (lp.contains("a")) lgr
             << "-"
@@ -608,8 +609,8 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "sujetEgo"
             << "sujetTu"
             << "objetPr"
-            << "negation"
             << "-"
+            << "negation"
             << "adv"
             << "ablabs"
             << "objet"
@@ -631,24 +632,38 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "-"
             << "vInd"
             << "vSubj";
+    else if (lp.contains("d")) lgr
+            << "-"
+            << "negation";
+    else lgr << "-"; 
 
     for (int i = 0;i<lgr.count();++i)
     {
         QString el = lgr.at(i);
         if (el == "-")
         {
-            fl << _tr << " ";
+            //fl << _tr << " ";
+            lret.append(_tr);
         }
         else
         {
             Requete* r = sub(el, rtest);
             if (r != 0)
             {
-                fl << r->trSub() << " ";
+                if (el=="negation")
+                {
+                    QString fv = lret.last();
+                    if (fv.contains(" "))
+                        fv.replace(" ", " ne ");
+                    else fv.prepend("ne ");
+                    lret.replace(lret.count()-1, fv);
+                }
+                //fl << r->trSub() << " ";
+                lret.append(r->trSub());
             }
         }
     }
-    return ret.simplified();
+    return lret.join(" ").simplified();
 }
 
 QString MotFlechi::trNue()
