@@ -175,6 +175,7 @@ QString Requete::doc()
     if (_sub == 0) fl << "?";
     else fl << _sub->mot()->gr()<<" "<<_sub->lemme()->gr()<<" "<<_sub->morpho();
     if (clonee()) fl <<" clonée de "<<_cloneeDe;
+    if (_valide) fl<<"\ntraduction:"<<tr();
     return ret;
 }
 
@@ -244,6 +245,7 @@ int Requete::handicap()
 
 QString Requete::hist()
 {
+    if (_valide) _hist.append("traduction:"+tr());
     return _hist.join("\n");
 }
 
@@ -529,8 +531,6 @@ QString Requete::tr()
 {
     QString ret = _regle->tr();
     if (_super != 0) ret.replace("<sup>", _super->tr());
-    //if (_super != 0) ret.replace("<sup>", _super->trGroupe());
-    //if (_sub != 0) ret.replace("<sub>", _sub->tr());
     if (_sub != 0) ret.replace("<sub>", _sub->trGroupe());
     return ret;
 }
@@ -539,9 +539,6 @@ QString Requete::trSub()
 {
     if (_sub == 0) return "erreur, sub manquant";
     QString ret = _regle->tr(_itr); 
-    //if (_super != 0)
-    //    ret.replace("<sup>", _super->tr());
-    //else
     ret.remove("<sup>");
     return ret.replace("<sub>", _sub->trGroupe());
 }
