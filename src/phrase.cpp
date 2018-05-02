@@ -159,41 +159,29 @@ void Phrase::ajRequete(Requete* req, bool force)
             && r->sub() == req->sub()
             && r->id() == req->id())
         {
-            return;
+            std::cerr << qPrintable("Requête "+req->numc()+" égale à la requête "+r->numc());
         }
     }
-    // attribuer un numéro
-    // trouver le numéro le plus élevé
-    int nn = 0;
-    for (int i=0;i<_requetes.count();++i)
-    {
-        Requete* req = _requetes.at(i);
-        if (req != 0 && req->num() > nn) nn = req->num();
-    }
-    ++nn;
-    req->setNum(nn);
     _requetes.append(req);
 }
 
 void Phrase::annuleLemme(Mot* m, Lemme* l)
 {
-    for (int i=0;i<_requetes.count();)
+    for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if (req == 0) continue;
+        if (req == 0 || req->morte()) continue;
         if (req->subRequis()) 
         {
             if (req->sub() != 0 
                 && req->sub()->mot() == m && req->sub()->lemme() == l)
             {
                 req->annuleRequis("lemme rejeté");
-                ++i;
             }
             else if (req->super()->mot() == m && req->super()->lemme() == l)
             {
-                _requetes.removeAt(i);
+                req->tue();
             }
-            else ++i;
         }
         else
         {
@@ -201,11 +189,10 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
                 && req->super()->mot() == m && req->super()->lemme() == l)
             {
                 req->annuleRequis("lemme rejeté");
-                ++i;
             }
             else if (req->sub()->mot() == m && req->sub()->lemme() == l)
             {
-                _requetes.removeAt(i);
+                req->tue();
             }
             else ++i;
         }
@@ -216,15 +203,15 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
 void Phrase::choixFlechi(MotFlechi* mf)
 {
     Mot* m = mf->mot();
-    for (int i=0;i<_requetes.count();)
+    for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
+        if (req == 0 || req->morte()) continue;
         MotFlechi* msup = req->super();
         MotFlechi* msub = req->sub();
         if ((msup->mot() == m && msup != mf)
             || (msub->mot() == m && msub != mf))
-            _requetes.removeAt(i);
-        else ++i;
+            req->tue();
     }
     m->choixFlechi(mf);
 }
@@ -237,12 +224,11 @@ void Phrase::choixReq(Requete* req)
     Mot *cour = motCourant();
     Mot* msub = req->sub()->mot();
     MotFlechi* mfsup = req->super();
-    for (int i=0;i<_requetes.count();)
+    for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
-        if (r == 0 || r == req || r->valide() || !r->close())
+        if (r == 0 || req->morte() || r == req || r->valide() || !r->close())
         {
-            ++i;
             continue;
         }
         // élimination des reqs de même super, et de sub de même aff, sauf multi
@@ -250,7 +236,7 @@ void Phrase::choixReq(Requete* req)
             && r->aff() == req->aff()
             && !req->multi())
         {
-            _requetes.removeAt(i);
+            r->tue();
             continue;
         }
         if (r->superRequis() && r->super()->mot() == cour)
@@ -269,9 +255,8 @@ void Phrase::choixReq(Requete* req)
             && r->id() != "antecedent"
             && r->super() != mfsup)
         {
-            _requetes.removeAt(i);
+            r->tue();
         }
-        else ++i;
     }
     if (req->regle()->aff() != "epithete" && req->regle()->aff() != "app")
     {
@@ -355,19 +340,18 @@ void Phrase::ecoute (QString m)
 		if (_imot > _maxImot) _maxImot = _imot;
         else
         {
-            // supprimer les requêtes clonées
-            for (int i=0;i<_requetes.count();)
+            // tuer les requêtes clonées
+            for (int i=0;i<_requetes.count();++i)
             {
                 Requete* req = _requetes.at(i);
                 if (req != 0 && !req->multi() && req->clonee() && req->origine()->valide())
                 {
-                    _requetes.removeAt(i);
+                    req->tue();
                 }
                 else 
                 {
-                    if (req->clonee() && req->valide())
-                        req->setCloneeDe(-1);
-                    ++i;
+                    if (req->clonee())
+                        req->setOrigine(0);
                 }
             } 
             // résolution des requêtes
@@ -570,7 +554,7 @@ void Phrase::ecoute (QString m)
 								      {
 									      case 'i':  // demande de doc sur le lien
 										      {
-                                                  Requete* req = requeteNum(eclats.at(2).toInt());
+                                                  Requete* req = _requetes.at(eclats.at(2).toInt());
 											      QMessageBox mb;
 											      mb.setText (req->doc());
 											      mb.exec ();
@@ -593,14 +577,14 @@ void Phrase::ecoute (QString m)
                               case 't': // rotation de la traduction du lien
                                   {
                                       int rang = eclats.at(2).toInt();
-                                      Requete* req = requeteNum(rang);
+                                      Requete* req = _requetes.at(rang);
                                       req->incItr();
                                       break;
                                   }
 						      case 'v':   // pos 1, valider
 							      {
                                       int rang = eclats.at(2).toInt();
-                                      Requete* req = requeteNum(rang);
+                                      Requete* req = _requetes.at(rang);
                                       if (req == 0)
                                           std::cerr << qPrintable("requête introuvable");
                                       else choixReq(req);
@@ -693,7 +677,7 @@ void Phrase::ecoute (QString m)
 						      case 'r':   // rejet d'un lien
 					      	      {
                                       int n = eclats.at(2).toInt();
-                                      Requete* req = requeteNum(n);
+                                      Requete* req = requete(n);
                                       if (req == 0)
                                       {
                                           std::cerr << qPrintable("Requête introuvable");
@@ -702,7 +686,7 @@ void Phrase::ecoute (QString m)
                                       req->annuleRequis("rejet demandé");
                                       if (req->requerant() == cour)
                                       {
-                                          _requetes.removeOne(req);
+                                          req->tue();
                                       }
 								      break;
 					      	      }
@@ -1106,16 +1090,6 @@ Requete* Phrase::requete(int n)
     return 0;
 }
 
-Requete* Phrase::requeteNum(int n)
-{
-    for (int i=0;i<_requetes.count();++i)
-    {
-        Requete* req = _requetes.at(i);
-        if (req->num() == n) return req;
-    }
-    return 0;
-}
-
 /*
  * QString Phrase::saisie (QString l, QString s)
  *   saisie par ouverture d'un dialogue
@@ -1247,6 +1221,7 @@ void Phrase::trace()
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if (req != 0) std::cout << qPrintable(req->hist());
+        if (req != 0) std::cout << qPrintable("\n----------\n"+req->hist());
+        else std::cout << qPrintable("\n---\nrequête "+QString::number(i)+" nulle");
     }
 }
