@@ -510,6 +510,7 @@ QString Mot::trGroupe(Requete* rtest)
     if (!lmf.isEmpty())
     {
         QStringList lret;
+        if (lmf.count() > 1) lret.append( _gr+" : Erreur, plusieurs fléchis valides");
         for (int i=0;i<lmf.count();++i)
         {
             lret.append(lmf.at(i)->trGroupe());
