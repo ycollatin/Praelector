@@ -44,7 +44,6 @@ class Phrase: public QObject
         QMap<QString,Handicap*> _handicaps;
         int                     _imot;
         Lemmat*                 _lemmatiseur;
-        QList<Requete*>         _listeR;
         int                     _maxImot;
         QList<Mot*>             _mots;
         int                     _num;
@@ -61,7 +60,6 @@ class Phrase: public QObject
         Phrase(QString t);
         bool static       accord(MotFlechi* ma, MotFlechi* mb, QString cgn);
         void              additions();
-        void              ajListeR(Requete* req);
         void              ajRequete(Requete* req, bool force=false);
         void              annuleLemme(Mot* m, Lemme* l);
         void              choixFlechi(MotFlechi* mf);
@@ -91,12 +89,10 @@ class Phrase: public QObject
         Mot*              motCourant();
         Mot*              motNo(int i);
         int               nbMots();
-        int               nbListeR();
         int               nbPonct(QChar p, Mot* ma, Mot* mb);
         int               nbRegles();
         int               nbRequetes();
         void              nettoieHomonymes(QString id);
-        int               num();
         void              peupleHandicap();
         void              peupleRegles(QString nf);
         QList<Mot*>       portee(int a, int b);

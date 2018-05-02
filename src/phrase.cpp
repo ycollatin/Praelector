@@ -147,14 +147,6 @@ void Phrase::additions()
 	}
 }
 
-void Phrase::ajListeR(Requete* req)
-{
-    if (!_listeR.contains(req))
-    {
-        _listeR.append(req);
-    }
-}
-
 void Phrase::ajRequete(Requete* req, bool force)
 {
     // vérifier que la requête n'existe pas
@@ -245,21 +237,22 @@ void Phrase::choixReq(Requete* req)
     Mot *cour = motCourant();
     Mot* msub = req->sub()->mot();
     MotFlechi* mfsup = req->super();
-    for (int i=0;i<_requetes.count();++i)
+    for (int i=0;i<_requetes.count();)
     {
         Requete* r = _requetes.at(i);
-        if (r == 0 || r == req || r->valide())
+        if (r == 0 || r == req || r->valide() || !r->close())
+        {
+            ++i;
             continue;
+        }
         // élimination des reqs de même super, et de sub de même aff, sauf multi
         if (r->super() != 0 && r->super()->mot() == req->super()->mot()
             && r->aff() == req->aff()
             && !req->multi())
         {
             _requetes.removeAt(i);
-            --i;
             continue;
         }
-        if (!r->close()) continue;
         if (r->superRequis() && r->super()->mot() == cour)
         {
             if (r->super() != req->super())
@@ -277,8 +270,8 @@ void Phrase::choixReq(Requete* req)
             && r->super() != mfsup)
         {
             _requetes.removeAt(i);
-            --i;
         }
+        else ++i;
     }
     if (req->regle()->aff() != "epithete" && req->regle()->aff() != "app")
     {
@@ -368,7 +361,7 @@ void Phrase::ecoute (QString m)
                 Requete* req = _requetes.at(i);
                 if (req != 0 && !req->multi() && req->clonee() && req->origine()->valide())
                 {
-                    _requetes.removeOne(req);
+                    _requetes.removeAt(i);
                 }
                 else 
                 {
@@ -577,7 +570,7 @@ void Phrase::ecoute (QString m)
 								      {
 									      case 'i':  // demande de doc sur le lien
 										      {
-                                                  Requete* req = requete(eclats.at(2).toInt());
+                                                  Requete* req = requeteNum(eclats.at(2).toInt());
 											      QMessageBox mb;
 											      mb.setText (req->doc());
 											      mb.exec ();
@@ -597,7 +590,7 @@ void Phrase::ecoute (QString m)
 								      }
 								      break;
 							      }
-                              case 't':
+                              case 't': // rotation de la traduction du lien
                                   {
                                       int rang = eclats.at(2).toInt();
                                       Requete* req = requeteNum(rang);
@@ -609,11 +602,8 @@ void Phrase::ecoute (QString m)
                                       int rang = eclats.at(2).toInt();
                                       Requete* req = requeteNum(rang);
                                       if (req == 0)
-                                      {
                                           std::cerr << qPrintable("requête introuvable");
-                                          return;
-                                      }
-                                      choixReq(req);
+                                      else choixReq(req);
 								      break;
 							      }
 							      // x y et z servent à éditer le gabarit du lien : 
@@ -962,11 +952,6 @@ int Phrase::nbMots()
     return _mots.count();
 }
 
-int Phrase::nbListeR()
-{
-    return _listeR.count();
-}
-
 int Phrase::nbPonct(QChar p, Mot* ma, Mot* mb)
 {
     // trouver le premier mot
@@ -1154,7 +1139,6 @@ QString Phrase::saisie (QString l, QString s)
 void Phrase::setGr(QString t)
 {
     entreMots.clear();
-    _listeR.clear();
     while (!_requetes.empty())
     {
         Requete* req = _requetes.takeFirst();
@@ -1208,16 +1192,18 @@ void Phrase::setLiens()
     {
         MotFlechi* mf = mc->flechi(im);
         // copie de la liste des requêtes
-        _listeR.clear();
+        QList<Requete*> listeR;
         for (int ir=0;ir<_requetes.count();++ir)
         {
             Requete* r = _requetes.at(ir);
-            if (!r->close()) ajListeR(r);
+            if (r != 0 && !r->close()) listeR.append(r);
         }
 
-        while (!_listeR.empty()) 
+        //while (!_listeR.empty()) 
+        while (!listeR.empty()) 
         {
-            Requete *req = _listeR.takeFirst();
+            //Requete *req = _listeR.takeFirst();
+            Requete *req = listeR.takeFirst();
             if (mf->resout(req))
             {
                 Requete* nr = req->clone();
@@ -1261,6 +1247,6 @@ void Phrase::trace()
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        std::cout << qPrintable(req->hist());
+        if (req != 0) std::cout << qPrintable(req->hist());
     }
 }
