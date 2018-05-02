@@ -725,7 +725,7 @@ tr:<sup> <sub>
 
 id:topos
 aff:lieu
-posSup:v
+posSup:v,w
 morphoSup:actif
 posSub:n
 morphoSub:accusatif
