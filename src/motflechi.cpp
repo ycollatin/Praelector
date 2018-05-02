@@ -238,8 +238,6 @@ void MotFlechi::lance()
         if (nr != 0)
         {
             _phrase->ajRequete(nr);
-            nr->ajHist("\n------------------\nRequête numéro "+nr->numc());
-            nr->ajHist(nr->doc());
         }
     }
 }
