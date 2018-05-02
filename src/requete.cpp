@@ -102,6 +102,11 @@ bool Requete::clonee()
     return _cloneeDe > -1;
 }
 
+int Requete::cloneeDe()
+{
+    return _cloneeDe;
+}
+
 bool Requete::close()
 {
     return (_super != 0 && _sub != 0);
@@ -440,7 +445,7 @@ bool Requete::separeparVConj()
 void Requete::setCloneeDe(int c)
 {
     _cloneeDe = c;
-    ajHist(" clonée de la req "+QString::number(c));
+    if (c > -1) ajHist(" clonée de la req "+QString::number(c));
 }
 
 void Requete::setCoord1(Requete* req)

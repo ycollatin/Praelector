@@ -58,6 +58,7 @@ class Requete : public QObject
         void        annuleRequis(QString cause);
         Requete*    clone();
         bool        clonee();
+        int         cloneeDe();
         bool        close();
         bool        contigue();
         Requete*    coord1();
