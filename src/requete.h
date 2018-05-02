@@ -36,12 +36,13 @@ class Requete : public QObject
     Q_OBJECT
 
     private:
-        int               _cloneeDe;
+        //int               _cloneeDe;
         Requete*          _coord1;
         QStringList       _hist;
         int               _itr;
         Lemme*            _lemme;
         QString           _morpho;
+        bool              _morte;
         int               _num;
         Requete*          _origine;
         Phrase*           _phrase;
@@ -83,6 +84,7 @@ class Requete : public QObject
         QString     id();
         void        incItr();
         int         largeur();
+        bool        morte();
         bool        multi();
         int         nbEx();
         int         nbPonct(QChar c);
@@ -100,9 +102,8 @@ class Requete : public QObject
         MotFlechi*  requisFl();
         QChar       sens();
         bool        separeparVConj();
-        void        setCloneeDe(int c);
         void        setCoord1(Requete* req);
-        void        setNum(int n);
+        //void        setNum(int n);
         void        setOrigine(Requete* req);
         void        setRequis(MotFlechi* m, QString cause="cause inconnue");
         void        setSub(MotFlechi *m);
@@ -116,6 +117,7 @@ class Requete : public QObject
         bool        superRequis();
         QString     tr();
         QString     trSub(); // traduction 
+        void        tue();
         MotFlechi*  ultima();
         bool        valide();
 };

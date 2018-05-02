@@ -31,8 +31,7 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
     _regle = r;
     _super = 0;
     _sub = 0;
-    _num = -1;
-    _cloneeDe = -1;
+    _morte = false;
     _origine = 0;
     if (sup != 0)
     {
@@ -50,11 +49,13 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
         _phrase = sub->mot()->phrase();
         _subRequis = false;
     }
+    _num = _phrase->nbRequetes();
     if (_super == 0) _requerant = _sub->mot();
     else if (_sub == 0) _requerant = _super->mot();
     _coord1 = 0;
     _valide = false;
     _itr = 0;
+    ajHist("Requête num "+numc()+" "+doc());
 }
 
 QString Requete::aff()
@@ -92,19 +93,20 @@ Requete* Requete::clone()
     }
     if (_subRequis) nreq->setSubRequis();
     else nreq->setSuperRequis();
-    nreq->setCloneeDe(_num);
+    //nreq->setCloneeDe(_num);
     nreq->setOrigine(this);
     return nreq;
 }
 
 bool Requete::clonee()
 {
-    return _cloneeDe > -1;
+    return _origine != 0;
 }
 
 int Requete::cloneeDe()
 {
-    return _cloneeDe;
+    if (_origine == 0) return -1;
+    return _origine->num();
 }
 
 bool Requete::close()
@@ -179,7 +181,8 @@ QString Requete::doc()
     fl << "-" <<id() <<"->";
     if (_sub == 0) fl << "?";
     else fl << _sub->mot()->gr()<<" "<<_sub->lemme()->gr()<<" "<<_sub->morpho();
-    if (clonee()) fl <<" clonée de "<<_cloneeDe;
+    if (_origine != 0) fl << "\nclonée de "<<_origine->num();
+    if (_morte) fl << "\nmorte";
     if (_valide) fl<<"\ntraduction:"<<tr();
     return ret;
 }
@@ -327,6 +330,11 @@ int Requete::largeur()
     return abs(_super->rang() - _sub->rang());
 }
 
+bool Requete::morte()
+{
+    return _morte;
+}
+
 bool Requete::multi()
 {
     return _regle->filtre().contains("multi");
@@ -442,20 +450,9 @@ bool Requete::separeparVConj()
     return v;
 }
 
-void Requete::setCloneeDe(int c)
-{
-    _cloneeDe = c;
-    if (c > -1) ajHist(" clonée de la req "+QString::number(c));
-}
-
 void Requete::setCoord1(Requete* req)
 {
     _coord1 = req;
-}
-
-void Requete::setNum(int n)
-{
-    _num = n;
 }
 
 void Requete::setOrigine(Requete* req)
@@ -508,7 +505,10 @@ void Requete::setSuperRequis()
 void Requete::setValide(bool v)
 {
     _valide = v;
-    if (v) ajHist("VALIDÉE");
+    if (v) 
+    {
+        ajHist("VALIDÉE\n"+doc());
+    }
     else ajHist("INVALIDÉE");
 }
 
@@ -546,6 +546,11 @@ QString Requete::trSub()
     QString ret = _regle->tr(_itr); 
     ret.remove("<sup>");
     return ret.replace("<sub>", _sub->trGroupe());
+}
+
+void Requete::tue()
+{
+    _morte = true;
 }
 
 MotFlechi* Requete::ultima()
