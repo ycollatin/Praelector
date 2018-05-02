@@ -230,29 +230,18 @@ void MotFlechi::lance()
     for (int i=0;i<_phrase->nbRegles();++i)
     {
         Regle* r = _phrase->regle(i);
-        if (r->estSuper(this) && r->sens() != '<') lanceReqSup(r);
-        if (r->estSub(this) && r->sens() != '>') lanceReqSub(r);
+        Requete* nr = 0;
+        if (r->estSuper(this) && r->sens() != '<')
+            nr = new Requete(this, 0, r);
+        else if (r->estSub(this) && r->sens() != '>')
+            nr = new Requete(0, this, r);
+        if (nr != 0)
+        {
+            _phrase->ajRequete(nr);
+            nr->ajHist("\n------------------\nRequête numéro "+nr->numc());
+            nr->ajHist(nr->doc());
+        }
     }
-}
-
-// _lreqSub est la liste des requêtes dont le fléchi est sub
-// _lreqSup est la liste des requêtes dont le fléchi est super
-Requete* MotFlechi::lanceReqSub(Regle* r)
-{
-    Requete* nr = new Requete(0, this, r);
-    _phrase->ajRequete(nr);
-    nr->ajHist("\n------------------\nRequête numéro "+nr->numc());
-    nr->ajHist(nr->doc());
-    return nr;
-}
-
-Requete* MotFlechi::lanceReqSup(Regle* r)
-{
-    Requete* nr = new Requete(this, 0, r);
-    _phrase->ajRequete(nr);
-    nr->ajHist("\n------------------\nRequête numéro "+nr->numc());
-    nr->ajHist(nr->doc());
-    return nr;
 }
 
 Lemme* MotFlechi::lemme()
@@ -350,7 +339,6 @@ Requete* MotFlechi::reqSup(int i)
 
 bool MotFlechi::resout(Requete* req)
 {
-    // signetResout
     // un mot ne peut être lié à lui-même.
     if (req->requerant() == _mot) return false;
 
@@ -569,7 +557,6 @@ QString MotFlechi::trGroupe(Requete* rtest)
 {
     QString lp = _lemme->pos();
     QString ret;
-    //QTextStream fl(&ret);
     QStringList lret;
     QStringList lgr;
     if (lp.contains("a")) lgr
@@ -642,7 +629,6 @@ QString MotFlechi::trGroupe(Requete* rtest)
         QString el = lgr.at(i);
         if (el == "-")
         {
-            //fl << _tr << " ";
             lret.append(_tr);
         }
         else
@@ -658,7 +644,6 @@ QString MotFlechi::trGroupe(Requete* rtest)
                     else fv.prepend("ne ");
                     lret.replace(lret.count()-1, fv);
                 }
-                //fl << r->trSub() << " ";
                 lret.append(r->trSub());
             }
         }

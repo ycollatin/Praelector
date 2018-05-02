@@ -66,8 +66,6 @@ class MotFlechi: public QObject
         void            incItr(); 
         bool static     intersect(QString a, QString b);
         void            lance();
-        Requete*        lanceReqSub(Regle* r);
-        Requete*        lanceReqSup(Regle* r);
         Lemme*          lemme();
         QString         morpho();
         Mot*            mot();
