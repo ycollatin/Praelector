@@ -159,7 +159,7 @@ void Phrase::ajRequete(Requete* req, bool force)
             && r->sub() == req->sub()
             && r->id() == req->id())
         {
-            std::cerr << qPrintable("Requête "+req->numc()+" égale à la requête "+r->numc());
+            std::cerr << qPrintable("\nRequête "+req->doc()+"\négale à la requête\n"+r->numc());
         }
     }
     _requetes.append(req);
@@ -176,7 +176,7 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
             if (req->sub() != 0 
                 && req->sub()->mot() == m && req->sub()->lemme() == l)
             {
-                req->annuleRequis("lemme rejeté");
+                if (req->close()) req->annuleRequis("lemme rejeté");
             }
             else if (req->super()->mot() == m && req->super()->lemme() == l)
             {
@@ -188,7 +188,7 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
             if (req->super() != 0 
                 && req->super()->mot() == m && req->super()->lemme() == l)
             {
-                req->annuleRequis("lemme rejeté");
+                if (req->close()) req->annuleRequis("lemme rejeté");
             }
             else if (req->sub()->mot() == m && req->sub()->lemme() == l)
             {
