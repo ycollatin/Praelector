@@ -253,7 +253,7 @@ int Requete::handicap()
 
 QString Requete::hist()
 {
-    if (_valide) _hist.append("traduction:"+tr());
+    if (_valide) _hist.append("tr.:"+tr());
     return _hist.join("\n");
 }
 
