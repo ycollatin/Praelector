@@ -2895,7 +2895,7 @@ breve:liste abrégée, sommaire
 breviarium:abrégé, sommaire
 breviculus:un peu court
 brevi:d'ici peu, bientôt, en peu de temps
-brevis:court (espace ou temps), petit (taille)
+brevis:court (espace ou temps), bref, petit (taille)
 brevitas:brièveté
 breviter:brièvement
 Briareus:Briarée
