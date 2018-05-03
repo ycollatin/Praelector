@@ -605,7 +605,6 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "attrSN"
             << "attrAdjV"
             << "attrPpp"
-            << "attrSInf"
             << "attrVideor"
             << "attrO"
             << "abl"
