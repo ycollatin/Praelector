@@ -78,8 +78,16 @@ void Mot::annuleLemme(Lemme* lem)
 
 void Mot::choixFlechi(MotFlechi* mf)
 {
-    _flechis.clear();
-    _flechis.append(mf);
+    for (int i=0;i<_flechis.count();)
+    {
+        MotFlechi* f = _flechis.at(i);
+        if (f != mf) 
+        {
+            _flechis.removeAt(i);
+            // delete f // ?
+        }
+        else ++i;
+    }
 }
 
 void Mot::choixLemme(Lemme* l)
