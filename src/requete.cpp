@@ -551,6 +551,7 @@ QString Requete::trSub()
 void Requete::tue()
 {
     _morte = true;
+    _hist.append("requête morte");
 }
 
 MotFlechi* Requete::ultima()
