@@ -20,8 +20,7 @@
 // bin/data/regles.la
 // bin/corpus/phrases.txt
 
-// FIXME : - Éliminer les liens circulaires après validation : ad ista concitari
-//         - des lemmes exclus continuent d'être utilisés
+// FIXME :- Des requêtes obsolètes persiste après le choix de la bonne.
 // TODO : - Deux retours en arrière : sans effacer, ou en effaçant toutes les données acquises.
 //        - Lexique personnel
 //        - Ordonner les formes et liens par fréquence
@@ -205,12 +204,14 @@ void Phrase::choixFlechi(MotFlechi* mf)
     Mot* m = mf->mot();
     for (int i=0;i<_requetes.count();++i)
     {
+        qDebug()<<"    i"<<i;
         Requete* req = _requetes.at(i);
+        qDebug()<<"    req"<<req->doc();
         if (req == 0 || req->morte()) continue;
         MotFlechi* msup = req->super();
         MotFlechi* msub = req->sub();
-        if ((msup->mot() == m && msup != mf)
-            || (msub->mot() == m && msub != mf))
+        if ((msup != 0 && msup->mot() == m && msup != mf)
+            || (msub != 0 && msub->mot() == m && msub != mf))
             req->tue();
     }
     m->choixFlechi(mf);
@@ -224,6 +225,15 @@ void Phrase::choixReq(Requete* req)
     Mot *cour = motCourant();
     Mot* msub = req->sub()->mot();
     MotFlechi* mfsup = req->super();
+
+    // tri des fléchis
+    if (req->regle()->aff() != "epithete" && req->regle()->aff() != "app")
+    {
+        req->super()->mot()->choixFlechi(req->super());
+        req->sub()->mot()->choixFlechi(req->sub());
+    }
+
+    // tri des requêtes
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
@@ -233,35 +243,33 @@ void Phrase::choixReq(Requete* req)
         }
         // élimination des reqs de même super, et de sub de même aff, sauf multi
         if (r->super() != 0 && r->super()->mot() == req->super()->mot()
-            && r->aff() == req->aff()
-            && !req->multi())
+            && r->aff() == req->aff() && !req->multi())
         {
             r->tue();
-            continue;
         }
-        if (r->superRequis() && r->super()->mot() == cour)
+        // élimination des requêtes concurrentes, de même sub mais de super !=
+        // TODO : vérif : exclure l'antécédent
+        else if (r->sub()->mot() == msub && r->super() != req->super() && !req->sub()->mot()->estRelatif())
         {
-            if (r->super() != req->super())
-                cour->annuleFlechi(r->super());
+            r->tue();
         }
-        else if (r->subRequis() && r->sub()->mot() == cour)
+        else if (r->superRequis() && r->super()->mot() == cour && r->super() != req->super())
         {
-            if (r->sub() != req->sub())
-                cour->annuleFlechi(r->sub());
+            cour->annuleFlechi(r->super());
+            r->tue();
+        }
+        else if (r->subRequis() && r->sub()->mot() == cour  && r->sub() != req->sub())
+        {
+            cour->annuleFlechi(r->sub());
+            r->tue();
         }
         // élimination des reqs dont le super est différent,
-        if (r != req 
-            && r->sub()->mot() == msub
+        else if (r->sub()->mot() == msub
             && r->id() != "antecedent"
             && r->super() != mfsup)
         {
             r->tue();
         }
-    }
-    if (req->regle()->aff() != "epithete" && req->regle()->aff() != "app")
-    {
-        req->super()->mot()->choixFlechi(req->super());
-        req->sub()->mot()->choixFlechi(req->sub());
     }
 }
 
@@ -432,7 +440,8 @@ void Phrase::ecoute (QString m)
                                       _mots.insert(_imot, motA);
 								      break;
 							      }
-						      case 'c': // éliminer toutes les autres morphos
+						      case 'c': // éliminer tous les autres fléchis
+                                  choixFlechi(mf);
 							      break;
 						      case 'd': // rotation du déterminant
 							      {
@@ -516,6 +525,8 @@ void Phrase::ecoute (QString m)
                           // liste des morphos affectées passées par m[3]
                           QList<Requete*> lreq;
 					      char gd = eclats.at(1).at(0).unicode();   // m[2] : opération à réaliser
+                          int rang = eclats.at(2).toInt();
+                          Requete* req = requete(rang);
 					      switch (gd)      // pos 1, idgp info et déplacement
 					      {
 						      case 'd':    // déplacement d'un groupe à droite
@@ -554,7 +565,7 @@ void Phrase::ecoute (QString m)
 								      {
 									      case 'i':  // demande de doc sur le lien
 										      {
-                                                  Requete* req = _requetes.at(eclats.at(2).toInt());
+                                                  //Requete* req = _requetes.at(eclats.at(2).toInt());
 											      QMessageBox mb;
 											      mb.setText (req->doc());
 											      mb.exec ();
@@ -576,17 +587,16 @@ void Phrase::ecoute (QString m)
 							      }
                               case 't': // rotation de la traduction du lien
                                   {
-                                      int rang = eclats.at(2).toInt();
-                                      Requete* req = _requetes.at(rang);
+                                      //int rang = eclats.at(2).toInt();
+                                      //Requete* req = _requetes.at(rang);
                                       req->incItr();
                                       break;
                                   }
 						      case 'v':   // pos 1, valider
 							      {
-                                      int rang = eclats.at(2).toInt();
-                                      Requete* req = _requetes.at(rang);
-                                      if (req == 0)
-                                          std::cerr << qPrintable("requête introuvable");
+                                      //int rang = eclats.at(2).toInt();
+                                      //Requete* req = _requetes.at(rang);
+                                      if (req == 0) std::cerr << qPrintable("requête introuvable");
                                       else choixReq(req);
 								      break;
 							      }
@@ -676,8 +686,11 @@ void Phrase::ecoute (QString m)
 							      }
 						      case 'r':   // rejet d'un lien
 					      	      {
+                                      /*
                                       int n = eclats.at(2).toInt();
-                                      Requete* req = requete(n);
+                                      Requete* req = requete(u);
+                                      Requete* req = requete(rang);
+                                      */
                                       if (req == 0)
                                       {
                                           std::cerr << qPrintable("Requête introuvable");
@@ -837,9 +850,8 @@ QString Phrase::htmlLiens()
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if (req->close()
-            && (req->requerant() == mc
-                || req->requis() == mc))
+        if (req->close() && !req->morte()
+            && (req->requerant() == mc || req->requis() == mc))
         {
             lr.append(req);
         }
