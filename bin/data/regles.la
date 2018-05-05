@@ -419,7 +419,7 @@ posSub:n
 morphoSub:génitif
 filtre:contigu
 poids:70
-tr:c'<sup> le propre de <sub>
+tr:<sup> le propre de <sub>
 
 id:gerondAd
 doc:ad + gérondif à l'accusatif pour le but
