@@ -20,7 +20,7 @@
 // bin/data/regles.la
 // bin/corpus/phrases.txt
 
-// FIXME :- Des requêtes obsolètes persiste après le choix de la bonne.
+// FIXME :- Legati ad Tarquinios proficiscuntur : Deux liens identiques pour ad prep proficiscuntur
 // TODO : - Deux retours en arrière : sans effacer, ou en effaçant toutes les données acquises.
 //        - Lexique personnel
 //        - Ordonner les formes et liens par fréquence
