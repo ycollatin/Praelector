@@ -9085,7 +9085,7 @@ furnus:four
 furo:être hors de soi, être fou
 furor2:voler
 Furor3:la Fureur (personnifiée).
-furor:fureur, folie furieuse
+furor:fureur, folie [furieuse]
 furtificus:prompt à voler
 furtim:en cachette, comme un voleur
 furtive:en cachette, furtivement
