@@ -204,9 +204,7 @@ void Phrase::choixFlechi(MotFlechi* mf)
     Mot* m = mf->mot();
     for (int i=0;i<_requetes.count();++i)
     {
-        qDebug()<<"    i"<<i;
         Requete* req = _requetes.at(i);
-        qDebug()<<"    req"<<req->doc();
         if (req == 0 || req->morte()) continue;
         MotFlechi* msup = req->super();
         MotFlechi* msub = req->sub();
@@ -227,11 +225,8 @@ void Phrase::choixReq(Requete* req)
     MotFlechi* mfsup = req->super();
 
     // tri des fléchis
-    if (req->regle()->aff() != "epithete" && req->regle()->aff() != "app")
-    {
-        req->super()->mot()->choixFlechi(req->super());
-        req->sub()->mot()->choixFlechi(req->sub());
-    }
+    choixFlechi(req->super());
+    choixFlechi(req->sub());
 
     // tri des requêtes
     for (int i=0;i<_requetes.count();++i)
@@ -242,31 +237,14 @@ void Phrase::choixReq(Requete* req)
             continue;
         }
         // élimination des reqs de même super, et de sub de même aff, sauf multi
-        if (r->super() != 0 && r->super()->mot() == req->super()->mot()
+        if ((r->super() != 0 && r->super()->mot() == mfsup->mot()
             && r->aff() == req->aff() && !req->multi())
-        {
-            r->tue();
-        }
-        // élimination des requêtes concurrentes, de même sub mais de super !=
-        // TODO : vérif : exclure l'antécédent
-        else if (r->sub()->mot() == msub && r->super() != req->super() && !req->sub()->mot()->estRelatif())
-        {
-            r->tue();
-        }
-        else if (r->superRequis() && r->super()->mot() == cour && r->super() != req->super())
-        {
-            cour->annuleFlechi(r->super());
-            r->tue();
-        }
-        else if (r->subRequis() && r->sub()->mot() == cour  && r->sub() != req->sub())
-        {
-            cour->annuleFlechi(r->sub());
-            r->tue();
-        }
-        // élimination des reqs dont le super est différent,
-        else if (r->sub()->mot() == msub
-            && r->id() != "antecedent"
-            && r->super() != mfsup)
+            // élimination des requêtes de mêmes super et sub, mais d'id différentes
+            || (r->sub() == req->sub() && r->super() == mfsup && r->id() != req->id())
+            // élimination des requêtes concurrentes, de même sub mais de super différents 
+           || (r->sub()->mot() == msub && r->super() != mfsup && !req->sub()->mot()->estRelatif())
+           || (r->superRequis() && r->super()->mot() == cour && r->super() != mfsup)
+           || (r->subRequis() && r->sub()->mot() == cour  && r->sub() != req->sub()))
         {
             r->tue();
         }
