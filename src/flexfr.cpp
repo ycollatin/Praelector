@@ -2116,7 +2116,7 @@ Verbe *verbe_m(QString inf)
         Vb = new TVgesir(inf);
     else if (inf == "mourir")
         Vb = new TVmourir(inf);
-    else if (inf == "offrir")
+    else if (inf == "offrir" || inf == "souffrir")
         Vb = new TVouvrir(inf);
     else if (inf == "ouïr")
         Vb = new TVouir(inf);
