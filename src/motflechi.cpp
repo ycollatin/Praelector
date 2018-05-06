@@ -75,6 +75,13 @@ bool MotFlechi::contigu(MotFlechi* mf)
     return abs(rang() - mf->rang()) == 1;
 }
 
+QString MotFlechi::elideFr(QString s)
+{
+    s.replace(QRegularExpression("(^|\\s)([jtl])[ea] ([aeéioôu])"), "\\1\\2'\\3");
+    s.replace(QRegularExpression("(^|\\s)de les "), "\\1des ");
+    return s;
+}
+
 bool MotFlechi::estSub()
 {
     QList<Requete*> lreqSub = _phrase->lReqSub(this);
@@ -469,7 +476,7 @@ void MotFlechi::setDet(bool f)
             else if (initVoc) _tr.prepend("l'");
             else if (f) _tr.prepend("la ");
             else _tr.prepend("le ");
-		}
+		} // pas de déterminant
         else _tr = _trNue;
 	}
 }
@@ -645,7 +652,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
             }
         }
     }
-    return lret.join(" ").simplified();
+    return elideFr(lret.join(" ").simplified());
 }
 
 QString MotFlechi::trNue()
