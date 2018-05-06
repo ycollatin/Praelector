@@ -20,8 +20,10 @@
 // bin/data/regles.la
 // bin/corpus/phrases.txt
 
-// FIXME :- Legati ad Tarquinios proficiscuntur : Deux liens identiques pour ad prep proficiscuntur
+// FIXME : - hominum sermo : règle id:genitif non détectée
 // TODO : - Deux retours en arrière : sans effacer, ou en effaçant toutes les données acquises.
+//        - vel dii : l'adv. porte sur le nom.
+//        - Remplacer QRegex par QRegularExpresion
 //        - Lexique personnel
 //        - Ordonner les formes et liens par fréquence
 //        - En vert : fonction des liens proposés
@@ -158,7 +160,8 @@ void Phrase::ajRequete(Requete* req, bool force)
             && r->sub() == req->sub()
             && r->id() == req->id())
         {
-            std::cerr << qPrintable("\nRequête "+req->doc()+"\négale à la requête\n"+r->numc());
+            //std::cerr << qPrintable("\nRequête "+req->doc()+"\négale à la requête\n"+r->numc());
+            return;
         }
     }
     _requetes.append(req);
