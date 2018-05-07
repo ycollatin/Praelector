@@ -117,7 +117,6 @@ QString MainWindow::choixPhr (QString c)
 			lin.remove (0, 1);
 			QTextStream (&p) << lin;
 		}
-		//else QTextStream (&p) << "<a href=\"-phr:"<<lin<<"\">"<<i++<<"-</a> "<< lin;
 		else QTextStream (&p) << "<a href=\"-phr-"<<lin<<"\">"<<i++<<"-</a> "<< lin;
 		lp.append (p);
 	}
