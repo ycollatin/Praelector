@@ -5721,7 +5721,7 @@ cultura:culture,
 cultus2:soigné, paré, orné
 cultus:- culture du sol, labourage ; le soin matériel ; la culture, éducation ; le culte (respect rendu aux dieux ou à des hommes), respect ; genre de vie, genre de civilisation; moeurs; vie de plaisir, luxe ; appareil, parure, toilette, costume, habit; ornement (du style)
 culus:cul, derrière
-cum2:alors que (conj. + subj.), quand (conj. + ind.)
+cum2:alors que (conj. + subj.), quand (conj. + ind.), (cum ... tum) tantôt [... tantôt]
 Cumae:Cumes
 Cumaeus:de Cumes
 Cumani:habitants de Cumes
