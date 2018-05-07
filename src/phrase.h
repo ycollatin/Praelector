@@ -38,7 +38,7 @@ class Phrase: public QObject
     private:
         QStringList             entreMots;
 	    QString                 _chAdditions;
-        Dialogue*               _dialogue;
+        //Dialogue*               _dialogue;
         QStringList             _feminins;
         QString                 _gr;
         QMap<QString,Handicap*> _handicaps;
@@ -53,7 +53,6 @@ class Phrase: public QObject
         QList<Requete*>         _requetes;
 
         void                    majAffichage();
-        QString                 saisie (QString l, QString s);
         bool static             sortR(Requete* ra, Requete* rb);
 
     public:
@@ -100,6 +99,7 @@ class Phrase: public QObject
         Regle*            regle(QString id);
         QList<Requete*>   reqCC(Mot* m);
         Requete*          requete(int n);
+        QString static    saisie (QString l, QString s);
         void              setGr(QString t);
         void              setLiens();
         QList<Mot*>       supersDe(Mot* m);
