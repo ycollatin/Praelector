@@ -355,13 +355,20 @@ void Phrase::ecoute (QString m)
 
 		--_imot;
 	}
-	/* Nouvelle phrase */
+	/* Nouvelle phrase saisie */
 	else if (m == "-nouvPhr")
 	{
-        _mots.clear();
-        _requetes.clear();
-        // TODO : repeupler la phrase ?
+        QString p = saisie("Saisir ou coller une phrase", "");
+        if (!p.isEmpty())
+        {
+		    _mots.clear();
+            setGr(p);
+            lemmatise();
+		    _imot = 0;
+            lance();
+        }
 	}
+	/* Nouvelle phrase choisie */
 	else if (m.startsWith("-phr-"))
 	{
         for (int i=0;i<_mots.count();++i)
@@ -434,13 +441,8 @@ void Phrase::ecoute (QString m)
 								      QString lt;
 								      QTextStream fl (&lt);
 								      fl<<"Meilleure traduction pour " << cour->gr();
-								      Dialogue *dialogue = new Dialogue ();
-								      dialogue->setLabel (lt);
-								      dialogue->setText (cour->flechi(num)->tr());
-								      int res = dialogue->exec ();
-								      if (res == QDialog::Accepted)
-									      mf->setTr(dialogue->getText());
-								      delete dialogue;
+                                      QString t = Phrase::saisie(lt, mf->tr());
+								      if (!t.isEmpty()) mf->setTr(t);
 								      break;
 							      }
                               case 'i': // rotation de la traduction du fléchi
@@ -1093,13 +1095,13 @@ QString Phrase::saisie (QString l, QString s)
 {
 	s = s.simplified();
 	QString ret = s;
-	_dialogue = new Dialogue ();
-	_dialogue->setLabel (l);
-	_dialogue->setText (s);
-	int res = _dialogue->exec ();
+	Dialogue* dialogue = new Dialogue ();
+	dialogue->setLabel (l);
+	dialogue->setText (s);
+	int res = dialogue->exec ();
 	if (res == QDialog::Accepted)
-		ret = _dialogue->getText ().simplified();
-	delete _dialogue;
+		ret = dialogue->getText ().simplified();
+	delete dialogue;
 	return ret;
 }
 
