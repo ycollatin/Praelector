@@ -20,7 +20,7 @@
 // bin/data/regles.la
 // bin/corpus/phrases.txt
 
-// FIXME : - hominum sermo : règle id:genitif non détectée
+// FIXME : - retour arrière, puis avant : les requêtes sont doublonnées. 
 // TODO : - Deux retours en arrière : sans effacer, ou en effaçant toutes les données acquises.
 //        - vel dii : l'adv. porte sur le nom.
 //        - Remplacer QRegex par QRegularExpresion
@@ -346,7 +346,9 @@ void Phrase::ecoute (QString m)
             // résolution des requêtes
             if (_imot > 0) setLiens();
             // lancement des nouvelles requêtes
-            if (_imot < _mots.count()-1) lance();
+            if (_imot < _maxImot && _imot < _mots.count()-1)
+                lance();
+            //if (_imot < _mots.count()-1) lance();
         }
 	}
     // retour au mot précédent
