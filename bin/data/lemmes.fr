@@ -1514,7 +1514,7 @@ Antenor:Antenor (prince troyen, fondateur de Patavium)
 Antenorides:descendant d'Anténor
 antepagmentum:revêtement d'une maison, chambranle
 antependulus:qui pend par devant
-antepono:placer devant, préférer à (+ dat.)
+antepono:placer devant, préférer [à] (+ dat.)
 antequam:avant que, avant de
 antescholanus:répétiteur, sous-maître
 antesignanus:soldat de première ligne (qui est en avant du drapeau)
