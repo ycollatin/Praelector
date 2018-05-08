@@ -78,7 +78,7 @@ bool MotFlechi::contigu(MotFlechi* mf)
 QString MotFlechi::elideFr(QString s)
 {
     s.replace(QRegularExpression("(^|\\s)([jtl])[ea] ([aeéioôu])"), "\\1\\2'\\3");
-    s.replace(QRegularExpression("(^|\\s)de les "), "\\1des ");
+    s.replace(QRegularExpression("(^|\\s)de [dl]es "), "\\1des ");
     return s;
 }
 
@@ -237,13 +237,15 @@ void MotFlechi::lance()
     for (int i=0;i<_phrase->nbRegles();++i)
     {
         Regle* r = _phrase->regle(i);
-        Requete* nr = 0;
         if (r->estSuper(this) && r->sens() != '<')
-            nr = new Requete(this, 0, r);
-        else if (r->estSub(this) && r->sens() != '>')
-            nr = new Requete(0, this, r);
-        if (nr != 0)
         {
+            Requete* nr = new Requete(this, 0, r);
+            _phrase->ajRequete(nr);
+            _phrase->ajRequete(nr);
+        }
+        if (r->estSub(this) && r->sens() != '>')
+        {
+            Requete* nr = new Requete(0, this, r);
             _phrase->ajRequete(nr);
         }
     }
