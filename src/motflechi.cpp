@@ -581,6 +581,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "det"
             << "num"
             << "-"
+            << "nihil"
             << "prepn"
             << "epithete"
             << "epitheteV"
