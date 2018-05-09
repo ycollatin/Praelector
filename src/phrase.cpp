@@ -20,7 +20,7 @@
 // bin/data/regles.la
 // bin/corpus/phrases.txt
 
-// FIXME : - retour arrière, puis avant : les requêtes sont doublonnées. 
+// FIXME : Nihil accidit bono uiro : impossibilité accidit-dat-uiro + uiro-epith-bono.
 // TODO : - Deux retours en arrière : sans effacer, ou en effaçant toutes les données acquises.
 //        - vel dii : l'adv. porte sur le nom.
 //        - Remplacer QRegex par QRegularExpresion
@@ -223,7 +223,7 @@ void Phrase::choixReq(Requete* req)
 {
     if (req == 0 || !req->close()) return;
     req->setValide(true);
-    Mot *cour = motCourant();
+    //Mot *cour = motCourant();
     Mot* msub = req->sub()->mot();
     MotFlechi* mfsup = req->super();
 
@@ -239,18 +239,26 @@ void Phrase::choixReq(Requete* req)
         {
             continue;
         }
-        // élimination des reqs de même super, et de sub de même aff, sauf multi
-        if ((r->super() != 0 && r->super()->mot() == mfsup->mot()
-            && r->aff() == req->aff() && !req->multi())
-            // élimination des requêtes de mêmes super et sub, mais d'id différentes
-            || (r->sub() == req->sub() && r->super() == mfsup && r->id() != req->id())
-            // élimination des requêtes concurrentes, de même sub mais de super différents 
-           || (r->sub()->mot() == msub && r->super() != mfsup && !req->sub()->mot()->estRelatif())
-           || (r->superRequis() && r->super()->mot() == cour && r->super() != mfsup)
-           || (r->subRequis() && r->sub()->mot() == cour  && r->sub() != req->sub()))
+        if ((r->super()->mot() == mfsup->mot() && r->aff() == req->aff() && !req->multi())
+            ||(r->sub() == req->sub() && r->super() == mfsup && r->id() != req->id())
+            ||(r->sub()->mot() == msub && r->super() != mfsup && !req->sub()->mot()->estRelatif()))
         {
             r->tue();
         }
+        /*
+        if (r->super()->mot() == mfsup->mot() && r->aff() == req->aff() && !req->multi())
+        {
+            r->tue();
+        }
+        else if (r->sub() == req->sub() && r->super() == mfsup && r->id() != req->id())
+        {
+            r->tue();
+        }
+        else if (r->sub()->mot() == msub && r->super() != mfsup && !req->sub()->mot()->estRelatif())
+        {
+            r->tue();
+        }
+        */
     }
 }
 
