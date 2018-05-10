@@ -15230,7 +15230,7 @@ Opitergium:Opitergium (ville de Vénétie, auj. Uderzo)
 opitulor:secourir, porter secours, assister, aider
 oplomachus:oplomaque (le galdiateur le plus armé)
 opobalsamum:baume (suc du baumier)
-oporteo:il faut
+oporteo:falloir
 oportunitas:opportunité, convenance, commodité, avantage
 oportunus:opportun, favorable
 oppango:ficher contre
@@ -17693,8 +17693,8 @@ primum:d'abord, pour la première fois
 primumdum:d'abord
 Primus2:Primus (surnom)
 primus:premier (comparatif : prior)
-princeps3:le premier, le prince du Sénat, empereur, prince
-princeps:premier; [subst. m.] chef, empereur
+princeps3:prince du Sénat, empereur, prince, chef
+princeps:premier
 principalis:principal, fondamental
 principaliter:principalement
 principatus:première place
@@ -20199,7 +20199,7 @@ serium:choses sérieuses
 serius:sérieux
 Sermo2:Sermo (surnom romain).
 sermocinor:converser, s'entretenir, causer
-sermo:entretien, conversation ; le dialogue, discussion ; le discours ; la langue
+sermo:entretien, conversation ; dialogue, discussion ; discours ; langue
 sermunculus:petit discours, racontars, cancans
 sero2:semer, engendrer
 sero3:tard, trop tard
