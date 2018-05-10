@@ -77,8 +77,19 @@ bool MotFlechi::contigu(MotFlechi* mf)
 
 QString MotFlechi::elideFr(QString s)
 {
-    s.replace(QRegularExpression("(^|\\s)([jtl])[ea] ([aeéioôu])"), "\\1\\2'\\3");
-    s.replace(QRegularExpression("(^|\\s)de [dl]es "), "\\1des ");
+    QString vv = "[aeéioôu]";
+    // ta affaire -> ton affaire
+    s.replace(QRegularExpression("(^|\\s)ta ("+vv+")"), "\\1ton \\2");
+    // je->j'  te->t'  me->m'
+    s.replace(QRegularExpression("(^|\\s)([jtm]e) ("+vv+")"), "\\1\\2'\\3");
+    // le->l'  la->l'
+    s.replace(QRegularExpression("(^|\\s)(l[ea]) ("+vv+")"), "\\1\\2'\\3");
+    // de les->des
+    s.replace(QRegularExpression("(^|\\s)de les "), "\\1des ");
+    // de le->du
+    s.replace(QRegularExpression("(^|\\s)de le "), "\\1du ");
+    // de un->d'un
+    s.replace(QRegularExpression("(^|\\s)de ("+vv+")"), "\\1d'\\2");
     return s;
 }
 
