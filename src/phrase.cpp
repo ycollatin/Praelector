@@ -20,7 +20,9 @@
 // bin/data/regles.la
 // bin/corpus/phrases.txt
 
-// FIXME : Nihil accidit bono uiro : impossibilité accidit-dat-uiro + uiro-epith-bono.
+// FIXME 
+//       - non oportet : il ne ne faut pas 
+//       - propInf et sujetPropInf mal traduits
 // TODO : - Deux retours en arrière : sans effacer, ou en effaçant toutes les données acquises.
 //        - vel dii : l'adv. porte sur le nom.
 //        - Remplacer QRegex par QRegularExpresion
