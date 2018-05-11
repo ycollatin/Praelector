@@ -20,12 +20,11 @@
 // bin/data/regles.la
 // bin/corpus/phrases.txt
 
-// FIXME 
-//       - non oportet : il ne ne faut pas 
-//       - propInf et sujetPropInf mal traduits
-// TODO : - Deux retours en arrière : sans effacer, ou en effaçant toutes les données acquises.
+// FIXME  - 
+// TODO : - Trouver un meilleur moyen d'ordonner les subs dans MotFlechi::trGroupe()
+//        - Deux retours en arrière : en effaçant ou non la cloture des requêtes
 //        - vel dii : l'adv. porte sur le nom.
-//        - Remplacer QRegex par QRegularExpresion
+//        - Remplacer QRegex par QRegularExpresion ?
 //        - Lexique personnel
 //        - Ordonner les formes et liens par fréquence
 //        - En vert : fonction des liens proposés
