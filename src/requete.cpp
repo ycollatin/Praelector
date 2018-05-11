@@ -545,7 +545,17 @@ QString Requete::trSub()
     if (_sub == 0) return "erreur, sub manquant";
     QString ret = _regle->tr(_itr); 
     ret.remove("<sup>");
-    return ret.replace("<sub>", _sub->trGroupe());
+    // début test
+    QString morph;
+    if (id()=="propInf")
+    {
+        morph = _sub->morpho();
+        morph.replace("infinitif", "indicatif");
+        morph.append(" 3ème singulier");
+    }
+    return ret.replace("<sub>", _sub->trGroupe(0, morph));
+    // fin test
+    //return ret.replace("<sub>", _sub->trGroupe(0));
 }
 
 void Requete::tue()
