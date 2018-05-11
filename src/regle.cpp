@@ -28,6 +28,12 @@
  *  © Yves Ouvrard, 2009 - 2017
  */
 
+// TODO
+// - Ajouter dans Regle le moyen de fixer la morpho française de
+// <sub> et <sup>, au moyen de deux nouvelles clés
+// frsup: et frsub:. Il faudra overloader MotFlechi::tr() et
+// MotFlechi::trGroupe().
+
 #include <iostream>
 #include <lemme.h>
 #include <regle.h>
@@ -43,17 +49,17 @@ QStringList const clesR = QStringList()
     <<"lemmeSub"
     <<"lemmeSup"
     <<"lsSub"
-    <<"lsSup"       // 10
+    <<"lsSup"      // 10
     <<"morphoSub"
     <<"morphoSup"
     <<"poids"
     <<"posSub"
-    <<"posSup"      // 15
+    <<"posSup"     // 15
     <<"sens"
     <<"subEstSup"
     <<"supEstSub"
     <<"supEstSup"
-    <<"tr"          // 20
+    <<"tr"         // 20
     <<"x";
 
 //////////////////////////////
@@ -63,7 +69,6 @@ QStringList const clesR = QStringList()
 Regle::Regle(QStringList ll)
 {
     _contig = 0;
-    //signetRegle
     for (int i=0;i<ll.count();++i)
     {
         QString lin = ll.at(i).simplified();
