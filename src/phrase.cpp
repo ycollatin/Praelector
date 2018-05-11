@@ -21,7 +21,10 @@
 // bin/corpus/phrases.txt
 
 // FIXME  - 
-// TODO : - Trouver un meilleur moyen d'ordonner les subs dans MotFlechi::trGroupe()
+// TODO : - Trouver un moyen de modifier la morpho française en fonctin
+//          de la requête
+//          modifier la morpho française du sup ou du sub.
+//        - Trouver un meilleur moyen d'ordonner les subs dans MotFlechi::trGroupe()
 //        - Deux retours en arrière : en effaçant ou non la cloture des requêtes
 //        - vel dii : l'adv. porte sur le nom.
 //        - Remplacer QRegex par QRegularExpresion ?
