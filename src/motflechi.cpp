@@ -35,35 +35,44 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
     _morpho = m;
     _phrase = parent->phrase();
     // traduction fléchie
-    QString tr = l->traduction("fr", l->pos().at(0));
+    // TODO : mieux gérer les lemmes multipos
+    QString pos = l->pos();
+    QString tr;
+    for (int i=0;i<pos.count();++i)
+    {
+        tr.append(l->traduction("fr", pos.at(i)));
+    }
     tr.remove(QRegExp("[(\\[][^)^\\]]*[)\\]]"));
-    _valide = false;
     _traductions = tr.split(QRegExp("[,;]"));
+    _traductions.removeDuplicates();
+    _valide = false;
     for (int i=0;i<_traductions.count();++i)
     {
         QString c = _traductions.at(i).simplified();
-        QString fl;
-        switch (_lemme->pos().at(0).toLatin1())
+        for (int ip=0;ip<_lemme->pos().length();++ip)
         {
-            case 'p':
-            case 'a': fl = accorde(c, _morpho); break;
-            case 'n':
-                      {
-                          if (_morpho.contains("plur")) fl = pluriel(c, _morpho);
-                          else fl = c;
+            QString fl;
+            switch (_lemme->pos().at(ip).toLatin1())
+            {
+                case 'p':
+                case 'a': fl = accorde(c, _morpho); break;
+                case 'n':
+                          {
+                              if (_morpho.contains("plur")) fl = pluriel(c, _morpho);
+                              else fl = c;
+                              break;
+                          }
+                          //case 'p': ret = _pronom->accorde(c, _morpho); break;
+                case 'v':
+                case 'w':
+                          fl = conjnat(c, _morpho);
                           break;
-                      }
-            //case 'p': ret = _pronom->accorde(c, _morpho); break;
-            case 'v':
-            case 'w':
-                      fl = conjnat(c, _morpho);
-                      break;
-            default: fl = c;
+                default: fl = c;
+            }
+            if (!fl.isEmpty()) _trfl.append(fl);
         }
-        if (!fl.isEmpty()) _trfl.append(fl);
     }
-    _itr = -1;
-    if (!_trfl.empty())
+    _trfl.removeDuplicates();
     {
         _trNue = _trfl.at(0);
         _tr = _trNue;
@@ -90,6 +99,8 @@ QString MotFlechi::elideFr(QString s)
     s.replace(QRegularExpression("(^|\\s)de le "), "\\1du ");
     // de un->d'un
     s.replace(QRegularExpression("(^|\\s)de ("+vv+")"), "\\1d'\\2");
+    // que il|elle->qu'il|elle
+    s.replace(QRegularExpression("(^|\\s)que ("+vv+")"), "\\1qu'\\2");
     return s;
 }
 
@@ -222,6 +233,7 @@ QString MotFlechi::htmlLiens()
 
 void MotFlechi::incItr()
 {
+    // XXX _trfl moins riche que _traductions
     if (_itr < 0)
     {
         if (_trfl.count() == 1) _itr = 0;
@@ -611,6 +623,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "sujet"
             << "sujetRel"
             << "sujetInf"
+            << "sujetPropInf"
             << "sujetPr"
             << "sujetEgo"
             << "sujetTu"
@@ -631,6 +644,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
             << "abl"
             << "datif"
             << "prep"
+            << "propInf"
             << "infObjet"
             << "conjSub";
     else if (lp.contains("s")) lgr
