@@ -73,6 +73,8 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
         }
     }
     _trfl.removeDuplicates();
+
+    if (!_trfl.isEmpty())
     {
         _trNue = _trfl.at(0);
         _tr = _trNue;
@@ -281,7 +283,7 @@ Lemme* MotFlechi::lemme()
 
 QString MotFlechi::morpho()
 {
-    return _lemme->gr()+" "+_lemme->pos()+" "+_morpho;
+    return /*_lemme->gr()+" "+_lemme->pos()+" "+*/_morpho;
 }
 
 Mot* MotFlechi::mot()
@@ -583,7 +585,7 @@ QString MotFlechi::trfl()
     return ret;
 }
 
-QString MotFlechi::trGroupe(Requete* rtest)
+QString MotFlechi::trGroupe(Requete* rtest, QString morph)
 {
     QString lp = _lemme->pos();
     QString ret;
@@ -661,7 +663,11 @@ QString MotFlechi::trGroupe(Requete* rtest)
         QString el = lgr.at(i);
         if (el == "-")
         {
-            lret.append(_tr);
+            if (morph.isEmpty()) lret.append(_tr);
+            else
+            {
+                lret.append(conjnat(_trNue, morph));
+            }
         }
         else
         {
