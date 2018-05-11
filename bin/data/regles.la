@@ -10,6 +10,8 @@
 ! accord:cgnpk (entre 0 et tous les caractères)
 ! conflit:<liste d'ids> si la règle est appliquée, le super ne peut avoir de subs par ces ids.
 ! contig:<int> si les deux mots son contigus, la requête gagne un poids de <int> points.
+! frsub : morpho française de sub dans la traduction
+! frsup : morpho française de sup dans la traduction
 ! lemmeSub:<lemme>,... Un lemme précédé de '-' entraine la nullité de la règle pour ce lemme
 ! posSub:<pos>
 ! morphoSub:<traits>,<traits>,<traits>,...
