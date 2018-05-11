@@ -35,9 +35,14 @@ QString personne[7] = {" ", "je", "tu", "i", "nous", "vous", "ils"};
    "plus-que-parfait", "passé antérieur"};
 */
 
-QString mode[8] = {" ",         "indicatif",
-    "subjonctif", "conditionnel", "impératif",
-    "infinitif", "participe",  "gérondif"};
+QString mode[8] = {" ",
+    "indicatif",     // 1
+    "subjonctif",
+    "conditionnel",
+    "impératif",
+    "infinitif",     // 5
+    "participe",
+    "gérondif"};
 
 // QString voix[3] = {" ", "actif", "passif"};
 
@@ -271,6 +276,7 @@ Verbe::Verbe(QString i)
 }
 
 Verbe::~Verbe() {}
+
 const QStringList personnes = QStringList()
     << "1ère" << "2ème" << "3ème";
 const QStringList temps = QStringList()
@@ -378,7 +384,7 @@ QString Verbe::auxiliaire()
 // radicaux
 QString Verbe::RadPres(int P)
 {
-    if (P < 1 || P > 6) return "numéro de personne invalide ";
+    if (P < 1 || P > 6) return "Verbe::RadPres, numéro de personne invalide ";
     return otedernieres(inf, 2);
 }
 
@@ -496,6 +502,7 @@ QString Verbe::conjugue(int P, int T, int M, int V, bool pr, int g, int n)
     QString aux = "";
     bool PPPP = false;
     QString result = "";
+    QString infinitif = inf;
     // vérifier la validité du champ P(ersonne)
 
     // pronominal
@@ -538,7 +545,9 @@ QString Verbe::conjugue(int P, int T, int M, int V, bool pr, int g, int n)
         else if (M == subj)  // subjonctif actif
         {
             if (T == pres)
+            {
                 result = SubjPres(P);
+            }
             else if (T == impf)
                 if (!RadPs().isEmpty())
                 {
@@ -581,7 +590,8 @@ QString Verbe::conjugue(int P, int T, int M, int V, bool pr, int g, int n)
         else if (M == infin)  // inf:
         {
             if (T == pres)
-                result = inf;
+                return infinitif;
+                //result = infinitif;
             else if (T == pcompose)
                 result = compose(aux, P, pres, infin, actif);
         }
@@ -829,7 +839,7 @@ QString TVcueillir::PP()
 
 QString TVsst::RadPres(int P)
 {
-    if (P < 1 || P > 6) return "numéro de personne invalide ";
+    if (P < 1 || P > 6) return "TVsst::RadPres, numéro de personne invalide ";
     return otedernieres(inf, 2);
 }
 
@@ -986,7 +996,7 @@ QString TVcevoir::PP()
 
 QString TVchoir::RadPres(int P)
 {
-    if (P < 1 || P > 6) return "numéro de personne invalide ";
+    if (P < 1 || P > 6) return "TVchoir, RadPres, numéro de personne invalide ";
     return otedernieres(inf, 1);
 }
 
@@ -1042,7 +1052,7 @@ QString TVclore::IndPres(int P)
 
 QString TVclore::IndPs(int P)
 {
-    if (P < 1 || P > 6) return "numéro de personne invalide ";
+    if (P < 1 || P > 6) return "TVclore, IndPs, numéro de personne invalide ";
     return "";
 }
 
@@ -2301,7 +2311,9 @@ QString conjnat(QString inf, QString morpho)
     inf = inf.simplified();
     if (inf.isEmpty()) return "requête vide, conjugaison impossible";
 
-    if (!inf.startsWith("se ") && inf.contains(" "))
+    bool se = inf.startsWith("se ");
+    bool s = inf.startsWith("s'");
+    if (!se  && inf.contains(" "))
         return conjnat(inf.section(" ",0,0), morpho) +" "+ inf.section(" ",1);
 
     int p = 0;
@@ -2328,7 +2340,7 @@ QString conjnat(QString inf, QString morpho)
         else if (genres.contains(trait))  g = genres.indexOf(trait)+1;
     }
     if (p > 0 && n > 1) p+=3; 
-    return conjugue(inf, p, t, m, v, (p != 3 && p != 6), g, n);
+    return conjugue(inf, p, t, m, v, (se || s || (p != 3 && p != 6)), g, n);
 }
 
 QString tableau(QString verbe, int voix)
@@ -2435,7 +2447,6 @@ Nom *nom_m(QString n)
     // QString nom = Nom(n);
     Nom *nom = NULL;
     QChar d = derniere(n);
-    // if (d == 's' || d == 'x' || d == 'z') nom = new NomSXZ (n);
     if (QString("sxz").contains(d))
         nom = new NomSXZ(n);
     else if (deuxder(n) == "al" && index_t(als, n, 9) < 0)
