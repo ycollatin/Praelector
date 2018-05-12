@@ -20,10 +20,10 @@
 // bin/data/regles.la
 // bin/corpus/phrases.txt
 
-// FIXME  - 
-// TODO : - Trouver un moyen de modifier la morpho française en fonctin
-//          de la requête
-//          modifier la morpho française du sup ou du sub.
+//                          FIXME 
+//        - Le rejet d'une requête entraine de nombreux dégâts
+//
+//                           TODO
 //        - Trouver un meilleur moyen d'ordonner les subs dans MotFlechi::trGroupe()
 //        - Deux retours en arrière : en effaçant ou non la cloture des requêtes
 //        - vel dii : l'adv. porte sur le nom.
@@ -34,7 +34,8 @@
 //        - Traduction multiple du lien : plusieurs lignes tr:<etc.
 //        - accorder la traduction de l'épithète
 //        - équivalents clavier des liens ?
-// XXX :  
+//                           XXX
+//
 
 #include <QApplication>
 #include <QDir>
