@@ -55,7 +55,7 @@ class Verbe
     virtual QString RadPs();
     // manipulations : pronoms-radical-dsinence
     virtual QString elide(QString A, QString B);
-    virtual QString Pron(int P, QString F, bool refl);
+    virtual QString Pron(int P, QString F);
     virtual QString RD(QString R, QString D);
     virtual QString compose(QString A, int P, int T, int M, int V);
     // temps

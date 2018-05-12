@@ -409,12 +409,9 @@ QString Verbe::elide(QString A, QString B)
     return A + " " + B;
 }
 
-QString Verbe::Pron(int P, QString F, bool refl)
+QString Verbe::Pron(int P, QString F)
 {
-    QString PR[7] = {"", "me", "te", "se", "nous", "vous", "se"};
     QString result = personne[P];
-    if (refl) result = result + " " + PR[P];
-    // élision
     return elide(result, F);
 }
 
@@ -639,10 +636,13 @@ QString Verbe::conjugue(int P, int T, int M, int V, bool pr, int g, int n)
         else if (npremieres(result, 3) == "se ")
             result = otepremieres(result, 3);
     }
-    if (pr)
-        result = Pron(P, result, pronominal);
-    else if (PPPP)
-        result = elide("se", result);
+    if (pronominal)
+    {
+        QString PR[7] = {"", "me", "te", "se", "nous", "vous", "se"};
+        result.prepend(PR[P]+" ");
+    }
+    if (pr) result = Pron(P, result);
+    else if (PPPP) result = elide("se", result);
     return result;
 }
 
@@ -2304,6 +2304,7 @@ QString conjugue(QString inf, int P, int T, int M, int V, bool Pr, int g, int n)
 
 QString conjnat(QString inf, QString morpho)
 {
+    bool debog = inf=="s'éloigner" && morpho=="indicatif présent actif 3ème singulier";
     // Un verbe est souvent traduit par plusieurs mots.
     // praesto:l'emporter sur, être garant, fournir (praestat : imp. : il vaut mieux)
     // Il faut pouvoir trouver quel est le verbe, ne
@@ -2340,7 +2341,9 @@ QString conjnat(QString inf, QString morpho)
         else if (genres.contains(trait))  g = genres.indexOf(trait)+1;
     }
     if (p > 0 && n > 1) p+=3; 
-    return conjugue(inf, p, t, m, v, (se || s || (p != 3 && p != 6)), g, n);
+    if (debog) qDebug()<<"inf"<<inf<<"p"<<p<<"t"<<t<<"m"<<m<<"v"<<v
+        <<"pr"<<(se || s || (p != 3 && p != 6))<<"g"<<g<<"n"<<n;
+    return conjugue(inf, p, t, m, v, (p != 3 && p != 6), g, n);
 }
 
 QString tableau(QString verbe, int voix)
