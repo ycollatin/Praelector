@@ -1009,7 +1009,6 @@ void Lemmat::lisTraductions(bool base, bool extension)
         QString lang = lignes.takeFirst();
         lang = lang.mid(1);
         _cibles[suff] = lang;
-
         foreach(QString lin, lignes)
         {
             Lemme *l = lemme(Ch::deramise(lin.section(':', 0, 0)));
