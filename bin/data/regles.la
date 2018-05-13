@@ -44,6 +44,7 @@ tr:<sup> par <sub>
 tr:<sup> à cause de <sub>
 tr:<sup> grâce à <sub>
 tr:<sup> de <sub>
+tr:<sup> par <sub>
 
 id:ablabs
 posSup:v,w
@@ -67,6 +68,7 @@ contig:24
 poids:79
 tr:<sup> de <sub>
 tr:<sup> à <sub>
+tr:<sup> par <sub>
 
 id:adjQue
 aff:coord
