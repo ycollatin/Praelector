@@ -182,7 +182,7 @@ QString Requete::doc()
     if (_sub == 0) fl << "?";
     else fl << _sub->mot()->gr()<<" "<<_sub->lemme()->gr()<<" "<<_sub->morpho();
     if (_origine != 0) fl << "\nclonée de "<<_origine->num();
-    if (_rejetee) fl << "\nmorte";
+    if (_rejetee) fl << "\nrejetée";
     if (_valide) fl<<"\ntraduction:"<<tr();
     return ret;
 }
@@ -286,9 +286,9 @@ QString Requete::html()
         // rotation de la traduction
         << "<a href=\"l.t."<<_num<<"\">tr. suiv</a> "
         // lien valider
-        << "<a href=\"l.v."<<_num<<"\">valider</a> "
+        << "<a href=\"l.v."<<_num<<"\">valider</a>";
         // lien rejeter
-        << "<a href=\"l.r."<<_num<<"\">rejeter</a>";
+        //<< "<a href=\"l.r."<<_num<<"\">rejeter</a>";
     return ret;
 }
 
