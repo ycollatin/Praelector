@@ -2304,7 +2304,6 @@ QString conjugue(QString inf, int P, int T, int M, int V, bool Pr, int g, int n)
 
 QString conjnat(QString inf, QString morpho)
 {
-    bool debog = inf=="s'éloigner" && morpho=="indicatif présent actif 3ème singulier";
     // Un verbe est souvent traduit par plusieurs mots.
     // praesto:l'emporter sur, être garant, fournir (praestat : imp. : il vaut mieux)
     // Il faut pouvoir trouver quel est le verbe, ne
@@ -2313,7 +2312,6 @@ QString conjnat(QString inf, QString morpho)
     if (inf.isEmpty()) return "requête vide, conjugaison impossible";
 
     bool se = inf.startsWith("se ");
-    bool s = inf.startsWith("s'");
     if (!se  && inf.contains(" "))
         return conjnat(inf.section(" ",0,0), morpho) +" "+ inf.section(" ",1);
 
@@ -2341,8 +2339,6 @@ QString conjnat(QString inf, QString morpho)
         else if (genres.contains(trait))  g = genres.indexOf(trait)+1;
     }
     if (p > 0 && n > 1) p+=3; 
-    if (debog) qDebug()<<"inf"<<inf<<"p"<<p<<"t"<<t<<"m"<<m<<"v"<<v
-        <<"pr"<<(se || s || (p != 3 && p != 6))<<"g"<<g<<"n"<<n;
     return conjugue(inf, p, t, m, v, (p != 3 && p != 6), g, n);
 }
 
