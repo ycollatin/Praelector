@@ -95,6 +95,7 @@ class Mot : public QObject
         void              setMorphos(MapLem m);
         void              setPSup(int p);
         void              setTr(QString t);
+        bool static       sortF(MotFlechi* mfa, MotFlechi* mfb);
         MotFlechi*        super();
         QString           trGroupe(Requete* rtest=0);
         QString           trs();
