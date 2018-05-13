@@ -31,7 +31,7 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
     _regle = r;
     _super = 0;
     _sub = 0;
-    _morte = false;
+    _rejetee = false;
     _origine = 0;
     if (sup != 0)
     {
@@ -182,7 +182,7 @@ QString Requete::doc()
     if (_sub == 0) fl << "?";
     else fl << _sub->mot()->gr()<<" "<<_sub->lemme()->gr()<<" "<<_sub->morpho();
     if (_origine != 0) fl << "\nclonée de "<<_origine->num();
-    if (_morte) fl << "\nmorte";
+    if (_rejetee) fl << "\nmorte";
     if (_valide) fl<<"\ntraduction:"<<tr();
     return ret;
 }
@@ -330,11 +330,6 @@ int Requete::largeur()
     return abs(_super->rang() - _sub->rang());
 }
 
-bool Requete::morte()
-{
-    return _morte;
-}
-
 bool Requete::multi()
 {
     return _regle->filtre().contains("multi");
@@ -393,6 +388,11 @@ MotFlechi* Requete::prima()
 bool Requete::reciproque(Requete* req)
 {
     return _super == req->sub() && _sub == req->super();
+}
+
+bool Requete::rejetee()
+{
+    return _rejetee;
 }
 
 Regle* Requete::regle()
@@ -458,6 +458,13 @@ void Requete::setCoord1(Requete* req)
 void Requete::setOrigine(Requete* req)
 {
     _origine = req;
+}
+
+void Requete::setRejetee(bool r)
+{
+    _rejetee = r;
+    if (r) _hist.append("rejetée");
+    else _hist.append("rejet annulé");
 }
 
 void Requete::setRequis(MotFlechi *m, QString cause)
@@ -556,12 +563,6 @@ QString Requete::trSub()
     return ret.replace("<sub>", _sub->trGroupe(0, morph));
     // fin test
     //return ret.replace("<sub>", _sub->trGroupe(0));
-}
-
-void Requete::tue()
-{
-    _morte = true;
-    _hist.append("requête morte");
 }
 
 MotFlechi* Requete::ultima()

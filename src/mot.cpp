@@ -84,7 +84,6 @@ void Mot::choixFlechi(MotFlechi* mf)
         if (f != mf) 
         {
             _flechis.removeAt(i);
-            // delete f // ?
         }
         else ++i;
     }
@@ -439,6 +438,18 @@ bool Mot::que()
 int Mot::rang()
 {
     return _rang;
+}
+
+/**
+ *  void Mot::reinit()
+ *  repêche tous les fléchis rejetées
+ */
+void Mot::reinit()
+{
+    for (int i=0;i<_flechis.count();++i)
+    {
+        _flechis.at(i)->setRejete(false);
+    }
 }
 
 Requete* Mot::reqSub(QString id)

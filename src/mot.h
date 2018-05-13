@@ -88,6 +88,7 @@ class Mot : public QObject
         MotFlechi*        princeps();
         bool              que();
         int               rang();
+        void              reinit();
         Requete*          reqSub(QString id);
         QList<Requete*>   reqSuper();
         void              rmFlechi(MotFlechi* mf);

@@ -34,10 +34,9 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
     _lemme = l;
     _morpho = m;
     _phrase = parent->phrase();
-    // traduction fléchie
-    // TODO : mieux gérer les lemmes multipos
     QString pos = l->pos();
     QString tr;
+    // traduction fléchie
     for (int i=0;i<pos.count();++i)
     {
         tr.append(l->traduction("fr", pos.at(i)));
@@ -45,6 +44,7 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
     tr.remove(QRegExp("[(\\[][^)^\\]]*[)\\]]"));
     _traductions = tr.split(QRegExp("[,;]"));
     _traductions.removeDuplicates();
+    _rejete = false;
     _valide = false;
     for (int i=0;i<_traductions.count();++i)
     {
@@ -347,6 +347,11 @@ int MotFlechi::rang()
     return _mot->rang();
 }
 
+bool MotFlechi::rejete()
+{
+    return _rejete;
+}
+
 Requete* MotFlechi::reqSub(int i)
 {
     return _phrase->lReqSub(this).at(i);
@@ -506,6 +511,11 @@ void MotFlechi::setDet(bool f)
 		} // pas de déterminant
         else _tr = _trNue;
 	}
+}
+
+void MotFlechi::setRejete(bool r)
+{
+    _rejete = r;
 }
 
 /* rotation du sujet des formes v. à la 3ème pers */

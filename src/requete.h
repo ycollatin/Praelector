@@ -42,10 +42,10 @@ class Requete : public QObject
         int               _itr;
         Lemme*            _lemme;
         QString           _morpho;
-        bool              _morte;
         int               _num;
         Requete*          _origine;
         Phrase*           _phrase;
+        bool              _rejetee;
         Regle*            _regle;
         Mot*              _requerant;
         MotFlechi*        _sub;
@@ -84,7 +84,6 @@ class Requete : public QObject
         QString     id();
         void        incItr();
         int         largeur();
-        bool        morte();
         bool        multi();
         int         nbEx();
         int         nbPonct(QChar c);
@@ -96,6 +95,7 @@ class Requete : public QObject
         MotFlechi*  prima();
         bool        reciproque(Requete* req);
         Regle*      regle();
+        bool        rejetee();
         Mot*        requerant();
         MotFlechi*  requerantFl();
         Mot*        requis();
@@ -105,6 +105,7 @@ class Requete : public QObject
         void        setCoord1(Requete* req);
         //void        setNum(int n);
         void        setOrigine(Requete* req);
+        void        setRejetee(bool r);
         void        setRequis(MotFlechi* m, QString cause="cause inconnue");
         void        setSub(MotFlechi *m);
         void        setSubRequis();
@@ -117,7 +118,6 @@ class Requete : public QObject
         bool        superRequis();
         QString     tr();
         QString     trSub(); // traduction 
-        void        tue();
         MotFlechi*  ultima();
         bool        valide();
 };

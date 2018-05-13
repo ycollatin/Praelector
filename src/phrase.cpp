@@ -21,9 +21,13 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - Le rejet d'une requête entraine de nombreux dégâts
+//        - nulla, flexfr donne aucunaucune.
 //
 //                           TODO
+//        - Un lien de retour pour le mot :
+//          . rétablissement de tous les fléchis du mot et des mots suivants;
+//          . résurrection de toutes les requêtes;
+//          . invalidation des requêtes du mot et des mots suivants
 //        - Trouver un meilleur moyen d'ordonner les subs dans MotFlechi::trGroupe()
 //        - Deux retours en arrière : en effaçant ou non la cloture des requêtes
 //        - vel dii : l'adv. porte sur le nom.
@@ -177,7 +181,7 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if (req == 0 || req->morte()) continue;
+        if (req == 0 || req->rejetee()) continue;
         if (req->subRequis()) 
         {
             if (req->sub() != 0 
@@ -187,7 +191,7 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
             }
             else if (req->super()->mot() == m && req->super()->lemme() == l)
             {
-                req->tue();
+                req->setRejetee(true);
             }
         }
         else
@@ -199,7 +203,7 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
             }
             else if (req->sub()->mot() == m && req->sub()->lemme() == l)
             {
-                req->tue();
+                req->setRejetee(true);
             }
             else ++i;
         }
@@ -213,12 +217,12 @@ void Phrase::choixFlechi(MotFlechi* mf)
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if (req == 0 || req->morte()) continue;
+        if (req == 0 || req->rejetee()) continue;
         MotFlechi* msup = req->super();
         MotFlechi* msub = req->sub();
         if ((msup != 0 && msup->mot() == m && msup != mf)
             || (msub != 0 && msub->mot() == m && msub != mf))
-            req->tue();
+            req->setRejetee(true);
     }
     m->choixFlechi(mf);
 }
@@ -240,7 +244,7 @@ void Phrase::choixReq(Requete* req)
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
-        if (r == 0 || req->morte() || r == req || r->valide() || !r->close())
+        if (r == 0 || req->rejetee() || r == req || r->valide() || !r->close())
         {
             continue;
         }
@@ -248,7 +252,7 @@ void Phrase::choixReq(Requete* req)
             ||(r->sub() == req->sub() && r->super() == mfsup && r->id() != req->id())
             ||(r->sub()->mot() == msub && r->super() != mfsup && !req->sub()->mot()->estRelatif()))
         {
-            r->tue();
+            r->setRejetee(true);
         }
         /*
         if (r->super()->mot() == mfsup->mot() && r->aff() == req->aff() && !req->multi())
@@ -334,6 +338,11 @@ void Phrase::ecoute (QString m)
 		emit (repondu(_reponse));
 		return;
 	}
+    /* Réinitialisation à partir du mot courant */
+    else if (m == "-reinit")
+    {
+        reinit(motCourant());
+    }
 	/* deux commandes de navigation */
     // passage au mot suivant
 	else if (m == "-suiv" && (_imot < _mots.count() -1))
@@ -348,7 +357,7 @@ void Phrase::ecoute (QString m)
                 Requete* req = _requetes.at(i);
                 if (req != 0 && !req->multi() && req->clonee() && req->origine()->valide())
                 {
-                    req->tue();
+                    req->setRejetee(true);
                 }
                 else 
                 {
@@ -697,7 +706,7 @@ void Phrase::ecoute (QString m)
                                       req->annuleRequis("rejet demandé");
                                       if (req->requerant() == cour)
                                       {
-                                          req->tue();
+                                          req->setRejetee(true);
                                       }
 								      break;
 					      	      }
@@ -772,7 +781,6 @@ QString Phrase::grLu()
 		else if (i > _imot)
 			fl << " <span style=\"color:lightgrey;\">";
 		else fl << " <span>";
-		//fl << _mots.at (i)->grBrute() << "</span> ";
 		fl << _mots.at(i)->gr() << "</span> ";
 	}
 	return ret;
@@ -848,7 +856,7 @@ QString Phrase::htmlLiens()
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if (req->close() && !req->morte()
+        if (req->close() && !req->rejetee()
             && (req->requerant() == mc || req->requis() == mc))
         {
             lr.append(req);
@@ -1065,6 +1073,26 @@ QList<Mot*> Phrase::portee(int a, int b)
 Regle* Phrase::regle(int i)
 {
     return _regles.at(i);
+}
+
+void Phrase::reinit(Mot* m)
+{
+    int rang = m->rang();
+    qDebug()<<"reinit, rang"<<rang;
+    for (int i=rang;i<_mots.count();++i)
+    {
+        _mots.at(i)->reinit();
+    }
+    qDebug()<<"requêtes";
+    for (int i=0;i<_requetes.count();++i)
+    {
+        qDebug()<<"i"<<i<<"/"<<_requetes.count();
+        Requete* req = _requetes.at(i);
+        qDebug()<<"req"<<req;
+        if ((req->super() != 0 && req->super()->mot()->rang() >= rang)
+            || (req->sub() != 0 && req->sub()->mot()->rang() >= rang))
+            req->setRejetee(false);
+    }
 }
 
 Regle* Phrase::regle(QString id)

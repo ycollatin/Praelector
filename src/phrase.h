@@ -97,6 +97,7 @@ class Phrase: public QObject
         QList<Mot*>       portee(int a, int b);
         Regle*            regle(int i);
         Regle*            regle(QString id);
+        void              reinit(Mot* m);
         QList<Requete*>   reqCC(Mot* m);
         Requete*          requete(int n);
         QString static    saisie (QString l, QString s);
@@ -115,7 +116,8 @@ namespace Chaines {
 	const QString affichage = QString::fromUtf8
 		( "%1<hr/>%2"
 		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>%3"
-		 "<hr/><a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a> d'un mot "
+		 "<hr/><a href=\"-reinit\">réinitialiser</a> "
+         "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a> "
          "&nbsp;<a href=\"-quitter\">quitter</a>"
 		 "<hr/><strong>Nouveaux liens syntaxiques</strong><br/>%4"
 		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>%5"
