@@ -487,6 +487,27 @@ void Mot::rmFlechi(MotFlechi* mf)
     _flechis.removeOne(mf);
 }
 
+bool Mot::sortF(MotFlechi* mfa, MotFlechi* mfb)
+{
+    if (mfa->lemme() != mfb->lemme())
+    {
+        return mfa->lemme()->freq() > mfb->lemme()->freq();
+    }
+    QStringList k = QStringList()
+        << "nominatif"<<"accusatif"<<"ablatif"
+        <<"datif"<<"génitif"<<"vocatif";
+    QString ma = mfa->morpho();
+    QString mb = mfb->morpho();
+    for (int i=0;i<k.count();++i)
+    {
+        if (ma.contains(k.at(i)))
+            return true;
+        else if (mb.contains(k.at(i)))
+            return false;
+    }
+    return true;
+}
+
 void Mot::setMorphos(MapLem m)
 {
     _morphos = m;
@@ -501,6 +522,8 @@ void Mot::setMorphos(MapLem m)
             ajFlechi(mf);
         }
     }
+    // trier les fléchis
+    qSort(_flechis.begin(), _flechis.end(), sortF);
 }
 
 void Mot::setTr(QString t)
