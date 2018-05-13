@@ -21,21 +21,14 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - nulla, flexfr donne aucunaucune.
 //
 //                           TODO
-//        - Un lien de retour pour le mot :
-//          . rétablissement de tous les fléchis du mot et des mots suivants;
-//          . résurrection de toutes les requêtes;
-//          . invalidation des requêtes du mot et des mots suivants
+//        - afficher la doc de la règle dans la ligne requête
 //        - Trouver un meilleur moyen d'ordonner les subs dans MotFlechi::trGroupe()
-//        - Deux retours en arrière : en effaçant ou non la cloture des requêtes
 //        - vel dii : l'adv. porte sur le nom.
 //        - Remplacer QRegex par QRegularExpresion ?
 //        - Lexique personnel
-//        - Ordonner les formes et liens par fréquence
 //        - En vert : fonction des liens proposés
-//        - Traduction multiple du lien : plusieurs lignes tr:<etc.
 //        - accorder la traduction de l'épithète
 //        - équivalents clavier des liens ?
 //                           XXX
@@ -1078,20 +1071,19 @@ Regle* Phrase::regle(int i)
 void Phrase::reinit(Mot* m)
 {
     int rang = m->rang();
-    qDebug()<<"reinit, rang"<<rang;
     for (int i=rang;i<_mots.count();++i)
     {
         _mots.at(i)->reinit();
     }
-    qDebug()<<"requêtes";
     for (int i=0;i<_requetes.count();++i)
     {
-        qDebug()<<"i"<<i<<"/"<<_requetes.count();
         Requete* req = _requetes.at(i);
-        qDebug()<<"req"<<req;
         if ((req->super() != 0 && req->super()->mot()->rang() >= rang)
             || (req->sub() != 0 && req->sub()->mot()->rang() >= rang))
+        {
             req->setRejetee(false);
+            req->setValide(false);
+        }
     }
 }
 
