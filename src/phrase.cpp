@@ -23,7 +23,8 @@
 //                          FIXME 
 //
 //                           TODO
-//        - afficher la doc de la règle dans la ligne requête
+//        - place entre aux et pp : n'est jamais vaincu
+//        - Réinitialisation : rétablir toutes les morphos
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
 //        - Trouver un meilleur moyen d'ordonner les subs dans MotFlechi::trGroupe()
