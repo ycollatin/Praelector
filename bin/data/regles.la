@@ -634,7 +634,7 @@ tr:<sup> <sub>
 
 id:regimeAcc
 aff:regime
-doc:l'accusatif après une préposition indique que le procès verbal porte sur un autre lieu, un autre temps, un autre objet
+doc:l'accusatif après une préposition indique un déplacement vers un autre lieu
 sens:>
 conflit:gerondAd,regimeAbl
 contig:50
