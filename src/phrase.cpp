@@ -24,6 +24,8 @@
 //
 //                           TODO
 //        - afficher la doc de la règle dans la ligne requête
+//        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
+//          par ex. subst
 //        - Trouver un meilleur moyen d'ordonner les subs dans MotFlechi::trGroupe()
 //        - vel dii : l'adv. porte sur le nom.
 //        - Remplacer QRegex par QRegularExpresion ?
@@ -248,19 +250,22 @@ void Phrase::choixReq(Requete* req)
             r->setRejetee(true);
         }
         /*
+        // même super, même aff, un seul sub permis
         if (r->super()->mot() == mfsup->mot() && r->aff() == req->aff() && !req->multi())
         {
-            r->tue();
+        r->tue();
         }
+        // même super, même sub, id différents
         else if (r->sub() == req->sub() && r->super() == mfsup && r->id() != req->id())
         {
-            r->tue();
+        r->tue();
         }
+        // même sub, supers différents, exc. antécédent
         else if (r->sub()->mot() == msub && r->super() != mfsup && !req->sub()->mot()->estRelatif())
         {
-            r->tue();
+        r->tue();
         }
-        */
+         */
     }
 }
 
@@ -314,7 +319,7 @@ QString Phrase::droite(Mot *m)
  *     3 : numéro de la morpho sur laquelle agir.
  *  si 1 == 'l' lien
  *     2. c = choisir ce lien et éliminer les concurrents
- *        d = déplacer le fils de ce lien à g. ou à d.
+ *        d = doc
  *        e = éditer la traduction de ce lien
  *        r = rejeter ce lien
  *        t = traduction suivante du lien
@@ -519,6 +524,7 @@ void Phrase::ecoute (QString m)
  	     		       */
 			case 'l':      // l == lien
 				      {
+                          qDebug()<<"écoute, lien, m"<<m;
 					      QStringList lv;
 					      if (eclats.count() > 3)
 						      lv = eclats.at (3).split (',');
@@ -534,41 +540,41 @@ void Phrase::ecoute (QString m)
 						      case 'i':    // info sur le lien
 						      case 'p':    // changement de position dans la traduction
 							      {
-								      char d = eclats.at (2).at (0).unicode();
+                                      /*
+								      char d = eclats.at (2).at(0).unicode();
 								      //bool droite = gd == 'd';
 								      // définition de sub en utilisant pos 2.
 								      switch (d)
 								      {
 									      case 's': // le lien est un sub
 										      {
-                                                  /*
 									              for (int i=0;i<cour->subordonnes().count();++i)
 										              if (lv.contains (QString::number (i)))
 											              lreq.append (cour->subordonnes().at (i));
-                                                  */
 											      break;
 										      }
 									      case 'd': // le lien est un dep
 										      {
-                                                  /*
 											      for (int i=0;i<cour->dependDe().count();++i)
 												      if (lv.contains (QString::number (i)))
 													      lreq.append (cour->dependDe().at (i));
-                                                   */
 											      break;
 										      }
 									      default:break;
 								      }
 								      if (lreq.empty())
 								            break;
+                                      */
+                                      qDebug()<<"   gd"<<gd<<"   rang"<<rang;
 								      switch (gd)
 								      {
 									      case 'i':  // demande de doc sur le lien
 										      {
-                                                  //Requete* req = _requetes.at(eclats.at(2).toInt());
+                                                  Requete* req = _requetes.at(eclats.at(2).toInt());
+                                                  qDebug()<<"case i, m"<<m<<"req"<<req;
 											      QMessageBox mb;
-											      mb.setText (req->doc());
-											      mb.exec ();
+											      mb.setText(req->regle()->doc());
+											      mb.exec();
 											      break;
 										      }
 									      case 'p':  // permutation P F
