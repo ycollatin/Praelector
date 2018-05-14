@@ -282,7 +282,7 @@ QString Requete::html()
         // En ocre italique, traduction
         << "<span style=\"color:"<<color<<";font-style:italic\">"<<_super->trGroupe(this)<<"</span> "
         // doc de la règle
-        << "<a href=\"l.d."<<_num<<"\">doc</a> "
+        << "<a href=\"l.i."<<_num<<"\">doc</a> "
         // rotation de la traduction
         << "<a href=\"l.t."<<_num<<"\">tr. suiv</a> "
         // lien valider
