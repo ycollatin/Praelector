@@ -55,12 +55,12 @@ void Mot::annuleFlechi(int f)
         mf->reqSup(ir)->annuleRequis(mf->morpho()+", fléchi rejeté");
     for (int ir=0;ir<mf->nbReqSub();++ir)
         mf->reqSub(ir)->annuleRequis(mf->morpho()+", fléchi rejeté");
-    _flechis.removeOne(mf);
+    mf->setRejete(true);
 }
 
 void Mot::annuleFlechi(MotFlechi* mf)
 {
-    _flechis.removeOne(mf);
+    mf->setRejete(true);
 }
 
 void Mot::annuleLemme(Lemme* lem)
@@ -70,7 +70,7 @@ void Mot::annuleLemme(Lemme* lem)
         MotFlechi* mf = _flechis.at(i); 
         if (mf->lemme() == lem)
         {
-            _flechis.removeOne(mf);
+            mf->setRejete(true);
         }
         else ++i;
     }
@@ -96,7 +96,7 @@ void Mot::choixLemme(Lemme* l)
         MotFlechi* mf = _flechis.at(i); 
         if (mf->lemme() != l)
         {
-            _flechis.removeOne(mf);
+            mf->setRejete(true);
         }
         else ++i;
     }
@@ -484,7 +484,7 @@ QList<Requete*> Mot::reqSuper()
 void Mot::rmFlechi(MotFlechi* mf)
 {
     if (mf == 0 || !_flechis.contains(mf)) return;
-    _flechis.removeOne(mf);
+    mf->setRejete(true);
 }
 
 bool Mot::sortF(MotFlechi* mfa, MotFlechi* mfb)
