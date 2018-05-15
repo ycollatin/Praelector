@@ -65,14 +65,13 @@ void Mot::annuleFlechi(MotFlechi* mf)
 
 void Mot::annuleLemme(Lemme* lem)
 {
-    for (int i=0;i<_flechis.count();)
+    for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* mf = _flechis.at(i); 
         if (mf->lemme() == lem)
         {
             mf->setRejete(true);
         }
-        else ++i;
     }
 }
 
@@ -90,14 +89,13 @@ void Mot::choixFlechi(MotFlechi* mf)
 
 void Mot::choixLemme(Lemme* l)
 {
-    for (int i=0;i<_flechis.count();)
+    for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* mf = _flechis.at(i); 
         if (mf->lemme() != l)
         {
             mf->setRejete(true);
         }
-        else ++i;
     }
 }
 
@@ -305,6 +303,7 @@ QString Mot::html()
         QString lin;
         QTextStream fl(&lin);
         MotFlechi* mf = _flechis.at(i);
+        if (mf->rejete()) continue;
 		fl << "<span style=\"color:green;font-style:italic\"> "
            << mf->morpho() << "</span>";
         switch(mf->lemme()->pos().at(0).unicode())
