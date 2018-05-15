@@ -23,6 +23,7 @@
 //                          FIXME 
 //
 //                           TODO
+//        - doc() de la requête : brève mais complète.
 //        - place entre aux et pp : n'est jamais vaincu
 //        - Réinitialisation : rétablir toutes les morphos
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
@@ -228,10 +229,8 @@ void Phrase::choixReq(Requete* req)
 {
     if (req == 0 || !req->close()) return;
     req->setValide(true);
-    //Mot *cour = motCourant();
     Mot* msub = req->sub()->mot();
     MotFlechi* mfsup = req->super();
-
     // tri des fléchis
     choixFlechi(req->super());
     choixFlechi(req->sub());
@@ -525,7 +524,6 @@ void Phrase::ecoute (QString m)
  	     		       */
 			case 'l':      // l == lien
 				      {
-                          qDebug()<<"écoute, lien, m"<<m;
 					      QStringList lv;
 					      if (eclats.count() > 3)
 						      lv = eclats.at (3).split (',');
@@ -566,13 +564,11 @@ void Phrase::ecoute (QString m)
 								      if (lreq.empty())
 								            break;
                                       */
-                                      qDebug()<<"   gd"<<gd<<"   rang"<<rang;
 								      switch (gd)
 								      {
 									      case 'i':  // demande de doc sur le lien
 										      {
                                                   Requete* req = _requetes.at(eclats.at(2).toInt());
-                                                  qDebug()<<"case i, m"<<m<<"req"<<req;
 											      QMessageBox mb;
 											      mb.setText(req->regle()->doc());
 											      mb.exec();
@@ -601,8 +597,6 @@ void Phrase::ecoute (QString m)
                                   }
 						      case 'v':   // pos 1, valider
 							      {
-                                      //int rang = eclats.at(2).toInt();
-                                      //Requete* req = _requetes.at(rang);
                                       if (req == 0) std::cerr << qPrintable("requête introuvable");
                                       else choixReq(req);
 								      break;
@@ -693,11 +687,6 @@ void Phrase::ecoute (QString m)
 							      }
 						      case 'r':   // rejet d'un lien
 					      	      {
-                                      /*
-                                      int n = eclats.at(2).toInt();
-                                      Requete* req = requete(u);
-                                      Requete* req = requete(rang);
-                                      */
                                       if (req == 0)
                                       {
                                           std::cerr << qPrintable("Requête introuvable");

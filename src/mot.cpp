@@ -78,14 +78,13 @@ void Mot::annuleLemme(Lemme* lem)
 
 void Mot::choixFlechi(MotFlechi* mf)
 {
-    for (int i=0;i<_flechis.count();)
+    for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* f = _flechis.at(i);
         if (f != mf) 
         {
             f->setRejete(true);
         }
-        else ++i;
     }
 }
 
