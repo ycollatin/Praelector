@@ -276,9 +276,9 @@ QString Requete::html()
         << _regle->aff() << " "
         << _super->gr() << " "
     */
-    fl  << _sub->morpho() << " "
+    fl  << _sub->gr()<<"<small> " << _sub->morpho() << " </small>"
         << _regle->aff() << " "
-        << _super->morpho() << " "
+        << _super->gr() <<"<small> " << _super->morpho() << " </small>"
         // En ocre italique, traduction
         << "<span style=\"color:"<<color<<";font-style:italic\">"<<_super->trGroupe(this)<<"</span> "
         // doc de la règle
@@ -286,9 +286,9 @@ QString Requete::html()
         // rotation de la traduction
         << "<a href=\"l.t."<<_num<<"\">tr. suiv</a> "
         // lien valider
-        << "<a href=\"l.v."<<_num<<"\">valider</a>";
+        << "<a href=\"l.v."<<_num<<"\">valider</a> "
         // lien rejeter
-        //<< "<a href=\"l.r."<<_num<<"\">rejeter</a>";
+        << "<a href=\"l.r."<<_num<<"\">rejeter</a>";
     return ret;
 }
 
