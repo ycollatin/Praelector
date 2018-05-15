@@ -83,7 +83,7 @@ void Mot::choixFlechi(MotFlechi* mf)
         MotFlechi* f = _flechis.at(i);
         if (f != mf) 
         {
-            _flechis.removeAt(i);
+            f->setRejete(true);
         }
         else ++i;
     }
