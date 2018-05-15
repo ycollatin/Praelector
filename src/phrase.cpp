@@ -202,7 +202,6 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
             {
                 req->setRejetee(true);
             }
-            else ++i;
         }
     }
     m->annuleLemme(l);
