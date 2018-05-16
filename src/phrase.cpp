@@ -23,7 +23,8 @@
 //                          FIXME 
 //
 //                           TODO
-//        - doc() de la requête : brève mais complète.
+//        - Le subj imparfait : traduire par le subj pr. ou le conditionnel présent
+//          donc : traduction multiple d'une même morpho.
 //        - place entre aux et pp : n'est jamais vaincu
 //        - Réinitialisation : rétablir toutes les morphos
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
