@@ -21,6 +21,10 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
+//        - flexfr : revoir la traduction de tu : acc et dat -> te prep -> toi
+//        - élision me e* : je me emporterais
+//        - nisi -> si ne pas, à traiter dans MotFlechi::elideFr, et si possible
+//          changer le nom de cette fonction.
 //
 //                           TODO
 //        - Le subj imparfait : traduire par le subj pr. ou le conditionnel présent
