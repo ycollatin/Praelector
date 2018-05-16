@@ -701,12 +701,6 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
                     else fv.prepend("ne ");
                     lret.replace(lret.count()-1, fv);
                 }
-                /*
-                QString trs = r->trSub();
-                // quelques transformations
-                trs.replace(QRegularExpression("(^| )(me|te|la|le|se|les) (je|tu|il|elle|on|nous|vous|ils|elles) "),
-                                               "\\1\\3 \\2 ");
-                */
                 lret.append(r->trSub());
             }
         }
