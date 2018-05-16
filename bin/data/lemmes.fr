@@ -3030,7 +3030,7 @@ caecus:aveugle
 caedes:meurtre, massacre
 Caedicius2:Caedicius (nom d'homme)
 Caedicius:(campus -) territoire chez les Vestins, (tabernae : lieu-dit sur la voie Appienne)
-caedo:abattre, tuer
+caedo:battre, abattre, tuer
 caeduus:qu'on peut couper, bon à couper
 caelamen:ciselure, ouvrage ciselé
 caelator:graveur, ciseleur
@@ -11627,7 +11627,7 @@ ira:colère
 iracunde:avec colère
 iracundia:irascibilité, mauvaise humeur
 iracundus:irritable
-irascor:se mettre en colère
+irascor:s'emporter, se mettre en colère
 irate:avec colère
 iratus:en colère, irrité
 iris2:hérisson
