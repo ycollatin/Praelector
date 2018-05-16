@@ -66,8 +66,13 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
                           //case 'p': ret = _pronom->accorde(c, _morpho); break;
                 case 'v':
                 case 'w':
-                          fl = conjnat(c, _morpho);
-                          break;
+                          {
+                              fl = conjnat(c, _morpho);
+                              QString mcond = _morpho;
+                              mcond.replace("subjonctif imparfait", "conditionnel présent");
+                              if (mcond != _morpho) _trfl.append(conjnat(c, mcond));
+                              break;
+                          }
                 default: fl = c;
             }
             if (!fl.isEmpty()) _trfl.append(fl);
