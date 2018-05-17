@@ -769,7 +769,7 @@ QString Phrase::grLu()
 		if (i <= _maxImot && i != _imot)
 			fl << " <a href=\"i."<<i<<"\">&bull;</a>";  // ou &middot;
 		if (i == _imot)
-			fl << " <span style=\"color:green;font-weight:bold\">";
+			fl << " <span style=\"color:green;font-weight:bold;\">";
 		else if (i > _imot)
 			fl << " <span style=\"color:lightgrey;\">";
 		else fl << " <span>";
@@ -859,7 +859,7 @@ QString Phrase::htmlLiens()
     for (int i=0;i<lr.count();++i)
         ll.append(lr.at(i)->html());
     ll.removeDuplicates();
-    return ll.join("<br/>");
+    return ll.join("<br/>\n");
 }
 
 void Phrase::lance()

@@ -115,12 +115,12 @@ namespace Chaines {
 
 	const QString affichage = QString::fromUtf8
 		( "%1<hr/>%2"
-		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>%3"
+		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%3"
 		 "<hr/><a href=\"-reinit\">réinitialiser</a> "
          "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a> "
          "&nbsp;<a href=\"-quitter\">quitter</a>"
-		 "<hr/><strong>Liens syntaxiques</strong><br/>%4"
-		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>%5"
+		 "<hr/><strong>Liens syntaxiques</strong><br/>%4\n"
+		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n%5"
 		 "<hr/><a href=\"-nouvPhr\">Saisir une phrase</a> "
 		 "<a href=\"-corpus\">choisir une phrase</a>&nbsp;<a href=\"-quitter\">quitter</a>");
 
@@ -135,15 +135,15 @@ namespace Chaines {
 
 	const QString documentation = QString::fromUtf8
 		(
-		 "<a href=\"-init\">Menu</a><br/>"
-		 "<strong>Saisie de la phrase</strong><br/>"
+		 "<a href=\"-init\">Menu</a><br/>\n"
+		 "<strong>Saisie de la phrase</strong><br/>\n"
 		 "Un clic sur le lien <em>Saisir une phrase</em> "
 		 "permet non seulement de saisir, mais aussi de coller "
 		 "la phrase qu'on veut lire. Pour valider, la touche "
 		 "<em>Entrée</em> est l'équivalent d'un clic sur le bouton OK."
 		 "De même, la touche <em>Échapp</em> est l'équivalent d'un "
-		 "clic sur le bouton Cancel.<br/>"
-		 "<strong>Morphologie et sémantique</strong><br/>"
+		 "clic sur le bouton Cancel.<br/>\n"
+		 "<strong>Morphologie et sémantique</strong><br/>\n"
 		 "Les liens <em>Reculer</em> et <em>Avancer</em> permettent "
 		 "de se déplacer dans la phrase. Il est conseillé de faire "
 		 "le plus de choix possibles avant de passer au mot suivant."
@@ -154,7 +154,7 @@ namespace Chaines {
 		 "<li> choix de la traduction ; "
 		 "<li> Rejet de la morphologie proposéë, ou validation "
 		 "comme seule morphologie possible.</ul>"
-		 "<strong>Liens syntaxiques</strong><br/>"
+		 "<strong>Liens syntaxiques</strong><br/>\n"
 		 "À partir du deuxième mot de la phrase, tous les "
 		 "liens syntaxiques possibles sont proposés. On peut "
 		 "rejeter ceux qui paraissent impossibles ou incorrects, "
@@ -169,8 +169,8 @@ namespace Chaines {
 	const QString initAff = QString::fromUtf8
 		("%1<hr/>"
 		 "est une aide à la lecture de la phrase latine. "
-		 "<br/><a href=\"-nouvPhr\">Saisir une phrase</a>  "
-		 "<a href=\"-corpus\">choisir une phrase</a><br/>"
+		 "<br/>\n<a href=\"-nouvPhr\">Saisir une phrase</a>  "
+		 "<a href=\"-corpus\">choisir une phrase</a><br/>\n"
 		 "<a href=\"-aide\">Documentation</a> "
 		 "<a href=\"-quitter\">Quitter</a>");
 
