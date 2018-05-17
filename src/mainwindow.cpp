@@ -42,6 +42,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
 	connect(textBrowser, SIGNAL(anchorClicked(QUrl)),this, SLOT(calcul(QUrl)));
 	textBrowser->setOpenLinks(false);
+    saisie.clear();
+    etat = clfl;
     /*
     textBrowser->setTextInteractionFlags
         (Qt::TextBrowserInteraction | Qt::TextSelectableByKeyboard);
@@ -60,6 +62,8 @@ MainWindow::~MainWindow()
  */
 void MainWindow::calcul (QUrl url)
 {
+    saisie.clear();
+    etat = clz;
 	QString cmd = url.toString ();
 	if (cmd == "-quitter") 
 	{
@@ -133,6 +137,22 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     phrase->trace();
     QMainWindow::closeEvent(event);
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *ev)
+{
+    if (etat = clz())
+    {
+        if (ev->key() == Qt::Key_M) etat = clfl;
+        else if (ev->key() == Qt::Key_L) etat = clreq;
+    }
+    else if (etat == clfl)
+    {
+    }
+    else if (etat == clreq)
+    {
+    }
+    else QMainWindow::keyPressEvent(ev);
 }
 
 void MainWindow::parle (QString m)

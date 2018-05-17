@@ -40,8 +40,14 @@ class MainWindow : public QMainWindow
     	~MainWindow();
 
 	private:
-		Phrase * phrase;
-		QString choixPhr (QString cmd);
+        int const    clz   = 0
+        int const    clfl  = 1;
+        int const    clreq = 2;
+        int          etat;
+        virtual void keyPressEvent(QKeyEvent *ev);
+        QString      saisie;
+		Phrase*      phrase;
+		QString      choixPhr (QString cmd);
 
 	private slots:
 		void calcul (QUrl url);

@@ -29,6 +29,7 @@
 //
 //                           TODO
 //        - équivalents clavier des liens, en utilisant QWebView ? 
+//        - Donc : remplacer QTextBrowser par QWebView ?
 //        - place entre aux et pp : n'est jamais vaincu
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
