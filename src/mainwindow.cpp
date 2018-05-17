@@ -42,6 +42,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
 	connect(textBrowser, SIGNAL(anchorClicked(QUrl)),this, SLOT(calcul(QUrl)));
 	textBrowser->setOpenLinks(false);
+    /*
+    textBrowser->setTextInteractionFlags
+        (Qt::TextBrowserInteraction | Qt::TextSelectableByKeyboard);
+    */
 	phrase->ecoute ("");
 }
 

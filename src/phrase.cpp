@@ -28,6 +28,7 @@
 //          changer le nom de cette fonction.
 //
 //                           TODO
+//        - équivalents clavier des liens, en utilisant QWebView ? 
 //        - place entre aux et pp : n'est jamais vaincu
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
@@ -37,7 +38,6 @@
 //        - Lexique personnel
 //        - En vert : fonction des liens proposés
 //        - accorder la traduction de l'épithète
-//        - équivalents clavier des liens ?
 //                           XXX
 //
 
