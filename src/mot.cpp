@@ -323,7 +323,7 @@ QString Mot::html()
 			<< " tr. <span style=\"color:darkred;font-style:italic\">"<<mf->tr()<<"</span>";
         ret.append(lin);
     }
-    return ret.join("<br/>");
+    return ret.join("<br/>\n");
 }
 
 void Mot::lance()
