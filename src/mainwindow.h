@@ -27,27 +27,40 @@
 #include <QUrl>
 #include <phrase.h>
 
+class Editeur : public QTextBrowser
+{
+    Q_OBJECT
+
+    public:
+        Editeur(QWidget *parent = Q_NULLPTR);
+        void emet(QUrl url);
+};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
-    QTextBrowser *textBrowser;
+    //QTextBrowser *textBrowser;
+    Editeur* textBrowser;
 
 	public:
     	explicit MainWindow(QWidget *parent = 0);
     	~MainWindow();
 
 	private:
-        int const    clz   = 0
-        int const    clfl  = 1;
-        int const    clreq = 2;
-        int          etat;
-        virtual void keyPressEvent(QKeyEvent *ev);
-        QString      saisie;
-		Phrase*      phrase;
-		QString      choixPhr (QString cmd);
+        QString           alpha;
+        bool              clavier;
+		Phrase*           phrase;
+        QString           texte;
+        QString           texteT; // texte avec reccourcis
+        QMap<QChar,QUrl>  urls;
+        void              ajTouches();
+		QString           choixPhr (QString cmd);
+
+    protected:
+        void keyPressEvent(QKeyEvent *ev);
 
 	private slots:
 		void calcul (QUrl url);

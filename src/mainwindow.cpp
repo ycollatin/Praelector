@@ -19,6 +19,14 @@
 #include "mainwindow.h"
 #include "phrase.h"
 
+Editeur::Editeur(QWidget *parent) : QTextBrowser(parent)
+{
+}
+
+void Editeur::emet(QUrl url)
+{
+    emit anchorClicked(url);
+}
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -32,7 +40,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     verticalLayout->setSpacing(6);
     verticalLayout->setContentsMargins(11, 11, 11, 11);
 
-    textBrowser = new QTextBrowser(centralWidget);
+    //textBrowser = new QTextBrowser(centralWidget);
+    textBrowser = new Editeur(centralWidget);
     verticalLayout->addWidget(textBrowser);
 
     setCentralWidget(centralWidget);
@@ -42,17 +51,50 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
 	connect(textBrowser, SIGNAL(anchorClicked(QUrl)),this, SLOT(calcul(QUrl)));
 	textBrowser->setOpenLinks(false);
-    saisie.clear();
-    etat = clfl;
-    /*
-    textBrowser->setTextInteractionFlags
-        (Qt::TextBrowserInteraction | Qt::TextSelectableByKeyboard);
-    */
+    clavier = false;
+    alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	phrase->ecoute ("");
 }
 
 MainWindow::~MainWindow()
 {
+}
+
+void MainWindow::ajTouches()
+{
+    if (texte.isEmpty() || !texteT.isEmpty()) return;
+    QString lien = "<span style=\"color:red;\">%1</a></span> ";
+    int i = 0;
+    QString t = texte;
+    QTextStream fl(&texteT);
+    qDebug()<<"ajTouches, alpha"<<alpha<<alpha.length();
+    while (!t.isEmpty())
+    {
+        if (t.startsWith("<a href"))
+        {
+            QString url;
+            t.remove(0,9);
+            while (t.at(0) != '"')
+            {
+                url.append(t.at(0));
+                t.remove(0,1);
+            }
+            if (i < alpha.size())
+            {
+                QChar ch = alpha.at(i);
+                fl << lien.arg(ch);
+                urls[ch] = QUrl(url);
+                ++i;
+            }
+            fl<<"<a href=\""<<url;
+        }
+        else 
+        {
+            fl << t.at(0);
+            t.remove(0,1);
+        }
+    }
+    qDebug().noquote()<<texteT;
 }
 
 /*
@@ -62,8 +104,8 @@ MainWindow::~MainWindow()
  */
 void MainWindow::calcul (QUrl url)
 {
-    saisie.clear();
-    etat = clz;
+    texte.clear();
+    texteT.clear();
 	QString cmd = url.toString ();
 	if (cmd == "-quitter") 
 	{
@@ -141,21 +183,30 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::keyPressEvent(QKeyEvent *ev)
 {
-    if (etat = clz())
+    QString t = ev->text();
+    if (t.isEmpty())
     {
-        if (ev->key() == Qt::Key_M) etat = clfl;
-        else if (ev->key() == Qt::Key_L) etat = clreq;
+        QMainWindow::keyPressEvent(ev);
+        return;
     }
-    else if (etat == clfl)
+    if (ev->key() == Qt::Key_Slash)
     {
+        clavier = !clavier;
+        if (texteT.isEmpty()) ajTouches();
+        if (clavier) textBrowser->setText(texteT);
+        else textBrowser->setText(texte);
     }
-    else if (etat == clreq)
+    else if (alpha.contains(ev->text()))
     {
+        QUrl url = urls[ev->text().at(0)];
+        textBrowser->emet(url); 
     }
-    else QMainWindow::keyPressEvent(ev);
+    QMainWindow::keyPressEvent(ev);
+   
 }
 
-void MainWindow::parle (QString m)
+void MainWindow::parle(QString m)
 {
-	textBrowser->setHtml (m);
+	textBrowser->setHtml(m);
+    texte = m;
 }
