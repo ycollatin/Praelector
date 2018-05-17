@@ -56,6 +56,16 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
             switch (_lemme->pos().at(ip).toLatin1())
             {
                 case 'p':
+                    if (l->gr()=="tu")
+                    {
+                        if (m.contains("acc"))
+                        {
+                            _trfl.append("te");
+                            break;
+                        }
+                        else _trfl.append("toi");
+                        break;
+                    }
                 case 'a': fl = accorde(c, _morpho); break;
                 case 'n':
                           {
