@@ -21,16 +21,14 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - flexfr : revoir la traduction de tu : acc et dat -> te prep -> toi
+//        - "te caederem nisi irascerer" : Lorsque la phrase est traduite, il reste
+//           un lien à valider, qui, cliqué, fait planter l'appli.
 //        - élision me e* : je me emporterais
 //        - nisi -> si ne pas, à traiter dans MotFlechi::elideFr, et si possible
 //          changer le nom de cette fonction.
 //
 //                           TODO
-//        - Le subj imparfait : traduire par le subj pr. ou le conditionnel présent
-//          donc : traduction multiple d'une même morpho.
 //        - place entre aux et pp : n'est jamais vaincu
-//        - Réinitialisation : rétablir toutes les morphos
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
 //        - Trouver un meilleur moyen d'ordonner les subs dans MotFlechi::trGroupe()
