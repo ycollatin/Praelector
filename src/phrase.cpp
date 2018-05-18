@@ -21,6 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
+//        - La traduction phrase reprend des traductions de fléchis rejetés
 //        - "te caederem nisi irascerer" : Lorsque la phrase est traduite, il reste
 //           un lien à valider, qui, cliqué, fait planter l'appli.
 //        - élision me e* : je me emporterais
@@ -28,8 +29,6 @@
 //          changer le nom de cette fonction.
 //
 //                           TODO
-//        - équivalents clavier des liens, en utilisant QWebView ? 
-//        - Donc : remplacer QTextBrowser par QWebView ?
 //        - place entre aux et pp : n'est jamais vaincu
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
@@ -39,6 +38,7 @@
 //        - Lexique personnel
 //        - En vert : fonction des liens proposés
 //        - accorder la traduction de l'épithète
+//        - Remplacer QTextBrowser par QWebView ?
 //                           XXX
 //
 
