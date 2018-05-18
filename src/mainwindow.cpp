@@ -67,7 +67,6 @@ void MainWindow::ajTouches()
     int i = 0;
     QString t = texte;
     QTextStream fl(&texteT);
-    qDebug()<<"ajTouches, alpha"<<alpha<<alpha.length();
     while (!t.isEmpty())
     {
         if (t.startsWith("<a href"))
@@ -94,7 +93,6 @@ void MainWindow::ajTouches()
             t.remove(0,1);
         }
     }
-    qDebug().noquote()<<texteT;
 }
 
 /*
@@ -132,7 +130,8 @@ void MainWindow::calcul (QUrl url)
 		page.prepend ("<br/><a href=\"-nouvPhr\">Saisir une phrase</a><br/>"
 					 "<a href=\"-init\">annuler</a>&nbsp;"
 					 "<a href=\"-quitter\">quitter</a><hr/>");
-		textBrowser->setHtml (page);
+        parle(page);
+		//textBrowser->setHtml (page);
 	}
 	else if (cmd.startsWith("@"))
 	{
@@ -192,21 +191,28 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     if (ev->key() == Qt::Key_Slash)
     {
         clavier = !clavier;
-        if (texteT.isEmpty()) ajTouches();
-        if (clavier) textBrowser->setText(texteT);
+        if (clavier)
+        {
+            if (texteT.isEmpty()) ajTouches();
+            textBrowser->setText(texteT);
+        }
         else textBrowser->setText(texte);
     }
-    else if (alpha.contains(ev->text()))
+    else if (clavier && alpha.contains(ev->text()))
     {
         QUrl url = urls[ev->text().at(0)];
         textBrowser->emet(url); 
     }
     QMainWindow::keyPressEvent(ev);
-   
 }
 
 void MainWindow::parle(QString m)
 {
-	textBrowser->setHtml(m);
     texte = m;
+    if (clavier)
+    {
+        ajTouches();
+	    textBrowser->setHtml(texteT);
+    }
+    else textBrowser->setHtml(texte);
 }
