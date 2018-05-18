@@ -130,7 +130,8 @@ void MainWindow::calcul (QUrl url)
 	}
 	else if (cmd == "-aide")
 	{
-		textBrowser->setHtml (Chaines::documentation);
+		//textBrowser->setHtml (Chaines::documentation);
+		parle(Chaines::documentation);
 	}
 	else if (cmd == "-corpus")
 	{
