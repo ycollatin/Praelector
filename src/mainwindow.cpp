@@ -131,7 +131,6 @@ void MainWindow::calcul (QUrl url)
 					 "<a href=\"-init\">annuler</a>&nbsp;"
 					 "<a href=\"-quitter\">quitter</a><hr/>");
         parle(page);
-		//textBrowser->setHtml (page);
 	}
 	else if (cmd.startsWith("@"))
 	{
