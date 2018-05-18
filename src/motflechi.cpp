@@ -302,7 +302,7 @@ Lemme* MotFlechi::lemme()
 
 QString MotFlechi::morpho()
 {
-    return /*_lemme->gr()+" "+_lemme->pos()+" "+*/_morpho;
+    return _lemme->gr()+" <small>"+_lemme->pos()+" "+ _morpho+"</small>";
 }
 
 Mot* MotFlechi::mot()
