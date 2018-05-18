@@ -29,7 +29,8 @@
 //          changer le nom de cette fonction.
 //
 //                           TODO
-//        - contrôle clavier : permettre le contrôle par 2 touches rapprochées
+//        - contrôle clavier : permettre le contrôle par 2 touches rapprochées,
+//          - soit :a :b :c etc., soit xa xb xc... puis ya yb yc... et za zb zc.
 //        - place entre aux et pp : n'est jamais vaincu
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
