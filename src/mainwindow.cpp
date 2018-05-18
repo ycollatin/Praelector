@@ -52,7 +52,24 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	connect(textBrowser, SIGNAL(anchorClicked(QUrl)),this, SLOT(calcul(QUrl)));
 	textBrowser->setOpenLinks(false);
     clavier = false;
-    alpha = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    alphabet = "abcdefghijklmnopqrstuv";
+    wxyz = "wxyz";
+    // construire la liste des clés alpha
+    for (int i=0;i<alphabet.count();++i)
+        clesL.append(alphabet.at(i));
+    for (int i=0;i<4;++i)
+    {
+        QChar prem = wxyz.at(i);
+        for (int j=0;j<alphabet.count();++j)
+        {
+            QString cle;
+            cle.append(prem);
+            cle.append(alphabet.at(j));
+            clesL.append(cle);
+        }
+    }
+    qDebug()<<"clesL";
+    qDebug()<<clesL.count();
 	phrase->ecoute ("");
 }
 
@@ -78,11 +95,12 @@ void MainWindow::ajTouches()
                 url.append(t.at(0));
                 t.remove(0,1);
             }
-            if (i < alpha.size())
+            if (i < clesL.count())
             {
-                QChar ch = alpha.at(i);
-                fl << lien.arg(ch);
-                urls[ch] = QUrl(url);
+                QString cle = clesL.at(i);
+                fl << lien.arg(cle);
+                //urls[cle] = QUrl(url);
+                urls.insert(cle, url);
                 ++i;
             }
             fl<<"<a href=\""<<url;
@@ -134,7 +152,8 @@ void MainWindow::calcul (QUrl url)
 	}
 	else if (cmd.startsWith("@"))
 	{
-		textBrowser->setHtml(choixPhr(cmd));
+        parle(choixPhr(cmd));
+		//textBrowser->setHtml(choixPhr(cmd));
 	}
 	else 
 	{
@@ -185,6 +204,7 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     if (t.isEmpty())
     {
         QMainWindow::keyPressEvent(ev);
+        prefixe.clear();
         return;
     }
     if (ev->key() == Qt::Key_Slash)
@@ -195,12 +215,22 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
             if (texteT.isEmpty()) ajTouches();
             textBrowser->setText(texteT);
         }
-        else textBrowser->setText(texte);
+        else 
+        {
+            textBrowser->setText(texte);
+        }
+        prefixe.clear();
     }
-    else if (clavier && alpha.contains(ev->text()))
+    else if (wxyz.contains(t))
     {
-        QUrl url = urls[ev->text().at(0)];
+        prefixe = t;
+    }
+    else if (clavier && clesL.contains(t))
+    {
+        t.prepend(prefixe);
+        QUrl url = urls[t];
         textBrowser->emet(url); 
+        prefixe.clear();
     }
     QMainWindow::keyPressEvent(ev);
 }
