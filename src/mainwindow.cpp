@@ -80,7 +80,7 @@ MainWindow::~MainWindow()
 void MainWindow::ajTouches()
 {
     if (texte.isEmpty() || !texteT.isEmpty()) return;
-    QString lien = "<span style=\"color:red;\">%1</a></span> ";
+    QString lien = "<span style=\"color:red;font-size:small\">%1</a></span> ";
     int i = 0;
     QString t = texte;
     QTextStream fl(&texteT);
