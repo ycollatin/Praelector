@@ -29,6 +29,7 @@
 //          changer le nom de cette fonction.
 //
 //                           TODO
+//        - contrôle clavier : permettre le contrôle par 2 touches rapprochées
 //        - place entre aux et pp : n'est jamais vaincu
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
