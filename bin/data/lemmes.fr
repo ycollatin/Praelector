@@ -11627,7 +11627,7 @@ ira:colère
 iracunde:avec colère
 iracundia:irascibilité, mauvaise humeur
 iracundus:irritable
-irascor:s'emporter, se mettre en colère
+irascor:s'emporter, être en colère
 irate:avec colère
 iratus:en colère, irrité
 iris2:hérisson
