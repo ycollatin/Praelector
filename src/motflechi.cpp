@@ -285,7 +285,6 @@ void MotFlechi::lance()
         {
             Requete* nr = new Requete(this, 0, r);
             _phrase->ajRequete(nr);
-            _phrase->ajRequete(nr);
         }
         if (r->estSub(this) && r->sens() != '>')
         {
