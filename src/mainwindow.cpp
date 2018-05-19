@@ -68,8 +68,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             clesL.append(cle);
         }
     }
-    qDebug()<<"clesL";
-    qDebug()<<clesL.count();
 	phrase->ecoute ("");
 }
 
