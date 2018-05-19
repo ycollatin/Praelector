@@ -167,15 +167,18 @@ void Phrase::additions()
 
 void Phrase::ajRequete(Requete* req, bool force)
 {
-    // vérifier que la requête n'existe pas
+    Mot* super = 0; Mot* sub = 0;
+    if (req->super() != 0) super = req->super()->mot();
+    if (req->sub() != 0) sub = req->sub()->mot();
+    QString id = req->id();
+    // vérifier qu'une requête homonyme n'existe pas déjà
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
-        if (r != 0 
-            && !force
-            && r->super() == req->super()
-            && r->sub() == req->sub()
-            && r->id() == req->id())
+        if (!force
+            && (r->super() != 0 && r->super()->mot() == super)
+            && (r->sub() != 0 && r->sub()->mot() == sub)
+            && r->id() == id)
         {
             //std::cerr << qPrintable("\nRequête "+req->doc()+"\négale à la requête\n"+r->numc());
             return;
@@ -352,36 +355,39 @@ void Phrase::ecoute (QString m)
         reinit(motCourant());
     }
 	/* deux commandes de navigation */
-    // passage au mot suivant
+    // 1. Avancer
 	else if (m == "-suiv" && (_imot < _mots.count() -1))
 	{
+        // tuer les requêtes clonées
+        for (int i=0;i<_requetes.count();++i)
+        {
+            Requete* req = _requetes.at(i);
+            if (!req->rejetee() && !req->multi() && req->clonee()) //&& req->origine()->valide())
+            {
+                req->setRejetee(true);
+            }
+            else 
+            {
+                if (req->clonee())
+                    req->setOrigine(0);
+            }
+        } 
+        // passer au mot suivant
 		++_imot;
-		if (_imot > _maxImot) _maxImot = _imot;
+		if (_imot > _maxImot)
+        {
+            _maxImot = _imot;
+        }
         else
         {
-            // tuer les requêtes clonées
-            for (int i=0;i<_requetes.count();++i)
-            {
-                Requete* req = _requetes.at(i);
-                if (req != 0 && !req->multi() && req->clonee() && req->origine()->valide())
-                {
-                    req->setRejetee(true);
-                }
-                else 
-                {
-                    if (req->clonee())
-                        req->setOrigine(0);
-                }
-            } 
             // résolution des requêtes
             if (_imot > 0) setLiens();
             // lancement des nouvelles requêtes
             if (_imot < _maxImot && _imot < _mots.count()-1)
                 lance();
-            //if (_imot < _mots.count()-1) lance();
         }
 	}
-    // retour au mot précédent
+    // 2. Reculer
 	else if (m == "-prec" && _imot > 0)
 	{
 
@@ -873,7 +879,10 @@ void Phrase::lance()
 {
     Mot* mc = motCourant();
     for (int i=0;i<mc->nbFlechis();++i)
-        if (mc != 0) mc->flechi(i)->lance();        
+    {
+        MotFlechi* mf = mc->flechi(i);
+        if (!mf->rejete()) mf->lance();        
+    }
 }
 
 QList<Requete*> Phrase::lReqSub(MotFlechi* mf, bool closes)
