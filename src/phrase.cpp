@@ -21,7 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - La traduction phrase reprend des traductions de fléchis rejetés
+//        - Disce paruo esse contentus : deux requetes identiques
+//          "être content" proposées pour contentus.
 //        - "te caederem nisi irascerer" : Lorsque la phrase est traduite, il reste
 //           un lien à valider, qui, cliqué, fait planter l'appli.
 //        - nisi -> si ne pas, à traiter dans MotFlechi::elideFr, et si possible
@@ -917,9 +918,9 @@ void Phrase::majAffichage()
     {
         _reponse = Chaines::affichage
 	        .arg (Chaines::titrePraelector)
-	        .arg (grLu())                            // %1
-	        .arg (motCourant()->html())              // %2
-	        .arg (htmlLiens())                       // %3
+	        .arg (grLu())
+	        .arg (motCourant()->html())
+	        .arg (htmlLiens())
 	        .arg (tr());
     }
 }
