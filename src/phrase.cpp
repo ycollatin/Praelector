@@ -24,13 +24,18 @@
 //        - La traduction phrase reprend des traductions de fléchis rejetés
 //        - "te caederem nisi irascerer" : Lorsque la phrase est traduite, il reste
 //           un lien à valider, qui, cliqué, fait planter l'appli.
-//        - élision me e* : je me emporterais
 //        - nisi -> si ne pas, à traiter dans MotFlechi::elideFr, et si possible
 //          changer le nom de cette fonction.
 //
 //                           TODO
-//        - motflechi : placer le lien vSubj, sup = conjsubj
-//        - place entre aux et pp : n'est jamais vaincu
+//        - Réfléchir sur la forme négative :
+//            . elle pourrait être une propriété /neg/ de MotFlechi :
+//            . par défaut, la négation serait ne + forme + pas,
+//              'pas' peut être remplacé par 'jamais', 'plus', 'personne' ou 'nulle part'
+//            . 'nisi' serait traduit par 'si' et basculerait la propriété /neg/ du v.
+//            . 'nunquam', serait traduit par 'jamais'
+//            . Il faudrait décider de la place de la traduction.
+//            . place entre aux et pp : n'est jamais vaincu
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
 //        - Trouver un meilleur moyen d'ordonner les subs dans MotFlechi::trGroupe()
