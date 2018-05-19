@@ -15776,7 +15776,7 @@ partus:accouchement, nouveau-né
 parumper:un peu, pour un instant, momentanément
 parum:peu
 parvulus:tout petit
-parvum:(très employé au gén. et abl) un peu de
+parvum:(très employé au gén. et abl) un peu de, peu
 parvus:petit
 pasceolus:bourse de cuir
 pasco:faire paître, nourrir
