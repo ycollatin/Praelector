@@ -566,7 +566,8 @@ QString Mot::trs()
     if (_flechis.count() == 1) return _flechis.at(0)->tr();
     for (int i=0;i<_flechis.count();++i)
     {
-        ret.append(_flechis.at(i)->tr());
+        MotFlechi* mf = _flechis.at(i);
+        if (!mf->rejete()) ret.append(mf->tr());
     }
     ret.removeDuplicates();
     return ret.join(" / ");
