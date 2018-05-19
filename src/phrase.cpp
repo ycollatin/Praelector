@@ -21,14 +21,13 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - Disce paruo esse contentus : deux requetes identiques
-//          "être content" proposées pour contentus.
 //        - "te caederem nisi irascerer" : Lorsque la phrase est traduite, il reste
 //           un lien à valider, qui, cliqué, fait planter l'appli.
-//        - nisi -> si ne pas, à traiter dans MotFlechi::elideFr, et si possible
-//          changer le nom de cette fonction.
 //
 //                           TODO
+//        - traitement de requêtes clonées : 
+//            . les supprimer si non multi et que l'original est validé
+//            . cloner une clonée ?
 //        - Réfléchir sur la forme négative :
 //            . elle pourrait être une propriété /neg/ de MotFlechi :
 //            . par défaut, la négation serait ne + forme + pas,
