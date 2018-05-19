@@ -108,7 +108,7 @@ QString MotFlechi::elideFr(QString s)
     // ta affaire -> ton affaire
     s.replace(QRegularExpression("(^|\\s)ta ("+vv+")"), "\\1ton \\2");
     // je->j'  te->t'  me->m'
-    s.replace(QRegularExpression("(^|\\s)([jtm]e) ("+vv+")"), "\\1\\2'\\3");
+    s.replace(QRegularExpression("(^|\\s)([jtm])e ("+vv+")"), "\\1\\2'\\3");
     // le->l'  la->l'
     s.replace(QRegularExpression("(^|\\s)(l[ea]) ("+vv+")"), "\\1\\2'\\3");
     // de les->des
