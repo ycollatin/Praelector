@@ -154,6 +154,7 @@ doc:L'attribut du sujet d'une infinitive est ordinairement placé après le suje
 posSup:w
 morphoSup:infinitif
 posSub:a,n
+supEstSub:propinf
 morphoSub:nominatif,accusatif
 lsSup:attr
 poids:77
