@@ -93,7 +93,6 @@ Requete* Requete::clone()
     }
     if (_subRequis) nreq->setSubRequis();
     else nreq->setSuperRequis();
-    //nreq->setCloneeDe(_num);
     nreq->setOrigine(this);
     return nreq;
 }
@@ -181,7 +180,7 @@ QString Requete::doc()
     fl << "-" <<id() <<"->";
     if (_sub == 0) fl << "?";
     else fl << _sub->mot()->gr()<<" "<<_sub->lemme()->gr()<<" "<<_sub->morpho();
-    if (_origine != 0) fl << "\nclonée de "<<_origine->num();
+    if (_origine != 0) fl << " clone de "<<_origine->num();
     if (_rejetee) fl << "\nrejetée";
     if (_valide) fl<<"\ntraduction:"<<tr();
     return ret;
