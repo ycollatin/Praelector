@@ -21,8 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - "te caederem nisi irascerer" : Lorsque la phrase est traduite, il reste
-//           un lien à valider, qui, cliqué, fait planter l'appli.
+//        - Très mauvais fonctionnement des retours arrière + avant : des liens 
+//          disparaissent, plantages, etc.
 //
 //                           TODO
 //        - traitement de requêtes clonées : 
@@ -365,11 +365,13 @@ void Phrase::ecoute (QString m)
             {
                 req->setRejetee(true);
             }
+            /*
             else 
             {
                 if (req->clonee())
                     req->setOrigine(0);
             }
+            */
         } 
         // passer au mot suivant
 		++_imot;
@@ -488,13 +490,17 @@ void Phrase::ecoute (QString m)
 						      case 'r': // rejeter m.r.m = le lemme ; m.r.f la forme
                                   if (eclats.count() > 3)
                                   {
+                                      qDebug()<<"rejet"<<m;
                                       int n = eclats.at(3).toInt();
                                       switch (eclats.at(2).at(0).unicode())
                                       {
                                           case 'm':
                                               {
+                                                  qDebug()<<"  de lemme";
                                                   Lemme* l = cour->flechi(n)->lemme();
+                                                  qDebug()<<"          "<<l->gr();
                                                   annuleLemme(cour, l);
+                                                  qDebug()<<"        OK";
                                                   break;
                                               }
                                           case 'f':
