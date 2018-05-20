@@ -295,7 +295,7 @@ QStringList Regle::filtre()
 // tous les traits demandés par a doivent être dans b
 bool Regle::inclus(QString a, QString b)
 {
-    QStringList la = a.split(' ');
+    QStringList la = a.split(',');
     for (int i=0;i<la.count();++i)
         if (!b.contains(la.at(i))) return false;
     return true;
