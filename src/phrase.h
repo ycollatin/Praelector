@@ -38,7 +38,6 @@ class Phrase: public QObject
     private:
         QStringList             entreMots;
 	    QString                 _chAdditions;
-        //Dialogue*               _dialogue;
         QStringList             _feminins;
         QString                 _gr;
         QMap<QString,Handicap*> _handicaps;
@@ -91,6 +90,7 @@ class Phrase: public QObject
         int               nbPonct(QChar p, Mot* ma, Mot* mb);
         int               nbRegles();
         int               nbRequetes();
+        int               numNouvReq();
         void              nettoieHomonymes(QString id);
         void              peupleHandicap();
         void              peupleRegles(QString nf);

@@ -21,13 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - Très mauvais fonctionnement des retours arrière + avant : des liens 
-//          disparaissent, plantages, etc.
 //
 //                           TODO
-//        - traitement de requêtes clonées : 
-//            . les supprimer si non multi et que l'original est validé
-//            . cloner une clonée ?
 //        - Réfléchir sur la forme négative :
 //            . elle pourrait être une propriété /neg/ de MotFlechi :
 //            . par défaut, la négation serait ne + forme + pas,
@@ -490,17 +485,13 @@ void Phrase::ecoute (QString m)
 						      case 'r': // rejeter m.r.m = le lemme ; m.r.f la forme
                                   if (eclats.count() > 3)
                                   {
-                                      qDebug()<<"rejet"<<m;
                                       int n = eclats.at(3).toInt();
                                       switch (eclats.at(2).at(0).unicode())
                                       {
                                           case 'm':
                                               {
-                                                  qDebug()<<"  de lemme";
                                                   Lemme* l = cour->flechi(n)->lemme();
-                                                  qDebug()<<"          "<<l->gr();
                                                   annuleLemme(cour, l);
-                                                  qDebug()<<"        OK";
                                                   break;
                                               }
                                           case 'f':
@@ -1012,6 +1003,11 @@ void Phrase::nettoieHomonymes(QString id)
             }
         }
     }
+}
+
+int Phrase::numNouvReq()
+{
+    return ++_numReq;
 }
 
 void Phrase::peupleRegles(QString nf)
