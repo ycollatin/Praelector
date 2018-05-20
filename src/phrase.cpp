@@ -21,7 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//
+//        - Fortes Fortuna adiuuat : Bien que adj ET nom, le pos nom de Fortes n'est pas
+//          pris en compte.
 //                           TODO
 //        - Réfléchir sur la forme négative :
 //            . elle pourrait être une propriété /neg/ de MotFlechi :
@@ -356,7 +357,7 @@ void Phrase::ecoute (QString m)
         for (int i=0;i<_requetes.count();++i)
         {
             Requete* req = _requetes.at(i);
-            if (!req->rejetee() && !req->multi() && req->clonee()) //&& req->origine()->valide())
+            if (!req->rejetee() && !req->multi() && req->clonee() && req->origine()->valide())
             {
                 req->setRejetee(true);
             }
@@ -602,8 +603,6 @@ void Phrase::ecoute (QString m)
 							      }
                               case 't': // rotation de la traduction du lien
                                   {
-                                      //int rang = eclats.at(2).toInt();
-                                      //Requete* req = _requetes.at(rang);
                                       req->incItr();
                                       break;
                                   }
