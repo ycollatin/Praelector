@@ -21,8 +21,9 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - Fortes Fortuna adiuuat : Bien que adj ET nom, le pos nom de Fortes n'est pas
-//          pris en compte.
+//        - Le pronom relatif qui est invariable en français
+//        - Revoir Fragiles sunt arbores.
+//
 //                           TODO
 //        - Réfléchir sur la forme négative :
 //            . elle pourrait être une propriété /neg/ de MotFlechi :
