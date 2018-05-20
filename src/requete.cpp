@@ -93,7 +93,8 @@ Requete* Requete::clone()
     }
     if (_subRequis) nreq->setSubRequis();
     else nreq->setSuperRequis();
-    nreq->setOrigine(this);
+    if (_origine != 0) nreq->setOrigine(_origine);
+    else nreq->setOrigine(this);
     return nreq;
 }
 
