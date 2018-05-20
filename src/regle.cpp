@@ -263,7 +263,9 @@ bool Regle::estSuper(MotFlechi* mf)
     QString m = mf->morpho();
     bool okm = _morphoSup.empty();
     if (!okm) for (int i=0;i<_morphoSup.count();++i)
+    {
         okm = okm || inclus(_morphoSup.at(i), m);
+    }
     if (!okm) return false;
     // lexicosyntaxe
     if (!_lsSup.empty())
@@ -295,7 +297,7 @@ QStringList Regle::filtre()
 // tous les traits demandés par a doivent être dans b
 bool Regle::inclus(QString a, QString b)
 {
-    QStringList la = a.split(',');
+    QStringList la = a.split(QRegularExpression("\\W"));
     for (int i=0;i<la.count();++i)
         if (!b.contains(la.at(i))) return false;
     return true;
