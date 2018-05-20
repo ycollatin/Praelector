@@ -49,7 +49,7 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
         _phrase = sub->mot()->phrase();
         _subRequis = false;
     }
-    _num = _phrase->nbRequetes();
+    _num = _phrase->numNouvReq();
     if (_super == 0) _requerant = _sub->mot();
     else if (_sub == 0) _requerant = _super->mot();
     _coord1 = 0;
