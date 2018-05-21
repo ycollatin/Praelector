@@ -97,7 +97,8 @@ class Phrase: public QObject
         QList<Mot*>       portee(int a, int b);
         Regle*            regle(int i);
         Regle*            regle(QString id);
-        void              reinit(Mot* m);
+        //void              reinit(Mot* m);
+        void              reinit();
         QList<Requete*>   reqCC(Mot* m);
         Requete*          requete(int n);
         QString static    saisie (QString l, QString s);

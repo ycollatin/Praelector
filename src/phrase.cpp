@@ -348,7 +348,7 @@ void Phrase::ecoute (QString m)
     /* Réinitialisation à partir du mot courant */
     else if (m == "-reinit")
     {
-        reinit(motCourant());
+        reinit();
     }
 	/* deux commandes de navigation */
     // 1. Avancer
@@ -1084,22 +1084,25 @@ Regle* Phrase::regle(int i)
     return _regles.at(i);
 }
 
-void Phrase::reinit(Mot* m)
+//void Phrase::reinit(Mot* m)
+void Phrase::reinit()
 {
-    int rang = m->rang();
-    for (int i=rang;i<_mots.count();++i)
+    //int rang = m->rang();
+    //for (int i=rang;i<_mots.count();++i)
+    for (int i=_imot;i<_mots.count();++i)
     {
         _mots.at(i)->reinit();
     }
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if ((req->super() != 0 && req->super()->mot()->rang() >= rang)
-            || (req->sub() != 0 && req->sub()->mot()->rang() >= rang))
+        if ((req->super() != 0 && req->super()->mot()->rang() >= _imot)
+            || (req->sub() != 0 && req->sub()->mot()->rang() >= _imot))
         {
             req->setRejetee(false);
             req->setValide(false);
         }
+        _maxImot = _imot;
     }
 }
 
