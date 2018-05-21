@@ -985,6 +985,18 @@ int Phrase::nbRequetes()
     return _requetes.count();
 }
 
+int Phrase::nbSuper(MotFlechi* mf)
+{
+    int ret = 0;
+    for (int i=0;i<_requetes.count();++i)
+    {
+        Requete* req = _requetes.at(i);
+        if (req->valide() && req->sub() == mf)
+            ++ret;
+    }
+    return ret;
+}
+
 void Phrase::nettoieHomonymes(QString id)
 {
     Requete* rprox = 0;
@@ -1272,4 +1284,16 @@ void Phrase::trace()
         if (req != 0) std::cout << qPrintable("\n----------\n"+req->hist());
         else std::cout << qPrintable("\n---\nrequête "+QString::number(i)+" nulle");
     }
+}
+
+MotFlechi* Phrase::vbRelative(MotFlechi* mf)
+{
+    if (mf->lemme()->gr() != "qui") return 0;
+    for (int i=0;i<_requetes.count();++i)
+    {
+        Requete* req = _requetes.at(i);
+        if (req->valide() && req->id() != "antecedent" && req->sub() == mf)
+            return req->super();
+    }
+    return 0;
 }

@@ -49,7 +49,6 @@ class MotFlechi: public QObject
         bool            _valide;
     public:
         MotFlechi(Lemme* l, QString m, Mot* parent);
-        bool            aUnSuper();
         bool            auxiliaire();
         QList<Requete*> closes();
         bool            contigu(MotFlechi* mf);
@@ -76,6 +75,7 @@ class MotFlechi: public QObject
         int             nbReqSup();
         int             nbReqSupCloses();
         int             nbReqSupValides(Requete* rtest=0);
+        int             nbSuper();
         void            nettoie();
         int             rang();
         bool            rejete();
@@ -96,6 +96,7 @@ class MotFlechi: public QObject
         QString         trGroupe(Requete* rtest=0, QString morph=0);
         QString         trNue();
         bool            valide();
+        MotFlechi*      vbRelative();
         void            videReq();
 };
 

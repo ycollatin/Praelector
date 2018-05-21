@@ -90,6 +90,7 @@ class Phrase: public QObject
         int               nbPonct(QChar p, Mot* ma, Mot* mb);
         int               nbRegles();
         int               nbRequetes();
+        int               nbSuper(MotFlechi* mf);
         int               numNouvReq();
         void              nettoieHomonymes(QString id);
         void              peupleHandicap();
@@ -106,6 +107,7 @@ class Phrase: public QObject
         void              setLiens();
         QList<Mot*>       supersDe(Mot* m);
         QString           tr();
+        MotFlechi*        vbRelative(MotFlechi* mf);
     signals:
         void              repondu(const QString);
     public slots:

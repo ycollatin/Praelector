@@ -345,6 +345,11 @@ int MotFlechi::nbReqSup()
     return _phrase->lReqSup(this).count();
 }
 
+int MotFlechi::nbSuper()
+{
+    return _phrase->nbSuper(this);
+}
+
 int MotFlechi::nbReqSupCloses()
 {
     return _phrase->lReqSup(this).count();
@@ -729,8 +734,22 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
                         fv.replace(" ", " ne ");
                     else fv.prepend("ne ");
                     lret.replace(lret.count()-1, fv);
+                    lret.append(r->trSub());
                 }
-                lret.append(r->trSub());
+                else if (el=="antecedent")
+                {
+                    int nbsup = _phrase->nbSuper(this);
+                    // si le relatif n'est pas encore sub dans la relative,
+                    // il sera lié directement à son antécédent.
+                    // Mais si le relatif est sub dans la relative, 
+                    // lier artificiellement le verbe de la relative à l'antécédent
+                    if (nbsup == 2)
+                    {
+                        MotFlechi* mfv = vbRelative();
+                        if (mfv != 0) lret.append(mfv->trGroupe());
+                    }
+                }
+                else lret.append(r->trSub());
             }
         }
     }
@@ -745,4 +764,9 @@ QString MotFlechi::trNue()
 bool MotFlechi::valide()
 {
     return _valide;
+}
+
+MotFlechi* MotFlechi::vbRelative()
+{
+    return _phrase->vbRelative(this); 
 }
