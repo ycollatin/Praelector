@@ -52,20 +52,40 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
         QString c = _traductions.at(i).simplified();
         for (int ip=0;ip<_lemme->pos().length();++ip)
         {
-            QString fl;
+            QString fl = c;
             switch (_lemme->pos().at(ip).toLatin1())
             {
                 case 'p':
-                    if (l->gr()=="tu")
+                    if (l->gr()=="je")
                     {
                         if (m.contains("acc"))
                         {
-                            _trfl.append("te");
-                            break;
+                            fl = "me";
                         }
-                        else _trfl.append("toi");
-                        break;
+                        else if (!m.contains("nomin"))
+                            fl = "moi";
                     }
+                    else if (l->gr()=="tu")
+                    {
+                        if (m.contains("acc"))
+                        {
+                            fl = "te";
+                        }
+                        else if (!m.contains("nomin"))
+                        {
+                            fl = "toi";
+                        }
+                    }
+                    else if (l->gr()=="il")
+                    {
+                        if (m.contains("acc"))
+                        {
+                            fl = "le";
+                        }
+                        else if (!m.contains("nomin"))
+                            fl = "lui";
+                    }
+                    break;
                 case 'a': fl = accorde(c, _morpho); break;
                 case 'n':
                           {
