@@ -21,8 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - Le pronom relatif qui est invariable en français
-//        - Revoir Fragiles sunt arbores.
+//        - Les relatives ne sont pas liées à l'antécédent, et le pronom est traduit dans les deux groupes.
 //
 //                           TODO
 //        - Réfléchir sur la forme négative :
