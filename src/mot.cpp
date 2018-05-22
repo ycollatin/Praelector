@@ -214,7 +214,8 @@ bool Mot::estSommet()
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* mf = _flechis.at(i);
-        if (mf->estSub()) return false;
+        // si le fléchi a un sub relatif, le mot n'est pas sommet.
+        if (mf->estSub() || _phrase->estVbRelative(mf)) return false;
     }
     return true;
 }

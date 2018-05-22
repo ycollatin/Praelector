@@ -69,6 +69,7 @@ class Phrase: public QObject
         QString           droite(Mot* m);
         void              ecoute (QString m);
         bool              estFeminin(QString n);
+        bool              estVbRelative(MotFlechi* mf);
         bool              filtre(Requete* req);
         QString           gauche(Mot *m);
         QString           grLu();

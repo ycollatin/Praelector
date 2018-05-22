@@ -724,13 +724,26 @@ void Phrase::ecoute (QString m)
 	emit(repondu(_reponse));
 }
 
-bool Phrase::estFeminin (QString n)
+bool Phrase::estFeminin(QString n)
 {
     if (n.isEmpty()) return "?";
 	return _feminins.contains(n.toLower());
 }
 
-void Phrase::initFeminins ()
+bool Phrase::estVbRelative(MotFlechi* mf)
+{
+    for (int i=0;i<_requetes.count();++i)
+    {
+        Requete* req = _requetes.at(i);
+        if (req->super() == mf 
+            && req->valide() && req->id() != "antecedent"
+            && req->sub()->lemme()->cle() == "qui2")
+            return true;
+    }
+    return false;
+}
+
+void Phrase::initFeminins()
 {
 	QFile fp (qApp->applicationDirPath ()+"/data/feminin.fr");
 	if (fp.open (QIODevice::ReadOnly|QIODevice::Text))

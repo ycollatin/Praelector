@@ -96,7 +96,6 @@ class MotFlechi: public QObject
         QString         trGroupe(Requete* rtest=0, QString morph=0);
         QString         trNue();
         bool            valide();
-        MotFlechi*      vbRelative();
         void            videReq();
 };
 
