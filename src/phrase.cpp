@@ -361,13 +361,6 @@ void Phrase::ecoute (QString m)
             {
                 req->setRejetee(true);
             }
-            /*
-            else 
-            {
-                if (req->clonee())
-                    req->setOrigine(0);
-            }
-            */
         } 
         // passer au mot suivant
 		++_imot;
@@ -381,13 +374,14 @@ void Phrase::ecoute (QString m)
             if (_imot > 0) setLiens();
             // lancement des nouvelles requêtes
             if (_imot < _maxImot && _imot < _mots.count()-1)
-                lance();
+            {
+                motCourant()->lance();
+            }
         }
 	}
     // 2. Reculer
 	else if (m == "-prec" && _imot > 0)
 	{
-
 		--_imot;
 	}
 	/* Nouvelle phrase saisie */
@@ -400,7 +394,7 @@ void Phrase::ecoute (QString m)
             setGr(p);
             lemmatise();
 		    _imot = 0;
-            lance();
+            motCourant()->lance();
         }
 	}
 	/* Nouvelle phrase choisie */
@@ -413,7 +407,7 @@ void Phrase::ecoute (QString m)
         setGr(m);
         lemmatise();
 		_imot = 0;
-        lance();
+        motCourant()->lance();
 	}
 	else // mots et liens
 	{
@@ -881,16 +875,6 @@ QString Phrase::htmlLiens()
         ll.append(lr.at(i)->html());
     ll.removeDuplicates();
     return ll.join("<br/>\n");
-}
-
-void Phrase::lance()
-{
-    Mot* mc = motCourant();
-    for (int i=0;i<mc->nbFlechis();++i)
-    {
-        MotFlechi* mf = mc->flechi(i);
-        if (!mf->rejete()) mf->lance();        
-    }
 }
 
 QList<Requete*> Phrase::lReqSub(MotFlechi* mf, bool closes)

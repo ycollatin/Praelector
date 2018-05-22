@@ -41,6 +41,7 @@ class Mot : public QObject
         int                 _dm;
         QList<MotFlechi*>   _flechis; 
         int                 _fm;
+        bool                _reqLancees;
         Phrase*             _phrase;
         int                 _rang;
         int                 _que;
@@ -89,10 +90,12 @@ class Mot : public QObject
         bool              que();
         int               rang();
         void              reinit();
+        bool              reqLancees();
         Requete*          reqSub(QString id);
         QList<Requete*>   reqSuper();
         void              rmFlechi(MotFlechi* mf);
         void              setMorphos(MapLem m);
+        void              setReqLancees(bool r);
         void              setPSup(int p);
         void              setTr(QString t);
         bool static       sortF(MotFlechi* mfa, MotFlechi* mfb);

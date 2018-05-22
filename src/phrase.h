@@ -80,7 +80,6 @@ class Phrase: public QObject
         QString           htmlLiens();
         void              initFeminins ();
         bool              isomorph(QString ma, QString mb);
-        void              lance();
         void              lemmatise();
         QList<Requete*>   lReqSub(MotFlechi* mf, bool closes=false);
         QList<Requete*>   lReqSup(MotFlechi* mf, bool closes=false);

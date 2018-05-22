@@ -40,6 +40,7 @@ Mot::Mot(QString g, int d, int f, int r, QObject *parent) : QObject(parent)
     _que = -1;
     _rang = r;
     _morphos.clear();
+    _reqLancees = false;
 }
 
 void Mot::ajFlechi(MotFlechi* mf)
@@ -329,11 +330,13 @@ QString Mot::html()
 
 void Mot::lance()
 {
+    if (_reqLancees) return;
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* mf = _flechis.at(i);
-        mf->lance();
+        if (!mf->rejete()) mf->lance();
     }
+    _reqLancees = true;
 }
 
 QList<Requete*> Mot::lReqSupCloses()
@@ -451,6 +454,11 @@ void Mot::reinit()
     }
 }
 
+bool Mot::reqLancees()
+{
+    return _reqLancees;
+}
+
 Requete* Mot::reqSub(QString id)
 {
     for (int i=0;i<_flechis.count();++i)
@@ -523,6 +531,11 @@ void Mot::setMorphos(MapLem m)
     }
     // trier les fléchis
     qSort(_flechis.begin(), _flechis.end(), sortF);
+}
+
+void Mot::setReqLancees(bool r)
+{
+    _reqLancees = r;
 }
 
 void Mot::setTr(QString t)
