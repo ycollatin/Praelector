@@ -29,6 +29,7 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
 {
     // signetRequete
     _regle = r;
+    _multi = _regle->filtre().contains("multi");
     _super = 0;
     _sub = 0;
     _rejetee = false;
@@ -332,7 +333,7 @@ int Requete::largeur()
 
 bool Requete::multi()
 {
-    return _regle->filtre().contains("multi");
+    return _multi;
 }
 
 int Requete::nbPonct(QChar c)

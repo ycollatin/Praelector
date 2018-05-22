@@ -42,6 +42,7 @@ class Requete : public QObject
         int               _itr;
         Lemme*            _lemme;
         QString           _morpho;
+        bool              _multi;
         int               _num;
         Requete*          _origine;
         Phrase*           _phrase;
