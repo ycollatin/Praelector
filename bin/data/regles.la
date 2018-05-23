@@ -353,7 +353,7 @@ id:datif
 doc:De nombreux verbes et quelques adjectifs acceptent comme subordonné un datif qui indique un destinataire
 posSup:v,w,a
 lsSup:datif
-posSub:n,p
+posSub:n
 morphoSub:datif
 poids:79
 tr:<sup> à <sub>
@@ -369,6 +369,16 @@ posSub:n,p
 morphoSub:datif
 contig:12
 poids:70
+tr:<sup> pour <sub>
+
+id:datifPr
+doc:Le français place volontiers la traduction du datif avant le verbe, en employant la forme tonique du pronom (moi, toi, lui, leur)
+posSup:v,w,a
+lsSup:datif
+posSub:p
+morphoSub:datif
+poids:79
+tr:<sub> <sup>
 tr:<sup> pour <sub>
 
 id:det
