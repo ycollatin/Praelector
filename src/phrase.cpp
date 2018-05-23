@@ -21,7 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - Les relatives ne sont pas liées à l'antécédent, et le pronom est traduit dans les deux groupes.
+//        - Il reste des requêtes redondantes après des retours en arrière.
 //
 //                           TODO
 //        - Réfléchir sur la forme négative :
