@@ -140,8 +140,10 @@ QString MotFlechi::elideFr(QString s)
     // que il|elle->qu'il|elle
     s.replace(QRegularExpression("(^|\\s)que ("+vv+")"), "\\1qu'\\2");
     // pronoms objet 
-    s.replace(QRegularExpression("(^|\\s)(me|te|la|le|se|les) (je|tu|il|elle|on|nous|vous|ils|elles) "),
-                                               "\\1\\3 \\2 ");
+    s.replace(QRegularExpression("(^|\\s)(me|te|la|le|se|les) (je|tu|il|elle|on|nous|vous|ils|elles) "), "\\1\\3 \\2 ");
+    // pronoms datif
+    s.replace(QRegularExpression("(lui|leurs?) (ils?|elles?|on)"), "\\2 \\1");
+
     return s;
 }
 
@@ -683,6 +685,7 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
             << "sujetEgo"
             << "sujetTu"
             << "objetPr"
+            << "datifPr"
             << "-"
             << "negation"
             << "adv"
