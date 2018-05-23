@@ -142,7 +142,7 @@ QString MotFlechi::elideFr(QString s)
     // pronoms objet 
     s.replace(QRegularExpression("(^|\\s)(me|te|la|le|se|les) (je|tu|il|elle|on|nous|vous|ils|elles) "), "\\1\\3 \\2 ");
     // pronoms datif
-    s.replace(QRegularExpression("(lui|leurs?) (ils?|elles?|on)"), "\\2 \\1");
+    s.replace(QRegularExpression("(lui|leurs?|me|te|nous|vous) (ils?|elles?|on)"), "\\2 \\1");
 
     return s;
 }
