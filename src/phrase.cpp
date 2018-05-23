@@ -22,6 +22,10 @@
 
 //                          FIXME 
 //        - Il reste des requêtes redondantes après des retours en arrière.
+//        - in omnem vitam unguento abstinemus : après validation de 
+//          vitam régime de in, la requête vitam objet unguento ne devrait
+//          pas être proposée. Les rejets après validation ne sont pas
+//          complets.
 //
 //                           TODO
 //        - Réfléchir sur la forme négative :
@@ -32,6 +36,7 @@
 //            . 'nunquam', serait traduit par 'jamais'
 //            . Il faudrait décider de la place de la traduction.
 //            . place entre aux et pp : n'est jamais vaincu
+//        - sic coord ? traiter sic ut.
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
 //        - Trouver un meilleur moyen d'ordonner les subs dans MotFlechi::trGroupe()
