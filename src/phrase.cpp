@@ -22,6 +22,7 @@
 
 //                          FIXME 
 //
+//        - Lors de reculs et avances successifs, des doublons apparaissent encore.
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Inter Pygmaeos non pudet esse breuem.
@@ -36,6 +37,8 @@
 //            . 'nunquam', serait traduit par 'jamais'
 //            . Il faudrait décider de la place de la traduction.
 //            . place entre aux et pp : n'est jamais vaincu
+//        - dans les cas des lemmes multipos : si une requête permet de savoir quel pos
+//          est utilisé, rejeter ou interdire les requêtes utilisant un autre pos.
 //        - sic coord ? traiter sic ut.
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
@@ -72,7 +75,6 @@ Phrase::Phrase(QString t)
     peupleRegles("regles.la");
     peupleHandicap();
     _numReq = -1;
-    _maxImot = 1000;
     if (!t.isEmpty())
     {
         setGr(t);
@@ -355,21 +357,11 @@ void Phrase::ecoute (QString m)
         } 
         // passer au mot suivant
 		++_imot;
-		if (_imot > _maxImot)
-        {
-            _maxImot = _imot;
-        }
-        else
-        {
-            // résolution des requêtes
-            if (_imot > 0) setLiens();
-            // lancement des nouvelles requêtes
-            if (_imot < _maxImot && _imot < _mots.count()-1)
-            {
-                motCourant()->lance();
-            }
-        }
-	}
+        // résolution des requêtes
+        if (_imot > 0 && !motCourant()->reqLancees()) setLiens();
+        // lancement de nouvelles requêtes
+        motCourant()->lance();
+    }
     // 2. Reculer
 	else if (m == "-prec" && _imot > 0)
 	{
@@ -772,7 +764,7 @@ QString Phrase::grLu()
 	QTextStream fl (&ret);
 	for (int i=0;i<_mots.count();++i)
 	{
-		if (i <= _maxImot && i != _imot)
+		if (/*i <= _maxImot &&*/ i != _imot)
 			fl << " <a href=\"i."<<i<<"\">&bull;</a>";  // ou &middot;
 		if (i == _imot)
 			fl << " <span style=\"color:green;font-weight:bold;\">";
@@ -1101,7 +1093,7 @@ void Phrase::reinit()
             req->setRejetee(false);
             req->setValide(false);
         }
-        _maxImot = _imot;
+        //_maxImot = _imot;
     }
 }
 
@@ -1208,7 +1200,8 @@ void Phrase::setGr(QString t)
 
 void Phrase::setLiens()
 {
-    Mot* mc = _mots.at(_imot);
+    //Mot* mc = _mots.at(_imot);
+    Mot* mc = motCourant();
     // essai de résolution des requêtes en attente.
     for (int im=0;im<mc->nbFlechis();++im)
     {
@@ -1221,10 +1214,8 @@ void Phrase::setLiens()
             if (r != 0 && !r->close()) listeR.append(r);
         }
 
-        //while (!_listeR.empty()) 
         while (!listeR.empty()) 
         {
-            //Requete *req = _listeR.takeFirst();
             Requete *req = listeR.takeFirst();
             if (mf->resout(req))
             {
