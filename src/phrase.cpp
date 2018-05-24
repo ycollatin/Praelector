@@ -248,7 +248,7 @@ void Phrase::choixReq(Requete* req)
     choixFlechi(req->super());
     choixFlechi(req->sub());
 
-    // tri des requêtes
+    // élimination des requêtes obsolètes
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
@@ -256,29 +256,15 @@ void Phrase::choixReq(Requete* req)
         {
             continue;
         }
+            // même super, même aff, un seul sub permis sauf règles multi
         if ((r->super()->mot() == mfsup->mot() && r->aff() == req->aff() && !req->multi())
+            // même super, même sub, id différents
             ||(r->sub() == req->sub() && r->super() == mfsup && r->id() != req->id())
-            ||(r->sub()->mot() == msub && r->super() != mfsup && !req->sub()->mot()->estRelatif()))
+            // même sub, requête non validée, exc. antécédent
+            ||(r->sub()->mot() == msub && !r->valide() && !req->sub()->mot()->estRelatif()))
         {
             r->setRejetee(true);
         }
-        /*
-        // même super, même aff, un seul sub permis
-        if (r->super()->mot() == mfsup->mot() && r->aff() == req->aff() && !req->multi())
-        {
-        r->tue();
-        }
-        // même super, même sub, id différents
-        else if (r->sub() == req->sub() && r->super() == mfsup && r->id() != req->id())
-        {
-        r->tue();
-        }
-        // même sub, supers différents, exc. antécédent
-        else if (r->sub()->mot() == msub && r->super() != mfsup && !req->sub()->mot()->estRelatif())
-        {
-        r->tue();
-        }
-         */
     }
 }
 
