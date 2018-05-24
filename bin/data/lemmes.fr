@@ -10497,7 +10497,7 @@ imputo:porter en compte
 imulus:complètement au fond, tout au bout
 imum:le bas
 imus:plus profond de, fond de
-in:dans, en, sur
+in:dans, en, sur, à
 inaccessus:inaccessible
 inacesco:s'aigrir, devenir aigre, déplaire
 Inachia:Inachia (nom de f.)
@@ -18146,7 +18146,7 @@ pudendus:honteux, infamant
 Pudens2:Pudens (nom d'h.)
 pudens:pudique, modeste, réservé
 pudenter:avec pudeur, aver retenue
-pudeo:avoir honte ; (surtout impers. : me pudet + gén.) j'ai honte de
+pudeo:avoir honte ; [impers. +acc] être honteux (me pudet : j'ai honte de)
 pudibundus:honteux
 pudice:pudiquement, vertueusement
 pudicitia:chasteté, pudeur, moralité
