@@ -22,6 +22,8 @@
 
 //                          FIXME 
 //
+//        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
+//        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Inter Pygmaeos non pudet esse breuem.
 //            . pudet mal traduit avec négagion
 //            . attr. beruem non proposé
@@ -591,7 +593,7 @@ void Phrase::ecoute (QString m)
                                   }
 						      case 'v':   // pos 1, valider
 							      {
-                                      if (req == 0) std::cerr << qPrintable("requête introuvable");
+                                      if (req == 0) std::cerr << qPrintable("requête nulle");
                                       else choixReq(req);
 								      break;
 							      }
@@ -683,7 +685,7 @@ void Phrase::ecoute (QString m)
 					      	      {
                                       if (req == 0)
                                       {
-                                          std::cerr << qPrintable("Requête introuvable");
+                                          std::cerr << qPrintable("Requête introuvable, rang ")<<rang;
                                           return;
                                       }
                                       req->annuleRequis("rejet demandé");
