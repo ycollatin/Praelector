@@ -21,12 +21,10 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - Il reste des requêtes redondantes après des retours en arrière.
-//        - in omnem vitam unguento abstinemus : après validation de 
-//          vitam régime de in, la requête vitam objet unguento ne devrait
-//          pas être proposée. Les rejets après validation ne sont pas
-//          complets.
 //
+//        - Inter Pygmaeos non pudet esse breuem.
+//            . pudet mal traduit avec négagion
+//            . attr. beruem non proposé
 //                           TODO
 //        - Réfléchir sur la forme négative :
 //            . elle pourrait être une propriété /neg/ de MotFlechi :
