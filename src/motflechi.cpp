@@ -143,6 +143,9 @@ QString MotFlechi::elideFr(QString s)
     s.replace(QRegularExpression("(^|\\s)(me|te|la|le|se|les) (je|tu|il|elle|on|nous|vous|ils|elles) "), "\\1\\3 \\2 ");
     // pronoms datif
     s.replace(QRegularExpression("(lui|leurs?|me|te|nous|vous) (ils?|elles?|on)"), "\\2 \\1");
+    // à le à les
+    s.replace(QRegularExpression("(^|\\s)à le "), "\\1au ");
+    s.replace(QRegularExpression("(^|\\s)à les "), "\\1aux ");
 
     return s;
 }
