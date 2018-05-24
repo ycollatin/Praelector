@@ -43,7 +43,7 @@ class Phrase: public QObject
         QMap<QString,Handicap*> _handicaps;
         int                     _imot;
         Lemmat*                 _lemmatiseur;
-        int                     _maxImot;
+        //int                     _maxImot;
         QList<Mot*>             _mots;
         int                     _num;
         int                     _numReq;
