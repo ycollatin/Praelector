@@ -22,7 +22,6 @@
 
 //                          FIXME 
 //
-//        - Lors de reculs et avances successifs, des doublons apparaissent encore.
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Inter Pygmaeos non pudet esse breuem.
@@ -585,7 +584,10 @@ void Phrase::ecoute (QString m)
                                   }
 						      case 'v':   // pos 1, valider
 							      {
-                                      if (req == 0) std::cerr << qPrintable("requête nulle");
+                                      if (req == 0) 
+                                      {
+                                          std::cerr << qPrintable("requête nulle");
+                                      }
                                       else choixReq(req);
 								      break;
 							      }
@@ -764,7 +766,7 @@ QString Phrase::grLu()
 	QTextStream fl (&ret);
 	for (int i=0;i<_mots.count();++i)
 	{
-		if (/*i <= _maxImot &&*/ i != _imot)
+		if (i != _imot)
 			fl << " <a href=\"i."<<i<<"\">&bull;</a>";  // ou &middot;
 		if (i == _imot)
 			fl << " <span style=\"color:green;font-weight:bold;\">";
@@ -1078,8 +1080,6 @@ Regle* Phrase::regle(int i)
 //void Phrase::reinit(Mot* m)
 void Phrase::reinit()
 {
-    //int rang = m->rang();
-    //for (int i=rang;i<_mots.count();++i)
     for (int i=_imot;i<_mots.count();++i)
     {
         _mots.at(i)->reinit();
@@ -1093,7 +1093,6 @@ void Phrase::reinit()
             req->setRejetee(false);
             req->setValide(false);
         }
-        //_maxImot = _imot;
     }
 }
 

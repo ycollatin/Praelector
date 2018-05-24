@@ -78,7 +78,7 @@ MainWindow::~MainWindow()
 void MainWindow::ajTouches()
 {
     if (texte.isEmpty() || !texteT.isEmpty()) return;
-    QString lien = "<span style=\"color:red;font-size:small\">%1</a></span> ";
+    QString lien = "<span style=\"color:red;font-size:small;vertical-align:bottom;\">%1</a></span>";
     int i = 0;
     QString t = texte;
     QTextStream fl(&texteT);
@@ -97,7 +97,6 @@ void MainWindow::ajTouches()
             {
                 QString cle = clesL.at(i);
                 fl << lien.arg(cle);
-                //urls[cle] = QUrl(url);
                 urls.insert(cle, url);
                 ++i;
             }
