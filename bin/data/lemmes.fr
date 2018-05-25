@@ -18545,7 +18545,7 @@ Quirinus2:de Quirinus
 Quirinus:Quirinus (Romulus)
 Quiris:Quirite = citoyen romain (Rare au sing.)
 quiritatus:plainte
-quisnam:qui donc ?, quoi donc ?
+quisnam:qui donc ?, quoi donc ?, quelqu'un, quelque chose
 quispiam:quelqu'un, quelque chose, quelque
 quisquam:quelque, quelqu'un, quelque chose
 quisque:chacun
