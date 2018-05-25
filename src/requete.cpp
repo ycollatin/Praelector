@@ -59,6 +59,11 @@ Requete::Requete(MotFlechi* sup, MotFlechi* sub, Regle* r)
     ajHist("Requête num "+numc()+" "+doc());
 }
 
+Requete::~Requete()
+{
+    _hist.clear();
+}
+
 QString Requete::aff()
 {
     return _regle->aff();

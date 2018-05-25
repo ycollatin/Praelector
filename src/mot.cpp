@@ -43,6 +43,16 @@ Mot::Mot(QString g, int d, int f, int r, QObject *parent) : QObject(parent)
     _reqLancees = false;
 }
 
+Mot::~Mot()
+{
+    _morphos.clear();
+    while (_flechis.count() > 0)
+    {
+        MotFlechi* mf = _flechis.takeFirst();
+        delete mf;
+    }
+}
+
 void Mot::ajFlechi(MotFlechi* mf)
 {
     if (!_flechis.contains(mf))

@@ -33,8 +33,6 @@ class Requete;
 
 class MotFlechi: public QObject
 {
-    Q_OBJECT
-
     private:
         Mot*            _mot;
         int             _itr;
@@ -49,6 +47,7 @@ class MotFlechi: public QObject
         bool            _valide;
     public:
         MotFlechi(Lemme* l, QString m, Mot* parent);
+        ~MotFlechi();
         bool            auxiliaire();
         QList<Requete*> closes();
         bool            contigu(MotFlechi* mf);

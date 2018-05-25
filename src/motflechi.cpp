@@ -117,6 +117,12 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
     }
 }
 
+MotFlechi::~MotFlechi()
+{
+    _traductions.clear();
+    _trfl.clear();
+}
+
 bool MotFlechi::contigu(MotFlechi* mf)
 {
     return abs(rang() - mf->rang()) == 1;

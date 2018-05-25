@@ -32,11 +32,7 @@ class Regle;
 
 class Requete : public QObject
 {
-
-    Q_OBJECT
-
     private:
-        //int               _cloneeDe;
         Requete*          _coord1;
         QStringList       _hist;
         int               _itr;
@@ -55,6 +51,7 @@ class Requete : public QObject
         bool              _valide;
     public:
         Requete(MotFlechi* sup, MotFlechi* sub, Regle* r);
+        ~Requete();
         QString     aff();
         void        ajHist(QString h);
         void        annuleRequis(QString cause);

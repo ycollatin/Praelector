@@ -382,9 +382,6 @@ void Phrase::ecoute (QString m)
 	/* Nouvelle phrase choisie */
 	else if (m.startsWith("-phr-"))
 	{
-        for (int i=0;i<_mots.count();++i)
-            delete _mots.at(i);
-		_mots.clear();
 		m.remove (0, 5);
         setGr(m);
         lemmatise();
@@ -1152,6 +1149,7 @@ QString Phrase::saisie (QString l, QString s)
 void Phrase::setGr(QString t)
 {
     entreMots.clear();
+    _numReq = -1;
     while (!_requetes.empty())
     {
         Requete* req = _requetes.takeFirst();

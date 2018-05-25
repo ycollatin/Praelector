@@ -32,9 +32,6 @@ class Requete;
 
 class Mot : public QObject
 {
-
-    Q_OBJECT
-
     private:
         QString             _gr;
         MapLem              _morphos;
@@ -49,6 +46,7 @@ class Mot : public QObject
 
     public:
         Mot(QString g, int d=-1, int f=-1, int r=-1, QObject *parent=0);
+        ~Mot();
         void              ajFlechi(MotFlechi* mf);
         void              annuleFlechi(int f);
         void              annuleFlechi(MotFlechi* mf);
