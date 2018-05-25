@@ -141,7 +141,7 @@ posSub:a
 morphoSub:nominatif
 posSup:w
 lemmeSub:-qui2,-quis
-morphoSup:indicatif actif,subjonctif actif,impératif actif,infinitif actif
+morphoSup:indicatif actif,subjonctif actif,impératif actif
 lsSup:attr
 contig:7
 !supEstSup:sujet,sujetPr,sujetRel
@@ -152,7 +152,7 @@ id:attrSInf
 aff:attrS
 doc:L'attribut du sujet d'une infinitive est ordinairement placé après le sujet.
 posSup:w
-morphoSup:infinitif
+morphoSup:infinitif actif
 posSub:a,n
 supEstSub:propinf
 morphoSub:nominatif,accusatif
