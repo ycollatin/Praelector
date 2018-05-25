@@ -22,6 +22,8 @@
 
 //                          FIXME 
 //
+//        - Traiter l'absence de point final.
+//        - "se charger de" et "se préoccuper de" non fléchis par conjnat.
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Inter Pygmaeos non pudet esse breuem.
@@ -343,7 +345,7 @@ void Phrase::ecoute (QString m)
     }
 	/* deux commandes de navigation */
     // 1. Avancer
-	else if (m == "-suiv" && (_imot < _mots.count() -1))
+	else if (m == "-suiv") //&& (_imot < _mots.count() -1))
 	{
         // tuer les requêtes clonées
         for (int i=0;i<_requetes.count();++i)
@@ -359,7 +361,7 @@ void Phrase::ecoute (QString m)
         // résolution des requêtes
         if (_imot > 0 && !motCourant()->reqLancees()) setLiens();
         // lancement de nouvelles requêtes
-        motCourant()->lance();
+        if (_imot < _mots.count() - 1) motCourant()->lance();
     }
     // 2. Reculer
 	else if (m == "-prec" && _imot > 0)
