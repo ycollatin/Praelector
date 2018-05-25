@@ -5800,8 +5800,8 @@ curiositas:soin à rechercher; la curiosité, indiscrétion, désir de savoir
 curiosus:soigneux, minutieux, curieux, avides de savoir, indiscret, vétilleux
 curis:pique
 Curius:Curius (M' Curius Dentatus, vainqueur des Samnites et de Pyrrhus)
-curo:se charger de, prendre soin de (curatus, a, um : bien soigné)
-cur:pourquoi ?
+curo:se charger de, prendre soin de, se préoccuper de (curatus, a, um : bien soigné)
+cur:pourquoi [?]
 curriculum:char de course
 curro:courir
 currus:char
