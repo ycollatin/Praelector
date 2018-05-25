@@ -2311,9 +2311,23 @@ QString conjnat(QString inf, QString morpho)
     inf = inf.simplified();
     if (inf.isEmpty()) return "requête vide, conjugaison impossible";
 
+    // infinitif, adjectif verbal :
+    if (morpho.contains("adjectif verbal"))
+        return "à "+inf;
+    else if (morpho.contains("supin"))
+        return "pour "+inf;
+
+    /*
+       if (!se  && inf.contains(" "))
+       return conjnat(inf.section(" ",0,0), morpho) +" "+ inf.section(" ",1);
+     */
     bool se = inf.startsWith("se ");
-    if (!se  && inf.contains(" "))
+    if (inf.contains(" ") && !se)
+    {
         return conjnat(inf.section(" ",0,0), morpho) +" "+ inf.section(" ",1);
+    }
+
+    // formes réfléchies
 
     int p = 0;
     int n = 0;
@@ -2321,11 +2335,6 @@ QString conjnat(QString inf, QString morpho)
     int m = 0;
     int v = 0;
     int g = 0;
-
-    if (morpho.contains("adjectif verbal"))
-        return "à "+inf;
-    else if (morpho.contains("supin"))
-        return "pour "+inf;
 
     QStringList lm = morpho.split(' ');
 
@@ -2339,6 +2348,11 @@ QString conjnat(QString inf, QString morpho)
         else if (genres.contains(trait))  g = genres.indexOf(trait)+1;
     }
     if (p > 0 && n > 1) p+=3; 
+    if (se) 
+    {
+        return conjugue(inf.section(" ",0,1), p, t, m, v, (p!=3 && p!=6), g, n)
+            + " " + inf.section(" ",2);
+    }
     return conjugue(inf, p, t, m, v, (p != 3 && p != 6), g, n);
 }
 
