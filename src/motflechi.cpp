@@ -93,7 +93,6 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
                               else fl = c;
                               break;
                           }
-                          //case 'p': ret = _pronom->accorde(c, _morpho); break;
                 case 'v':
                 case 'w':
                           {
@@ -743,7 +742,7 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
                 {
                     QString fv = lret.last();
                     if (fv.contains(" "))
-                        fv.replace(" ", " ne ");
+                        fv.replace(QRegularExpression("^(\\w+) "), "\\1 ne ");
                     else fv.prepend("ne ");
                     lret.replace(lret.count()-1, fv);
                     lret.append(r->trSub());
