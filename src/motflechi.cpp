@@ -431,6 +431,7 @@ bool MotFlechi::resout(Requete* req)
 {
     // un mot ne peut être lié à lui-même.
     if (req->requerant() == _mot) return false;
+    if (req->rejetee()) return false;
 
     // pas de sujet séparé de son verbe par le seul mot /quam/
     if (this->rang() - req->requerant()->rang() == 2)
@@ -712,7 +713,8 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
             << "prep"
             << "propInf"
             << "infObjet"
-            << "conjSub";
+            << "conjSub"
+            << "conjcoordV";
     else if (lp.contains("s")) lgr
             << "-"
             << "vInd"
