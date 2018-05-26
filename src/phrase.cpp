@@ -22,8 +22,7 @@
 
 //                          FIXME 
 //
-//        - Traiter l'absence de point final.
-//        - "se charger de" et "se préoccuper de" non fléchis par conjnat.
+//        - Requêtes non rejetées : post *equitem* demandé comme objet !
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Inter Pygmaeos non pudet esse breuem.
@@ -32,14 +31,16 @@
 //                           TODO
 //        - Réfléchir sur la forme négative :
 //            . elle pourrait être une propriété /neg/ de MotFlechi :
-//            . par défaut, la négation serait ne + forme + pas,
-//              'pas' peut être remplacé par 'jamais', 'plus', 'personne' ou 'nulle part'
+//            . par défaut, la négation serait ne + vb + pas,
+//              'pas' peut être remplacé par 'jamais', 'rien', 'plus', 'personne' ou 'nulle part'
 //            . 'nisi' serait traduit par 'si' et basculerait la propriété /neg/ du v.
 //            . 'nunquam', serait traduit par 'jamais'
 //            . Il faudrait décider de la place de la traduction.
 //            . place entre aux et pp : n'est jamais vaincu
 //        - dans les cas des lemmes multipos : si une requête permet de savoir quel pos
 //          est utilisé, rejeter ou interdire les requêtes utilisant un autre pos.
+//        - enregistrement des sessions : phrase, et liste des requêtes validées.
+//          Mais on peut aussi enregistre le parcours (avancer, reculer, aller à un mot).
 //        - sic coord ? traiter sic ut.
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
@@ -345,7 +346,7 @@ void Phrase::ecoute (QString m)
     }
 	/* deux commandes de navigation */
     // 1. Avancer
-	else if (m == "-suiv") //&& (_imot < _mots.count() -1))
+	else if (m == "-suiv")
 	{
         // tuer les requêtes clonées
         for (int i=0;i<_requetes.count();++i)
@@ -357,7 +358,7 @@ void Phrase::ecoute (QString m)
             }
         } 
         // passer au mot suivant
-		++_imot;
+        ++_imot;
         // résolution des requêtes
         if (_imot > 0 && !motCourant()->reqLancees()) setLiens();
         // lancement de nouvelles requêtes
@@ -374,7 +375,6 @@ void Phrase::ecoute (QString m)
         QString p = saisie("Saisir ou coller une phrase", "");
         if (!p.isEmpty())
         {
-		    _mots.clear();
             setGr(p);
             lemmatise();
 		    _imot = 0;
@@ -1150,6 +1150,16 @@ QString Phrase::saisie (QString l, QString s)
 
 void Phrase::setGr(QString t)
 {
+    _gr = t.simplified();
+    // Ajouter une ponctuation finale manquante 
+    if (_gr.at(_gr.length()-1).isLetter())
+        _gr.append('.');
+    // ôter les balises html
+    _gr.remove(QRegExp("<[^>]*>"));
+    // et les espaces de début de ligne
+    _gr.replace("\n ", "\n");
+
+    // vider les données de la phrase précédente
     entreMots.clear();
     _numReq = -1;
     while (!_requetes.empty())
@@ -1162,16 +1172,12 @@ void Phrase::setGr(QString t)
         Mot* m = _mots.takeFirst();
         delete m;
     }
-    _gr = t.simplified();
-    // les balises html
-    _gr.remove(QRegExp("<[^>]*>"));
-    // et les espaces de début de ligne
-    _gr.replace("\n ", "\n");
+
     // initialisation des mots
     QString nm;   // nouveau mot
     int     dm=0;   // début du mot
     QString ne;   // nouvel entremots
-    for (int i=0;i<t.length();++i)
+    for (int i=0;i<_gr.length();++i)
     {
         QChar c = _gr.at(i);
         if (c.isLetter())
