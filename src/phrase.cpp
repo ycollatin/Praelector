@@ -22,7 +22,7 @@
 
 //                          FIXME 
 //
-//        - Requêtes non rejetées : post *equitem* demandé comme objet !
+//        - flexfr : il /pouvoait/pouvait/
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Inter Pygmaeos non pudet esse breuem.
@@ -256,10 +256,17 @@ void Phrase::choixReq(Requete* req)
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
-        if (r == 0 || req->rejetee() || r == req || r->valide() || !r->close())
+        if (r == 0 || req->rejetee() || r == req || r->valide())
         {
             continue;
         }
+        // requêtes non closes, mais en contradiction avec req
+        if ((r->superRequis() && r->sub() == req->sub() && r->sub()->lemme()->cle() != "qui2")
+           || (r->subRequis() && r->super()->mot() == req->super()->mot() && (!req->multi())))
+        {
+            r->setRejetee(true);
+        }
+        if (!r->close()) continue;
             // même super, même aff, un seul sub permis sauf règles multi
         if ((r->super()->mot() == mfsup->mot() && r->aff() == req->aff() && !req->multi())
             // même super, même sub, id différents
