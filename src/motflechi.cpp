@@ -721,7 +721,8 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
             << "vSubj";
     else if (lp.contains("d")) lgr
             << "-"
-            << "negation";
+            << "negation"
+            << "conjcoordAdv";
     else lgr << "-"; 
 
     for (int i = 0;i<lgr.count();++i)
