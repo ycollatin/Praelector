@@ -1525,6 +1525,11 @@ QString TVpouvoir::IndPres(int P)
     return D[P];
 }
 
+QString TVpouvoir::IndImpf(int P)
+{
+    return RD(otedernieres(inf, 3), GetDesImpf(P));
+}
+
 QString TVpouvoir::IndPs(int P)
 {
     return RD(RadPs(), GetDesPsU(P));

@@ -472,6 +472,7 @@ class TVpouvoir : public TVsst
     virtual QString RadFut();
     virtual QString RadPs();
     virtual QString IndPres(int P);
+    virtual QString IndImpf(int P);
     virtual QString IndPs(int P);
     virtual QString SubjPres(int P);
     virtual QString PP();
