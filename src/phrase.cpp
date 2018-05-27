@@ -22,7 +22,6 @@
 
 //                          FIXME 
 //
-//        - flexfr : il /pouvoait/pouvait/
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Inter Pygmaeos non pudet esse breuem.
