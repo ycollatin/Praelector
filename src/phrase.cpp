@@ -22,11 +22,12 @@
 
 //                          FIXME 
 //
+//        - phrases.23, inter Pygmaeos, esse infobjet non proposé, et breuem attrObj non proposé
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Inter Pygmaeos non pudet esse breuem.
 //            . pudet mal traduit avec négagion
-//            . attr. beruem non proposé
+//            . attr. breuem non proposé
 //                           TODO
 //        - Réfléchir sur la forme négative :
 //            . elle pourrait être une propriété /neg/ de MotFlechi :

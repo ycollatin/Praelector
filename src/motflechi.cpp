@@ -137,7 +137,7 @@ QString MotFlechi::elideFr(QString s)
     // le->l'  la->l'
     s.replace(QRegularExpression("(^|\\s)(l[ea]) ("+vv+")"), "\\1\\2'\\3");
     // de les->des
-    s.replace(QRegularExpression("(^|\\s)de les "), "\\1des ");
+    s.replace(QRegularExpression("(^|\\s)de les "), "\\1des "); // XXX le regret *de les* quitter
     // de le->du
     s.replace(QRegularExpression("(^|\\s)de le "), "\\1du ");
     // de un->d'un
@@ -546,6 +546,7 @@ void MotFlechi::setDet(bool f)
     bool indef = _tr.startsWith ("un ") || _tr.startsWith ("une ") || _tr.startsWith ("des ");
 	bool initVoc = QString ("aehiouâéêAEHIOUÂÉÊ").contains (_trNue.at (0));
     bool plur = _morpho.contains("plur");
+    // TODO : redondance avec ::elidefr ?
 	// déterminant
 	if (_lemme->pos().contains('n'))
 	{
