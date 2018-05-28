@@ -466,10 +466,10 @@ void Requete::setOrigine(Requete* req)
     _origine = req;
 }
 
-void Requete::setRejetee(bool r)
+void Requete::setRejetee(bool r, QString cause)
 {
     _rejetee = r;
-    if (r) _hist.append("rejetée");
+    if (r) _hist.append("rejetée "+cause);
     else _hist.append("rejet annulé");
 }
 

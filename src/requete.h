@@ -103,7 +103,7 @@ class Requete : public QObject
         void        setCoord1(Requete* req);
         //void        setNum(int n);
         void        setOrigine(Requete* req);
-        void        setRejetee(bool r);
+        void        setRejetee(bool r, QString cause="");
         void        setRequis(MotFlechi* m, QString cause="cause inconnue");
         void        setSub(MotFlechi *m);
         void        setSubRequis();

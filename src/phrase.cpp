@@ -29,6 +29,7 @@
 //            . pudet mal traduit avec négagion
 //            . attr. breuem non proposé
 //                           TODO
+//        - Vérifier Requete::doc();
 //        - Réfléchir sur la forme négative :
 //            . elle pourrait être une propriété /neg/ de MotFlechi :
 //            . par défaut, la négation serait ne + vb + pas,
@@ -206,7 +207,7 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
             }
             else if (req->super()->mot() == m && req->super()->lemme() == l)
             {
-                req->setRejetee(true);
+                req->setRejetee(true, "lemme rejeté");
             }
         }
         else
@@ -218,7 +219,7 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
             }
             else if (req->sub()->mot() == m && req->sub()->lemme() == l)
             {
-                req->setRejetee(true);
+                req->setRejetee(true, "lemme rejeté");
             }
         }
     }
@@ -236,7 +237,7 @@ void Phrase::choixFlechi(MotFlechi* mf)
         MotFlechi* msub = req->sub();
         if ((msup != 0 && msup->mot() == m && msup != mf)
             || (msub != 0 && msub->mot() == m && msub != mf))
-            req->setRejetee(true);
+            req->setRejetee(true, "choix du fléchi "+mf->morpho());
     }
     m->choixFlechi(mf);
 }
@@ -261,10 +262,10 @@ void Phrase::choixReq(Requete* req)
             continue;
         }
         // requêtes non closes, mais en contradiction avec req
-        if ((r->superRequis() && r->sub() == req->sub() && r->sub()->lemme()->cle() != "qui2")
-           || (r->subRequis() && r->super()->mot() == req->super()->mot() && (!req->multi())))
+        if (r->superRequis() && r->sub() == req->sub() && r->sub()->lemme()->cle() != "qui2")
+           //|| (r->subRequis() && r->super()->mot() == req->super()->mot() && (!req->multi())))
         {
-            r->setRejetee(true);
+            r->setRejetee(true, "requête incompatible choisie "+req->doc());
         }
         if (!r->close()) continue;
             // même super, même aff, un seul sub permis sauf règles multi
@@ -274,7 +275,7 @@ void Phrase::choixReq(Requete* req)
             // même sub, requête non validée, exc. antécédent
             ||(r->sub()->mot() == msub && !r->valide() && !req->sub()->mot()->estRelatif()))
         {
-            r->setRejetee(true);
+            r->setRejetee(true, "req. incompatible choisie");
         }
     }
 }
@@ -361,7 +362,7 @@ void Phrase::ecoute (QString m)
             Requete* req = _requetes.at(i);
             if (!req->rejetee() && !req->multi() && req->clonee() && req->origine()->valide())
             {
-                req->setRejetee(true);
+                req->setRejetee(true, "clone obsolète");
             }
         } 
         // passer au mot suivant
@@ -691,7 +692,7 @@ void Phrase::ecoute (QString m)
                                       req->annuleRequis("rejet demandé");
                                       if (req->requerant() == cour)
                                       {
-                                          req->setRejetee(true);
+                                          req->setRejetee(true, "rejet explicite");
                                       }
 								      break;
 					      	      }
