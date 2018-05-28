@@ -320,6 +320,7 @@ QString Mot::html()
            << mf->morpho() << "</span>";
         switch(mf->lemme()->pos().at(0).unicode())
         {
+            case 'a': if (!mf->lemme()->pos().contains('n')) break;
             case 'n': fl << " <a href=\"m.d."<<i<<"\">det.</a> "; break;
             case 'w':
             case 'v': if (mf->morpho().contains('3'))
