@@ -150,11 +150,11 @@ tr:<sup> <sub>
 
 id:attrSInf
 aff:attrS
-doc:L'attribut du sujet d'une infinitive est ordinairement placé après le sujet.
+doc:L'attribut du sujet d'un infinitif est ordinairement placé après le sujet, lorsqu'il est exprimé.
 posSup:w
 morphoSup:infinitif actif
 posSub:a,n
-supEstSub:propinf
+!supEstSub:propinf
 morphoSub:nominatif,accusatif
 lsSup:attr
 poids:77
