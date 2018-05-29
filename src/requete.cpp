@@ -520,9 +520,23 @@ void Requete::setValide(bool v)
     _valide = v;
     if (v) 
     {
+        // négation
+        if (_regle->lsSub("neg"))
+        {
+            _super->setNeg(true);
+        }
         ajHist("VALIDÉE\n"+doc());
     }
-    else ajHist("INVALIDÉE");
+    else
+    {
+        // négation
+        if (_regle->lsSub("neg"))
+        {
+            _super->setNeg(false);
+        }
+        ajHist("VALIDÉE\n"+doc());
+        ajHist("INVALIDÉE");
+    }
 }
 
 MotFlechi* Requete::sub()
