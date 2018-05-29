@@ -14339,7 +14339,7 @@ necesse:
 necessitas:
 necessitudo:
 necessum:
-nec:coord
+nec:coord,neg
 necne:
 necopinans:
 necopinato:
@@ -14379,7 +14379,7 @@ ne:conjsub,posd
 Nemesis:
 Nemetes:
 Nemetocenna:
-nemo:
+nemo:neg
 nemoralis:
 Nemorensis2:
 nemoriuagus:
@@ -14403,7 +14403,7 @@ Neptunus:
 nequam:
 nequaquam:
 nequedum:
-neque:
+neque:neg
 nequeo:
 nequior:
 nequiquam:
@@ -14486,7 +14486,7 @@ nigresco:
 Nigrinus:
 nigro:
 nigror:
-nihil:
+nihil:neg
 nihildum:
 nihilominus:
 nihilo:
@@ -14513,7 +14513,7 @@ Nisaeus:
 Niseis:
 Niseus:
 ni:
-nisi:coord,conjind,conjsubj
+nisi:coord,conjind,conjsubj,neg
 Nisus3:
 nisus:
 nitedula:
@@ -14586,11 +14586,11 @@ nonagiens:
 nonaginta:
 nonanus:
 nonarius:
-nondum:
+nondum:neg
 nongenti:
 Nonius:
 nonne:
-non:
+non:neg
 nonnulli:
 nonnullus:
 nonnumquam:
@@ -14731,7 +14731,7 @@ nuncupo:
 nundinae:
 nundinatio:
 nundinor:
-nunquam:
+nunquam:neg
 nuntia:
 nuntiatio:
 nuntio:
@@ -14746,7 +14746,7 @@ nuptialis:
 nuptus2:
 Nursia:
 nurus:
-nusquam:
+nusquam:neg
 nutatio:
 nuto:
 nutricatus:
