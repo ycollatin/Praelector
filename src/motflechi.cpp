@@ -669,6 +669,7 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
     if (lp.contains("a")) lgr
             << "-"
             << "ablAdj"
+            << "adv"
             << "cadj"
             << "datif";
     else if (lp.contains("c")) lgr
@@ -743,11 +744,9 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
         if (el == "-")
         {
             QString trf;
-            //if (morph.isEmpty()) lret.append(_tr);
             if (morph.isEmpty()) trf = _tr;
             else
             {
-                //lret.append(conjnat(_trNue, morph));
                 trf = conjnat(_trNue, morph);
             }
             if (_neg)
