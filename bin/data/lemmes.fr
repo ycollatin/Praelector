@@ -7318,13 +7318,13 @@ effutio:répandre
 egelidus:tiède, dégourdi, frais
 egens:qui est dépourvu de, qui manque de, dénué de, privé de ; indigent, pauvre, nécessiteux ; qui sent le besoin, désireux
 egenus:qui manque de
-egeo:manquer de
-Egeria:Egérie, nymphe qu'inspira le roi Numa au cours de ses entrevues
+egeo:manquer [de]
+Egeria:Egérie (nymphe qu'inspira le roi Numa au cours de ses entrevues)
 Egerius:Egerius (frère de Tarquin l'Ancien)
 egero:(tr.) emporter dehors, retirer, enlever
 Egesta:Égeste [en Sicile, plus tard Ségeste]
 egestas:manque, défaut, privation, disette, pénurie ; l'indigence, misère, besoin, détresse, indigence
-egestio:action de rendre
+egestio:restitution (action de rendre)
 egigno:produire; [pass.] croître de, sortir de
 ego:moi, me
 Egnatia:Egnatia (ville d'Apulie, ville des Sallentins, nom de femme)
@@ -7343,7 +7343,7 @@ e:hors de, de
 eia:courage! allons!
 ei:hélas
 ejaculo:lancer, jeter
-ejectamentum:ce qui est rejeté, rejet
+ejectamentum:rejet (ce qui est rejeté)
 ejectio:expulsion, bannissement
 ejecto:rejeter [hors], lancer au loin; vomir
 ejectus2:éjection
@@ -18399,7 +18399,7 @@ qualiter:de quelle manière ; (relat.) ainsi que, comme
 qualum:corbeille, panier
 qualus:corbeille, panier
 quamdiu:combien de temps ?
-quam:(introduit le second terme de la comparaison =) que adv. combien
+quam:que (introduit le second terme de la comparaison), combien
 quamlibet:à quelque degré que
 quamobrem:pourquoi
 quamprimum:aussitôt que possible
