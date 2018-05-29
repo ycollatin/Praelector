@@ -330,9 +330,19 @@ QStringList Regle::supEstSup()
     return _supEstSup;
 }
 
+bool Regle::lsSub(QString l)
+{
+    return _lsSub.contains(l);
+}
+
 QString Regle::lsSub(int i)
 {
-    return _lsSup.at(i);
+    return _lsSub.at(i);
+}
+
+bool Regle::lsSup(QString l)
+{
+    return _lsSup.contains(l);
 }
 
 QString Regle::lsSup(int i)

@@ -82,7 +82,9 @@ class Regle : public QObject
         bool static  intersect(QString a, QString b); // a et b ont au moins un char commun
         QStringList  lemmeSub();
         QStringList  lemmeSup();
+        bool         lsSub(QString l);
         QString      lsSub(int i);
+        bool         lsSup(QString l);
         QString      lsSup(int i);
         QStringList  morphoSub();
         QStringList  morphoSup();
