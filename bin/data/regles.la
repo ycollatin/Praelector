@@ -692,7 +692,7 @@ doc:le sujet d'un verbe conjugué à l'indicatif ou au subjonctif est au nominat
 posSup:v,w
 morphoSup:indicatif,subjonctif
 posSub:p
-lemmeSub:-qui2,-quis,-ego,-tu
+lemmeSub:-qui2,-ego,-tu
 morphoSub:nominatif
 accord:np
 poids:87
