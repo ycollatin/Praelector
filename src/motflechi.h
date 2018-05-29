@@ -38,6 +38,7 @@ class MotFlechi: public QObject
         int             _itr;
         Lemme*          _lemme;
         QString         _morpho;
+        bool            _neg;
         Phrase*         _phrase;
         bool            _rejete;
         QStringList     _traductions;
@@ -75,6 +76,7 @@ class MotFlechi: public QObject
         int             nbReqSupCloses();
         int             nbReqSupValides(Requete* rtest=0);
         int             nbSuper();
+        bool            neg();
         void            nettoie();
         int             rang();
         bool            rejete();
@@ -83,6 +85,7 @@ class MotFlechi: public QObject
         Requete*        reqSup(int i);
         bool            resout(Requete* req);
         void            setDet(bool f=false);
+        void            setNeg(bool n);
         void            setRejete(bool r);
         void            setSujet();
         void            setTr(QString t);

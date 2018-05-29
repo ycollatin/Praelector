@@ -47,6 +47,7 @@ MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
     _traductions.removeDuplicates();
     _rejete = false;
     _valide = false;
+    _neg    = false;
     for (int i=0;i<_traductions.count();++i)
     {
         QString c = _traductions.at(i).simplified();
@@ -377,6 +378,11 @@ int MotFlechi::nbReqSupValides(Requete* rtest)
     return ret;
 }
 
+bool MotFlechi::neg()
+{
+    return _neg;
+}
+
 void MotFlechi::nettoie()
 {
     // nettoyer les subs :
@@ -568,6 +574,11 @@ void MotFlechi::setDet(bool f)
 	}
 }
 
+void MotFlechi::setNeg(bool n)
+{
+    _neg = n;
+}
+
 void MotFlechi::setRejete(bool r)
 {
     _rejete = r;
@@ -653,8 +664,7 @@ QString MotFlechi::trfl()
 QString MotFlechi::trGroupe(Requete* rtest, QString morph)
 {
     QString lp = _lemme->pos();
-    QString ret;
-    QStringList lret;
+    //QString ret;
     QStringList lgr;
     if (lp.contains("a")) lgr
             << "-"
@@ -726,32 +736,34 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
             << "conjcoordAdv";
     else lgr << "-"; 
 
+    QStringList lret;
     for (int i = 0;i<lgr.count();++i)
     {
         QString el = lgr.at(i);
         if (el == "-")
         {
-            if (morph.isEmpty()) lret.append(_tr);
+            QString trf;
+            //if (morph.isEmpty()) lret.append(_tr);
+            if (morph.isEmpty()) trf = _tr;
             else
             {
-                lret.append(conjnat(_trNue, morph));
+                //lret.append(conjnat(_trNue, morph));
+                trf = conjnat(_trNue, morph);
             }
+            if (_neg)
+            {
+                if (trf.contains(" ")) 
+                    trf.insert(trf.indexOf(" "), " ne");
+                else trf.prepend("ne ");
+            }
+            lret.append (trf);
         }
         else
         {
             Requete* r = sub(el, rtest);
             if (r != 0)
             {
-                if (el=="negation")
-                {
-                    QString fv = lret.last();
-                    if (fv.contains(" "))
-                        fv.replace(QRegularExpression("^(\\w+) "), "\\1 ne ");
-                    else fv.prepend("ne ");
-                    lret.replace(lret.count()-1, fv);
-                    lret.append(r->trSub());
-                }
-                else if (el=="antecedent")
+                if (el=="antecedent")
                 {
                     int nbsup = _phrase->nbSuper(r->sub());
                     // si le relatif n'est pas encore sub dans la relative,
