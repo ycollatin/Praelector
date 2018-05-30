@@ -22,7 +22,6 @@
 
 //                          FIXME 
 //
-//        - Quis est amicior quam : le groupe amicior quam ne traduit pas le sub.
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //                           TODO
