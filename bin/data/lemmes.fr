@@ -18471,8 +18471,8 @@ questus:plainte
 qui2:qui, que (cuius = dont) (quoi, lequel, celui qui, celui que)
 quianam:pourquoi ?
 quia:parce que
-quibuscum:= cum quibus
-quicum:= cum quo
+quibuscum:avec lesquels, avec lesquelles (= cum quibus)
+quicum:avec qui (=cum quo)
 quicumque:qui que ce soit, quoi que ce soit
 quidam:un certain, quelqu'un, quelque chose
 quidem:certes ; (ne- : ne ...) même pas
