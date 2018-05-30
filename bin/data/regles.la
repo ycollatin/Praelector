@@ -235,12 +235,23 @@ poids:70
 tr:<sup> que <sub>
 
 id:compQuam
-aff:adv
-doc:le complément du comparatif est souvent introduit par l'adv. quam
+aff:comp1
+doc:le complément du comparatif est souvent introduit par quam
 posSup:a,d,p
 morphoSup:comparatif
 lemmeSub:quam
 !supEstSub:adv
+contig:40
+sens:>
+poids:87
+tr:<sup> <sub>
+
+id:cquam
+add:ccompar
+doc:le complément du comparatif est souvent introduit par quam
+lemmeSup:quam
+supEstSub:compQuam
+posSub:v,w,n,p
 contig:40
 sens:>
 poids:87

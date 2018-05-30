@@ -661,6 +661,12 @@ QString MotFlechi::trfl()
     return ret;
 }
 
+/**
+ * QString MotFlechi::trGroupe(Requete* rtest, QString morph)
+ * Permet de réordonner les groupes en suivant les
+ * règle syntagmatiques du français, pour aboutir à une
+ * traduction la plus correcte possible.
+ */
 QString MotFlechi::trGroupe(Requete* rtest, QString morph)
 {
     QString lp = _lemme->pos();
@@ -670,6 +676,7 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
             << "-"
             << "ablAdj"
             << "adv"
+            << "compQuam"
             << "cadj"
             << "datif";
     else if (lp.contains("c")) lgr
@@ -734,6 +741,7 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
     else if (lp.contains("d")) lgr
             << "-"
             << "negation"
+            << "cquam"
             << "conjcoordAdv";
     else lgr << "-"; 
 
@@ -751,6 +759,9 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
             }
             if (_neg)
             {
+                // introduire le premier élément négatif en 
+                // seconde position, après le pronom sujet 
+                // ou après l'auxiliaire.
                 if (trf.contains(" ")) 
                     trf.insert(trf.indexOf(" "), " ne");
                 else trf.prepend("ne ");
