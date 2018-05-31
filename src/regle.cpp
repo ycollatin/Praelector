@@ -229,7 +229,8 @@ bool Regle::estSub(MotFlechi* mf)
     if (subExclu(cle)) return false;
     if (!_lemmeSub.empty() && !_lemmeSub.contains(cle)) return false;
     // pos
-    if (!_posSub.isEmpty() && !intersect(_posSub, l->pos()))
+    //if (!_posSub.isEmpty() && !intersect(_posSub, l->pos()))
+    if (!_posSub.isEmpty() && !_posSub.contains(mf->pos()))
         return false;
     // morpho
     QString m = mf->morpho();
@@ -251,14 +252,19 @@ bool Regle::estSuper(MotFlechi* mf)
 {
     // lemme
     Lemme* l = mf->lemme();
+    bool debog = _id=="attrSN" && mf->gr()=="est";
+    if (debog) qDebug()<<mf->gr()<<"estSuper"<<_id;
     //QStringList ll = l->gr().split(',');
     QString cle = l->cle();
     if (!_lemmeSup.empty() && !_lemmeSup.contains(cle)) return false;
     // pos
-    if (!_posSup.isEmpty() && !intersect(_posSup, l->pos()))
+    if (debog) qDebug()<<"_posSup"<<_posSup<<"synt attr"<<(mf->lemme()->synt("attr"));
+    if (!_posSup.isEmpty() && (!_posSup.contains(mf->pos())
+        && !(_posSup.contains("w") && mf->lemme()->synt("attr"))))
     {
         return false;
     }
+    if (debog) qDebug()<<"pos ok";
     // morpho
     QString m = mf->morpho();
     bool okm = _morphoSup.empty();
