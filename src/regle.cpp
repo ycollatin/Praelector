@@ -218,7 +218,7 @@ int Regle::contig()
 
 QString Regle::doc()
 {
-    return _doc;
+    return _id + " " + _doc;
 }
 
 bool Regle::estSub(MotFlechi* mf)
