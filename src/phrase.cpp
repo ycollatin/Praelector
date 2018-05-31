@@ -22,10 +22,7 @@
 
 //                          FIXME 
 //
-//        - amicus est is qui est... : la traduction du lien antecedent est sans sub.
-//          CAUSE : le if else de MotFlechi prend d'abord is comme adjectif, et 
-//                  ignore le pronom. Il faudrait donc un fléchi par pos pour les
-//                  multipos !
+//        - Requêtes doublonnées.
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //                           TODO
@@ -898,7 +895,7 @@ void Phrase::lemmatise()
     for (int i=0;i<_mots.count();++i)
     {
         Mot* mc = _mots.at(i);
-        mc->setMorphos(_lemmatiseur->lemmatiseM(mc->gr()));
+        mc->setFlechis(_lemmatiseur->lemmatiseM(mc->gr()));
     }
 }
 
@@ -1284,7 +1281,7 @@ MotFlechi* Phrase::vbRelative(MotFlechi* mf)
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if (req->valide() && req->id() != "antecedent" && req->sub() == mf)
+        if (req->valide() && req->aff() != "antecedent" && req->sub() == mf)
             return req->super();
     }
     return 0;
