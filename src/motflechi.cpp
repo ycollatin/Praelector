@@ -28,20 +28,16 @@
       Classe MotFlechi
  **********************/
 
-MotFlechi::MotFlechi(Lemme* l, QString m, Mot* parent)
+MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
 {
     _mot = parent;
     _lemme = l;
     _morpho = m;
     _phrase = parent->phrase();
-    QString pos = l->pos();
+    _pos = p;
     QString tr;
     // traduction fléchie
-    for (int i=0;i<pos.count();++i)
-    {
-        if (!tr.isEmpty()) tr.append(",");
-        tr.append(l->traduction("fr", pos.at(i)));
-    }
+    tr = l->traduction("fr", _pos);
     tr.remove(QRegExp("[(\\[][^)^\\]]*[)\\]]"));
     _traductions = tr.split(QRegExp("[,;]"));
     _traductions.removeDuplicates();
@@ -332,7 +328,7 @@ Lemme* MotFlechi::lemme()
 
 QString MotFlechi::morpho()
 {
-    return _lemme->gr()+" <small>"+_lemme->pos()+" "+ _morpho+"</small>";
+    return _lemme->gr()+" <small>"+_pos+" "+ _morpho+"</small>";
 }
 
 Mot* MotFlechi::mot()
@@ -669,82 +665,79 @@ QString MotFlechi::trfl()
  */
 QString MotFlechi::trGroupe(Requete* rtest, QString morph)
 {
-    QString lp = _lemme->pos();
-    //QString ret;
     QStringList lgr;
-    if (lp.contains("a")) lgr
-            << "-"
-            << "ablAdj"
-            << "adv"
-            << "compQuam"
-            << "cadj"
-            << "datif";
-    else if (lp.contains("c")) lgr
-            << "-"
-            << "coordAdv"
-            << "coordN"
-            << "coordInit"
-            << "coordV";
-    else if (lp.contains("n") || lp.contains("p")) lgr
-            << "det"
-            << "num"
-            << "-"
-            << "nihil"
-            << "prepn"
-            << "epithete"
-            << "epitheteV"
-            << "genitif"
-            << "gerondGen"
-            << "app"
-            << "antecedent"
-            << "isqui"
-            << "nomQue"
-            << "conjcoordN";
-    else if (lp.contains("m")) lgr << "-";
-    else if (lp.contains("r")) lgr
-            << "-"
-            << "regimeAbl"
-            << "regimeAcc";
-    else if (lp.contains('v') || lp.contains('w')) lgr
-            << "sujet"
-            << "sujetRel"
-            << "sujetInf"
-            << "sujetPropInf"
-            << "sujetPr"
-            << "sujetEgo"
-            << "sujetTu"
-            << "objetPr"
-            << "datifPr"
-            << "-"
-            << "negation"
-            << "adv"
-            << "ablabs"
-            << "objet"
-            << "attrSTu"
-            << "attrSInf"
-            << "attrSA"
-            << "attrSN"
-            << "attrAdjV"
-            << "attrPpp"
-            << "attrVideor"
-            << "attrO"
-            << "abl"
-            << "datif"
-            << "prep"
-            << "propInf"
-            << "infObjet"
-            << "conjSub"
-            << "conjcoordV";
-    else if (lp.contains("s")) lgr
-            << "-"
-            << "vInd"
-            << "vSubj";
-    else if (lp.contains("d")) lgr
-            << "-"
-            << "negation"
-            << "cquam"
-            << "conjcoordAdv";
-    else lgr << "-"; 
+    switch (_pos)
+    {
+        case 'a': lgr << "-"
+                  << "ablAdj"
+                      << "adv"
+                      << "compQuam"
+                      << "cadj"
+                      << "datif";
+                  break;
+        case 'c': lgr << "-"
+                  << "coordAdv"
+                      << "coordN"
+                      << "coordInit"
+                      << "coordV";
+                  break;
+        case 'n':
+        case 'p': lgr
+                  << "det"
+                      << "num"
+                      << "-"
+                      << "nihil"
+                      << "prepn"
+                      << "epithete"
+                      << "epitheteV"
+                      << "genitif"
+                      << "gerondGen"
+                      << "app"
+                      << "antecedent"
+                      << "isqui"
+                      << "nomQue"
+                      << "conjcoordN";
+                  break;
+        case 'm': lgr << "-"; break;
+        case 'r': lgr << "-" << "regimeAbl" << "regimeAcc";
+                  break;
+        case 'v':
+        case 'w': lgr << "sujet"
+                      << "sujetRel"
+                      << "sujetInf"
+                      << "sujetPropInf"
+                      << "sujetPr"
+                      << "sujetEgo"
+                      << "sujetTu"
+                      << "objetPr"
+                      << "datifPr"
+                      << "-"
+                      << "negation"
+                      << "adv"
+                      << "ablabs"
+                      << "objet"
+                      << "attrSTu"
+                      << "attrSInf"
+                      << "attrSA"
+                      << "attrSN"
+                      << "attrAdjV"
+                      << "attrPpp"
+                      << "attrVideor"
+                      << "attrO"
+                      << "abl"
+                      << "datif"
+                      << "prep"
+                      << "propInf"
+                      << "infObjet"
+                      << "conjSub"
+                      << "conjcoordV";
+                  break;
+        case 's': lgr << "-" << "vInd" << "vSubj";
+                  break;
+        case 'd': lgr << "-" << "negation" << "cquam" << "conjcoordAdv";
+                  break;
+        default: lgr << "-"; 
+    }
 
     QStringList lret;
     for (int i = 0;i<lgr.count();++i)
@@ -776,10 +769,7 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
             {
                 if (el=="antecedent" || el=="isqui")
                 {
-                    bool debog = r->id()=="isqui" && r->close();
-                    if (debog) qDebug()<<"trGroupe, el"<<el<<"r"<<r->doc();
                     int nbsup = _phrase->nbSuper(r->sub());
-                    if (debog) qDebug()<<"     nbSuper"<<nbsup;
                     // si le relatif n'est pas encore sub dans la relative,
                     // il sera lié directement à son antécédent.
                     // Mais si le relatif est sub dans la relative, 
@@ -794,11 +784,13 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
                     }
                     else
                     {
-                        if (debog) qDebug()<<"lret"<<lret<<"  ajout de r->trSub"<<r->trSub();
                         lret.append(r->trSub());
                     }
                 }
-                else lret.append(r->trSub());
+                else
+                {
+                    lret.append(r->trSub());
+                }
             }
         }
     }

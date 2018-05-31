@@ -39,6 +39,7 @@ class MotFlechi: public QObject
         Lemme*          _lemme;
         QString         _morpho;
         bool            _neg;
+        char            _pos;
         Phrase*         _phrase;
         bool            _rejete;
         QStringList     _traductions;
@@ -47,7 +48,7 @@ class MotFlechi: public QObject
         QString         _tr;
         bool            _valide;
     public:
-        MotFlechi(Lemme* l, QString m, Mot* parent);
+        MotFlechi(Lemme* l, char p, QString m, Mot* parent);
         ~MotFlechi();
         bool            auxiliaire();
         QList<Requete*> closes();
