@@ -433,6 +433,7 @@ QChar Modele::pos()
         return 'n';
     if (estUn("doctus") || estUn("fortis")) return 'a';
     if (estUn("amo") || estUn("imitor")) return 'v';
-    if (!_desinences.isEmpty()) return 'p';
-    return 'd';
+    if (_desinences.count() > 10) return 'p';
+    if (estUn("inv") || _gr.startsWith("adv")) return 'd';
+    return 'r';
 }
