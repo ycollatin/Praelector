@@ -22,7 +22,7 @@
 
 //                          FIXME 
 //
-//        - Requêtes doublonnées.
+//        - Requêtes non proposées : revoir Regle::estSuper et ::estSub
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //                           TODO
