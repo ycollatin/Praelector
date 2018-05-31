@@ -579,7 +579,6 @@ QString Mot::trGroupe(Requete* rtest)
         if (lmf.count() > 1) lret.append( _gr+" : Erreur, plusieurs fléchis valides");
         for (int i=0;i<lmf.count();++i)
         {
-            qDebug()<<"   trGroupe"<<lmf.at(i)->gr()<<lmf.at(i)->morpho();
             lret.append(lmf.at(i)->trGroupe());
         }
         return lret.join("\n");
