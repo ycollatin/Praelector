@@ -104,7 +104,7 @@ tr:<sup> <sub>
 id:antecedent
 doc:l'antécédent précède le relatif, qui s'accorde avec lui en genre et nombre
 posSup:n,p
-lemmeSup:-qui2,-quis
+lemmeSup:-qui2,-quis,-is
 lemmeSub:qui2
 posSub:p
 accord:gn
