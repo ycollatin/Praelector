@@ -505,6 +505,35 @@ void Mot::rmFlechi(MotFlechi* mf)
     mf->setRejete(true);
 }
 
+void Mot::setFlechis(MapLem m)
+{
+    _morphos = m;
+    // calcul de tous les fléchis de mc
+    for (int il=0;il<m.keys().count();++il)
+    {
+        Lemme *l = m.keys().at(il);
+        for (int im=0;im<m[l].count();++im)
+        {
+            QString morpho = m[l].at(im).morpho;
+            char p = m[l].at(im).pos;
+            MotFlechi* mf = new MotFlechi(l, p, morpho, this);
+            ajFlechi(mf);
+        }
+    }
+    // trier les fléchis
+    qSort(_flechis.begin(), _flechis.end(), sortF);
+}
+
+void Mot::setReqLancees(bool r)
+{
+    _reqLancees = r;
+}
+
+void Mot::setTr(QString t)
+{
+    _tr = t;
+}
+
 bool Mot::sortF(MotFlechi* mfa, MotFlechi* mfb)
 {
     if (mfa->lemme() != mfb->lemme())
@@ -524,34 +553,6 @@ bool Mot::sortF(MotFlechi* mfa, MotFlechi* mfb)
             return false;
     }
     return true;
-}
-
-void Mot::setMorphos(MapLem m)
-{
-    _morphos = m;
-    // calcul de tous les fléchis de mc
-    for (int il=0;il<m.keys().count();++il)
-    {
-        Lemme *l = m.keys().at(il);
-        for (int im=0;im<m[l].count();++im)
-        {
-            QString morpho = m[l].at(im).morpho;
-            MotFlechi* mf = new MotFlechi(l, morpho, this);
-            ajFlechi(mf);
-        }
-    }
-    // trier les fléchis
-    qSort(_flechis.begin(), _flechis.end(), sortF);
-}
-
-void Mot::setReqLancees(bool r)
-{
-    _reqLancees = r;
-}
-
-void Mot::setTr(QString t)
-{
-    _tr = t;
 }
 
 MotFlechi* Mot::super()
@@ -578,6 +579,7 @@ QString Mot::trGroupe(Requete* rtest)
         if (lmf.count() > 1) lret.append( _gr+" : Erreur, plusieurs fléchis valides");
         for (int i=0;i<lmf.count();++i)
         {
+            qDebug()<<"   trGroupe"<<lmf.at(i)->gr()<<lmf.at(i)->morpho();
             lret.append(lmf.at(i)->trGroupe());
         }
         return lret.join("\n");

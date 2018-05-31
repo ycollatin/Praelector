@@ -92,7 +92,7 @@ class Mot : public QObject
         Requete*          reqSub(QString id);
         QList<Requete*>   reqSuper();
         void              rmFlechi(MotFlechi* mf);
-        void              setMorphos(MapLem m);
+        void              setFlechis(MapLem m);
         void              setReqLancees(bool r);
         void              setPSup(int p);
         void              setTr(QString t);
