@@ -11677,7 +11677,7 @@ irruo:se précipiter, se jeter contre
 irruptio:irruption, invasion
 irruptus:non rompu, indissoluble
 Isaac:Isaac
-is:adj. ce, cette pron. celui-ci, celle-ci, cela ; il, elle, le, la, les, leur (au génitif : son, sa, ses)
+is:adj. ce, cette pron. celui-ci, celle-ci, cela; [- ... qui:] celui, celle ; il, elle, le, la, les, leur (au génitif : son, sa, ses)
 Isaeus:Isée [orateur grec, orateur contemporain de Pline]
 Isauricus2:Isaurien [surnom de Servilius Vatia]
 Isaurus:isaurien
