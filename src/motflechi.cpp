@@ -397,6 +397,11 @@ void MotFlechi::nettoie()
     }
 }
 
+char MotFlechi::pos()
+{
+    return _pos;
+}
+
 int MotFlechi::rang()
 {
     return _mot->rang();

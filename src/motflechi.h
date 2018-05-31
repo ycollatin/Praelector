@@ -79,6 +79,7 @@ class MotFlechi: public QObject
         int             nbSuper();
         bool            neg();
         void            nettoie();
+        char            pos();
         int             rang();
         bool            rejete();
         Requete*        reqSub(int i);
