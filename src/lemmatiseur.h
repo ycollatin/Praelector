@@ -41,6 +41,7 @@ typedef struct
     Lemme*  lemme;
     QString morpho;
     QString sufq;
+    char pos;
 } SLem;
 
 typedef QMap<Lemme*, QList<SLem> > MapLem;

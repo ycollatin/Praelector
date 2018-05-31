@@ -183,13 +183,13 @@ void Lemmat::ajRadicaux(Lemme *l)
 void Lemmat::ajPos()
 {
     mapPos.insert("adj.", 'a');
+    mapPos.insert("adv.", 'd');
     mapPos.insert("conj.", 'c');
     mapPos.insert("excl.", 'e');
     mapPos.insert("interj.", 'i');
     mapPos.insert("num.", 'm');
     mapPos.insert("pron.", 'p');
     mapPos.insert("prép.", 'r');
-    mapPos.insert("adv.", 'd');
     mapPos.insert("n.", 'n');
     mapPos.insert("subst.", 'n');
     mapPos.insert(" v.", 'V');
@@ -371,7 +371,7 @@ MapLem Lemmat::lemmatise(QString f)
     {
         foreach (int m, irr->morphos())
         {
-            SLem sl = {irr->grq(), irr->lemme(), morpho(m), ""};
+            SLem sl = {irr->grq(), irr->lemme(), morpho(m), "", irr->lemme()->pos().at(0).toLatin1()};
             result[irr->lemme()].prepend(sl);
         }
     }
@@ -421,7 +421,7 @@ MapLem Lemmat::lemmatise(QString f)
                         else numM = des->morphoNum();
                         QString morphosl = morpho(numM);
                         if (l->pos() == "n") morphosl.append(" "+l->genre());
-                        SLem sl = {fq, l, morphosl, ""};
+                        SLem sl = {fq, l, morphosl, "", l->modele()->pos().toLatin1()};
                         result[l].prepend(sl);
                     }
                 }
@@ -474,7 +474,7 @@ MapLem Lemmat::lemmatiseM(QString f, bool debPhr)
         Lemme *romain = new Lemme(lin, 0, this);
         int nr = aRomano(f);
         romain->ajTrad(QString("%1").arg(nr), "fr");
-        SLem sl = {f, 0, "inv",""};
+        SLem sl = {f, 0, "inv","",'m'};
         QList<SLem> lsl;
         lsl.append(sl);
         mm.insert(romain, lsl);
