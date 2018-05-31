@@ -695,8 +695,9 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
             << "epitheteV"
             << "genitif"
             << "gerondGen"
-            << "antecedent"
             << "app"
+            << "antecedent"
+            << "isqui"
             << "nomQue"
             << "conjcoordN";
     else if (lp.contains("m")) lgr << "-";
@@ -773,9 +774,12 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
             Requete* r = sub(el, rtest);
             if (r != 0)
             {
-                if (el=="antecedent")
+                if (el=="antecedent" || el=="isqui")
                 {
+                    bool debog = r->id()=="isqui" && r->close();
+                    if (debog) qDebug()<<"trGroupe, el"<<el<<"r"<<r->doc();
                     int nbsup = _phrase->nbSuper(r->sub());
+                    if (debog) qDebug()<<"     nbSuper"<<nbsup;
                     // si le relatif n'est pas encore sub dans la relative,
                     // il sera lié directement à son antécédent.
                     // Mais si le relatif est sub dans la relative, 
@@ -788,7 +792,11 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
                             lret.append(mfv->trGroupe());
                         }
                     }
-                    else lret.append(r->trSub());
+                    else
+                    {
+                        if (debog) qDebug()<<"lret"<<lret<<"  ajout de r->trSub"<<r->trSub();
+                        lret.append(r->trSub());
+                    }
                 }
                 else lret.append(r->trSub());
             }

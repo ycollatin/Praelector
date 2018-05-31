@@ -22,6 +22,10 @@
 
 //                          FIXME 
 //
+//        - amicus est is qui est... : la traduction du lien antecedent est sans sub.
+//          CAUSE : le if else de MotFlechi prend d'abord is comme adjectif, et 
+//                  ignore le pronom. Il faudrait donc un fléchi par pos pour les
+//                  multipos !
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //                           TODO
