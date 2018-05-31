@@ -22,10 +22,10 @@
 
 //                          FIXME 
 //
-//        - Requêtes non proposées : revoir Regle::estSuper et ::estSub
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //                           TODO
+//        - procurer un Modele::pos() qui tienne la route.
 //        - Vérifier Requete::doc();
 //        - Réfléchir sur la forme négative :
 //            . elle pourrait être une propriété /neg/ de MotFlechi :
