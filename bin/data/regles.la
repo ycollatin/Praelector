@@ -247,7 +247,7 @@ poids:87
 tr:<sup> <sub>
 
 id:cquam
-add:ccompar
+aff:ccompar
 doc:le complément du comparatif est souvent introduit par quam
 lemmeSup:quam
 supEstSub:compQuam
@@ -496,7 +496,6 @@ posSup:p
 lemmeSup:is,ille
 posSub:p
 lemmeSub:qui2
-!filtre:contigu
 accord:gn
 sens:>
 contig:20
