@@ -37,6 +37,14 @@ morphoSub:datif
 contig:20
 poids:80
 
+id:opus
+aff:attrS
+lemmeSup:sum
+morphoSup:3ème
+lemmeSub:opus2
+contig:20
+poids:80
+
 id:paenitet
 aff:objet
 lemmeSup:paeniteo,misereo,pigeo,taedeo
