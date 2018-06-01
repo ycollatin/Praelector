@@ -129,7 +129,6 @@ Lemme::Lemme(QString linea, int origin, QObject *parent)
         }
     _lemmatiseur->ajRadicaux(this);
 
-
     _indMorph = eclats.at(4);
     _pos.clear();
     if (_indMorph.contains("adj."))
