@@ -512,12 +512,18 @@ void Mot::setFlechis(MapLem m)
     for (int il=0;il<m.keys().count();++il)
     {
         Lemme *l = m.keys().at(il);
+        QString pl = l->pos();
         for (int im=0;im<m[l].count();++im)
         {
-            QString morpho = m[l].at(im).morpho;
-            char p = m[l].at(im).pos;
-            MotFlechi* mf = new MotFlechi(l, p, morpho, this);
-            ajFlechi(mf);
+            // pour les lemmes à plusieurs pos
+            for (int ip=0;ip<pl.count();++ip)
+            {
+                QString morpho = m[l].at(im).morpho;
+                //char p = m[l].at(im).pos;
+                char p = pl.at(ip).toLatin1();
+                MotFlechi* mf = new MotFlechi(l, p, morpho, this);
+                ajFlechi(mf);
+            }
         }
     }
     // trier les fléchis
