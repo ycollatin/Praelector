@@ -902,7 +902,8 @@ void Lemmat::lisLexicoSyntaxe()
                 QString s = lsynt.at(i);
                 if (s.startsWith("pos")) l->setPos(l->pos()+s.right(1));
             }
-            l->setLexSynt(eclats.at(1).split(',',QString::SkipEmptyParts));
+            //l->setLexSynt(eclats.at(1).split(',',QString::SkipEmptyParts));
+            l->setLexSynt(lsynt);
         }
     }
 }
@@ -1213,7 +1214,7 @@ void Lemmat::lireHyphen(QString fichierHyphen)
 #ifdef DEBOG
             if (ecl.count() != 2)
             {
-                qDebug () << "ligne mal formée" << linea;
+                std::cerr() << "ligne mal formée" << linea;
                 continue;
             }
 #endif
@@ -1221,7 +1222,7 @@ void Lemmat::lireHyphen(QString fichierHyphen)
             if (l!=NULL)
                 l->setHyphen(ecl[1]);
 #ifdef DEBOG
-            else qDebug () << linea << "erreur lireHyphen";
+            else std::cerr() << linea << "erreur lireHyphen";
 #endif
         }
     }
