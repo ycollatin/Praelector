@@ -2853,8 +2853,9 @@ Bonna:Bonna (ville de Germanie sur le Rhin auj. Bonn)
 Bonnensis:de Bonna
 Bononia:Bononia (ville de l'Italie, auj. Bologne, ville de Belgique, auj. Boulogne-sur-Mer)
 Bononiensis:Bononien, de Bononie [Bologne]
-bonum:[en gén.] bien
-bonus:bon ; [subst. m. pl.] gens de bien ; [subst. n.] bien, bonne chose
+bonum:[en gén.] bien, bonne chose
+bonus:bon
+bonus2:homme de bien, [pl.] gens de bien
 boo:mugir, retentir, crier
 Bootes:le Bouvier [constellation]
 boreas2:borée, aquilon, vent du Nord, le septentrion
