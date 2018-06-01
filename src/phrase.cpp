@@ -25,6 +25,9 @@
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //                           TODO
+//        - quid ergo ; opus est : règles particulières en include
+//        - opus est + datif : règle à trois pattes.
+//        - phr interrogatives : inversion du sujet et adv interrogatif en première place.
 //        - procurer un Modele::pos() qui tienne la route.
 //        - Vérifier Requete::doc();
 //        - Réfléchir sur la forme négative :
