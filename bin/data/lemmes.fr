@@ -725,7 +725,7 @@ aegrotatio:maladie [du corps]
 aegroto:être malade
 aegrotus:malade, souffrant
 Aegyptius2:Égyptien
-Aegyptius:égyptien ; [subst. m.] Égyptien
+Aegyptius:égyptien ; subst. m. Égyptien
 Aegyptus:Egypte
 Aelia:Aelia
 Aelianus:d'Élius
@@ -1017,7 +1017,7 @@ alea:jeu de dès, jeu de hasard, hasard
 aleatorius:qui concerne le jeu
 aleator:joueur de dés
 aleo:joueur
-ales:adj. : ailé ; [subst. m.] oiseau, présage; (poétique) oiseau
+ales:adj. : ailé ; subst. m. oiseau, présage; (poétique) oiseau
 alesco:pousser, augmenter
 Alesia:Alesia (ville de la Gaule)
 Aletes:Aletes (nom d'un compagnon d'Énée, Thébain, fils d'Égisthe)
@@ -1125,7 +1125,7 @@ alsus:frais (seult. au comparatif : plus frais)
 altare:autel
 alte:en haut, de haut
 alteras:une autre fois
-alter:autre (de deux) [subst. m.] ; [alteri ... alteri] les uns, les autres
+alter:autre (de deux) subst. m. ; [alteri ... alteri] les uns, les autres
 altercatio:altercation, dispute
 altercor:disputer ; échanger des propos (au tribunal) ; lutter avec (+ dat.)
 alternis:alternativement, à tour de rôle [alternis... alternis..., tantôt... tantôt]
@@ -1165,7 +1165,7 @@ amandatio:éloignement, exil
 amando:éloigner
 Amanicae:Amanices (défilé du mont Amanus)
 amans2:amant, amante
-amans:amant ; [subst. m.] amant
+amans:amant ; subst. m. amant
 amanter:en ami, d'une façon affectueuse
 Amantia:Amantia (ville d'Épire)
 Amantini:Amantins (habitants d'Amantia)
@@ -1214,7 +1214,7 @@ Ambiliati:Ambiliati (peuple de la Belgique)
 ambio:aller à l'entour, entourer, solliciter
 Ambiorix:Ambiorix
 ambitiose:avec désir de plaire, par ambition
-ambitiosus:qui enveloppe, [subst. m] ambitieux
+ambitiosus:qui enveloppe, subst. m ambitieux
 ambitio:tournées électorales ; ambition ; pompe, faste
 ambitus:brigue (recherche des magistratures par des moyens irréguliers), mouvement circulaire, tour, pourtour
 Ambivareti:Ambivarètes (peuple de la Gaule)
@@ -1750,7 +1750,7 @@ Arabicus:d'Arabie
 Arabius:d'Arabie
 Arabs:Arabe
 Arabs2:arabe
-Arabus:arabe, arabique; [subst. m.] Arabe
+Arabus:arabe, arabique; subst. m. Arabe
 Arachne2:Arachné [jeune fille changée en araignée par Minerve]
 Arachosii:Arachosiens
 Aracynthus:Aracynthus (mont d'Étolie, de Béotie)
@@ -2084,7 +2084,7 @@ asina:ânesse
 asinalis:d'âne
 Asinaria:Asinaire [le Prix des ânes, pièce de Plaute]
 asinarius2:ânier
-asinarius:d'âne ; [subst. m.] ânier
+asinarius:d'âne ; subst. m. ânier
 asininus:d'âne
 Asinius:Asinius
 asinus:âne
@@ -2628,7 +2628,7 @@ B:B (deuxième lettre de l'alphabet romain)
 beate:heureusement, à souhait
 beatitudo:bonheur, félicité
 beatulus:un peu heureux
-beatus:heureux, [subst. m.] bienheureux
+beatus:heureux, subst. m. bienheureux
 Bebrycius:de Bébrycie; de la colonie bébrycienne établie dans la Narbonnaise
 Bedriacum:Bedriacum (ville près de Vérone, où Othon fut vaincu par Vitellius)
 Bedriacensis:de Bedriacum
@@ -2871,7 +2871,7 @@ Bottiaei:Bottiens (habitants de la Bottiée)
 botularius:marchand de saucisses
 botulus:boudin, saucisson, [en gén.] boyau farci, [fig.] boyaux
 Boudicca:Boudicca (reine des Icènes)
-bovarius:qui concerne les boeufs, [subst. m.] marchand de boeufs
+bovarius:qui concerne les boeufs, subst. m. marchand de boeufs
 Bovianum:Bovianum (ville des Samnites)
 bovile:étable
 bovilis:de boeuf
@@ -2909,7 +2909,7 @@ Briseus:Briseus (surnom de Bacchus)
 Britannia:Bretagne, Grande-Bretagne
 Britanni:Bretons [habitants de la Bretagne (Angleterre)]
 Britannicus2:Britannicus
-Britannicus:de Bretagne, Breton ; [subst. m.] Britannicus
+Britannicus:de Bretagne, Breton ; subst. m. Britannicus
 Britannus:breton
 Britto:Breton
 Brixellum:Brixellum (ville de la Gaule Transpadane, auj. Bersello)
@@ -3257,7 +3257,7 @@ campestre:[espèce de] caleçon
 campestria:lieux plats, plaines
 campestris:de plaine, uni, plat, chemin de plaine
 Campus2:le Champ de Mars
-campus:plaine, champ ; [subst. m.] Champ de Mars
+campus:plaine, champ ; subst. m. Champ de Mars
 Camulodunum:Camulodunum (ville de Bretagne)
 Camulogenus:Camulogène (chef gaulois).
 Canace:Canace (fille d'Éole, aima son frère, et se donna la mort)
@@ -3558,7 +3558,7 @@ castro:châtrer
 Castrum2:Castrum (camp, sert à désigner des localités)
 castrum:fort, place forte
 Castulonensis:Castulonensis (massif montagneux dans la Bétique)
-castus:pur, intègre, vertueux ; chaste ; pieux, religieux, saint ; [subst. m.] Castus
+castus:pur, intègre, vertueux ; chaste ; pieux, religieux, saint ; subst. m. Castus
 casula:cabane, [fig.] tombeau, vêtement de dessus
 casu:par hasard
 casus:hasard, malheur, chute
@@ -3616,7 +3616,7 @@ Catulinus:de Catulle
 Catulla:Catulla (nom de femme)
 Catullus:Catulle
 Catulus2:Lutatius Catulus (auteur de la loi Lutatia)
-catulus:petit d'un chien, ou d'un animal quelconque ; [subst. m.] Catulus
+catulus:petit d'un chien, ou d'un animal quelconque ; subst. m. Catulus
 Caturiges:Caturiges (peuple des Alpes Cottiennes)
 catus2:aigu, avisé, fin, habile
 catus:Catus
@@ -4412,7 +4412,7 @@ cogitatum:pensée, réflexion, [surtout au pl.], projet
 cogito:penser, réfléchir
 cognatio:lien de sang, parenté
 cognatus2:parent (par les liens du sang).
-cognatus:parent [subst. m.]
+cognatus:parent subst. m.
 cognitio:action d'apprendre, étude, connaissance; l'enquête
 cognitor:celui qui connaît qqn, témoin d'identité, garant, répondant, représentant [d'un plaideur]
 cognitus:connu, reconnu
@@ -5522,7 +5522,7 @@ crasse:grossièrement, confusément
 Crassicius:Crassitius (grammairien latin).
 crassitudo:épaisseur, grosseur
 Crassus2:Crassus (surnom de la famille Licinia)
-crassus:épais, grossier ; [subst. m.] Crassus
+crassus:épais, grossier ; subst. m. Crassus
 crastinum:le lendemain
 Crastinus2:Crastinus (surnom).
 crastinus:de demain (crastinum, i, n. : le lendemain)
@@ -5941,7 +5941,7 @@ Damon:Damon (Pythagoricien, célèbre musicien d'Athènes, berger)
 Danae:Danaé [mère de Persée]
 Danaeius:de Danaé
 Danaidae:les Danéens (les Grecs)
-Danai:Danaens, Grecs, [subst. m.] les Danaens
+Danai:Danaens, Grecs, subst. m. les Danaens
 Danaides:les Danaïdes (filles de Danaüs)
 Danaus2:relatif à Danaüs
 Danaus:Danaüs (roi d'Argos)
@@ -8646,7 +8646,7 @@ firmitudo:solidité, fermeté, constance
 Firmius:Firmius
 firmo:consolider
 Firmus2:Firmus (nom d'homme, de femme)
-firmus:ferme, sûr ; [subst. m.] Firmus
+firmus:ferme, sûr ; subst. m. Firmus
 fiscella:petite corbeille, petit panier, muselière [pour les boeufs]
 Fiscellus:Fiscellus (partie de l'Apennin, auj. Monti della Sibilla)
 fiscina:corbeille, petit panier de jonc ou d'osier
@@ -9671,7 +9671,7 @@ Hasdrubal:Hasdrubal
 Hasta2:Hasta (ville de Ligurie)
 hasta:lance, pique, javelot
 hastati:les hastats
-hastatus:armé de javelot ; [subst. m.] hastati
+hastatus:armé de javelot ; subst. m. hastati
 hastile:bois d'un javelot
 Haterius:Haterius
 haudquaquam:pas du tout
@@ -11044,7 +11044,7 @@ inimice:en ennemi
 inimicitia:haine, inimitié
 inimico:rendre ennemi
 inimicus2:ennemi
-inimicus:ennemi [subst. m.]
+inimicus:ennemi subst. m.
 inique:inégalement, à tort, injustement, avec peine, avec impatience
 iniquitas:inégalité ; le désavantage, difficulté, malheur ; l'injustice
 iniquus2:ennemi
@@ -13284,7 +13284,7 @@ maternus:maternel
 matertera:tante maternelle
 mathematice:mathématiques, astrologie
 mathematicus2:mathématicien, astrologue
-mathematicus:mathématique ; [subst. m.] mathématicien
+mathematicus:mathématique ; subst. m. mathématicien
 Matho:Matho (nom d'h.)
 Matinus2:Matinus (montagne d'Apulie)
 Matinus:du Matinus
@@ -13481,7 +13481,7 @@ mendicitas:mendicité, indigence
 mendico:mendier
 mendiculus:de pauvre mendiant
 mendicus2:mendiant, gueux, gredin
-mendicus:misérable, pauvre ; [subst. m.] mendiant
+mendicus:misérable, pauvre ; subst. m. mendiant
 mendose:d'une manière défectueuse
 mendosus:défectueux, fautif
 mendum:faute, erreur [dans un texte], défectuosité physique
@@ -13793,7 +13793,7 @@ moderor:imposer une limite, diriger
 modeste:avec modération, discrètement
 modestia:modération, mesure
 Modestus2:Modestus
-modestus:modéré, mesuré, calme, vertueux ; [subst. m.] Modestus
+modestus:modéré, mesuré, calme, vertueux ; subst. m. Modestus
 modialis:qui peut contenir un modius (env 8,75 l.)
 modice:modérément
 modico:peu, un peu
@@ -15882,7 +15882,7 @@ Paulus:Paulus
 pauperculus:pauvre, nécessiteux
 pauperies:pauvreté
 paupero:appauvrir, frustrer, dépouiller
-pauper:[adj.] pauvre ; [subst. m.] pauvre
+pauper:adj. pauvre ; subst. m. pauvre
 paupertas:pauvreté
 paupertinus:misérable
 pauperus:c. pauper
@@ -17854,7 +17854,7 @@ progenero:engendrer, créer
 progenies:fille, fils, race, famille
 progero:porter en avant, dehors
 progigno:créer, engendrer, produire
-prognatus:descendant de (+ abl.) [subst. m.]
+prognatus:descendant de (+ abl.) subst. m.
 progredior:s'avancer
 progressio:progrès, accroissement, [rhét.] progression, gradation
 progressus2:marche en avant, (archit.) saillie; accroissement, progrès
@@ -18552,7 +18552,7 @@ quisquam:quelque, quelqu'un, quelque chose
 quisque:chacun
 quisquilia:déchet, rebut
 quisquiliae:déchet, rebut
-quis:qui [?], quoi [?] [après si, nisi, ne, num, quis est l'équivalent de aliquis :] quelqu'un, quelque chose
+quis:pron. qui [?], quoi [?]; adj. quel; [après si, nisi, ne, num, quis est l'équivalent de aliquis :] quelqu'un, quelque chose
 quisquis:quiconque, quoi que ce soit
 quivis:n'importe quel, quiconque
 quoad:tant que, aussi longtemps que
@@ -19197,7 +19197,7 @@ ridicularia:plaisanteries, bouffonneries
 ridicule:plaisamment
 ridiculum:mot plaisant, plaisanterie, bouffonnerie
 ridiculus2:bouffon
-ridiculus:ridicule, plaisant, drôle; [subst. m.] bouffon
+ridiculus:ridicule, plaisant, drôle; subst. m. bouffon
 rigens:raide, dur, insensible
 rigeo:être roide, raidi, durci
 rigesco:se raidir, se durcir, se hérisser (cheveux), devenir rigide
@@ -19244,7 +19244,7 @@ Romanicus:romain
 Romaniensis:romain
 Romani:les Romains
 Romanus2:Romanus (nom d'homme; saint Romain; un grammairien)
-Romanus:Romain [subst. m.]
+Romanus:Romain
 Roma:Rome
 Romilius2:Romilius (consul; décemvir; centurion)
 Romularis:de Romulus
@@ -19615,7 +19615,7 @@ sapa:sapa, vin cuit
 saperda:saperda (hareng ou sardine salés)
 sapiens2:sage
 Sapiens3:le Sage (surnom de plusieurs jurisconsultes).
-sapiens:sage; [subst. m.]
+sapiens:sage
 sapienter:sagement
 sapientia:sagesse
 sapio:avoir du goût, de l'intelligence
@@ -20975,7 +20975,7 @@ stlattarius:apporté par bateau, cher, étoffes précieuses
 Stoice:à la façon des Stoïciens
 Stoicida:disciple des Stoïciens
 Stoicus2:Stoïcien
-Stoicus:stoicien [subst. m.] Stoïcien
+Stoicus:stoicien, subst. m. Stoïcien
 stola:robe
 stolatae:noble dames, matrones
 stolide:sottement, stupidement
