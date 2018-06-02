@@ -40,10 +40,13 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
     tr = l->traduction("fr", _pos);
     tr.remove(QRegExp("[(\\[][^)^\\]]*[)\\]]"));
     _traductions = tr.split(QRegExp("[,;]"));
-    _traductions.removeDuplicates();
+    //_traductions.removeDuplicates();
     _rejete = false;
     _valide = false;
     _neg    = false;
+    // _trfl  : liste de traductions fléchies
+    // _trNue : traduction courante sans déterminant ni sujet
+    // _tr    : traduction courante
     for (int i=0;i<_traductions.count();++i)
     {
         QString c = _traductions.at(i).simplified();
