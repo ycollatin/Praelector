@@ -36,20 +36,24 @@ class Phrase: public QObject
     Q_OBJECT
 
     private:
-        QStringList             entreMots;
-	    QString                 _chAdditions;
-        QStringList             _feminins;
-        QString                 _gr;
-        QMap<QString,Handicap*> _handicaps;
-        int                     _imot;
-        Lemmat*                 _lemmatiseur;
-        QList<Mot*>             _mots;
-        int                     _num;
-        int                     _numReq;
-        QList<Regle*>           _regles;
-        QString                 _reponse;
-        QList<Requete*>         _requetes;
+        QStringList                entreMots;
+	    QString                    _chAdditions;
+        QStringList                _feminins;
+        QString                    _gr;
+        QMap<QString,Handicap*>    _handicaps;
+        int                        _imot;
+        Lemmat*                    _lemmatiseur;
+        QMap<QString, QStringList> _mapLgr;
+        QList<Mot*>                _mots;
+        int                        _num;
+        int                        _numReq;
+        QList<Regle*>              _regles;
+        QString                    _reponse;
+        QList<Requete*>            _requetes;
 
+        bool                    estFeminin(QString n);
+        void                    initFeminins ();
+        void                    initLgr();
         void                    majAffichage();
         bool static             sortR(Requete* ra, Requete* rb);
 
@@ -67,7 +71,6 @@ class Phrase: public QObject
         bool              contigus(Mot *a, Mot *b);
         QString           droite(Mot* m);
         void              ecoute (QString m);
-        bool              estFeminin(QString n);
         bool              estVbRelative(MotFlechi* mf);
         bool              filtre(Requete* req);
         QString           gauche(Mot *m);
@@ -77,7 +80,7 @@ class Phrase: public QObject
         QList<Requete*>   homonymes(Requete* req);
         QList<Requete*>   homonymes(QString id);
         QString           htmlLiens();
-        void              initFeminins ();
+        QStringList       lgr(char pos);
         bool              isomorph(QString ma, QString mb);
         void              lemmatise();
         QList<Requete*>   lReqSub(MotFlechi* mf, bool closes=false);
@@ -97,7 +100,6 @@ class Phrase: public QObject
         QList<Mot*>       portee(int a, int b);
         Regle*            regle(int i);
         Regle*            regle(QString id);
-        //void              reinit(Mot* m);
         void              reinit();
         QList<Requete*>   reqCC(Mot* m);
         Requete*          requete(int n);
