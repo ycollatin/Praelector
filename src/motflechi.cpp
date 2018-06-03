@@ -99,6 +99,7 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
                               fl = conjnat(c, _morpho);
                               QString mcond = _morpho;
                               mcond.replace("subjonctif imparfait", "conditionnel présent");
+                              mcond.replace("impératif futur", "impératif présent");
                               if (mcond != _morpho) _trfl.append(conjnat(c, mcond));
                               break;
                           }
