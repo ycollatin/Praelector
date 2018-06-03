@@ -2844,7 +2844,7 @@ Bolanus:habitant de Bola (ancienne ville du Latium)
 boletus:bolet (champignon)
 bolus:coup de dés, coup de filet, amende
 bombus:bourdonnement des abeilles, bruit retentissant
-bombycinus:de soie, [subst. n.] étoffe de soie
+bombycinus:[adj.] de soie, [subst. n.] étoffe de soie
 bombyx:ver à soie, vêtement de soie, duvet de graines
 Bomilcar:Bomilcar (général carthaginois, général d'Annibal, officier de Jugurtha)
 bonatus:de bonne pâte
@@ -23430,7 +23430,7 @@ Verulanus2:Verulanus (nom d'homme)
 verumtamen:séparé de
 verum:vraiment, en vérité, mais
 Verus2:Verus2 (nom d'h.)
-verus:vrai
+verus:[adj.] vrai, [subst. n.] vérité
 verutum:pique (sorte de dard)
 verutus:armé d'un dard [ ou d'une javeline nommée veru]
 vervactum:jachère [jusqu'aux semailles]
@@ -23453,7 +23453,7 @@ vespertinus:du soir, du couchant, occidental
 vesperugo:l'étoile de Vénus
 Vespillo2:Vespillo2 (surnom romain)
 Vestalis2:vestale (prêtresse de Vesta)
-Vestalis:de Vesta [subst.] vestale
+Vestalis:[adj.] de Vesta [subst.] vestale
 Vesta:Vesta
 vester:votre
 vestiarium:coffre à serrer les habits, habits, vêtements, garde-robe, magasin d'habits
