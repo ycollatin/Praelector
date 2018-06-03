@@ -79,6 +79,7 @@ Phrase::Phrase(QString t)
 {
     _lemmatiseur = new Lemmat(this);
     initFeminins();
+    initLgr();
     peupleRegles("regles.la");
     peupleHandicap();
     _numReq = -1;
@@ -741,11 +742,41 @@ void Phrase::initFeminins()
         QTextStream fluxD (&fp);
         while (!fluxD.atEnd ())
         {
-	        _feminins.append (fluxD.readLine ());
+	        _feminins.append (fluxD.readLine());
         }
         fp.close ();
     }
     else std::cerr << "fichier feminin.fr introuvable";
+}
+
+void Phrase::initLgr()
+{
+	QFile fp (qApp->applicationDirPath ()+"/data/synt.fr");
+	if (fp.open (QIODevice::ReadOnly|QIODevice::Text))
+    {
+        QTextStream fluxD (&fp);
+        QStringList lgr;
+        QString pos;
+        while (!fluxD.atEnd ())
+        {
+            QString lin = fluxD.readLine().simplified();
+            if (lin.isEmpty() || lin.startsWith('!')) continue;
+            if (lin.startsWith("pos:"))
+            {
+                if (!lgr.isEmpty())
+                {
+                    _mapLgr.insert(pos, lgr);
+                }
+                pos = lin.section(':',1,1);
+                lgr.clear();
+            }
+            else lgr.append(lin);
+        }
+        // dernière liste :
+        _mapLgr.insert(pos, lgr);
+        fp.close ();
+    }
+    else std::cerr << "fichier synt.fr introuvable";
 }
 
 bool Phrase::isomorph(QString ma, QString mb)
@@ -871,6 +902,17 @@ QString Phrase::htmlLiens()
         ll.append(lr.at(i)->html());
     ll.removeDuplicates();
     return ll.join("<br/>\n");
+}
+
+QStringList Phrase::lgr(char pos)
+{
+    for (int i=0;i<_mapLgr.keys().count();++i)
+    {
+        QString cle = _mapLgr.keys().at(i);
+        if (cle.contains(pos))
+            return _mapLgr.value(cle);
+    }
+    return QStringList() << "-";
 }
 
 QList<Requete*> Phrase::lReqSub(MotFlechi* mf, bool closes)
