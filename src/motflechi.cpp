@@ -731,6 +731,7 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
                       << "attrAdjV"
                       << "attrPpp"
                       << "attrVideor"
+                      << "attrSP"
                       << "attrO"
                       << "abl"
                       << "datif"
