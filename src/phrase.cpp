@@ -22,10 +22,14 @@
 
 //                          FIXME 
 //
+//        - non habere : négation non proposée
+//        - mihi uidetur : datif non proposé
+//        - necesse : adj inv. ne peut s'accorder
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
+//        - conversion impér fut. latin -> impér prés. fr.
 //        - Certains pronoms sont postposés : dans lexsynt ?
 //        - quid ergo ; opus est : règles particulières en include
 //        - opus est + datif : règle à trois pattes.
