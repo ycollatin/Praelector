@@ -67,6 +67,7 @@ datifPr
 -
 negation
 adv
+datifP
 ablabs
 objet
 attrSTu
