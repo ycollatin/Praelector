@@ -673,6 +673,7 @@ QString MotFlechi::trfl()
  */
 QString MotFlechi::trGroupe(Requete* rtest, QString morph)
 {
+    /*
     QStringList lgr;
     switch (_pos)
     {
@@ -748,7 +749,12 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
         default: lgr << "-"; 
     }
 
+*/
+    //
+
     QStringList lret;
+    QStringList lgr = _phrase->lgr(_pos);
+
     for (int i = 0;i<lgr.count();++i)
     {
         QString el = lgr.at(i);
