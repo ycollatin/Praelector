@@ -1,0 +1,98 @@
+!             synt.fr
+!    Syntagmatique française
+!    rang des groupes traduits par Praelector
+!
+!    Format :
+!
+!pos:pos_du_noyau  // caratères séparés par des virgules
+!   id     id de la règle du premier groupe placé avant le noyau
+!   id      "     "       du second    "
+!   .
+!   -      un tiret représente la place du noyau
+!   id     id de la règle du premier groupe après le noyau
+!   id       "               second
+!   id                       troisième, etc.
+!   .
+!
+
+pos:a
+-
+ablAdj
+adv
+compQuam
+cadj
+datif
+
+pos:c
+-
+coordAdv
+coordN
+coordInit
+coordV
+
+pos:n,p
+det
+num
+-
+nihil
+prepn
+epithete
+epitheteV
+genitif
+gerondGen
+app
+antecedent
+isqui
+nomQue
+conjcoordN
+
+pos:m
+-
+
+pos:r
+-
+regimeAbl
+regimeAcc
+
+pos:v,w
+sujet
+sujetRel
+sujetInf
+sujetPropInf
+sujetPr
+sujetEgo
+sujetTu
+objetPr
+datifPr
+-
+negation
+adv
+ablabs
+objet
+attrSTu
+attrSInf
+attrSA
+attrSN
+attrAdjV
+attrPpp
+attrVideor
+attrSP
+attrO
+abl
+datif
+prep
+propInf
+infObjet
+conjSub
+conjcoordV;
+
+pos:s
+-
+vInd
+vSubj
+
+pos:d
+-
+negation
+cquam
+conjcoordAdv
