@@ -22,11 +22,12 @@
 
 //                          FIXME 
 //
-//        - Quo iure : Quo épithète (ou déterminant) non lancé.
+//        - Sed quia id ego... latro uocor : attrS non proposé
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
+//        - Éliminer le long switch de syntagmatique française dans motflechi.cpp
 //        - Certains pronoms sont postposés : dans lexsynt ?
 //        - quid ergo ; opus est : règles particulières en include
 //        - opus est + datif : règle à trois pattes.
