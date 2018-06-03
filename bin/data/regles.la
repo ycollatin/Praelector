@@ -192,6 +192,17 @@ lsSup:attr
 poids:60
 tr:<sup> <sub>
 
+id:attrSP
+aff:attrS
+doc:les verbes qui à l'actif peuvent avoir un attribut de l'objet, peuvent aussi avoir à l'actif un attribut du sujet
+posSup:v
+morphoSup:passif
+lsSup:attro
+posSub:n,a
+morphoSub:nominatif
+poids:60
+tr:<sup> <sub>
+
 id:attrVideor
 aff:attrS
 doc:uideor peut être suivi d'un attribut du sujet
