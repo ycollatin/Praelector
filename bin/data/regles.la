@@ -43,6 +43,7 @@ poids:75
 tr:<sup> par <sub>
 tr:<sup> à cause de <sub>
 tr:<sup> grâce à <sub>
+tr:<sup> avec <sub>
 tr:<sup> de <sub>
 tr:<sup> par <sub>
 
@@ -566,23 +567,13 @@ tr:<sup> <sub>
 
 id:objet
 doc:nom objet d'un verbe transitif
-posSub:n
+posSub:n,p
 morphoSub:accusatif
 lemmeSub:-qui2,-quis
 posSup:v
 morphoSup:actif
 poids:75
 tr:<sup> <sub>
-
-id:objetPr
-doc:pronom objet d'un verbe transitif
-posSub:p
-morphoSub:accusatif
-lemmeSub:-qui2,-quis
-posSup:v
-morphoSup:actif
-poids:75
-tr:<sub> <sup>
 
 id:objetRel
 aff:objet

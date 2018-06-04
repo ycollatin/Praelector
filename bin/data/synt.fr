@@ -62,7 +62,6 @@ sujetPropInf
 sujetPr
 sujetEgo
 sujetTu
-objetPr
 datifPr
 -
 negation

@@ -676,6 +676,7 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
 {
     QStringList lret;
     QStringList lgr = _phrase->lgr(_pos);
+    int inoyau = -1;
 
     for (int i = 0;i<lgr.count();++i)
     {
@@ -698,12 +699,14 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
                 else trf.prepend("ne ");
             }
             lret.append (trf);
+            inoyau = lret.count()-1;
         }
         else
         {
             Requete* r = sub(el, rtest);
             if (r != 0)
             {
+                // relatifs
                 if (el=="antecedent" || el=="isqui")
                 {
                     int nbsup = _phrase->nbSuper(r->sub());
@@ -723,6 +726,13 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
                     {
                         lret.append(r->trSub());
                     }
+                }
+                // placer les pronoms antéposés avant leur verbe
+                if (Ch::anteposes.contains(r->sub()->tr())
+                    && (inoyau > -1)
+                    && (el == "objet" || el == "datif"))
+                {
+                    lret.insert(inoyau, r->trSub());
                 }
                 else
                 {

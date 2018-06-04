@@ -19,6 +19,13 @@ namespace Ch
     QString           accentue(QString l);
     QStringList       ajoute(QString mot, QStringList liste);
     void              allonge(QString *f);
+    QStringList const anteposes = QStringList()
+        << "la"
+        << "le"
+        << "les"
+        << "leur"
+        << "lui"
+        << "se";
     QString           atone(const QString a, bool bdc = false);
     QStringList const cas = QStringList()
         << "nominatif"
