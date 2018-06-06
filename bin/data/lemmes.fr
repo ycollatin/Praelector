@@ -652,7 +652,7 @@ adversarius2:opposé, adverse, contraire
 adversarius:adversaire
 adversor:s'opposer, être contraire, faire opposition
 adversus2:contre, envers
-adversus:contraire (-ae res : adversité)
+adversus:adj. contraire (-ae res : adversité); subst. événement contraire
 adverto:tourner vers, faire attention  [- animum : s'apercevoir]
 advesperascit:le soir vient, il se fait tard
 advesperasco:(impersonnel) le soir vient, il se fait tard
@@ -6276,7 +6276,7 @@ demiror:s'étonner, être surpris
 demisse:humblement, bassement
 demissio:abaissement, affaissement
 demissus:abaissé, modeste, abattu
-demitto:faire tomber, laisser tomber
+demitto:faire tomber, laisser tomber, abattre
 Demochares:Démocharès (orateur athénien)
 Democrates:Démocrate (nom d'homme)
 Democritus:Démocrite
@@ -7246,7 +7246,7 @@ edita:ordres, lieux élevés
 editicius:juge choisi par l'accusateur
 editio:enfantement, production, représentation, publication [de livres], édition, déclaration
 editum:tertre, hauteur
-editus:adjt, élevé, haut, supérieur
+editus:élevé, haut, supérieur
 edo2:mettre à jour, faire connaître, produire (editus, a, um : élevé, haut)
 edoceo:enseigner, former complètement
 edo:manger
@@ -8093,7 +8093,7 @@ explano:étendre, expliquer
 explaudo:chasser [en battant des mains], mal accueillir, huer, siffler, désapprouver, condamner
 explementum:remplissage
 expleo:remplir
-expletus:adjt, accompli, parfait
+expletus:accompli, parfait
 explicabilis:explicable
 explicatio:explication
 explico:déployer, dérouler ; étendre, allonger ; débrouiller, tirer au clair
@@ -11678,7 +11678,7 @@ irruo:se précipiter, se jeter contre
 irruptio:irruption, invasion
 irruptus:non rompu, indissoluble
 Isaac:Isaac
-is:adj. ce, cette pron. celui-ci, celle-ci, cela; [- ... qui:] celui, celle ; il, elle, le, la, les, leur (au génitif : son, sa, ses)
+is:adj. ce, cette, pron. celui-ci, [celle-ci, cela] il, [elle, le, la, les,] leur, (au génitif eius : son, sa, ses ; ... qui: )celui[, celle]
 Isaeus:Isée [orateur grec, orateur contemporain de Pline]
 Isauricus2:Isaurien [surnom de Servilius Vatia]
 Isaurus:isaurien
@@ -13618,7 +13618,7 @@ Mevia:Mevia (nom de femme)
 Mevius:Mevius
 Mezentius:Mézence (allié de Turnus contre Enée)
 mia:une
-micans:adjt, brillant, étincelant
+micans:brillant, étincelant
 mica:parcelle, miette, grain
 micarius:ramasse-miettes
 Micipsa:Micipsa (fils de Masinissa)
@@ -19118,7 +19118,7 @@ retrorsum:en arrière, en sens inverse
 retroversus2:en sens inverse
 retundo:rabattre une pointe, un tranchant, émousser, rabattre, réprimer
 retrudo:pousser en arrière, faire reculer
-retusus:adjt, émoussé, obtus, dépourvu de pénétration
+retusus:émoussé, obtus, dépourvu de pénétration
 Reudigni:Reudigni (peuple de Germanie)
 reus:accusé
 revalesco:reprendre des forces, se relever, se rétablir
@@ -19922,7 +19922,7 @@ secunde:avec bonheur
 secundo:favoriser, rendre heureux
 secundum:après, derrière, selon, suivant, conformément
 Secundus2:Secundus (Julius -, orateur sous Titus)
-secundus:second, favorable
+secundus:adj. second, favorable, subst. événement favorable
 secure:sans se faire de souci, tranquillement, en sécurité
 securiger:qui porte une hache
 securis:hache
@@ -21768,7 +21768,7 @@ tector:badigeonneur, stucateur
 tectorium:revêtement de stuc, enduit, plâtrage, fard
 Tectosages:les Tectosages (peuple de la Narbonnaise)
 tectum:toit, maison
-tectus:adjt, caché, couvert, souterrain
+tectus:caché, couvert, souterrain
 tecum:avec toi
 Tegeaeus:de Tégée, d'Arcadie
 Tegeatae:Tégéates (habitants de Tégée)
