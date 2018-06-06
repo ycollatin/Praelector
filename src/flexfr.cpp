@@ -2650,9 +2650,8 @@ QString Tout::pluriel(bool fem)
 Pronom::Pronom()
 {
     map.insert("ce", "cette,ces,ces");
-    map.insert("celui", "celle,ceux,celles");
     map.insert("celui-ci", "celle-ci,ceux-ci,celles-ci");
-    map.insert("le", "la,les,les");
+    map.insert("celui", "celle,ceux,celles");
     map.insert("le sien","la sienne,les siens,les siennes");
     map.insert("le nôtre","la nôtre,les nôtres,les nôtres");
     map.insert("tout","toute chose,toutes choses,toutes choses");
@@ -2663,12 +2662,38 @@ QString Pronom::accorde(QString p, QString m)
 {
     p = p.simplified();
     QString ret;
-    if (m.contains("fém"))
+    bool acc = m.contains("acc");
+    bool fem = m.contains("fém");
+    bool plur = m.contains("plur");
+    if (p == "il")
     {
-        if (m.contains("plur")) ret = map.value(p).section(',', 2, 2);
+        if (plur)
+        {
+            if (acc)
+            {
+                ret = "les";
+            }
+            else if (fem)
+                ret = "elles";
+            else ret = "ils";
+        }
+        else  // singulier
+        {
+            if (acc)
+            {
+                if (fem) ret = "la";
+                else ret = "le";
+            }
+            else if (fem) ret = "elle";
+            //else ret = p;
+        }
+    }
+    else if (fem)
+    {
+        if (plur) ret = map.value(p).section(',', 2, 2);
         else ret =  map.value(p).section(',', 0, 0);
     }
-    else if (m.contains("plur"))
+    else if (plur)
         ret = map.value(p).section(',', 1, 1);
     if (ret.isEmpty()) ret = p;
     return ret;
