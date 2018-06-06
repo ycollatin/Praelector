@@ -479,7 +479,9 @@ QString Lemme::traduction(QString l, QString pos)
 
 QString Lemme::traduction(QString l, QChar pos)
 {
+    bool debog = _gr=="secundus";
     QString p = _lemmatiseur->posString(pos);
+    if (debog) qDebug()<<"traduction"<<_gr<<"p"<<p;
     return traduction(l, p);
 }
 
