@@ -477,11 +477,16 @@ QString Lemme::traduction(QString l, QString pos)
     return t;
 }
 
+
+/**
+ *  \fn QString Lemme::traduction(QString l, QChar pos)
+ *  \brief appelle traduction(QString l, QString pos)
+ *  après avoir converti le QChar pos en QString
+ *  en utilisant la fonction posString du lemmatiseur.
+ */
 QString Lemme::traduction(QString l, QChar pos)
 {
-    bool debog = _gr=="secundus";
     QString p = _lemmatiseur->posString(pos);
-    if (debog) qDebug()<<"traduction"<<_gr<<"p"<<p;
     return traduction(l, p);
 }
 
