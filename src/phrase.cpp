@@ -21,10 +21,16 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//
-//        - non habere : négation non proposée
-//        - mihi uidetur : datif non proposé
-//        - necesse : adj inv. ne peut s'accorder
+//        - Pour Collatinus : beaucoup de :adjt dans lemmes.fr
+//        - secundus : multipos mal traduit.
+//        - Plangage si on réinitialise sur le premier mot.
+//        - 27 nullus dolor est quam : nombreuses erreurs.
+//          . quem est traduit deux fois ;
+//          . le déterminant fr s'accorde avec le masculin du latin dolor
+//          . la relative ne s'accroche pas à l'antécédent
+//          . minuat ac : la coord1 n'est pas traduite
+//        - attrS de uidetur, et datif mihi non proposés
+//        - necesse : adj inv. ne peut s'accorder. Il faudrait au moins le déclarer nominatif
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
