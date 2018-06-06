@@ -190,7 +190,6 @@ void Lemmat::ajPos()
     mapPos.insert("num.", 'm');
     mapPos.insert("pron.", 'p');
     mapPos.insert("prép.", 'r');
-    mapPos.insert("n.", 'n');
     mapPos.insert("subst.", 'n');
     mapPos.insert(" v.", 'V');
     mapPos.insert("vb.", 'V');
@@ -1127,7 +1126,7 @@ QChar Lemmat::posChar(QString p)
 
 QString Lemmat::posString(QChar p)
 {
-    return mapPos.key(p,"subst.");
+    return mapPos.key(p,"n.");
 }
 
 /**
