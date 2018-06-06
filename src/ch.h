@@ -25,7 +25,11 @@ namespace Ch
         << "les"
         << "leur"
         << "lui"
-        << "se";
+        << "me"
+        << "nous"
+        << "se"
+        << "te"
+        << "vous";
     QString           atone(const QString a, bool bdc = false);
     QStringList const cas = QStringList()
         << "nominatif"
