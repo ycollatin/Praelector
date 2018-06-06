@@ -17,7 +17,7 @@ de celle de nos langues modernes.
 On avance dans la phrase grâce à un hyperlien,
 mais on peut aussi reculer. À chaque mot, Praelector
 propose
-- une liste des lemmatisation du mot, et un choix de traductions ;
+- une liste des lemmatisations du mot, et un choix de traductions ;
 - une liste de liens syntaxiques ordonnés du
 plus au moins probable, et l'utilisateur sélectionne
 le lien qui lui convient le plus. La traduction globale
