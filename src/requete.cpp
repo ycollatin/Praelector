@@ -295,7 +295,7 @@ QString Requete::html()
         << "<a href=\"l.v."<<_num<<"\">valider</a> "
         // lien rejeter
         << "<a href=\"l.r."<<_num<<"\">rejeter</a>";
-    return ret;
+    return MotFlechi::elideFr(ret);
 }
 
 QString Requete::humain(bool num)
