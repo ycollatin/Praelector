@@ -9859,7 +9859,7 @@ Hiberus:de l'Ibérie
 hibiscum:guimauve
 hibrida:hybride
 hic2:ici
-hic:adj. ce, cette pron. celui-ci, [celle-ci] (antécédent = celui, celle, ceux)
+hic:adj. ce, cette pron. celui-ci, [celle-ci,] cela (antécédent = celui, celle, ceux)
 Hicetaonius:Hicetaonius (fils d'Hicétaon)
 hiemalis:d'hiver, de mauvais temps
 hiemo:hiverner
