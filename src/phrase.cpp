@@ -21,9 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - Pour Collatinus : beaucoup de :adjt dans lemmes.fr
-//        - secundus : multipos mal traduit.
-//        - Plangage si on réinitialise sur le premier mot.
+//        - Plantage si on réinitialise sur le premier mot.
 //        - 27 nullus dolor est quam : nombreuses erreurs.
 //          . quem est traduit deux fois ;
 //          . le déterminant fr s'accorde avec le masculin du latin dolor
