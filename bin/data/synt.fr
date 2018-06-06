@@ -62,7 +62,6 @@ sujetPropInf
 sujetPr
 sujetEgo
 sujetTu
-datifPr
 -
 negation
 adv
@@ -79,6 +78,7 @@ attrVideor
 attrSP
 attrO
 abl
+datifPr
 datif
 prep
 propInf
