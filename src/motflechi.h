@@ -53,7 +53,7 @@ class MotFlechi: public QObject
         bool            auxiliaire();
         QList<Requete*> closes();
         bool            contigu(MotFlechi* mf);
-        QString         elideFr(QString s);
+        QString static  elideFr(QString s);
         bool            estSub();
         bool            estSubParAff(QString aff);
         bool            estSubParId(QString id);

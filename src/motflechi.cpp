@@ -50,63 +50,57 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
     for (int i=0;i<_traductions.count();++i)
     {
         QString c = _traductions.at(i).simplified();
-        for (int ip=0;ip<_lemme->pos().length();++ip)
+        QString fl = c;
+        switch(_pos)
         {
-            QString fl = c;
-            switch (_lemme->pos().at(ip).toLatin1())
-            {
-                case 'p':
-                    if (l->gr()=="je")
+            case 'p':
+                if (l->gr()=="je")
+                {
+                    if (m.contains("acc"))
                     {
-                        if (m.contains("acc"))
-                        {
-                            fl = "me";
-                        }
-                        else if (!m.contains("nomin"))
-                            fl = "moi";
+                        fl = "me";
                     }
-                    else if (l->gr()=="tu")
+                    else if (!m.contains("nomin"))
+                        fl = "moi";
+                }
+                else if (l->gr()=="tu")
+                {
+                    if (m.contains("acc"))
                     {
-                        if (m.contains("acc"))
-                        {
-                            fl = "te";
-                        }
-                        else if (!m.contains("nomin"))
-                        {
-                            fl = "toi";
-                        }
+                        fl = "te";
                     }
-                    else if (l->gr()=="il")
+                    else if (!m.contains("nomin"))
                     {
-                        if (m.contains("acc"))
-                        {
-                            fl = "le";
-                        }
-                        else if (!m.contains("nomin"))
-                            fl = "lui";
+                        fl = "toi";
                     }
-                    break;
-                case 'a': fl = accorde(c, _morpho); break;
-                case 'n':
-                          {
-                              if (_morpho.contains("plur")) fl = pluriel(c, _morpho);
-                              else fl = c;
-                              break;
-                          }
-                case 'v':
-                case 'w':
-                          {
-                              fl = conjnat(c, _morpho);
-                              QString mcond = _morpho;
-                              mcond.replace("subjonctif imparfait", "conditionnel présent");
-                              mcond.replace("impératif futur", "impératif présent");
-                              if (mcond != _morpho) _trfl.append(conjnat(c, mcond));
-                              break;
-                          }
-                default: fl = c;
-            }
-            if (!fl.isEmpty()) _trfl.append(fl);
+                }
+                else
+                {
+                    Pronom* pr = new Pronom();
+                    fl = pr->accorde(c, _morpho);
+                    delete pr;
+                }
+                break;
+            case 'a': fl = accorde(c, _morpho); break;
+            case 'n':
+                      {
+                          if (_morpho.contains("plur")) fl = pluriel(c, _morpho);
+                          else fl = c;
+                          break;
+                      }
+            case 'v':
+            case 'w':
+                      {
+                          fl = conjnat(c, _morpho);
+                          QString mcond = _morpho;
+                          mcond.replace("subjonctif imparfait", "conditionnel présent");
+                          mcond.replace("impératif futur", "impératif présent");
+                          if (mcond != _morpho) _trfl.append(conjnat(c, mcond));
+                          break;
+                      }
+            default: fl = c;
         }
+        if (!fl.isEmpty()) _trfl.append(fl);
     }
     _trfl.removeDuplicates();
 
@@ -131,14 +125,14 @@ bool MotFlechi::contigu(MotFlechi* mf)
 QString MotFlechi::elideFr(QString s)
 {
     QString vv = "[aeéioôu]";
-    // ta affaire -> ton affaire
-    s.replace(QRegularExpression("(^|\\s)ta ("+vv+")"), "\\1ton \\2");
-    // je->j'  te->t'  me->m'
-    s.replace(QRegularExpression("(^|\\s)([jtm])e ("+vv+")"), "\\1\\2'\\3");
-    // le->l'  la->l'
+    // ta affaire -> ton affaire, sa->son
+    s.replace(QRegularExpression("(^|\\s)[st]a ("+vv+")"), "\\1ton \\2");
+    // je->j'  te->t'  me->m' ne->n' se->s'
+    s.replace(QRegularExpression("(^|\\s)([jtmns])e ("+vv+")"), "\\1\\2'\\3");
+    // le->l'  la->l' 
     s.replace(QRegularExpression("(^|\\s)(l[ea]) ("+vv+")"), "\\1\\2'\\3");
-    // de les->des
-    s.replace(QRegularExpression("(^|\\s)de les "), "\\1des "); // XXX le regret *de les* quitter
+    // de les->des XXX le regret *de les* quitter
+    s.replace(QRegularExpression("(^|\\s)de les "), "\\1des ");
     // de le->du
     s.replace(QRegularExpression("(^|\\s)de le "), "\\1du ");
     // de un->d'un
@@ -152,6 +146,9 @@ QString MotFlechi::elideFr(QString s)
     // à le à les
     s.replace(QRegularExpression("(^|\\s)à le "), "\\1au ");
     s.replace(QRegularExpression("(^|\\s)à les "), "\\1aux ");
+
+    // je te n'aime pas, je le n'aime pas etc.
+    s.replace(QRegularExpression("(je|tu|il|elle) ([tl])[ea] n'"), "\\1 ne \\2'");
 
     return s;
 }
@@ -553,11 +550,11 @@ bool MotFlechi::resout(Requete* req)
 
 void MotFlechi::setDet(bool f)
 {
+    // TODO : redondance avec ::elidefr ?
     bool zero = _tr == _trNue;
     bool indef = _tr.startsWith ("un ") || _tr.startsWith ("une ") || _tr.startsWith ("des ");
 	bool initVoc = QString ("aehiouâéêAEHIOUÂÉÊ").contains (_trNue.at (0));
     bool plur = _morpho.contains("plur");
-    // TODO : redondance avec ::elidefr ?
 	// déterminant
 	if (_lemme->pos().contains('n'))
 	{
@@ -694,8 +691,12 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
                 // introduire le premier élément négatif en 
                 // seconde position, après le pronom sujet 
                 // ou après l'auxiliaire.
-                if (trf.contains(" ")) 
+                if (trf.contains("'"))
+                    trf.insert(trf.indexOf("'"), "e n");
+                else if (trf.contains(" ")) 
                     trf.insert(trf.indexOf(" "), " ne");
+                    //trf.insert(trf.indexOf(QRegularExpression("('| )")), " ne");
+                // ne j'aime
                 else trf.prepend("ne ");
             }
             lret.append (trf);
@@ -733,6 +734,8 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
                     && (el == "objet" || el == "datif"))
                 {
                     lret.insert(inoyau, r->trSub());
+                    // TODO : si un pronom sujet a été ajouté, insérer
+                    // l'objet après ce pronom.
                 }
                 else
                 {
