@@ -2688,6 +2688,11 @@ QString Pronom::accorde(QString p, QString m)
             //else ret = p;
         }
     }
+    else if (p == "qui")
+    {
+        if (acc) ret = "que";
+        else if (m.contains("gén")) ret = "dont";
+    }
     else if (fem)
     {
         if (plur) ret = map.value(p).section(',', 2, 2);
