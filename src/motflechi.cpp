@@ -711,10 +711,6 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
                 if (el=="antecedent" || el=="isqui")
                 {
                     int nbsup = _phrase->nbSuper(r->sub());
-                    // si le relatif n'est pas encore sub dans la relative,
-                    // il sera lié directement à son antécédent.
-                    // Mais si le relatif est sub dans la relative, 
-                    // lier artificiellement le verbe de la relative à l'antécédent
                     if (nbsup == 2)
                     {
                         MotFlechi* mfv = _phrase->vbRelative(r->sub());
@@ -728,18 +724,21 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
                         lret.append(r->trSub());
                     }
                 }
-                // placer les pronoms antéposés avant leur verbe
-                if (Ch::anteposes.contains(r->sub()->tr())
-                    && (inoyau > -1)
-                    && (el == "objet" || el == "datif"))
-                {
-                    lret.insert(inoyau, r->trSub());
-                    // TODO : si un pronom sujet a été ajouté, insérer
-                    // l'objet après ce pronom.
-                }
                 else
                 {
-                    lret.append(r->trSub());
+                    // placer les pronoms antéposés avant leur verbe
+                    if (Ch::anteposes.contains(r->sub()->tr())
+                        && (inoyau > -1)
+                        && (el == "objet" || el == "datif"))
+                    {
+                        lret.insert(inoyau, r->trSub());
+                        // TODO : si un pronom sujet a été ajouté, insérer
+                        // l'objet après ce pronom.
+                    }
+                    else
+                    {
+                        lret.append(r->trSub());
+                    }
                 }
             }
         }
