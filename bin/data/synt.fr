@@ -55,6 +55,7 @@ regimeAbl
 regimeAcc
 
 pos:v,w
+objetRel
 sujet
 sujetRel
 sujetInf
