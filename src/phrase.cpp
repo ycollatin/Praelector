@@ -33,11 +33,12 @@
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
+//        - Comment lier ?
+//              . un pronom sujet non exprimé peut avoir une apposition : ibam forte uia sacra nescio quid meditans....
+//              . un groupe elliptique dont le noyau est absent : homo homini lupus.
 //        - quid ergo ; opus est : règles particulières en include
 //        - opus est + datif : règle à trois pattes.
 //        - phr interrogatives : inversion du sujet et adv interrogatif en première place.
-//        - procurer un Modele::pos() qui tienne la route.
-//        - Vérifier Requete::doc();
 //        - Réfléchir sur la forme négative :
 //            . elle pourrait être une propriété /neg/ de MotFlechi :
 //            . par défaut, la négation serait ne + vb + pas,
