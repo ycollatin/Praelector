@@ -193,6 +193,15 @@ QString Requete::doc()
     return ret;
 }
 
+bool Requete::egale(Requete* req)
+{
+    if (   (req->regle()     != _regle)
+        || (req->sub()       != _sub)
+        || (req->subRequis() != _subRequis)
+        || (req->super()     != _super)) return false;
+    return true;
+}
+
 bool Requete::enConflit(QString id)
 {
     return _regle->conflit(id);
@@ -564,6 +573,18 @@ QString Requete::tr()
     QString ret = _regle->tr();
     if (_super != 0) ret.replace("<sup>", _super->tr());
     if (_sub != 0) ret.replace("<sub>", _sub->trGroupe());
+    return ret;
+}
+
+QString Requete::trace()
+{
+    if (!_valide) return "-";
+    QString ret;
+    QTextStream fl(&ret);
+    fl  << _super->mot()->rang()
+        << "->"
+        << _sub->mot()->rang()
+        << " ["<<id()<<"]";
     return ret;
 }
 

@@ -65,6 +65,7 @@ class Requete : public QObject
         int         distance();
         int         distance(Mot* m);
         QString     doc();
+        bool        egale(Requete* req);
         bool        enConflit(QString id);
         bool        estEx(MotFlechi* mf);
         MotFlechi*  ex(int i);
@@ -115,6 +116,7 @@ class Requete : public QObject
         MotFlechi*  super();
         bool        superRequis();
         QString     tr();
+        QString     trace();
         QString     trSub(); // traduction 
         MotFlechi*  ultima();
         bool        valide();

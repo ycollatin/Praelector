@@ -50,11 +50,13 @@ class Phrase: public QObject
         QList<Regle*>              _regles;
         QString                    _reponse;
         QList<Requete*>            _requetes;
+        QStringList                _trace;
 
         bool                    estFeminin(QString n);
         void                    initFeminins ();
         void                    initLgr();
         void                    majAffichage();
+        QString                 nfTrace();
         bool static             sortR(Requete* ra, Requete* rb);
 
     public:
@@ -112,6 +114,7 @@ class Phrase: public QObject
     signals:
         void              repondu(const QString);
     public slots:
+        void              traceReq();
         void              trace();
 };
 

@@ -34,6 +34,10 @@
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
+//        - enregistrer dans _trace :
+//          . les déplacements directs vers un mot ;
+//          . les rejets ;
+//          . les éditions de traduction.
 //        - Comment lier ?
 //              . un pronom sujet non exprimé peut avoir une apposition : ibam forte uia sacra nescio quid meditans....
 //              . un groupe elliptique dont le noyau est absent : homo homini lupus.
@@ -183,18 +187,11 @@ void Phrase::additions()
 
 void Phrase::ajRequete(Requete* req, bool force)
 {
-    Mot* super = 0; Mot* sub = 0;
-    if (req->super() != 0) super = req->super()->mot();
-    if (req->sub() != 0) sub = req->sub()->mot();
-    QString id = req->id();
     // vérifier qu'une requête homonyme n'existe pas déjà
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* r = _requetes.at(i);
-        if (!force
-            && (r->super() != 0 && r->super()->mot() == super)
-            && (r->sub() != 0 && r->sub()->mot() == sub)
-            && r->id() == id)
+        if (!force && req->egale(r))
         {
             //std::cerr << qPrintable("\nRequête "+req->doc()+"\négale à la requête\n"+r->numc());
             return;
@@ -258,6 +255,7 @@ void Phrase::choixReq(Requete* req)
 {
     if (req == 0 || !req->close()) return;
     req->setValide(true);
+    _trace.append(req->trace());
     Mot* msub = req->sub()->mot();
     MotFlechi* mfsup = req->super();
     // tri des fléchis
@@ -378,6 +376,7 @@ void Phrase::ecoute (QString m)
         } 
         // passer au mot suivant
         ++_imot;
+        _trace.append(">");
         // résolution des requêtes
         if (_imot > 0 && !motCourant()->reqLancees()) setLiens();
         // lancement de nouvelles requêtes
@@ -387,6 +386,7 @@ void Phrase::ecoute (QString m)
 	else if (m == "-prec" && _imot > 0)
 	{
 		--_imot;
+        _trace.append("<");
 	}
 	/* Nouvelle phrase saisie */
 	else if (m == "-nouvPhr")
@@ -970,6 +970,16 @@ void Phrase::majAffichage()
     }
 }
 
+/* donne un nom au fichier trace. À changer pour prod. */
+QString Phrase::nfTrace()
+{
+    QString ret = _gr.left(14);
+    ret.replace(" ","_");
+    ret.remove(QRegularExpression("[^_^\\w]"));
+    ret.append(".prae");
+    return ret;
+}
+
 Requete* Phrase::montante(Mot* m)
 {
     for (int i=0; i<_requetes.count();++i)
@@ -1210,6 +1220,7 @@ QString Phrase::saisie (QString l, QString s)
 
 void Phrase::setGr(QString t)
 {
+    // initialisations
     _gr = t.simplified();
     // Ajouter une ponctuation finale manquante 
     if (_gr.at(_gr.length()-1).isLetter())
@@ -1261,6 +1272,8 @@ void Phrase::setGr(QString t)
             ne.append(c);
         }
     }
+    _trace.clear();
+    _trace.append(_gr);
 }
 
 void Phrase::setLiens()
@@ -1304,6 +1317,7 @@ QList<Mot*> Phrase::supersDe(Mot* m)
     return ret;
 }
 
+
 QString Phrase::tr()
 {
     QString retour;
@@ -1321,6 +1335,21 @@ QString Phrase::tr()
 }
 
 void Phrase::trace()
+{
+    qDebug()<<"trace"<<_trace;
+    if (!_trace.isEmpty())
+    {
+        QFile f(nfTrace());
+        f.open(QIODevice::WriteOnly);
+        QTextStream fl(&f);
+        for (int i=0;i<_trace.count();++i)
+            fl<<_trace.at(i)<<"\n";
+        f.close();
+        _trace.clear();
+    }
+}
+
+void Phrase::traceReq()
 {
     for (int i=0;i<_requetes.count();++i)
     {
