@@ -14366,7 +14366,7 @@ neglegenter:
 neglegentia:
 neglego:
 negligo:
-nego:propinf
+nego:propinf,attro
 negotiatio:
 negotiator:
 negotior:
@@ -23578,7 +23578,7 @@ uictrix:
 uictus:
 uicus:
 uidelicet:
-uideo:datp,attr
+uideo:datp,attro
 uidibius:
 uidua:
 uiduertas:
