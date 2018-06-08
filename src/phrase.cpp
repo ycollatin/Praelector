@@ -21,6 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
+//        - omni uita : dét non proposé
 //        - Plantage si on réinitialise sur le premier mot.
 //        - 27 nullus dolor est quam : nombreuses erreurs.
 //          . quem est traduit deux fois ;
