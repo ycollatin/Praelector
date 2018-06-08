@@ -15174,7 +15174,7 @@ omnino:complètement, tout à fait
 omniparens:qui produit toutes choses
 Omnipotens2:Omnipotens (Jupiter, le Tout-Puissant)
 omnipotens:tout puissant
-omnis:tout, [subst. n.] toute chose
+omnis:adj. tout, subst. toute chose
 omnituens:qui voit tout
 omnivolus:qui veut tout
 Omphale:Omphale (reine de Lydie)
