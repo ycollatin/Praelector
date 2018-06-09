@@ -34,10 +34,6 @@
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
-//        - enregistrer dans _trace :
-//          . les déplacements directs vers un mot ;
-//          . les rejets ;
-//          . les éditions de traduction.
 //        - Comment lier ?
 //              . un pronom sujet non exprimé peut avoir une apposition : ibam forte uia sacra nescio quid meditans....
 //              . un groupe elliptique dont le noyau est absent : homo homini lupus.
@@ -255,7 +251,6 @@ void Phrase::choixReq(Requete* req)
 {
     if (req == 0 || !req->close()) return;
     req->setValide(true);
-    _trace.append(req->trace());
     Mot* msub = req->sub()->mot();
     MotFlechi* mfsup = req->super();
     // tri des fléchis
@@ -416,301 +411,328 @@ void Phrase::ecoute (QString m)
 		QChar ml = eclats.at(0).at(0);
 		switch (ml.unicode())
 		{
-			case 'i': _imot = eclats.at(1).toInt(); break;  // retour rapide vers le mot de rang m[1]
-			/* PREMIÈRE SECTION : MORPHOS DU NOUVEAU MOT*/
+			case 'i':  // retour rapide vers le mot de rang m[1]
+                {
+                    _imot = eclats.at(1).toInt();
+                    _trace.append("imot="+eclats.at(1));
+                    break;
+                }
+			    /* PREMIÈRE SECTION : MORPHOS DU NOUVEAU MOT*/
 			case 'm':  // m[0] : opération sur les morphos.
-			          {
-				          /* Calculer le numéro de la morpho sur laquelle agir */
-				          int num = eclats.at (2).toInt ();
-                          MotFlechi* mf = cour->flechi(num);
-					      switch (eclats.at (1).at(0).unicode())
-					      {
-						      case 'a':  // ajout d'une entrée dans les additions
-							      {
-                                      // TODO à implémenter
-								      QString nm = saisie(Chaines::ajTrEntree, "");
-								      if (nm.isEmpty()) break;
-								      QStringList eclats = nm.split (':');
-								      QString la = eclats.at (0);
-								      QString tr = eclats.at (1);
-								      QStringList eclLa = la.split (';');
-								      // TODO contrôle de saisie
-								      // dans le cas d'un modèle alphanumérique, chercher le modèle numérique
-								      QString modele = eclLa.at (1);
-								      la = eclLa.join ('|');
-								      QFile fla (_chAdditions+"/lemmata.la");
-								      fla.open (QIODevice::WriteOnly|QIODevice::Append);
-								      QTextStream (&fla) << la << "\n";
-								      fla.close ();
-								      QFile ffr (_chAdditions+"/lemmata.fr");
-								      ffr.open (QIODevice::WriteOnly|QIODevice::Append);
-								      QString lemme = Ch::ote_diacritiques (la.section('|',0,0));
-								      QString lat = lemme.section ('=',0,0);
-								      QTextStream (&ffr) <<lat << "|" << tr <<"\n";
-								      ffr.close ();
-								      additions ();
-								      QString grmot = motCourant()->gr();
-								      // rafraîchir le mot
-								      Mot *motA = new Mot(grmot, 0, 0, _imot, this);
-								      delete _mots.at(_imot);
-                                      _mots.removeAt(_imot);
-                                      _mots.insert(_imot, motA);
-								      break;
-							      }
-						      case 'c': // éliminer tous les autres fléchis
-                                  choixFlechi(mf);
-							      break;
-						      case 'd': // rotation du déterminant
-							      {
-								      mf->setDet(estFeminin(mf->trNue()));
-								      break;
-							      }
-						      case 'e':  // éditer de la traduction
-							      {
-								      QString lt;
-								      QTextStream fl (&lt);
-								      fl<<"Meilleure traduction pour " << cour->gr();
-                                      QString t = Phrase::saisie(lt, mf->tr());
-								      if (!t.isEmpty()) mf->setTr(t);
-								      break;
-							      }
-                              case 'i': // rotation de la traduction du fléchi
-                                  cour->flechi(num)->incItr();
-                                  break;
-						      case 'r': // rejeter m.r.m = le lemme ; m.r.f la forme
-                                  if (eclats.count() > 3)
-                                  {
-                                      int n = eclats.at(3).toInt();
-                                      switch (eclats.at(2).at(0).unicode())
-                                      {
-                                          case 'm':
-                                              {
-                                                  Lemme* l = cour->flechi(n)->lemme();
-                                                  annuleLemme(cour, l);
-                                                  break;
-                                              }
-                                          case 'f':
-                                              cour->annuleFlechi(n);
-                                              break;
-                                          default:
-                                              break;
-                                      }
-                                  }
-							      break;
-						      case 's': // rotation du sujet
-							      {
-								      MotFlechi *mf = cour->flechi(num);
-								      mf->setSujet();
-								      break;
-							      }
-						      case 'v':
-							      if (eclats.count() > 3)
-							      {
-								      // l'une des traductions proposée a été cliquée
-								      //cour->setTradLemPostag (num, eclats.at (3));
-							      }
-							      //else cour->valideTr (num);
-							      break;
-						      default: std::cerr << qPrintable (m)
-								       << " erreur d'url morpho"<<"\n"; break;
-					      }
-					      break;
-				      }
-				      /* SECONDE SECTION : LIENS SYNTAXIQUES */
- 				      /*     0. == 'l' : opération sur un lien
-				       *     1. s : lien dont le mot courant est père
-				       *        d : lien dont le mot courant est fils
-				       *        i : demande de doc sur le lien
-				       *        p : permutation fils-père dans l'ordre de la traduction : homme grand / grand homme
-                       *        t : traduction suivante du lien
- 	     		       *     2. d = déplacer le fils de ce lien vers la g ou la d
- 	     		       *        e = éditer la traduction de ce lien
- 	     		       *        r = rejeter ce lien
-				       *        x,y,z = éditer les ajouts français avant, entre, après F et P, ou P et F.
-				       *
- 	     		       */
+			    {
+				    /* Calculer le numéro de la morpho sur laquelle agir */
+				    int num = eclats.at(2).toInt ();
+                    MotFlechi* mf = cour->flechi(num);
+					switch (eclats.at (1).at(0).unicode())
+					{
+						case 'a':  // ajout d'une entrée dans les additions
+							{
+                                // TODO à implémenter
+								QString nm = saisie(Chaines::ajTrEntree, "");
+								if (nm.isEmpty()) break;
+								QStringList eclats = nm.split (':');
+								QString la = eclats.at (0);
+								QString tr = eclats.at (1);
+								QStringList eclLa = la.split (';');
+								// TODO contrôle de saisie
+								// dans le cas d'un modèle alphanumérique, chercher le modèle numérique
+								QString modele = eclLa.at (1);
+								la = eclLa.join ('|');
+								QFile fla (_chAdditions+"/lemmata.la");
+								fla.open (QIODevice::WriteOnly|QIODevice::Append);
+								QTextStream (&fla) << la << "\n";
+								fla.close ();
+								QFile ffr (_chAdditions+"/lemmata.fr");
+								ffr.open (QIODevice::WriteOnly|QIODevice::Append);
+								QString lemme = Ch::ote_diacritiques (la.section('|',0,0));
+								QString lat = lemme.section ('=',0,0);
+								QTextStream (&ffr) <<lat << "|" << tr <<"\n";
+								ffr.close ();
+								additions ();
+								QString grmot = motCourant()->gr();
+								// rafraîchir le mot
+								Mot *motA = new Mot(grmot, 0, 0, _imot, this);
+								delete _mots.at(_imot);
+                                _mots.removeAt(_imot);
+                                _mots.insert(_imot, motA);
+								break;
+							}
+						case 'c': // éliminer tous les autres fléchis
+                            {
+                                choixFlechi(mf);
+                                _trace.append("choixFlechi:"+eclats.at(2));
+							    break;
+                            }
+						case 'd': // rotation du déterminant
+							{
+								mf->setDet(estFeminin(mf->trNue()));
+                                _trace.append("det:"+eclats.at(2));
+								break;
+							}
+						case 'e':  // éditer de la traduction
+							{
+								QString lt;
+								QTextStream fl (&lt);
+								fl<<"Meilleure traduction pour " << cour->gr();
+                                QString t = Phrase::saisie(lt, mf->tr());
+								if (!t.isEmpty())
+                                {
+                                    mf->setTr(t);
+                                    _trace.append("tr:"+eclats.at(2)+":"+t);
+                                }
+								break;
+							}
+                        case 'i': // rotation de la traduction du fléchi
+                            {
+                                cour->flechi(num)->incItr();
+                                _trace.append("rotTr:"+eclats.at(2));
+                                break;
+                            }
+						case 'r': // rejeter m.r.m = le lemme ; m.r.f la forme
+                            if (eclats.count() > 3)
+                            {
+                                int n = eclats.at(3).toInt();
+                                switch (eclats.at(2).at(0).unicode())
+                                {
+                                    case 'm':
+                                        {
+                                            Lemme* l = cour->flechi(n)->lemme();
+                                            annuleLemme(cour, l);
+                                            _trace.append("annuleLemme:"+eclats.at(3));
+                                            break;
+                                        }
+                                    case 'f':
+                                        {
+                                            cour->annuleFlechi(n);
+                                            _trace.append("annuleFlechi:"+eclats.at(3));
+                                            break;
+                                        }
+                                    default:
+                                        break;
+                                }
+                            }
+							break;
+						case 's': // rotation du sujet
+							{
+								MotFlechi *mf = cour->flechi(num);
+								mf->setSujet();
+                                _trace.append("rotSujet:"+eclats.at(2));
+								break;
+							}
+						case 'v':
+							if (eclats.count() > 3)
+							{
+								// l'une des traductions proposée a été cliquée
+								//cour->setTradLemPostag (num, eclats.at (3));
+							}
+							//else cour->valideTr (num);
+							break;
+						default: std::cerr << qPrintable (m)
+								 << " erreur d'url morpho"<<"\n"; break;
+					}
+					break;
+				}
+				/* SECONDE SECTION : LIENS SYNTAXIQUES */
+ 				/*     0. == 'l' : opération sur un lien
+				 *     1. s : lien dont le mot courant est père
+				 *        d : lien dont le mot courant est fils
+				 *        i : demande de doc sur le lien
+				 *        p : permutation fils-père dans l'ordre de la traduction : homme grand / grand homme
+                 *        t : traduction suivante du lien
+ 	     		 *     2. d = déplacer le fils de ce lien vers la g ou la d
+ 	     		 *        e = éditer la traduction de ce lien
+ 	     		 *        r = rejeter ce lien
+				 *        x,y,z = éditer les ajouts français avant, entre, après F et P, ou P et F.
+				 *
+ 	     		 */
 			case 'l':      // l == lien
-				      {
-					      QStringList lv;
-					      if (eclats.count() > 3)
-						      lv = eclats.at (3).split (',');
-                          // liste des morphos affectées passées par m[3]
-                          QList<Requete*> lreq;
-					      char gd = eclats.at(1).at(0).unicode();   // m[2] : opération à réaliser
-                          int rang = eclats.at(2).toInt();
-                          Requete* req = requete(rang);
-					      switch (gd)      // pos 1, idgp info et déplacement
-					      {
-						      case 'd':    // déplacement d'un groupe à droite
-						      case 'g':    // et à gauche
-						      case 'i':    // info sur le lien
-						      case 'p':    // changement de position dans la traduction
-							      {
-                                      /*
-								      char d = eclats.at (2).at(0).unicode();
-								      //bool droite = gd == 'd';
-								      // définition de sub en utilisant pos 2.
-								      switch (d)
-								      {
-									      case 's': // le lien est un sub
-										      {
-									              for (int i=0;i<cour->subordonnes().count();++i)
-										              if (lv.contains (QString::number (i)))
-											              lreq.append (cour->subordonnes().at (i));
-											      break;
-										      }
-									      case 'd': // le lien est un dep
-										      {
-											      for (int i=0;i<cour->dependDe().count();++i)
-												      if (lv.contains (QString::number (i)))
-													      lreq.append (cour->dependDe().at (i));
-											      break;
-										      }
-									      default:break;
-								      }
-								      if (lreq.empty())
-								            break;
-                                      */
-								      switch (gd)
-								      {
-									      case 'i':  // demande de doc sur le lien
-										      {
-                                                  Requete* req = _requetes.at(eclats.at(2).toInt());
-											      QMessageBox mb;
-											      mb.setText(req->regle()->doc());
-											      mb.exec();
-											      break;
-										      }
-									      case 'p':  // permutation P F
-										      {
-                                                  /*
-											      foreach (LienSub *s, lreq)
-												      s->swapG ();
-                                                  */
-											      break;
-										      }
-									      default:  // déplacement du groupe à g ou à d
-											      // foreach (LienSub *s, lreq) s->super()->deplaceFilsFr(s, droite);
-											      break;
-								      }
-								      break;
-							      }
-                              case 't': // rotation de la traduction du lien
-                                  {
-                                      req->incItr();
-                                      break;
-                                  }
-						      case 'v':   // pos 1, valider
-							      {
-                                      if (req == 0) 
-                                      {
-                                          std::cerr << qPrintable("requête nulle");
-                                      }
-                                      else choixReq(req);
-								      break;
-							      }
-							      // x y et z servent à éditer le gabarit du lien : 
-                                  // avant, entre et après les 2 nœuds père et fils.
-						      case 'x':
-						            {
-                                      /*
-								      LLienSub subs;
-							            switch (eclats.at (2).at(0).unicode ())
-							            {
-								            case 's':
-									            {
-										            break;
-									            }
-								            case 'd':
-									            {
-										            break;
-									            }
-									      default: std::cerr << qPrintable (m)
-									      	       << "à placer en tête de lien, erreur d'url\n"; break;
-							            }
-								      QString trav = saisie ("changer le lien syntaxique ...",  subs.at(0)->trAv());
-								      // recouvrir le gabarit s'il définit une tête de traduction
-								      if (trav.isEmpty()) trav = "_";
-								      foreach (LienSub *sub, subs)
-								            sub->setTrAv (trav);
-                                      */
-							            break;
-							      }
-						      case 'y':
-							      {
-                                      /*
-								      LLienSub subs;
-								      switch (eclats.at (2).at(0).unicode ())
-								      {
-									      case 's':
-										      {
-											      break;
-										      }
-									      case 'd':
-										      {
-											      break;
-										      }
-									      case 'a':
-										      {
-											      break;
-										      }
-									      default: std::cerr << qPrintable (m)
-											       <<", édition de lien syntaxique, erreur d'Url\n"; break;
-								      }
-								      if (!subs.empty())
-								      {
-									      QString trin = saisie ("insérer dans la traduction", subs.at(0)->trInter());
-								            foreach (LienSub *sub, subs)
-									            sub->setTrInter (trin);
-								      }
-                                      */
-								      break;
-							      }
-						      case 'z':
-						            {
-                                      /*
-							            LLienSub subs;
-							            switch (eclats.at (2).at(0).unicode ())
-							            {
-								            case 's':
-									            {
-										            break;
-									            }
-								            case 'd':
-									            {
-											      break;
-										      }
-									      default: std::cerr << qPrintable (m) <<", édition de lien syntaxique, erreur d'Url\n"; 
-									      	       break;
-								      }
-								      if  (!subs.empty())
-								      {
+				{
+					QStringList lv;
+					if (eclats.count() > 3)
+						lv = eclats.at (3).split (',');
+                    // liste des morphos affectées passées par m[3]
+                    QList<Requete*> lreq;
+					char gd = eclats.at(1).at(0).unicode();   // m[2] : opération à réaliser
+                    int rang = eclats.at(2).toInt();
+                    Requete* req = requete(rang);
+					switch (gd)      // pos 1, idgp info et déplacement
+					{
+						case 'd':    // déplacement d'un groupe à droite
+						case 'g':    // et à gauche
+						case 'i':    // info sur le lien
+						case 'p':    // changement de position dans la traduction
+							{
+                                /*
+								   char d = eclats.at (2).at(0).unicode();
+								//bool droite = gd == 'd';
+								// définition de sub en utilisant pos 2.
+								switch (d)
+								{
+								case 's': // le lien est un sub
+								{
+								for (int i=0;i<cour->subordonnes().count();++i)
+								if (lv.contains (QString::number (i)))
+								lreq.append (cour->subordonnes().at (i));
+								break;
+								}
+								case 'd': // le lien est un dep
+								{
+								for (int i=0;i<cour->dependDe().count();++i)
+								if (lv.contains (QString::number (i)))
+								lreq.append (cour->dependDe().at (i));
+								break;
+								}
+								default:break;
+								}
+								if (lreq.empty())
+								break;
+                                 */
+								switch (gd)
+								{
+									case 'i':  // demande de doc sur le lien
+										{
+                                            Requete* req = _requetes.at(eclats.at(2).toInt());
+											QMessageBox mb;
+											mb.setText(req->regle()->doc());
+											mb.exec();
+											break;
+										}
+									case 'p':  // permutation P F
+										{
+                                            /*
+											   foreach (LienSub *s, lreq)
+											   s->swapG ();
+                                             */
+											break;
+										}
+									default:  // déplacement du groupe à g ou à d
+										// foreach (LienSub *s, lreq) s->super()->deplaceFilsFr(s, droite);
+										break;
+								}
+								break;
+							}
+                        case 't': // rotation de la traduction du lien
+                            {
+                                req->incItr();
+                                _trace.append("incItr");
+                                break;
+                            }
+						case 'v':   // pos 1, valider
+							{
+                                if (req == 0) 
+                                {
+                                    std::cerr << qPrintable("requête nulle");
+                                }
+                                else 
+                                {
+                                    choixReq(req);
+                                    _trace.append(req->trace());
+                                }
+								break;
+							}
+							// x y et z servent à éditer le gabarit du lien : 
+                            // avant, entre et après les 2 nœuds père et fils.
+						case 'x':
+						    {
+                                /*
+								   LLienSub subs;
+							       switch (eclats.at (2).at(0).unicode ())
+							       {
+								   case 's':
+								   {
+								   break;
+								   }
+								   case 'd':
+								   {
+								   break;
+								   }
+								   default: std::cerr << qPrintable (m)
+								   << "à placer en tête de lien, erreur d'url\n"; break;
+							       }
+								   QString trav = saisie ("changer le lien syntaxique ...",  subs.at(0)->trAv());
+								// recouvrir le gabarit s'il définit une tête de traduction
+								if (trav.isEmpty()) trav = "_";
+								foreach (LienSub *sub, subs)
+								sub->setTrAv (trav);
+                                 */
+							    break;
+							}
+						case 'y':
+							{
+                                /*
+								   LLienSub subs;
+								   switch (eclats.at (2).at(0).unicode ())
+								   {
+								   case 's':
+								   {
+								   break;
+								   }
+								   case 'd':
+								   {
+								   break;
+								   }
+								   case 'a':
+								   {
+								   break;
+								   }
+								   default: std::cerr << qPrintable (m)
+								   <<", édition de lien syntaxique, erreur d'Url\n"; break;
+								   }
+								   if (!subs.empty())
+								   {
+								   QString trin = saisie ("insérer dans la traduction", subs.at(0)->trInter());
+								   foreach (LienSub *sub, subs)
+								   sub->setTrInter (trin);
+								   }
+                                 */
+								break;
+							}
+						case 'z':
+						    {
+                                /*
+							       LLienSub subs;
+							       switch (eclats.at (2).at(0).unicode ())
+							       {
+								   case 's':
+								   {
+								   break;
+								   }
+								   case 'd':
+								   {
+								   break;
+								   }
+								   default: std::cerr << qPrintable (m) <<", édition de lien syntaxique, erreur d'Url\n"; 
+								   break;
+								   }
+								   if  (!subs.empty())
+								   {
 
-									      QString trseq = saisie ("ajouter à la traduction", subs.at(0)->trSeq ());
-								            foreach (LienSub *sub, subs)
-									            sub->setTrSeq (trseq);
-								      }
-                                      */
-							            break;
-							      }
-						      case 'r':   // rejet d'un lien
-					      	      {
-                                      if (req == 0)
-                                      {
-                                          std::cerr << qPrintable("Requête introuvable, rang ")<<rang;
-                                          return;
-                                      }
-                                      req->annuleRequis("rejet demandé");
-                                      if (req->requerant() == cour)
-                                      {
-                                          req->setRejetee(true, "rejet explicite");
-                                      }
-								      break;
-					      	      }
-						      default: std::cerr << qPrintable(m)<<", erreur d'url lien"<<"\n"; break;
-					      }
-					      break;
-				      }
+								   QString trseq = saisie ("ajouter à la traduction", subs.at(0)->trSeq ());
+								   foreach (LienSub *sub, subs)
+								   sub->setTrSeq (trseq);
+								   }
+                                 */
+							    break;
+							}
+						case 'r':   // rejet d'un lien
+					      	{
+                                if (req == 0)
+                                {
+                                    std::cerr << qPrintable("Requête introuvable, rang ")<<rang;
+                                    return;
+                                }
+                                req->annuleRequis("rejet demandé");
+                                if (req->requerant() == cour)
+                                {
+                                    req->setRejetee(true, "rejet explicite");
+                                    _trace.append("reqRej:"+req->trace());
+                                }
+								break;
+					      	}
+						default: std::cerr << qPrintable(m)<<", erreur d'url lien"<<"\n"; break;
+					}
+					break;
+				}
 			default: std::cerr << qPrintable (m) << ", commande mal formée\n"; break;
 		}
         majAffichage();
@@ -1320,18 +1342,18 @@ QList<Mot*> Phrase::supersDe(Mot* m)
 
 QString Phrase::tr()
 {
-    QString retour;
-    QTextStream fl(&retour);
+    _tr.clear();
+    QTextStream fl(&_tr);
     for(int i=0;i<=_imot;++i)
 	{
         Mot* m = _mots.at(i);
 		if (m->estSommet()) 
         {
+            // le nouveau mot est sommet tant qu'un lien n'a pas été validé
             fl << m->trGroupe() << "<br/>";
         }
 	}
-    // le nouveau mot est sommet tant qu'un lien n'a pas été validé
-	return retour;
+    return _tr;
 }
 
 void Phrase::trace()
@@ -1343,7 +1365,8 @@ void Phrase::trace()
         f.open(QIODevice::WriteOnly);
         QTextStream fl(&f);
         for (int i=0;i<_trace.count();++i)
-            fl<<_trace.at(i)<<"\n";
+            fl << _trace.at(i)<<"\n";
+        fl << _tr;
         f.close();
         _trace.clear();
     }

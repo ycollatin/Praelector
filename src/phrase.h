@@ -50,6 +50,7 @@ class Phrase: public QObject
         QList<Regle*>              _regles;
         QString                    _reponse;
         QList<Requete*>            _requetes;
+        QString                    _tr;
         QStringList                _trace;
 
         bool                    estFeminin(QString n);
@@ -188,9 +189,11 @@ namespace Chaines {
 	const QString titrePraelector =
 		"<h2 style=\"font-family:serif;letter-spacing:2em\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
 
+    /*
 	const QString affSubGris = QString::fromUtf8
 		("%1 <span style=\"color:grey;font-style:italic\">%2</span> "
 		 "<a href=\"l.v.%3\">valider</a>");
+    */
 
 	const QString affInit = QString::fromUtf8
 		("Saisis ci-dessous la phrase à lire");
