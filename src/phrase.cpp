@@ -34,8 +34,15 @@
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
+//        - Trace :
+//          * Mentionner l'auteur de la trace ;
+//          * La trace d'une phrase doit commencer par son numéro dans le fichier phrase homonyme
+//          * Ajouter des hyperliens :
+//            . sur le dernier mot, pour envoyer l'enregistrement de la trace dans fTrace.
+//            . Partout, pour demander l'apparition du choix de l'auteur de la trace
 //        - Comment lier ?
-//              . un pronom sujet non exprimé peut avoir une apposition : ibam forte uia sacra nescio quid meditans....
+//              . un pronom sujet non exprimé peut avoir une apposition :
+//                ibam forte uia sacra nescio quid meditans....
 //              . un groupe elliptique dont le noyau est absent : homo homini lupus.
 //        - quid ergo ; opus est : règles particulières en include
 //        - opus est + datif : règle à trois pattes.
@@ -50,8 +57,6 @@
 //            . place entre aux et pp : n'est jamais vaincu
 //        - dans les cas des lemmes multipos : si une requête permet de savoir quel pos
 //          est utilisé, rejeter ou interdire les requêtes utilisant un autre pos.
-//        - enregistrement des sessions : phrase, et liste des requêtes validées.
-//          Mais on peut aussi enregistre le parcours (avancer, reculer, aller à un mot).
 //        - sic coord ? traiter sic ut.
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
@@ -371,7 +376,7 @@ void Phrase::ecoute (QString m)
         } 
         // passer au mot suivant
         ++_imot;
-        _trace.append(">");
+        _trace.append("suiv");
         // résolution des requêtes
         if (_imot > 0 && !motCourant()->reqLancees()) setLiens();
         // lancement de nouvelles requêtes
@@ -381,7 +386,7 @@ void Phrase::ecoute (QString m)
 	else if (m == "-prec" && _imot > 0)
 	{
 		--_imot;
-        _trace.append("<");
+        _trace.append("prec");
 	}
 	/* Nouvelle phrase saisie */
 	else if (m == "-nouvPhr")
@@ -396,14 +401,18 @@ void Phrase::ecoute (QString m)
         }
 	}
 	/* Nouvelle phrase choisie */
-	else if (m.startsWith("-phr-"))
+	else if (m.startsWith("-phr"))
 	{
-		m.remove (0, 5);
-        setGr(m);
+        QStringList ecl = m.split('_');
+        setGr(ecl.at(1));
+        QString num = m.at(0);
+        num.remove(0,3);
+        _num = num.toInt();
         lemmatise();
 		_imot = 0;
         motCourant()->lance();
 	}
+    else if (m == "-enr") trace();
 	else // mots et liens
 	{
 		Mot *cour = motCourant();
@@ -984,22 +993,25 @@ void Phrase::majAffichage()
 	else 
     {
         _reponse = Chaines::affichage
-	        .arg (Chaines::titrePraelector)
-	        .arg (grLu())
-	        .arg (motCourant()->html())
-	        .arg (htmlLiens())
-	        .arg (tr());
+	        .arg(Chaines::titrePraelector)
+	        .arg(grLu())
+	        .arg(motCourant()->html())
+            .arg("<a href=\"-enr\">enregistrer</a><br/>")
+	        .arg(htmlLiens())
+	        .arg(tr());
     }
-}
-
-/* donne un nom au fichier trace. À changer pour prod. */
-QString Phrase::nfTrace()
-{
-    QString ret = _gr.left(14);
-    ret.replace(" ","_");
-    ret.remove(QRegularExpression("[^_^\\w]"));
-    ret.append(".prae");
-    return ret;
+    /*
+		( "%1<hr/>%2"
+		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%3"
+		 "<hr/><a href=\"-reinit\">réinitialiser</a> "
+         "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a> "
+         "%4"
+         "&nbsp;<a href=\"-quitter\">quitter</a>"
+		 "<hr/><strong>Liens syntaxiques</strong><br/>%5\n"
+		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n%6"
+		 "<hr/><a href=\"-nouvPhr\">Saisir une phrase</a> "
+		 "<a href=\"-corpus\">choisir une phrase</a>&nbsp;<a href=\"-quitter\">quitter</a>");
+         */
 }
 
 Requete* Phrase::montante(Mot* m)
@@ -1240,6 +1252,13 @@ QString Phrase::saisie (QString l, QString s)
 	return ret;
 }
 
+void Phrase::setFTrace(QString nf)
+{
+    nf.append(".prae");
+    qDebug()<<"setFTrace"<<nf;
+    _fTrace.setFileName(nf);
+}
+
 void Phrase::setGr(QString t)
 {
     // initialisations
@@ -1296,6 +1315,7 @@ void Phrase::setGr(QString t)
     }
     _trace.clear();
     _trace.append(_gr);
+    _trace.append("--T;");
 }
 
 void Phrase::setLiens()
@@ -1358,16 +1378,15 @@ QString Phrase::tr()
 
 void Phrase::trace()
 {
-    qDebug()<<"trace"<<_trace;
+    qDebug()<<"trace"<<_fTrace.fileName();
     if (!_trace.isEmpty())
     {
-        QFile f(nfTrace());
-        f.open(QIODevice::WriteOnly);
-        QTextStream fl(&f);
+        _fTrace.open(QIODevice::WriteOnly);
+        QTextStream fl(&_fTrace);
         for (int i=0;i<_trace.count();++i)
-            fl << _trace.at(i)<<"\n";
+            fl << _trace.at(i)<<";";
         fl << _tr;
-        f.close();
+        _fTrace.close();
         _trace.clear();
     }
 }

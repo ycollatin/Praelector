@@ -139,7 +139,7 @@ void MainWindow::calcul (QUrl url)
 		{
 			QString nf = corpus.at (i);
 			QString lin;
-			QTextStream (&lin) << "<a href=\"@" <<nf <<"\">"<<nf<<"</a>";
+            QTextStream (&lin) << "<a href=\"@" <<nf <<"\">"<<nf<<"</a>";
 			corpus[i] = lin;
 		}
 		QString page = corpus.join ("<br/>");
@@ -151,7 +151,6 @@ void MainWindow::calcul (QUrl url)
 	else if (cmd.startsWith("@"))
 	{
         parle(choixPhr(cmd));
-		//textBrowser->setHtml(choixPhr(cmd));
 	}
 	else 
 	{
@@ -166,6 +165,7 @@ QString MainWindow::choixPhr (QString c)
 		 "<a href=\"-nouvPhr\">Saisir une phrase</a> "
          "<a href=\"-init\">annuler</a><br/>");
 	c.remove (0,1);
+    phrase->setFTrace(QFileInfo(c).baseName());
 	QFile f (qApp->applicationDirPath ()+"/corpus/"+c);
 	f.open (QIODevice::ReadOnly|QIODevice::Text);
 	QTextStream fluxD (&f);
@@ -182,7 +182,11 @@ QString MainWindow::choixPhr (QString c)
 			lin.remove (0, 1);
 			QTextStream (&p) << lin;
 		}
-		else QTextStream (&p) << "<a href=\"-phr-"<<lin<<"\">"<<i++<<"-</a> "<< lin;
+		else
+        {
+            QTextStream (&p) << "<a href=\"-phr"<<i<<"_"<<lin<<"\">"<<i<<"-</a> "<< lin;
+            ++i;
+        }
 		lp.append (p);
 	}
 	f.close ();
@@ -192,8 +196,7 @@ QString MainWindow::choixPhr (QString c)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    phrase->traceReq();
-    phrase->trace();
+    //phrase->traceReq();
     QMainWindow::closeEvent(event);
 }
 

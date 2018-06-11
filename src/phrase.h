@@ -39,6 +39,7 @@ class Phrase: public QObject
         QStringList                entreMots;
 	    QString                    _chAdditions;
         QStringList                _feminins;
+        QFile                      _fTrace;
         QString                    _gr;
         QMap<QString,Handicap*>    _handicaps;
         int                        _imot;
@@ -47,6 +48,7 @@ class Phrase: public QObject
         QList<Mot*>                _mots;
         int                        _num;
         int                        _numReq;
+        QString                    _prae;
         QList<Regle*>              _regles;
         QString                    _reponse;
         QList<Requete*>            _requetes;
@@ -57,7 +59,6 @@ class Phrase: public QObject
         void                    initFeminins ();
         void                    initLgr();
         void                    majAffichage();
-        QString                 nfTrace();
         bool static             sortR(Requete* ra, Requete* rb);
 
     public:
@@ -109,6 +110,7 @@ class Phrase: public QObject
         QString static    saisie (QString l, QString s);
         void              setGr(QString t);
         void              setLiens();
+        void              setFTrace(QString nf);
         QList<Mot*>       supersDe(Mot* m);
         QString           tr();
         MotFlechi*        vbRelative(MotFlechi* mf);
@@ -126,9 +128,10 @@ namespace Chaines {
 		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%3"
 		 "<hr/><a href=\"-reinit\">réinitialiser</a> "
          "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a> "
+         "%4"
          "&nbsp;<a href=\"-quitter\">quitter</a>"
-		 "<hr/><strong>Liens syntaxiques</strong><br/>%4\n"
-		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n%5"
+		 "<hr/><strong>Liens syntaxiques</strong><br/>%5\n"
+		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n%6"
 		 "<hr/><a href=\"-nouvPhr\">Saisir une phrase</a> "
 		 "<a href=\"-corpus\">choisir une phrase</a>&nbsp;<a href=\"-quitter\">quitter</a>");
 
