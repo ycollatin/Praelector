@@ -35,11 +35,13 @@
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
 //        - Trace :
+//          * La trace d'une phrase doit pouvoir remplacer une trace précédente enregistrée, au
+//            besoin après avertissement.
 //          * Mentionner l'auteur de la trace ;
 //          * La trace d'une phrase doit commencer par son numéro dans le fichier phrase homonyme
 //          * Ajouter des hyperliens :
-//            . sur le dernier mot, pour envoyer l'enregistrement de la trace dans fTrace.
-//            . Partout, pour demander l'apparition du choix de l'auteur de la trace
+//            . Pour demander l'enregistrement de la trace ;
+//            . pour demander l'apparition du choix de l'auteur de la trace
 //        - Comment lier ?
 //              . un pronom sujet non exprimé peut avoir une apposition :
 //                ibam forte uia sacra nescio quid meditans....
@@ -404,10 +406,9 @@ void Phrase::ecoute (QString m)
 	else if (m.startsWith("-phr"))
 	{
         QStringList ecl = m.split('_');
+        _num = ecl.at(0);
+        _num.remove(0,4);
         setGr(ecl.at(1));
-        QString num = m.at(0);
-        num.remove(0,3);
-        _num = num.toInt();
         lemmatise();
 		_imot = 0;
         motCourant()->lance();
@@ -1255,7 +1256,6 @@ QString Phrase::saisie (QString l, QString s)
 void Phrase::setFTrace(QString nf)
 {
     nf.append(".prae");
-    qDebug()<<"setFTrace"<<nf;
     _fTrace.setFileName(nf);
 }
 
@@ -1314,8 +1314,7 @@ void Phrase::setGr(QString t)
         }
     }
     _trace.clear();
-    _trace.append(_gr);
-    _trace.append("--T;");
+    _trace.append(QString("%1 %2_").arg(_num).arg(_gr));
 }
 
 void Phrase::setLiens()
@@ -1378,10 +1377,10 @@ QString Phrase::tr()
 
 void Phrase::trace()
 {
-    qDebug()<<"trace"<<_fTrace.fileName();
     if (!_trace.isEmpty())
     {
-        _fTrace.open(QIODevice::WriteOnly);
+        _fTrace.open(QIODevice::ReadWrite);
+        _fTrace.readAll();
         QTextStream fl(&_fTrace);
         for (int i=0;i<_trace.count();++i)
             fl << _trace.at(i)<<";";

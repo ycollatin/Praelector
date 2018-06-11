@@ -46,7 +46,7 @@ class Phrase: public QObject
         Lemmat*                    _lemmatiseur;
         QMap<QString, QStringList> _mapLgr;
         QList<Mot*>                _mots;
-        int                        _num;
+        QString                    _num;
         int                        _numReq;
         QString                    _prae;
         QList<Regle*>              _regles;
