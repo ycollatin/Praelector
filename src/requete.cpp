@@ -582,9 +582,9 @@ QString Requete::trace()
     QString ret;
     QTextStream fl(&ret);
     fl  << _super->mot()->rang()
-        << "->"
+        << "-"
         << _sub->mot()->rang()
-        << " ["<<id()<<"]";
+        << "_"<<id();
     return ret;
 }
 
