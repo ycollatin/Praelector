@@ -413,7 +413,7 @@ void Phrase::ecoute (QString m)
 		_imot = 0;
         motCourant()->lance();
 	}
-    else if (m == "-enr") trace();
+    else if (m == "-trace") trace();
 	else // mots et liens
 	{
 		Mot *cour = motCourant();
@@ -997,9 +997,9 @@ void Phrase::majAffichage()
 	        .arg(Chaines::titrePraelector)
 	        .arg(grLu())
 	        .arg(motCourant()->html())
-            .arg("<a href=\"-enr\">enregistrer</a><br/>")
 	        .arg(htmlLiens())
-	        .arg(tr());
+	        .arg(tr())
+            .arg(Chaines::menu);
     }
     /*
 		( "%1<hr/>%2"
@@ -1363,15 +1363,17 @@ QString Phrase::tr()
 {
     _tr.clear();
     QTextStream fl(&_tr);
+    QStringList sl;
     for(int i=0;i<=_imot;++i)
 	{
         Mot* m = _mots.at(i);
 		if (m->estSommet()) 
         {
             // le nouveau mot est sommet tant qu'un lien n'a pas été validé
-            fl << m->trGroupe() << "<br/>";
+            sl.append(m->trGroupe());
         }
 	}
+    _tr = sl.join("<br/>");
     return _tr;
 }
 
