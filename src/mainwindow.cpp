@@ -253,7 +253,6 @@ void MainWindow::parle(QString m)
     {
         ajTouches();
 	    textBrowser->setHtml(texteT);
-        qDebug()<<texteT;
     }
     else textBrowser->setHtml(texte);
 }
