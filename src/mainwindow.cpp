@@ -40,12 +40,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     verticalLayout->setSpacing(6);
     verticalLayout->setContentsMargins(11, 11, 11, 11);
 
-    //textBrowser = new QTextBrowser(centralWidget);
     textBrowser = new Editeur(centralWidget);
     verticalLayout->addWidget(textBrowser);
 
     setCentralWidget(centralWidget);
-    //retranslateUi(MainWindow);
 
 	phrase = new Phrase("");
 	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
@@ -53,6 +51,12 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	textBrowser->setOpenLinks(false);
     clavier = false;
     alphabet = "abcdefghijklmnopqrstuv";
+    /*
+	menu = "<a href=\"-corpus\">choisir une phrase</a> "
+		 "<a href=\"-enr\">choisir une phrase enregistrée</a> "
+		 "<a href=\"-nouvPhr\">Saisir une phrase</a> "
+         "<a href=\"-init\">annuler</a><a href=\"-quitter\">quitter</a><br/>";
+    */
     wxyz = "wxyz";
     // construire la liste des clés alpha
     for (int i=0;i<alphabet.count();++i)
@@ -127,25 +131,13 @@ void MainWindow::calcul (QUrl url)
 	}
 	else if (cmd == "-aide")
 	{
-		//textBrowser->setHtml (Chaines::documentation);
 		parle(Chaines::documentation);
 	}
-	else if (cmd == "-corpus")
+	else if (cmd == "-corpus" || cmd == "-enr")
 	{
-		// charger la liste des fichiers du rép. ./corpus/*
-    	QDir repertoire = QDir (qApp->applicationDirPath () +"/corpus", "*");
-    	QStringList corpus = repertoire.entryList (QDir::Files);
-		for (int i=0;i<corpus.count();++i)
-		{
-			QString nf = corpus.at (i);
-			QString lin;
-            QTextStream (&lin) << "<a href=\"@" <<nf <<"\">"<<nf<<"</a>";
-			corpus[i] = lin;
-		}
-		QString page = corpus.join ("<br/>");
-		page.prepend ("<br/><a href=\"-nouvPhr\">Saisir une phrase</a><br/>"
-					 "<a href=\"-init\">annuler</a>&nbsp;"
-					 "<a href=\"-quitter\">quitter</a><hr/>");
+        cmd.remove(0,1);
+		// charger la liste des fichiers du rép.
+        QString page = catalogue(cmd);
         parle(page);
 	}
 	else if (cmd.startsWith("@"))
@@ -158,23 +150,37 @@ void MainWindow::calcul (QUrl url)
 	}
 }
 
-QString MainWindow::choixPhr (QString c)
+QString MainWindow::catalogue(QString rep)
 {
-	const QString menu ( 
-		 "<a href=\"-corpus\">choisir une phrase</a> "
-		 "<a href=\"-nouvPhr\">Saisir une phrase</a> "
-         "<a href=\"-init\">annuler</a><br/>");
+        rep = QString("%1/%2").arg(qApp->applicationDirPath()).arg(rep);
+        QDir repertoire = QDir(rep);
+    	QStringList ls = repertoire.entryList(QDir::Files);
+		for (int i=0;i<ls.count();++i)
+		{
+			QString nf = ls.at(i);
+			QString lin;
+            QTextStream(&lin) << "<a href=\"@"<<rep<<"/"<<nf <<"\">"<<nf<<"</a>";
+			ls[i] = lin;
+		}
+		QString page = ls.join ("<br/>");
+        page.prepend(Chaines::menu);
+        return page;
+}
+
+QString MainWindow::choixPhr(QString c)
+{
 	c.remove (0,1);
     phrase->setFTrace(QFileInfo(c).baseName());
-	QFile f (qApp->applicationDirPath ()+"/corpus/"+c);
+	QFile f(c);
 	f.open (QIODevice::ReadOnly|QIODevice::Text);
 	QTextStream fluxD (&f);
 	QStringList lp;
-	lp.append (menu);
+	lp.append(Chaines::menu);
 	int i=1;
 	while (!fluxD.atEnd ())
 	{
 		QString lin = fluxD.readLine().simplified ();
+        if (lin.isEmpty()) continue;
 		QString p;
 		// commentaires
 		if (lin.startsWith("!"))
@@ -184,13 +190,16 @@ QString MainWindow::choixPhr (QString c)
 		}
 		else
         {
-            QTextStream (&p) << "<a href=\"-phr"<<i<<"_"<<lin<<"\">"<<i<<"-</a> "<< lin;
+            QString aff = lin;
+            QStringList ecl = lin.split('_');
+            if (ecl.count() > 1) aff = ecl.at(0);
+            QTextStream (&p) << "<a href=\"-phr"<<i<<"_"<<lin<<"\">"<<i<<"-</a> "<< aff;
             ++i;
         }
 		lp.append (p);
 	}
 	f.close ();
-	lp.append (menu);
+	lp.append (Chaines::menu);
 	return lp.join ("<br/>");
 }
 
@@ -244,6 +253,7 @@ void MainWindow::parle(QString m)
     {
         ajTouches();
 	    textBrowser->setHtml(texteT);
+        qDebug()<<texteT;
     }
     else textBrowser->setHtml(texte);
 }
