@@ -21,6 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
+//        - coordination de deux formes verbales.
+//        - mauvais enregistrement du fichier trace
 //        - omni uita : dét non proposé
 //        - Plantage si on réinitialise sur le premier mot.
 //        - 27 nullus dolor est quam : nombreuses erreurs.
@@ -35,13 +37,8 @@
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
 //        - Trace :
-//          * La trace d'une phrase doit pouvoir remplacer une trace précédente enregistrée, au
-//            besoin après avertissement.
 //          * Mentionner l'auteur de la trace ;
-//          * La trace d'une phrase doit commencer par son numéro dans le fichier phrase homonyme
-//          * Ajouter des hyperliens :
-//            . Pour demander l'enregistrement de la trace ;
-//            . pour demander l'apparition du choix de l'auteur de la trace
+//          * décider de la lecture de la trace.
 //        - Comment lier ?
 //              . un pronom sujet non exprimé peut avoir une apposition :
 //                ibam forte uia sacra nescio quid meditans....
@@ -1388,11 +1385,15 @@ void Phrase::trace()
         QTextStream fl(&_fTrace);
         QStringList neotrace;
         bool ins = false;
-        QString t = _trace.join(';');
-        while (!_fTrace.atEnd())
+        _trace.append(tr());
+        QString t = _trace.join(';').simplified();
+        qDebug()<<"t"<<t;
+        int ne = _num.toInt();   // numéro de la trace à enregistrer
+        QString lin;
+        do
         {
             // chercher la phrase par son numéro
-            QString lin = fl.readLine().simplified();
+            lin = fl.readLine().simplified();
             qDebug()<<"lin"<<lin;
             if (lin.startsWith('!'))
             {
@@ -1401,25 +1402,35 @@ void Phrase::trace()
                 continue;
             }
             QString n = lin.section(' ',0,0);
-            qDebug()<<"n"<<n<<n.toInt()<<"_num"<<_num.toInt();
-            // si la phrase à enregistrer existe, l'écraser
-            if (n == _num)
+            qDebug()<<"   n"<<n<<n.toInt()<<"_num"<<_num.toInt();
+            int nl = n.toInt();      // numéro de la ligne lue
+            // si la trace à enregistrer existe, l'écraser
+            if (ne == nl)
             {
-                qDebug("  ==");
+                qDebug("   ==");
                 neotrace.append(t);
                 ins = true;
                 continue;
             }
-            // sinon, l'insérer au bon endroit.
-            else if (n.toInt() > _num.toInt())
+            // si son n° est inférieur à la ligne lue, l'insérer
+            if (ne < nl)
             {
-                qDebug("  <");
+                qDebug("   <");
                 neotrace.append(t);
                 ins = true;
             }
+            // puis enregistrer la ligne lue 
+            qDebug()<<"    ajout de lin"<<"atEnd"<<_fTrace.atEnd();
             neotrace.append(lin);
         }
-        if (!ins) neotrace.append(t);
+        while (!lin.isNull());
+
+        // si la trace n'est toujours pas enregistrée il faut l'ajouter à la fin.
+        if (!ins)
+        {
+            qDebug()<<"ajout en fin";
+            neotrace.append(t);
+        }
         _fTrace.close();
         // enregistrer neotrace
         _fTrace.open(QIODevice::WriteOnly);
