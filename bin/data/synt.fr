@@ -85,7 +85,7 @@ prep
 propInf
 infObjet
 conjSub
-conjcoordV;
+conjcoordV
 
 pos:s
 -

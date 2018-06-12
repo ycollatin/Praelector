@@ -285,7 +285,7 @@ tr:<sup> <sub>
 id:conjcoordV
 aff:coord1
 doc:Une conjonction de coordination coordonne deux groupes compatibles
-posSup:v
+posSup:v,w
 posSub:c
 lsSub:coord
 sens:>
