@@ -1255,8 +1255,10 @@ QString Phrase::saisie (QString l, QString s)
 
 void Phrase::setFTrace(QString nf)
 {
-    nf.append(".prae");
-    _fTrace.setFileName(nf);
+    QString nft;
+    QTextStream(&nft) << qApp->applicationDirPath()
+        << "/enr/"<<nf<<".prae";
+    _fTrace.setFileName(nft);
 }
 
 void Phrase::setGr(QString t)
@@ -1381,14 +1383,50 @@ void Phrase::trace()
 {
     if (!_trace.isEmpty())
     {
-        _fTrace.open(QIODevice::ReadWrite);
-        _fTrace.readAll();
+        _fTrace.open(QIODevice::ReadOnly);
+        // lire les lignes
         QTextStream fl(&_fTrace);
-        for (int i=0;i<_trace.count();++i)
-            fl << _trace.at(i)<<";";
-        fl << _tr;
+        QStringList neotrace;
+        bool ins = false;
+        QString t = _trace.join(';');
+        while (!_fTrace.atEnd())
+        {
+            // chercher la phrase par son numéro
+            QString lin = fl.readLine().simplified();
+            qDebug()<<"lin"<<lin;
+            if (lin.startsWith('!'))
+            {
+                neotrace.append(lin);
+                ins = true;
+                continue;
+            }
+            QString n = lin.section(' ',0,0);
+            qDebug()<<"n"<<n<<n.toInt()<<"_num"<<_num.toInt();
+            // si la phrase à enregistrer existe, l'écraser
+            if (n == _num)
+            {
+                qDebug("  ==");
+                neotrace.append(t);
+                ins = true;
+                continue;
+            }
+            // sinon, l'insérer au bon endroit.
+            else if (n.toInt() > _num.toInt())
+            {
+                qDebug("  <");
+                neotrace.append(t);
+                ins = true;
+            }
+            neotrace.append(lin);
+        }
+        if (!ins) neotrace.append(t);
         _fTrace.close();
-        _trace.clear();
+        // enregistrer neotrace
+        _fTrace.open(QIODevice::WriteOnly);
+        QTextStream flneo(&_fTrace);
+        for (int i=0;i<neotrace.count();++i)
+            flneo << neotrace.at(i)<<'\n';
+        _fTrace.close();
     }
 }
 
