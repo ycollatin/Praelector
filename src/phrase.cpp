@@ -21,6 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
+//        - Il semble que l'affichage (au moins) des fléchis soit calculé deux fois.
 //        - Saut de ligne indésirable dans l'enregistrement trace
 //        - omni uita : dét non proposé
 //        - Plantage si on réinitialise sur le premier mot.
@@ -402,9 +403,12 @@ void Phrase::ecoute (QString m)
 	/* Nouvelle phrase choisie */
 	else if (m.startsWith("-phr"))
 	{
+        // séparer la commande, la phrase et son enregistrement
         QStringList ecl = m.split('_');
+        // 0 : numéro de la phrase, en string
         _num = ecl.at(0);
         _num.remove(0,4);
+        // 1 : la phrase
         setGr(ecl.at(1));
         lemmatise();
 		_imot = 0;
@@ -481,7 +485,8 @@ void Phrase::ecoute (QString m)
 								QString lt;
 								QTextStream fl (&lt);
 								fl<<"Meilleure traduction pour " << cour->gr();
-                                QString t = Phrase::saisie(lt, mf->tr());
+                                //QString t = Phrase::saisie(lt, mf->tr());
+                                QString t = saisie(lt, mf->tr());
 								if (!t.isEmpty())
                                 {
                                     mf->setTr(t);
@@ -1238,6 +1243,12 @@ QString Phrase::saisie (QString l, QString s)
 	return ret;
 }
 
+void Phrase::setEnr(QString e)
+{
+    qDebug()<<"setEnr"<<e;
+    _enr = e.split(';');
+}
+
 void Phrase::setFTrace(QString nf)
 {
     QString nft;
@@ -1375,14 +1386,12 @@ void Phrase::trace()
         bool ins = false;
         _trace.append(tr());
         QString t = _trace.join(';').simplified();
-        qDebug()<<"t"<<t;
         int ne = _num.toInt();   // numéro de la trace à enregistrer
         QString lin;
         do
         {
             // chercher la phrase par son numéro
             lin = fl.readLine().simplified();
-            qDebug()<<"lin"<<lin;
             if (lin.startsWith('!'))
             {
                 neotrace.append(lin);
@@ -1390,12 +1399,10 @@ void Phrase::trace()
                 continue;
             }
             QString n = lin.section(' ',0,0);
-            qDebug()<<"   n"<<n<<n.toInt()<<"_num"<<_num.toInt();
             int nl = n.toInt();      // numéro de la ligne lue
             // si la trace à enregistrer existe, l'écraser
             if (ne == nl && !ins)
             {
-                qDebug("   ==");
                 neotrace.append(t);
                 ins = true;
                 continue;
@@ -1403,12 +1410,10 @@ void Phrase::trace()
             // si son n° est inférieur à la ligne lue, l'insérer
             if (ne < nl && !ins)
             {
-                qDebug("   <");
                 neotrace.append(t);
                 ins = true;
             }
             // puis enregistrer la ligne lue 
-            qDebug()<<"    ajout de lin"<<"atEnd"<<_fTrace.atEnd();
             neotrace.append(lin);
         }
         while (!lin.isNull());
@@ -1416,7 +1421,6 @@ void Phrase::trace()
         // si la trace n'est toujours pas enregistrée il faut l'ajouter à la fin.
         if (!ins)
         {
-            qDebug()<<"ajout en fin";
             neotrace.append(t);
         }
         _fTrace.close();
@@ -1437,6 +1441,12 @@ void Phrase::traceReq()
         if (req != 0) std::cout << qPrintable("\n----------\n"+req->hist());
         else std::cout << qPrintable("\n---\nrequête "+QString::number(i)+" nulle");
     }
+}
+
+void Phrase::vacEnr()
+{
+    qDebug()<<"vacEnr";
+    _enr.clear();
 }
 
 MotFlechi* Phrase::vbRelative(MotFlechi* mf)

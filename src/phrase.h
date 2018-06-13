@@ -38,6 +38,7 @@ class Phrase: public QObject
     private:
         QStringList                entreMots;
 	    QString                    _chAdditions;
+        QStringList                _enr;
         QStringList                _feminins;
         QFile                      _fTrace;
         QString                    _gr;
@@ -50,6 +51,7 @@ class Phrase: public QObject
         int                        _numReq;
         QString                    _prae;
         QList<Regle*>              _regles;
+        QStringList                _relect;
         QString                    _reponse;
         QList<Requete*>            _requetes;
         QString                    _tr;
@@ -108,11 +110,13 @@ class Phrase: public QObject
         QList<Requete*>   reqCC(Mot* m);
         Requete*          requete(int n);
         QString static    saisie (QString l, QString s);
+        void              setEnr(QString e);
         void              setGr(QString t);
         void              setLiens();
         void              setFTrace(QString nf);
         QList<Mot*>       supersDe(Mot* m);
         QString           tr();
+        void              vacEnr();
         MotFlechi*        vbRelative(MotFlechi* mf);
     signals:
         void              repondu(const QString);
@@ -135,6 +139,17 @@ namespace Chaines {
 		 "<hr/><a href=\"-reinit\">réinitialiser</a>&nbsp;"
          "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a>&nbsp;"
          "<a href=\"-trace\">enregistrer</a>&nbsp;"
+         "<a href=\"-quitter\">quitter</a>"
+		 "<hr/><strong>Liens syntaxiques</strong><br/>%4\n"
+		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n%5"
+         "<br/>%6");
+
+	const QString affRelect = QString::fromUtf8
+        ("%1<hr/>%2"
+		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%3"
+		 "<hr/><a href=\"-reinit\">réinitialiser</a>&nbsp;"
+         "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a>&nbsp;"
+         "<a href=\"-lect\">lecture</a>&nbsp;<a href=\"-tjlect\">tout relire</a>&nbsp;"
          "<a href=\"-quitter\">quitter</a>"
 		 "<hr/><strong>Liens syntaxiques</strong><br/>%4\n"
 		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n%5"
