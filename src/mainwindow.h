@@ -53,6 +53,7 @@ class MainWindow : public QMainWindow
         QString            alphabet;
         QStringList        clesL;
         bool               clavier;
+        QStringList        lenr;
 		Phrase*            phrase;
         QString            prefixe;
         QString            texte;
