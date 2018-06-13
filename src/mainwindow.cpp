@@ -146,6 +146,13 @@ void MainWindow::calcul (QUrl url)
 	}
 	else 
 	{
+        // passer les enregistrements si -phr
+        if (cmd.startsWith("-phr"))
+        {
+            QString num = cmd.section('_',0,0);
+            num.remove(0,4);
+            phrase->setEnr(lenr.at(num.toInt()));
+        }
 		phrase->ecoute(cmd);
 	}
 }
@@ -190,10 +197,18 @@ QString MainWindow::choixPhr(QString c)
 		}
 		else
         {
-            QString aff = lin;
-            QStringList ecl = lin.split('_');
-            if (ecl.count() > 1) aff = ecl.at(0);
-            QTextStream (&p) << "<a href=\"-phr"<<i<<"_"<<lin<<"\">"<<i<<"-</a> "<< aff;
+            // TODO vérifier lin vide
+            QString aff;
+            int nsep = lin.count('_');
+            if (nsep > 1) aff = lin.section('_',0,0);
+            QTextStream fl(&p);
+            fl << "<a href=\"-phr"<<i<<"_"<<aff<<"\">"<<i<<"-</a> "<< aff;
+            if (nsep > 2) 
+            {
+                lenr.append(lin.section('_',2));
+                //phrase->setEnr(lin.section('_',2).split(';'));
+            }
+            else phrase->vacEnr();
             ++i;
         }
 		lp.append (p);
