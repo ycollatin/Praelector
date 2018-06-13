@@ -21,8 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - coordination de deux formes verbales.
-//        - mauvais enregistrement du fichier trace
+//        - Saut de ligne indésirable dans l'enregistrement trace
 //        - omni uita : dét non proposé
 //        - Plantage si on réinitialise sur le premier mot.
 //        - 27 nullus dolor est quam : nombreuses erreurs.
@@ -37,8 +36,9 @@
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
 //        - Trace :
+//          * Rendre le format indépendant des choix précédents
 //          * Mentionner l'auteur de la trace ;
-//          * décider de la lecture de la trace.
+//          * Si la lecture courante est trop éloignée de la trace lue : "trace perdue"
 //        - Comment lier ?
 //              . un pronom sujet non exprimé peut avoir une apposition :
 //                ibam forte uia sacra nescio quid meditans....
@@ -492,7 +492,7 @@ void Phrase::ecoute (QString m)
                         case 'i': // rotation de la traduction du fléchi
                             {
                                 cour->flechi(num)->incItr();
-                                _trace.append("rotTr:"+eclats.at(2));
+                                _trace.append("rotTr:"+eclats.at(2)+":"+cour->flechi(num)->tr());
                                 break;
                             }
 						case 'r': // rejeter m.r.m = le lemme ; m.r.f la forme
@@ -998,18 +998,6 @@ void Phrase::majAffichage()
 	        .arg(tr())
             .arg(Chaines::menu);
     }
-    /*
-		( "%1<hr/>%2"
-		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%3"
-		 "<hr/><a href=\"-reinit\">réinitialiser</a> "
-         "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a> "
-         "%4"
-         "&nbsp;<a href=\"-quitter\">quitter</a>"
-		 "<hr/><strong>Liens syntaxiques</strong><br/>%5\n"
-		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n%6"
-		 "<hr/><a href=\"-nouvPhr\">Saisir une phrase</a> "
-		 "<a href=\"-corpus\">choisir une phrase</a>&nbsp;<a href=\"-quitter\">quitter</a>");
-         */
 }
 
 Requete* Phrase::montante(Mot* m)
@@ -1405,7 +1393,7 @@ void Phrase::trace()
             qDebug()<<"   n"<<n<<n.toInt()<<"_num"<<_num.toInt();
             int nl = n.toInt();      // numéro de la ligne lue
             // si la trace à enregistrer existe, l'écraser
-            if (ne == nl)
+            if (ne == nl && !ins)
             {
                 qDebug("   ==");
                 neotrace.append(t);
@@ -1413,7 +1401,7 @@ void Phrase::trace()
                 continue;
             }
             // si son n° est inférieur à la ligne lue, l'insérer
-            if (ne < nl)
+            if (ne < nl && !ins)
             {
                 qDebug("   <");
                 neotrace.append(t);
