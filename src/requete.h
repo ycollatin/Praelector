@@ -66,6 +66,7 @@ class Requete : public QObject
         int         distance(Mot* m);
         QString     doc();
         bool        egale(Requete* req);
+        bool        egale(QString tr);
         bool        enConflit(QString id);
         bool        estEx(MotFlechi* mf);
         MotFlechi*  ex(int i);
@@ -73,14 +74,14 @@ class Requete : public QObject
         int         freq();
         QString     gv(QString format="dot");
         int         handicap();
-        bool        idConflit(QString id);
         QString     hist();
         bool        homonyme(Requete* req);
         bool        homoSuper(MotFlechi* mf);
-        QString     html();
+        QString     html(bool enr=false);
         bool        homoSub(MotFlechi* mf);
         QString     humain(bool num=false);
         QString     id();
+        bool        idConflit(QString id);
         void        incItr();
         int         largeur();
         bool        multi();

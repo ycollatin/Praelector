@@ -202,6 +202,11 @@ bool Requete::egale(Requete* req)
     return true;
 }
 
+bool Requete::egale(QString tr)
+{
+    return trace() == tr;
+}
+
 bool Requete::enConflit(QString id)
 {
     return _regle->conflit(id);
@@ -277,7 +282,7 @@ bool Requete::homoSub(MotFlechi* mf)
     return _sub->mot() == mf->mot();
 }
 
-QString Requete::html()
+QString Requete::html(bool enr)
 {
     if (!close()) return doc();
     QString ret;
@@ -285,17 +290,13 @@ QString Requete::html()
     QString color;
     if (_valide) color = "darkred";
     else color = "black";
-    // En noir, fonction
-    /*
-    fl << _sub->gr() << " "
-        << _regle->aff() << " "
-        << _super->gr() << " "
-    */
+    //if (enr) fl << "<span bgcolor=\"lightyellow\">";
+    if (enr) fl << "<span style=\"font-color:red;font-size:x-large;>"<<QChar(9654)<<"</span>";
     fl  << _sub->gr()<<"<small> " << _sub->morpho() << " </small>"
         << _regle->aff() << " "
         << _super->gr() <<"<small> " << _super->morpho() << " </small>"
         // En ocre italique, traduction
-        << "<span style=\"color:"<<color<<";font-style:italic\">"<<_super->trGroupe(this)<<"</span> "
+        << "<span style=\"color:"<<color<<";font-style:italic\">"<<MotFlechi::elideFr(_super->trGroupe(this))<<"</span> "
         // doc de la règle
         << "<a href=\"l.i."<<_num<<"\">doc</a> "
         // rotation de la traduction
@@ -304,7 +305,8 @@ QString Requete::html()
         << "<a href=\"l.v."<<_num<<"\">valider</a> "
         // lien rejeter
         << "<a href=\"l.r."<<_num<<"\">rejeter</a>";
-    return MotFlechi::elideFr(ret);
+    return ret;
+    //return MotFlechi::elideFr(ret);
 }
 
 QString Requete::humain(bool num)
@@ -578,7 +580,7 @@ QString Requete::tr()
 
 QString Requete::trace()
 {
-    if (!_valide) return "-";
+    if (!close()) return "-";
     QString ret;
     QTextStream fl(&ret);
     fl  << _super->mot()->rang()
