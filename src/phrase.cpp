@@ -40,6 +40,7 @@
 //          * Rendre le format indépendant des choix précédents
 //          * Mentionner l'auteur de la trace ;
 //          * Si la lecture courante est trop éloignée de la trace lue : "trace perdue"
+//          * Comparaision en fin de lecture ?
 //        - Comment lier ?
 //              . un pronom sujet non exprimé peut avoir une apposition :
 //                ibam forte uia sacra nescio quid meditans....
@@ -755,6 +756,11 @@ void Phrase::ecoute (QString m)
 	emit(repondu(_reponse));
 }
 
+bool Phrase::enr()
+{
+    return !_enr.isEmpty();
+}
+
 bool Phrase::estFeminin(QString n)
 {
     if (n.isEmpty()) return "?";
@@ -939,7 +945,22 @@ QString Phrase::htmlLiens()
     qSort(lr.begin(), lr.end(), sortR);
     QStringList ll;
     for (int i=0;i<lr.count();++i)
-        ll.append(lr.at(i)->html());
+    {
+        bool reqEnr = false;
+        Requete* req = lr.at(i);
+        if (enr())
+        {
+            for (int i=0;i<_enr.count();++i)
+            {
+                if (req->egale(_enr.at(i)))
+                {
+                    reqEnr = true;
+                    break;
+                }
+            }
+        }
+        ll.append(req->html(reqEnr));
+    }
     ll.removeDuplicates();
     return ll.join("<br/>\n");
 }
@@ -1245,7 +1266,6 @@ QString Phrase::saisie (QString l, QString s)
 
 void Phrase::setEnr(QString e)
 {
-    qDebug()<<"setEnr"<<e;
     _enr = e.split(';');
 }
 
@@ -1445,7 +1465,6 @@ void Phrase::traceReq()
 
 void Phrase::vacEnr()
 {
-    qDebug()<<"vacEnr";
     _enr.clear();
 }
 

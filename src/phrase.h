@@ -57,6 +57,7 @@ class Phrase: public QObject
         QString                    _tr;
         QStringList                _trace;
 
+        bool                    enr();
         bool                    estFeminin(QString n);
         void                    initFeminins ();
         void                    initLgr();
@@ -139,17 +140,6 @@ namespace Chaines {
 		 "<hr/><a href=\"-reinit\">réinitialiser</a>&nbsp;"
          "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a>&nbsp;"
          "<a href=\"-trace\">enregistrer</a>&nbsp;"
-         "<a href=\"-quitter\">quitter</a>"
-		 "<hr/><strong>Liens syntaxiques</strong><br/>%4\n"
-		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n%5"
-         "<br/>%6");
-
-	const QString affRelect = QString::fromUtf8
-        ("%1<hr/>%2"
-		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%3"
-		 "<hr/><a href=\"-reinit\">réinitialiser</a>&nbsp;"
-         "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a>&nbsp;"
-         "<a href=\"-lect\">lecture</a>&nbsp;<a href=\"-tjlect\">tout relire</a>&nbsp;"
          "<a href=\"-quitter\">quitter</a>"
 		 "<hr/><strong>Liens syntaxiques</strong><br/>%4\n"
 		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n%5"
