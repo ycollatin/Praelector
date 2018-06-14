@@ -933,15 +933,18 @@ QString Phrase::htmlLiens()
 {
     Mot* mc = motCourant();
     QList<Requete*> lr;
+    // lr, liste des requêtes closes
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
         if (req->close() && !req->rejetee()
-            && (req->requerant() == mc || req->requis() == mc))
-        {
-            lr.append(req);
-        }
+            //&& (req->requerant() == mc || req->requis() == mc))
+            && (req->requis() == mc))
+            {
+                lr.append(req);
+            }
     }
+    // tri en fonction de la probabilité
     qSort(lr.begin(), lr.end(), sortR);
     QStringList ll;
     for (int i=0;i<lr.count();++i)
@@ -958,8 +961,9 @@ QString Phrase::htmlLiens()
                     break;
                 }
             }
+            ll.append(req->html(reqEnr));
         }
-        ll.append(req->html(reqEnr));
+        else ll.append(req->html());
     }
     ll.removeDuplicates();
     return ll.join("\n");
