@@ -290,8 +290,8 @@ QString Requete::html(bool enr)
     QString color;
     if (_valide) color = "darkred";
     else color = "black";
-    //if (enr) fl << "<span bgcolor=\"lightyellow\">";
-    if (enr) fl << "<span style=\"font-color:red;font-size:x-large;>"<<QChar(9654)<<"</span>";
+    if (enr) fl << "<div style=\"bgcolor:lightyellow;\">";
+    else fl << "<div>";
     fl  << _sub->gr()<<"<small> " << _sub->morpho() << " </small>"
         << _regle->aff() << " "
         << _super->gr() <<"<small> " << _super->morpho() << " </small>"
@@ -305,6 +305,7 @@ QString Requete::html(bool enr)
         << "<a href=\"l.v."<<_num<<"\">valider</a> "
         // lien rejeter
         << "<a href=\"l.r."<<_num<<"\">rejeter</a>";
+    fl << "</div>";
     return ret;
 }
 
@@ -583,9 +584,9 @@ QString Requete::trace()
     QString ret;
     QTextStream fl(&ret);
     fl  << _super->mot()->rang()
-        << "-"
+        << "->"
         << _sub->mot()->rang()
-        << "_"<<id();
+        << "[" << id() << "]";
     return ret;
 }
 
