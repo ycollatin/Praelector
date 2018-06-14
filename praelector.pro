@@ -6,6 +6,7 @@ DEPENDPATH += $$PWD/src
 INCLUDEPATH += $$PWD/src 
 
 QT += widgets
+QT += webkitwidgets
 
 # CONFIG += release_binary
 CONFIG += debug
