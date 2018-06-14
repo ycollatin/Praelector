@@ -306,7 +306,6 @@ QString Requete::html(bool enr)
         // lien rejeter
         << "<a href=\"l.r."<<_num<<"\">rejeter</a>";
     return ret;
-    //return MotFlechi::elideFr(ret);
 }
 
 QString Requete::humain(bool num)
