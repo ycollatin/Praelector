@@ -290,7 +290,7 @@ QString Requete::html(bool enr)
     QString color;
     if (_valide) color = "darkred";
     else color = "black";
-    if (enr) fl << "<div style=\"bgcolor:lightyellow;\">";
+    if (enr) fl << "<div style=\"background-color:lightyellow;\">";
     else fl << "<div>";
     fl  << _sub->gr()<<"<small> " << _sub->morpho() << " </small>"
         << _regle->aff() << " "
