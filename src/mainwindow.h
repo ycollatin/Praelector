@@ -20,14 +20,15 @@
 
 #include <QApplication>
 #include <QMainWindow>
-#include <QTextBrowser>
+//#include <QTextBrowser>
+#include <QWebView>
 #include <QVBoxLayout>
 #include <QWidget>
 
 #include <QUrl>
 #include <phrase.h>
 
-class Editeur : public QTextBrowser
+class Editeur : public QWebView
 {
     Q_OBJECT
 

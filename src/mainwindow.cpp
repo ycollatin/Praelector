@@ -19,13 +19,13 @@
 #include "mainwindow.h"
 #include "phrase.h"
 
-Editeur::Editeur(QWidget *parent) : QTextBrowser(parent)
+Editeur::Editeur(QWidget *parent) : QWebView(parent)
 {
 }
 
 void Editeur::emet(QUrl url)
 {
-    emit anchorClicked(url);
+    emit linkClicked(url);
 }
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
@@ -47,8 +47,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 	phrase = new Phrase("");
 	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
-	connect(textBrowser, SIGNAL(anchorClicked(QUrl)),this, SLOT(calcul(QUrl)));
-	textBrowser->setOpenLinks(false);
+	connect(textBrowser, SIGNAL(linkClicked(QUrl)),this, SLOT(calcul(QUrl)));
+	//textBrowser->setOpenLinks(false);
     clavier = false;
     alphabet = "abcdefghijklmnopqrstuv";
     /*
@@ -142,6 +142,7 @@ void MainWindow::calcul (QUrl url)
 	}
 	else if (cmd.startsWith("@"))
 	{
+        lenr.clear();
         parle(choixPhr(cmd));
 	}
 	else 
@@ -151,7 +152,11 @@ void MainWindow::calcul (QUrl url)
         {
             QString num = cmd.section('_',0,0);
             num.remove(0,4);
-            phrase->setEnr(lenr.at(num.toInt()));
+            int numint = num.toInt()-1;
+            if (lenr.count() > 0)
+            {
+                phrase->setEnr(lenr.at(numint));
+            }
         }
 		phrase->ecoute(cmd);
 	}
@@ -200,22 +205,22 @@ QString MainWindow::choixPhr(QString c)
             // TODO vérifier lin vide
             QString aff;
             int nsep = lin.count('_');
-            if (nsep > 1) aff = lin.section('_',0,0);
+            if (nsep > 0) aff = lin.section('_',0,0);
+            else aff = lin;
             QTextStream fl(&p);
             fl << "<a href=\"-phr"<<i<<"_"<<aff<<"\">"<<i<<"-</a> "<< aff;
-            if (nsep > 2) 
+            if (nsep > 0) 
             {
-                lenr.append(lin.section('_',2));
-                //phrase->setEnr(lin.section('_',2).split(';'));
+                lenr.append(lin.section('_',1));
             }
-            else phrase->vacEnr();
+            //else phrase->vacEnr();
             ++i;
         }
 		lp.append (p);
 	}
 	f.close ();
 	lp.append (Chaines::menu);
-	return lp.join ("<br/>");
+	return lp.join ("<br/>\n");
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -239,11 +244,11 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
         if (clavier)
         {
             if (texteT.isEmpty()) ajTouches();
-            textBrowser->setText(texteT);
+            textBrowser->setHtml(texteT);
         }
         else 
         {
-            textBrowser->setText(texte);
+            textBrowser->setHtml(texte);
         }
         prefixe.clear();
     }
