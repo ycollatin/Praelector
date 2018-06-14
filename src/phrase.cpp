@@ -950,9 +950,9 @@ QString Phrase::htmlLiens()
         Requete* req = lr.at(i);
         if (enr())
         {
-            for (int i=0;i<_enr.count();++i)
+            for (int j=0;j<_enr.count();++j)
             {
-                if (req->egale(_enr.at(i)))
+                if (req->egale(_enr.at(j)))
                 {
                     reqEnr = true;
                     break;
@@ -962,7 +962,7 @@ QString Phrase::htmlLiens()
         ll.append(req->html(reqEnr));
     }
     ll.removeDuplicates();
-    return ll.join("<br/>\n");
+    return ll.join("\n");
 }
 
 QStringList Phrase::lgr(char pos)
@@ -1266,7 +1266,7 @@ QString Phrase::saisie (QString l, QString s)
 
 void Phrase::setEnr(QString e)
 {
-    _enr = e.split(';');
+    _enr = e.split(';',QString::SkipEmptyParts);
 }
 
 void Phrase::setFTrace(QString nf)
@@ -1406,6 +1406,7 @@ void Phrase::trace()
         bool ins = false;
         _trace.append(tr());
         QString t = _trace.join(';').simplified();
+        t.replace("_;", "_");
         int ne = _num.toInt();   // numéro de la trace à enregistrer
         QString lin;
         do
@@ -1463,10 +1464,12 @@ void Phrase::traceReq()
     }
 }
 
+/*
 void Phrase::vacEnr()
 {
     _enr.clear();
 }
+*/
 
 MotFlechi* Phrase::vbRelative(MotFlechi* mf)
 {

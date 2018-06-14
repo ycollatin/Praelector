@@ -117,7 +117,7 @@ class Phrase: public QObject
         void              setFTrace(QString nf);
         QList<Mot*>       supersDe(Mot* m);
         QString           tr();
-        void              vacEnr();
+        //void              vacEnr();
         MotFlechi*        vbRelative(MotFlechi* mf);
     signals:
         void              repondu(const QString);
@@ -201,7 +201,8 @@ namespace Chaines {
 		 "<a href=\"-quitter\">Quitter</a>");
 
 	const QString titrePraelector =
-		"<h2 style=\"font-family:serif;letter-spacing:2em\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
+		//"<h2 style=\"font-family:serif;letter-spacing:2em\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
+		"<h2 style=\"font-family:serif;\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
 
     /*
 	const QString affSubGris = QString::fromUtf8
