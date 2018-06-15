@@ -244,11 +244,11 @@ void MainWindow::enr()
 {
     // joindre les cmd
     trace.prepend(phrase->num());
+    trace.append(phrase->tr());
     QString vest = trace.join(',');
     // chercher le fichier trace
     if (!fTrace.exists())
     {
-        qDebug()<<"fTrace:"<<fTrace.fileName();
         fTrace.open(QIODevice::WriteOnly);
         QTextStream (&fTrace) << vest <<'\n';
         fTrace.close();
