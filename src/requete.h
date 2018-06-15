@@ -84,6 +84,7 @@ class Requete : public QObject
         bool        idConflit(QString id);
         void        incItr();
         int         largeur();
+        QString     lemMorph();
         bool        multi();
         int         nbEx();
         int         nbPonct(QChar c);

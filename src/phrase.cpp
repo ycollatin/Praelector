@@ -21,6 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
+//        - trop de liens surlignés en relecture : la trace de la requête est insuffisante, elle
+//          doit donner aussi la morpho des sub et sup.
 //        - Il semble que l'affichage (au moins) des fléchis soit calculé deux fois.
 //        - Saut de ligne indésirable dans l'enregistrement trace
 //        - omni uita : dét non proposé
@@ -377,7 +379,6 @@ void Phrase::ecoute (QString m)
         } 
         // passer au mot suivant
         ++_imot;
-        _trace.append("suiv");
         // résolution des requêtes
         if (_imot > 0 && !motCourant()->reqLancees()) setLiens();
         // lancement de nouvelles requêtes
@@ -387,7 +388,6 @@ void Phrase::ecoute (QString m)
 	else if (m == "-prec" && _imot > 0)
 	{
 		--_imot;
-        _trace.append("prec");
 	}
 	/* Nouvelle phrase saisie */
 	else if (m == "-nouvPhr")
@@ -415,7 +415,6 @@ void Phrase::ecoute (QString m)
 		_imot = 0;
         motCourant()->lance();
 	}
-    else if (m == "-trace") trace();
 	else // mots et liens
 	{
 		Mot *cour = motCourant();
@@ -426,7 +425,6 @@ void Phrase::ecoute (QString m)
 			case 'i':  // retour rapide vers le mot de rang m[1]
                 {
                     _imot = eclats.at(1).toInt();
-                    _trace.append("imot="+eclats.at(1));
                     break;
                 }
 			    /* PREMIÈRE SECTION : MORPHOS DU NOUVEAU MOT*/
@@ -472,13 +470,11 @@ void Phrase::ecoute (QString m)
 						case 'c': // éliminer tous les autres fléchis
                             {
                                 choixFlechi(mf);
-                                _trace.append("choixFlechi:"+eclats.at(2));
 							    break;
                             }
 						case 'd': // rotation du déterminant
 							{
 								mf->setDet(estFeminin(mf->trNue()));
-                                _trace.append("det:"+eclats.at(2));
 								break;
 							}
 						case 'e':  // éditer de la traduction
@@ -491,14 +487,12 @@ void Phrase::ecoute (QString m)
 								if (!t.isEmpty())
                                 {
                                     mf->setTr(t);
-                                    _trace.append("tr:"+eclats.at(2)+":"+t);
                                 }
 								break;
 							}
                         case 'i': // rotation de la traduction du fléchi
                             {
                                 cour->flechi(num)->incItr();
-                                _trace.append("rotTr:"+eclats.at(2)+":"+cour->flechi(num)->tr());
                                 break;
                             }
 						case 'r': // rejeter m.r.m = le lemme ; m.r.f la forme
@@ -511,13 +505,11 @@ void Phrase::ecoute (QString m)
                                         {
                                             Lemme* l = cour->flechi(n)->lemme();
                                             annuleLemme(cour, l);
-                                            _trace.append("annuleLemme:"+eclats.at(3));
                                             break;
                                         }
                                     case 'f':
                                         {
                                             cour->annuleFlechi(n);
-                                            _trace.append("annuleFlechi:"+eclats.at(3));
                                             break;
                                         }
                                     default:
@@ -529,7 +521,6 @@ void Phrase::ecoute (QString m)
 							{
 								MotFlechi *mf = cour->flechi(num);
 								mf->setSujet();
-                                _trace.append("rotSujet:"+eclats.at(2));
 								break;
 							}
 						case 'v':
@@ -627,7 +618,6 @@ void Phrase::ecoute (QString m)
                         case 't': // rotation de la traduction du lien
                             {
                                 req->incItr();
-                                _trace.append("incItr");
                                 break;
                             }
 						case 'v':   // pos 1, valider
@@ -639,7 +629,6 @@ void Phrase::ecoute (QString m)
                                 else 
                                 {
                                     choixReq(req);
-                                    _trace.append(req->trace());
                                 }
 								break;
 							}
@@ -738,7 +727,6 @@ void Phrase::ecoute (QString m)
                                 if (req->requerant() == cour)
                                 {
                                     req->setRejetee(true, "rejet explicite");
-                                    _trace.append("reqRej:"+req->trace());
                                 }
 								break;
 					      	}
@@ -754,11 +742,6 @@ void Phrase::ecoute (QString m)
 	}
 	majAffichage();
 	emit(repondu(_reponse));
-}
-
-bool Phrase::enr()
-{
-    return !_enr.isEmpty();
 }
 
 bool Phrase::estFeminin(QString n)
@@ -949,21 +932,8 @@ QString Phrase::htmlLiens()
     QStringList ll;
     for (int i=0;i<lr.count();++i)
     {
-        bool reqEnr = false;
         Requete* req = lr.at(i);
-        if (enr())
-        {
-            for (int j=0;j<_enr.count();++j)
-            {
-                if (req->egale(_enr.at(j)))
-                {
-                    reqEnr = true;
-                    break;
-                }
-            }
-            ll.append(req->html(reqEnr));
-        }
-        else ll.append(req->html());
+        ll.append(req->html());
     }
     ll.removeDuplicates();
     return ll.join("\n");
@@ -1096,6 +1066,11 @@ int Phrase::nbSuper(MotFlechi* mf)
             ++ret;
     }
     return ret;
+}
+
+QString Phrase::num()
+{
+    return _num;
 }
 
 void Phrase::nettoieHomonymes(QString id)
@@ -1268,11 +1243,7 @@ QString Phrase::saisie (QString l, QString s)
 	return ret;
 }
 
-void Phrase::setEnr(QString e)
-{
-    _enr = e.split(';',QString::SkipEmptyParts);
-}
-
+/*
 void Phrase::setFTrace(QString nf)
 {
     QString nft;
@@ -1280,6 +1251,7 @@ void Phrase::setFTrace(QString nf)
         << "/enr/"<<nf<<".prae";
     _fTrace.setFileName(nft);
 }
+*/
 
 void Phrase::setGr(QString t)
 {
@@ -1335,8 +1307,6 @@ void Phrase::setGr(QString t)
             ne.append(c);
         }
     }
-    _trace.clear();
-    _trace.append(QString("%1 %2_").arg(_num).arg(_gr));
 }
 
 void Phrase::setLiens()
@@ -1399,65 +1369,6 @@ QString Phrase::tr()
     return _tr;
 }
 
-void Phrase::trace()
-{
-    if (!_trace.isEmpty())
-    {
-        _fTrace.open(QIODevice::ReadOnly);
-        // lire les lignes
-        QTextStream fl(&_fTrace);
-        QStringList neotrace;
-        bool ins = false;
-        _trace.append(tr());
-        QString t = _trace.join(';').simplified();
-        t.replace("_;", "_");
-        int ne = _num.toInt();   // numéro de la trace à enregistrer
-        QString lin;
-        do
-        {
-            // chercher la phrase par son numéro
-            lin = fl.readLine().simplified();
-            if (lin.startsWith('!'))
-            {
-                neotrace.append(lin);
-                ins = true;
-                continue;
-            }
-            QString n = lin.section(' ',0,0);
-            int nl = n.toInt();      // numéro de la ligne lue
-            // si la trace à enregistrer existe, l'écraser
-            if (ne == nl && !ins)
-            {
-                neotrace.append(t);
-                ins = true;
-                continue;
-            }
-            // si son n° est inférieur à la ligne lue, l'insérer
-            if (ne < nl && !ins)
-            {
-                neotrace.append(t);
-                ins = true;
-            }
-            // puis enregistrer la ligne lue 
-            neotrace.append(lin);
-        }
-        while (!lin.isNull());
-
-        // si la trace n'est toujours pas enregistrée il faut l'ajouter à la fin.
-        if (!ins)
-        {
-            neotrace.append(t);
-        }
-        _fTrace.close();
-        // enregistrer neotrace
-        _fTrace.open(QIODevice::WriteOnly);
-        QTextStream flneo(&_fTrace);
-        for (int i=0;i<neotrace.count();++i)
-            flneo << neotrace.at(i)<<'\n';
-        _fTrace.close();
-    }
-}
-
 void Phrase::traceReq()
 {
     for (int i=0;i<_requetes.count();++i)
@@ -1467,13 +1378,6 @@ void Phrase::traceReq()
         else std::cout << qPrintable("\n---\nrequête "+QString::number(i)+" nulle");
     }
 }
-
-/*
-void Phrase::vacEnr()
-{
-    _enr.clear();
-}
-*/
 
 MotFlechi* Phrase::vbRelative(MotFlechi* mf)
 {

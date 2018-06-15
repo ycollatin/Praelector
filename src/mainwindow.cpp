@@ -48,16 +48,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	phrase = new Phrase("");
 	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
 	connect(textBrowser, SIGNAL(linkClicked(QUrl)),this, SLOT(calcul(QUrl)));
-	//textBrowser->setOpenLinks(false);
     clavier = false;
     alphabet = "abcdefghijklmnopqrstuv";
-    /*
-	menu = "<a href=\"-corpus\">choisir une phrase</a> "
-		 "<a href=\"-enr\">choisir une phrase enregistrée</a> "
-		 "<a href=\"-nouvPhr\">Saisir une phrase</a> "
-         "<a href=\"-init\">annuler</a><a href=\"-quitter\">quitter</a><br/>";
-    */
     wxyz = "wxyz";
+    lurl = QStringList()
+    << "-prec"
+    << "-suiv"
+    << "m.r.m."
+    << "m.r.f."
+    << "m.i."
+    << "m.e."
+    << "m.c."
+    << "m.d."
+    << "m.s."
+    << "l.r."
+    << "l.v."
+    << "l.t.";
+
     // construire la liste des clés alpha
     for (int i=0;i<alphabet.count();++i)
         clesL.append(alphabet.at(i));
@@ -114,6 +121,15 @@ void MainWindow::ajTouches()
     }
 }
 
+void MainWindow::ajTrace(QString cmd)
+{
+    for (int i=0;i<lurl.count();++i)
+        if (cmd.startsWith(lurl.at(i)))
+        {
+            trace.append(cmd);
+        }
+}
+
 /*
  * MainWindow::calcul (Qurl url) traite l'hyperlien cliqué.
  * Il le renvoie si nécessaire à la méhtode homonyme de Phrase.
@@ -144,20 +160,23 @@ void MainWindow::calcul (QUrl url)
 	{
         lenr.clear();
         parle(choixPhr(cmd));
+        QString nf = cmd.remove(0,1);
+        setFTrace(nf);
 	}
+    else if (cmd.startsWith("-trace"))
+    {
+        enr();
+    }
 	else 
 	{
-        // passer les enregistrements si -phr
+        // nouvelle phrase : réinitaliser la trace 
         if (cmd.startsWith("-phr"))
         {
-            QString num = cmd.section('_',0,0);
-            num.remove(0,4);
-            int numint = num.toInt()-1;
-            if (lenr.count() > 0)
-            {
-                phrase->setEnr(lenr.at(numint));
-            }
+            trace.clear();
         }
+        // éventuellement, enregistrer la commande dans trace
+        else (ajTrace(cmd));
+        // passer la commande à phrase
 		phrase->ecoute(cmd);
 	}
 }
@@ -182,7 +201,6 @@ QString MainWindow::catalogue(QString rep)
 QString MainWindow::choixPhr(QString c)
 {
 	c.remove (0,1);
-    phrase->setFTrace(QFileInfo(c).baseName());
 	QFile f(c);
 	f.open (QIODevice::ReadOnly|QIODevice::Text);
 	QTextStream fluxD (&f);
@@ -213,7 +231,6 @@ QString MainWindow::choixPhr(QString c)
             {
                 lenr.append(lin.section('_',1));
             }
-            //else phrase->vacEnr();
             ++i;
         }
 		lp.append (p);
@@ -221,6 +238,72 @@ QString MainWindow::choixPhr(QString c)
 	f.close ();
 	lp.append (Chaines::menu);
 	return lp.join ("<br/>\n");
+}
+
+void MainWindow::enr()
+{
+    // joindre les cmd
+    trace.prepend(phrase->num());
+    QString vest = trace.join(',');
+    // chercher le fichier trace
+    if (!fTrace.exists())
+    {
+        qDebug()<<"fTrace:"<<fTrace.fileName();
+        fTrace.open(QIODevice::WriteOnly);
+        QTextStream (&fTrace) << vest <<'\n';
+        fTrace.close();
+        return;
+    }
+    fTrace.open(QIODevice::ReadOnly);
+    // lire les lignes
+    QTextStream fl(&fTrace);
+    bool ins = false;
+    QStringList lignes;
+    QStringList neotrace;
+    int ne = phrase->num().toInt();   // numéro de la trace à enregistrer
+    QString lin;
+    do
+    {
+        // chercher la phrase par son numéro
+        lin = fl.readLine().simplified();
+        if (lin.startsWith('!'))
+        {
+            neotrace.append(lin);
+            ins = true;
+            continue;
+        }
+        QString n = lin.section(',',0,0);
+        int nl = n.toInt();      // numéro de la ligne lue
+        // si la trace à enregistrer existe, l'écraser
+        if (ne == nl && !ins)
+        {
+            neotrace.append(vest);
+            ins = true;
+            continue;
+        }
+        // si son n° est inférieur à la ligne lue, l'insérer
+        if (ne < nl && !ins)
+        {
+            neotrace.append(vest);
+            ins = true;
+        }
+        // puis enregistrer la ligne lue 
+        neotrace.append(lin);
+    }
+    while (!lin.isNull());
+
+    // si la trace n'est toujours pas enregistrée il faut l'ajouter à la fin.
+    if (!ins)
+    {
+        neotrace.append(vest);
+    }
+    fTrace.close();
+    // enregistrer neotrace
+    fTrace.open(QIODevice::WriteOnly);
+    QTextStream flneo(&fTrace);
+    for (int i=0;i<neotrace.count();++i)
+        flneo << neotrace.at(i)<<'\n';
+    fTrace.close();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -275,4 +358,14 @@ void MainWindow::parle(QString m)
 	    textBrowser->setHtml(texteT);
     }
     else textBrowser->setHtml(texte);
+}
+
+void MainWindow::setFTrace(QString nf)
+{
+    QString nft;
+    QTextStream(&nft) << qApp->applicationDirPath()
+        << "/enr/"
+        << QFileInfo(nf).baseName()
+        <<".prae";
+    fTrace.setFileName(nft);
 }

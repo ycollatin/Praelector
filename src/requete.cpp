@@ -202,10 +202,12 @@ bool Requete::egale(Requete* req)
     return true;
 }
 
+/*
 bool Requete::egale(QString tr)
 {
     return trace() == tr;
 }
+*/
 
 bool Requete::enConflit(QString id)
 {
@@ -316,7 +318,7 @@ QString Requete::humain(bool num)
     if (num) fl << _num <<". ";
     if (_super == 0)
         fl << "?";
-    else fl << _super->gr();
+    else fl << _super->lemme()->gr();
     fl << " "<<id()<<" ";
     if (_sub == 0)
         fl << "?";
@@ -346,6 +348,18 @@ int Requete::largeur()
     if (!close()) return 1000;
     return abs(_super->rang() - _sub->rang());
 }
+
+/*
+QString Requete::lemMorph()
+{
+    if (!close()) return "";
+    QString ret;
+    QTextStream(&ret)
+        << _super->lemme()->gr()<<","<<_super->morpho()<<"-"
+        << _sub->lemme()->gr()<<","<<_sub->morpho();
+    return ret;
+}
+*/
 
 bool Requete::multi()
 {
@@ -578,6 +592,7 @@ QString Requete::tr()
     return ret;
 }
 
+/*
 QString Requete::trace()
 {
     if (!close()) return "-";
@@ -586,9 +601,11 @@ QString Requete::trace()
     fl  << _super->mot()->rang()
         << "->"
         << _sub->mot()->rang()
-        << "[" << id() << "]";
+        << "[" << id() << "] "
+        << lemMorph();
     return ret;
 }
+*/
 
 QString Requete::trSub()
 {

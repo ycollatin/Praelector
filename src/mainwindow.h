@@ -54,17 +54,23 @@ class MainWindow : public QMainWindow
         QString            alphabet;
         QStringList        clesL;
         bool               clavier;
+        QFile              fTrace;
         QStringList        lenr;
+        QStringList        lurl;
 		Phrase*            phrase;
         QString            prefixe;
         QString            texte;
         QString            texteT; // texte avec reccourcis
+        QStringList        trace;
         QMap<QString,QUrl> urls;
         QString            wxyz;
 
         void               ajTouches();
+        void               ajTrace(QString cmd);
         QString            catalogue(QString rep);
 		QString            choixPhr(QString cmd);
+        void               enr();
+        void               setFTrace(QString nf);
 
     protected:
         void keyPressEvent(QKeyEvent *ev);

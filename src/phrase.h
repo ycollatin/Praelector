@@ -38,9 +38,7 @@ class Phrase: public QObject
     private:
         QStringList                entreMots;
 	    QString                    _chAdditions;
-        QStringList                _enr;
         QStringList                _feminins;
-        QFile                      _fTrace;
         QString                    _gr;
         QMap<QString,Handicap*>    _handicaps;
         int                        _imot;
@@ -55,7 +53,6 @@ class Phrase: public QObject
         QString                    _reponse;
         QList<Requete*>            _requetes;
         QString                    _tr;
-        QStringList                _trace;
 
         bool                    enr();
         bool                    estFeminin(QString n);
@@ -100,6 +97,7 @@ class Phrase: public QObject
         int               nbRegles();
         int               nbRequetes();
         int               nbSuper(MotFlechi* mf);
+        QString           num();
         int               numNouvReq();
         void              nettoieHomonymes(QString id);
         void              peupleHandicap();
@@ -111,19 +109,15 @@ class Phrase: public QObject
         QList<Requete*>   reqCC(Mot* m);
         Requete*          requete(int n);
         QString static    saisie (QString l, QString s);
-        void              setEnr(QString e);
         void              setGr(QString t);
         void              setLiens();
-        void              setFTrace(QString nf);
         QList<Mot*>       supersDe(Mot* m);
         QString           tr();
-        //void              vacEnr();
         MotFlechi*        vbRelative(MotFlechi* mf);
     signals:
         void              repondu(const QString);
     public slots:
         void              traceReq();
-        void              trace();
 };
 
 namespace Chaines {
