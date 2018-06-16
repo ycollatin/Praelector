@@ -21,10 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - trop de liens surlignés en relecture : la trace de la requête est insuffisante, elle
-//          doit donner aussi la morpho des sub et sup.
 //        - Il semble que l'affichage (au moins) des fléchis soit calculé deux fois.
-//        - Saut de ligne indésirable dans l'enregistrement trace
 //        - omni uita : dét non proposé
 //        - Plantage si on réinitialise sur le premier mot.
 //        - 27 nullus dolor est quam : nombreuses erreurs.
@@ -41,7 +38,6 @@
 //        - Trace :
 //          * Rendre le format indépendant des choix précédents
 //          * Mentionner l'auteur de la trace ;
-//          * Si la lecture courante est trop éloignée de la trace lue : "trace perdue"
 //          * Comparaision en fin de lecture ?
 //        - Comment lier ?
 //              . un pronom sujet non exprimé peut avoir une apposition :
@@ -1243,15 +1239,10 @@ QString Phrase::saisie (QString l, QString s)
 	return ret;
 }
 
-/*
-void Phrase::setFTrace(QString nf)
+QString Phrase::gr()
 {
-    QString nft;
-    QTextStream(&nft) << qApp->applicationDirPath()
-        << "/enr/"<<nf<<".prae";
-    _fTrace.setFileName(nft);
+    return _gr;
 }
-*/
 
 void Phrase::setGr(QString t)
 {

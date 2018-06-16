@@ -78,6 +78,7 @@ class Phrase: public QObject
         bool              estVbRelative(MotFlechi* mf);
         bool              filtre(Requete* req);
         QString           gauche(Mot *m);
+        QString           gr();
         QString           grLu();
         int               handicap(MotFlechi* mf);
         QList<Requete*>   homolexes(Requete* req);
