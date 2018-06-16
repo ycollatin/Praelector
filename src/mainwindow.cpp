@@ -222,15 +222,18 @@ QString MainWindow::choixPhr(QString c)
         {
             // TODO vérifier lin vide
             QString aff;
-            int nsep = lin.count('_');
-            if (nsep > 0) aff = lin.section('_',0,0);
-            else aff = lin;
+            /*
+            if (lin.contains(",-suiv"))
+                aff = lin.section(',',1,1);
+            else*/ aff = lin;
             QTextStream fl(&p);
             fl << "<a href=\"-phr"<<i<<"_"<<aff<<"\">"<<i<<"-</a> "<< aff;
+            /*
             if (nsep > 0) 
             {
                 lenr.append(lin.section('_',1));
             }
+            */
             ++i;
         }
 		lp.append (p);
@@ -242,9 +245,9 @@ QString MainWindow::choixPhr(QString c)
 
 void MainWindow::enr()
 {
-    trace.prepend(phrase->gr());
+    trace.prepend(phrase->gr()+"<!--");
     trace.prepend(phrase->num());
-    trace.append(phrase->tr());
+    trace.append(phrase->tr()+"-->");
     // joindre les cmd
     QString vest = trace.join(',');
     while (vest.endsWith('\n')) vest.chop(1);
@@ -252,7 +255,7 @@ void MainWindow::enr()
     if (!fTrace.exists())
     {
         fTrace.open(QIODevice::WriteOnly);
-        QTextStream (&fTrace) << vest <<'\n';
+        QTextStream (&fTrace) << vest << "\n";;
         fTrace.close();
         return;
     }
