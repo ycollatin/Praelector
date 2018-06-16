@@ -242,10 +242,12 @@ QString MainWindow::choixPhr(QString c)
 
 void MainWindow::enr()
 {
-    // joindre les cmd
+    trace.prepend(phrase->gr());
     trace.prepend(phrase->num());
     trace.append(phrase->tr());
+    // joindre les cmd
     QString vest = trace.join(',');
+    while (vest.endsWith('\n')) vest.chop(1);
     // chercher le fichier trace
     if (!fTrace.exists())
     {
