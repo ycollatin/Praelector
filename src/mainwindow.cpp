@@ -151,6 +151,7 @@ void MainWindow::calcul (QUrl url)
 	}
 	else if (cmd == "-corpus" || cmd == "-enr")
 	{
+        qDebug()<<"corpus, cmd"<<cmd;
         cmd.remove(0,1);
 		// charger la liste des fichiers du rép.
         QString page = catalogue(cmd);
@@ -173,9 +174,25 @@ void MainWindow::calcul (QUrl url)
         if (cmd.startsWith("-phr"))
         {
             trace.clear();
+            // séparer éventuellement la phrase de l'enregistrement maître
+            relect = cmd.contains("%3C!--,");
+            if (relect)
+            {
+                // -phr1_1,id bene scio.%3C!--,-suiv,-suiv,l.v.28,l.v.26,m.i.3,m.i.3,je le sais bien--%3E
+                //QRegularExpressionMatch rem = QRegularExpression("(-phr\\d+_),([]*)%3C!--,(.*)--%3E$").match(cmd);
+                //cmd = rem.captured(1)+rem.captured(2);
+                //trace = rem.captured(3).split(',');
+                QRegExp re = QRegExp("(-phr)(\\d)+_\\d*,([^%]*)%3C!--,(.*)--%3E$");
+                int pos = re.indexIn(cmd);
+                if (pos > -1)
+                {
+                    cmd = re.cap(1)+"_"+re.cap(3);
+                    trace = re.cap(4).split(',');
+                }
+            }
         }
         // éventuellement, enregistrer la commande dans trace
-        else (ajTrace(cmd));
+        else if (!relect) (ajTrace(cmd));
         // passer la commande à phrase
 		phrase->ecoute(cmd);
 	}
@@ -222,18 +239,9 @@ QString MainWindow::choixPhr(QString c)
         {
             // TODO vérifier lin vide
             QString aff;
-            /*
-            if (lin.contains(",-suiv"))
-                aff = lin.section(',',1,1);
-            else*/ aff = lin;
+            aff = lin;
             QTextStream fl(&p);
             fl << "<a href=\"-phr"<<i<<"_"<<aff<<"\">"<<i<<"-</a> "<< aff;
-            /*
-            if (nsep > 0) 
-            {
-                lenr.append(lin.section('_',1));
-            }
-            */
             ++i;
         }
 		lp.append (p);
@@ -357,6 +365,8 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
 void MainWindow::parle(QString m)
 {
     texte = m;
+    qDebug()<<"parle, texte"<<texte;
+    qDebug()<<"clavier:"<<clavier;
     if (clavier)
     {
         ajTouches();

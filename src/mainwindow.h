@@ -70,6 +70,7 @@ class MainWindow : public QMainWindow
         QString            catalogue(QString rep);
 		QString            choixPhr(QString cmd);
         void               enr();
+        bool               relect;
         void               setFTrace(QString nf);
 
     protected:
