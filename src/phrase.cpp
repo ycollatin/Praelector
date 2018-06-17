@@ -348,10 +348,12 @@ QString Phrase::droite(Mot *m)
 
 void Phrase::ecoute (QString m)
 {
+    qDebug()<<"Phrase::ecoute m"<<m;
     _reponse.clear();
 	if (m.isEmpty() || m == "-init")
 	{
 		majAffichage ();
+        qDebug()<<"ecoute, apreès maj, _reponse"<<_reponse;
 		emit (repondu(_reponse));
 		return;
 	}
@@ -400,7 +402,6 @@ void Phrase::ecoute (QString m)
 	/* Nouvelle phrase choisie */
 	else if (m.startsWith("-phr"))
 	{
-        // séparer la commande, la phrase et son enregistrement
         QStringList ecl = m.split('_');
         // 0 : numéro de la phrase, en string
         _num = ecl.at(0);
