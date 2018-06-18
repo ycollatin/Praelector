@@ -348,12 +348,10 @@ QString Phrase::droite(Mot *m)
 
 void Phrase::ecoute (QString m)
 {
-    qDebug()<<"Phrase::ecoute m"<<m;
     _reponse.clear();
 	if (m.isEmpty() || m == "-init")
 	{
 		majAffichage ();
-        qDebug()<<"ecoute, apreès maj, _reponse"<<_reponse;
 		emit (repondu(_reponse));
 		return;
 	}
