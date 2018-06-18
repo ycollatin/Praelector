@@ -15,12 +15,14 @@
 
 #include <QDebug>
 #include <QDir>
+#include <QWebPage>
 
 #include "mainwindow.h"
 #include "phrase.h"
 
 Editeur::Editeur(QWidget *parent) : QWebView(parent)
 {
+    page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 }
 
 void Editeur::emet(QUrl url)
@@ -139,7 +141,7 @@ void MainWindow::calcul (QUrl url)
 {
     texte.clear();
     texteT.clear();
-	QString cmd = url.toString ();
+	QString cmd = url.toString();
 	if (cmd == "-quitter") 
 	{
 		// TODO : détruire MainWindow (et donc phrase), mais pê dans main.cpp.
@@ -151,7 +153,6 @@ void MainWindow::calcul (QUrl url)
 	}
 	else if (cmd == "-corpus" || cmd == "-enr")
 	{
-        qDebug()<<"corpus, cmd"<<cmd;
         cmd.remove(0,1);
 		// charger la liste des fichiers du rép.
         QString page = catalogue(cmd);
@@ -365,8 +366,6 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
 void MainWindow::parle(QString m)
 {
     texte = m;
-    qDebug()<<"parle, texte"<<texte;
-    qDebug()<<"clavier:"<<clavier;
     if (clavier)
     {
         ajTouches();
