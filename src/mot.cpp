@@ -328,6 +328,7 @@ QString Mot::html()
                       break;
             default:break;
         }
+        //fl	<< " <input type=\"text\" name=\"edtr\">"
         fl	<< " <a href=\"m.e."<<i<<"\">&eacute;diter</a>"
             << " <a href=\"m.i."<<i<<"\">tr. suiv.</a>"
 			<< " <a href=\"m.c."<<i<<"\">choisir</a> rejeter"
