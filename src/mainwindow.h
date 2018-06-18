@@ -55,6 +55,7 @@ class MainWindow : public QMainWindow
         QStringList        clesL;
         bool               clavier;
         QFile              fTrace;
+        int                ienr;
         QStringList        lenr;
         QStringList        lurl;
 		Phrase*            phrase;
@@ -72,6 +73,7 @@ class MainWindow : public QMainWindow
         void               enr();
         bool               relect;
         void               setFTrace(QString nf);
+        void               surligne();
 
     protected:
         void keyPressEvent(QKeyEvent *ev);

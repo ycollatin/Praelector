@@ -51,6 +51,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
 	connect(textBrowser, SIGNAL(linkClicked(QUrl)),this, SLOT(calcul(QUrl)));
     clavier = false;
+    relect = false;
     alphabet = "abcdefghijklmnopqrstuv";
     wxyz = "wxyz";
     lurl = QStringList()
@@ -190,6 +191,7 @@ void MainWindow::calcul (QUrl url)
                     cmd = re.cap(1)+"_"+re.cap(3);
                     trace = re.cap(4).split(',');
                 }
+                ienr = 0;
             }
         }
         // éventuellement, enregistrer la commande dans trace
@@ -366,6 +368,10 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
 void MainWindow::parle(QString m)
 {
     texte = m;
+    if (relect)
+    {
+        surligne();
+    }
     if (clavier)
     {
         ajTouches();
@@ -382,4 +388,24 @@ void MainWindow::setFTrace(QString nf)
         << QFileInfo(nf).baseName()
         <<".prae";
     fTrace.setFileName(nft);
+}
+
+void MainWindow::surligne()
+{
+    int from = texte.indexOf("<a href=", 0);
+    while (from > -1)
+    {
+        from += 9;
+        int to = texte.indexOf("\"", from);
+        QString url = texte.mid(from, to-from);
+        //if (relue(url))
+        if (url == trace.at(ienr))
+        {
+            //texte.insert(to+2, "<span style=\"bgcolor:lightyellow;\">");
+            texte.insert(to+2, "<span style=\"background-color:lightyellow;\">");
+            to = texte.indexOf("</a>", to);
+            texte.insert(to, "</span>");
+        }
+        from = texte.indexOf("<a href=", to);
+    }
 }
