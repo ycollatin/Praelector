@@ -35,10 +35,14 @@
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
+//        - Liens à ajouter :
+//          * clavier
+//          * voir la traduction enregistrée
+//          * ligne de saisie, combo de traduction
 //        - Trace :
-//          * Rendre le format indépendant des choix précédents
+//          * édition de traduction dans l'url d'enregistrement
 //          * Mentionner l'auteur de la trace ;
-//          * Comparaision en fin de lecture ?
+//          * Comparaision de traduction en fin de lecture
 //        - Comment lier ?
 //              . un pronom sujet non exprimé peut avoir une apposition :
 //                ibam forte uia sacra nescio quid meditans....
@@ -65,7 +69,6 @@
 //        - Lexique personnel
 //        - En vert : fonction des liens proposés
 //        - accorder la traduction de l'épithète
-//        - Remplacer QTextBrowser par QWebView ?
 //                           XXX
 //
 

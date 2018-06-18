@@ -193,7 +193,16 @@ namespace Chaines {
 		 "<a href=\"-corpus\">choisir une phrase</a><br/>\n"
 		 "<a href=\"-enr\">choisir une phrase enregisrée</a><br/>\n"
 		 "<a href=\"-aide\">Documentation</a> "
-		 "<a href=\"-quitter\">Quitter</a>");
+		 "<a href=\"-quitter\">Quitter</a>"
+        );
+         /*
+         // test
+         "<br/><select>"
+         "<option>un</option>"
+         "<option>deux</option>"
+         "<option>trois</option>"
+         "</select>"
+         */
 
 	const QString titrePraelector =
 		//"<h2 style=\"font-family:serif;letter-spacing:2em\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
