@@ -57,6 +57,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     lurl = QStringList()
     << "-prec"
     << "-suiv"
+    << "i."
     << "m.r.m."
     << "m.r.f."
     << "m.i."
@@ -143,6 +144,7 @@ void MainWindow::calcul (QUrl url)
     texte.clear();
     texteT.clear();
 	QString cmd = url.toString();
+    if (relect && cmd == trace.at(ienr)) ++ienr;
 	if (cmd == "-quitter") 
 	{
 		// TODO : détruire MainWindow (et donc phrase), mais pê dans main.cpp.
@@ -401,8 +403,8 @@ void MainWindow::surligne()
         //if (relue(url))
         if (url == trace.at(ienr))
         {
-            //texte.insert(to+2, "<span style=\"bgcolor:lightyellow;\">");
-            texte.insert(to+2, "<span style=\"background-color:lightyellow;\">");
+            //texte.insert(to+2, "<span style=\"backgroundcolor:lightyellow;\">");
+            texte.insert(to+2, "<span style=\"background-color:red;\">");
             to = texte.indexOf("</a>", to);
             texte.insert(to, "</span>");
         }
