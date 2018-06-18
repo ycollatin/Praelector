@@ -124,10 +124,10 @@ class Phrase: public QObject
 namespace Chaines {
 
     const QString menu = QString::fromUtf8
-	    ("<a href=\"-corpus\">choisir une phrase</a> "
+	    ("<a href=\"-corpus\">choisir une phrase</a> "
 		 "<a href=\"-enr\">choisir une phrase enregistrée</a> "
-		 "<a href=\"-nouvPhr\">Saisir une phrase</a> "
-         "<a href=\"-init\">annuler</a><a href=\"-quitter\">quitter</a><br/>");
+		 "<a href=\"-nouvPhr\">Saisir une phrase</a> "
+         "<a href=\"-init\">annuler</a> <a href=\"-quitter\">quitter</a><br/>");
 
 	const QString affichage = QString::fromUtf8
         ("%1<hr/>%2"
