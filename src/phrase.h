@@ -124,30 +124,25 @@ class Phrase: public QObject
 namespace Chaines {
 
     const QString menu = QString::fromUtf8
-	    ("<a href=\"-corpus\">choisir une phrase</a> "
-		 "<a href=\"-enr\">choisir une phrase enregistrée</a> "
-		 "<a href=\"-nouvPhr\">Saisir une phrase</a> "
-         "<a href=\"-init\">annuler</a> <a href=\"-quitter\">quitter</a><br/>");
+	    ("<hr/>"
+         "<a href=\"-corpus\">choisir une phrase</a><br/>"
+		 "<a href=\"-enr\">choisir une phrase enregistrée</a><br/>"
+		 "<a href=\"-nouvPhr\">Saisir une phrase</a><br/>"
+         "<a href=\"-clav\">clavier</a><br/>"
+         "<a href=\"-init\">annuler</a> <a href=\"-quitter\">quitter</a><br/>"
+         "<hr/>");
 
 	const QString affichage = QString::fromUtf8
-        ("%1<hr/>%2"
-		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%3"
+        ("%1%2<br/>"
+         "%3<br/>"
+		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%4"
 		 "<hr/><a href=\"-reinit\">réinitialiser</a>&nbsp;"
          "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a>&nbsp;"
          "<a href=\"-trace\">enregistrer</a>&nbsp;"
          "<a href=\"-quitter\">quitter</a>"
-		 "<hr/><strong>Liens syntaxiques</strong><br/>%4\n"
-		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n%5"
-         "<br/>%6");
-
-	const QString affSubAPrendre = QString::fromUtf8
-		("%1 <span style=\"color:blue;font-style:italic\">%2</span> "
-		 "<a href=\"l.v.%3\">valider</a> <a href=\"l.r.%3\">rejeter</a>");
-
-	const QString affSubValide = QString::fromUtf8
-		("%1 <span style=\"color:green;font-style:italic;font-weight:bold\">%2</span> "
-		 "<a href=\"l.g.%3\">&larr;</a><a href=\"l.p.%3\">&#x21c6;</a><a href=\"l.d.%3\">&rarr;</a>"
-		 "<a href=\"l.r.%3\">rejeter</a>");
+		 "<hr/><strong>Liens syntaxiques</strong><br/>%5\n"
+		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n%6"
+         "<hr/>%7");
 
 	const QString documentation = QString::fromUtf8
 		(
@@ -186,15 +181,6 @@ namespace Chaines {
 		 "de ces traductions. L'état de la traduction est affiché au "
 		 "bas de la fenêtre. Bon courage !");
 
-	const QString initAff = QString::fromUtf8
-		("%1<hr/>"
-		 "est une aide à la lecture de la phrase latine. "
-		 "<br/>\n<a href=\"-nouvPhr\">Saisir une phrase</a>  "
-		 "<a href=\"-corpus\">choisir une phrase</a><br/>\n"
-		 "<a href=\"-enr\">choisir une phrase enregisrée</a><br/>\n"
-		 "<a href=\"-aide\">Documentation</a> "
-		 "<a href=\"-quitter\">Quitter</a>"
-        );
          /*
          // test
          "<br/><select>"
@@ -207,12 +193,6 @@ namespace Chaines {
 	const QString titrePraelector =
 		//"<h2 style=\"font-family:serif;letter-spacing:2em\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
 		"<h2 style=\"font-family:serif;\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
-
-    /*
-	const QString affSubGris = QString::fromUtf8
-		("%1 <span style=\"color:grey;font-style:italic\">%2</span> "
-		 "<a href=\"l.v.%3\">valider</a>");
-    */
 
 	const QString affInit = QString::fromUtf8
 		("Saisis ci-dessous la phrase à lire");

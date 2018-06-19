@@ -21,9 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - Il semble que l'affichage (au moins) des fléchis soit calculé deux fois.
 //        - omni uita : dét non proposé
-//        - Plantage si on réinitialise sur le premier mot.
 //        - 27 nullus dolor est quam : nombreuses erreurs.
 //          . quem est traduit deux fois ;
 //          . le déterminant fr s'accorde avec le masculin du latin dolor
@@ -39,6 +37,7 @@
 //          * clavier
 //          * voir la traduction enregistrée
 //          * ligne de saisie, combo de traduction
+//        - Un <select> pour remplacer "traduction suivante"
 //        - Trace :
 //          * édition de traduction dans l'url d'enregistrement
 //          * Mentionner l'auteur de la trace ;
@@ -978,11 +977,15 @@ void Phrase::majAffichage()
 {
     // TODO - ajouter un texte d'accueil et d'aide
 	if (_mots.empty())
-		_reponse = Chaines::initAff.arg (Chaines::titrePraelector);
+		//_reponse = Chaines::initAff.arg (Chaines::titrePraelector);
+        _reponse = QString("%1%2")
+            .arg(Chaines::titrePraelector)
+            .arg(Chaines::menu);
 	else 
     {
         _reponse = Chaines::affichage
 	        .arg(Chaines::titrePraelector)
+            .arg(Chaines::menu)
 	        .arg(grLu())
 	        .arg(motCourant()->html())
 	        .arg(htmlLiens())
