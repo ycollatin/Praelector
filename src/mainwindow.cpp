@@ -84,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             clesL.append(cle);
         }
     }
-	phrase->ecoute ("");
+	phrase->ecoute("-init");
 }
 
 MainWindow::~MainWindow()
@@ -155,6 +155,19 @@ void MainWindow::calcul (QUrl url)
 	{
 		parle(Chaines::documentation);
 	}
+    else if (cmd == "-clav")
+    {
+        /*
+        clav();
+        if (clavier) parle(texteT);
+        else parle(texte);
+        */
+        // QEvent::Type type, int key, Qt::KeyboardModifiers modifiers
+        //keyPressEvent(new QKeyEvent(QEvent::KeyPress, Qt::Key_Slash, Qt::NoModifier));
+        //emit(QKeyEvent(QEvent::KeyPress, Qt::Key_Slash, Qt::NoModifier));
+        clavier = !clavier;
+        calcul(QUrl("-init"));
+    }
 	else if (cmd == "-corpus" || cmd == "-enr")
 	{
         cmd.remove(0,1);
@@ -183,10 +196,6 @@ void MainWindow::calcul (QUrl url)
             relect = cmd.contains("%3C!--,");
             if (relect)
             {
-                // -phr1_1,id bene scio.%3C!--,-suiv,-suiv,l.v.28,l.v.26,m.i.3,m.i.3,je le sais bien--%3E
-                //QRegularExpressionMatch rem = QRegularExpression("(-phr\\d+_),([]*)%3C!--,(.*)--%3E$").match(cmd);
-                //cmd = rem.captured(1)+rem.captured(2);
-                //trace = rem.captured(3).split(',');
                 QRegExp re = QRegExp("(-phr)(\\d)+_\\d*,([^%]*)%3C!--,(.*)--%3E$");
                 int pos = re.indexIn(cmd);
                 if (pos > -1)
@@ -226,9 +235,27 @@ QString MainWindow::catalogue(QString rep)
             QTextStream(&lin) << "<a href=\"@"<<rep<<"/"<<nf <<"\">"<<nf<<"</a>";
 			ls[i] = lin;
 		}
-		QString page = ls.join ("<br/>");
-        page.prepend(Chaines::menu);
+        QString page;
+        QTextStream(&page)
+            << Chaines::titrePraelector
+            << Chaines::menu
+            << ls.join("<br/>");
         return page;
+}
+
+void MainWindow::clav()
+{
+    clavier = !clavier;
+    if (clavier)
+    {
+        if (texteT.isEmpty()) ajTouches();
+        textBrowser->setHtml(texteT);
+    }
+    else 
+    {
+        textBrowser->setHtml(texte);
+    }
+    prefixe.clear();
 }
 
 QString MainWindow::choixPhr(QString c)
@@ -238,7 +265,6 @@ QString MainWindow::choixPhr(QString c)
 	f.open (QIODevice::ReadOnly|QIODevice::Text);
 	QTextStream fluxD (&f);
 	QStringList lp;
-	lp.append(Chaines::menu);
 	int i=1;
 	while (!fluxD.atEnd ())
 	{
@@ -263,8 +289,14 @@ QString MainWindow::choixPhr(QString c)
 		lp.append (p);
 	}
 	f.close ();
-	lp.append (Chaines::menu);
-	return lp.join ("<br/>\n");
+    QString page;
+    QTextStream(&page)
+        << Chaines::titrePraelector
+        << Chaines::menu
+        << lp.join("<br/>\n")
+        << Chaines::menu;
+
+    return page;
 }
 
 void MainWindow::enr()
@@ -352,17 +384,7 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     }
     if (ev->key() == Qt::Key_Slash)
     {
-        clavier = !clavier;
-        if (clavier)
-        {
-            if (texteT.isEmpty()) ajTouches();
-            textBrowser->setHtml(texteT);
-        }
-        else 
-        {
-            textBrowser->setHtml(texte);
-        }
-        prefixe.clear();
+        clav();
     }
     else if (wxyz.contains(t))
     {
