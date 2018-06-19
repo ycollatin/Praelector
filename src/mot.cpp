@@ -331,7 +331,7 @@ QString Mot::html()
         }
         //fl	<< " <a href=\"m.e."<<i<<"\">&eacute;diter</a>"
         fl  << "<input type=\"text\" id=\"editlem"<<i<<"\">"
-            << "<a href=\"m.e."<<i<<"\">&eacute;diter</a> "
+            << "<a href=\"m.e."<<i<<"\">&lt;-traduire</a> "
             << "<a href=\"m.i."<<i<<"\">tr. suiv.</a> "
 			<< "<a href=\"m.c."<<i<<"\">choisir</a> rejeter "
 			<< "<a href=\"m.r.m."<<i<<"\">le lemme</a> "

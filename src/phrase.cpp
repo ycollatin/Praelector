@@ -477,15 +477,8 @@ void Phrase::ecoute (QString m)
 							}
 						case 'e':  // éditer de la traduction
 							{
-								QString lt;
-								QTextStream fl (&lt);
-								fl<<"Meilleure traduction pour " << cour->gr();
-                                //QString t = Phrase::saisie(lt, mf->tr());
-                                QString t = saisie(lt, mf->tr());
-								if (!t.isEmpty())
-                                {
-                                    mf->setTr(t);
-                                }
+                                if (eclats.count() > 2 && !eclats.at(3).isEmpty())
+                                    mf->setTr(eclats.at(3));
 								break;
 							}
                         case 'i': // rotation de la traduction du fléchi

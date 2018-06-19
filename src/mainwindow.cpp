@@ -204,7 +204,8 @@ void MainWindow::calcul (QUrl url)
             id.append(cmd.at(4));
             QWebFrame* wf = textBrowser->page()->mainFrame();
             QWebElement ed = wf->findFirstElement(id);
-            qDebug()<<"édité:"<<ed.evaluateJavaScript("this.value").toString();
+            cmd.append(".");
+            cmd.append(ed.evaluateJavaScript("this.value").toString());
         }
         // éventuellement, enregistrer la commande dans trace
         else if (!relect) (ajTrace(cmd));
