@@ -15,6 +15,7 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
 #include <mot.h>
+#include <mainwindow.h>
 
 #include <iostream>
 #include <QDebug>
@@ -328,13 +329,14 @@ QString Mot::html()
                       break;
             default:break;
         }
-        //fl	<< " <input type=\"text\" name=\"edtr\">"
-        fl	<< " <a href=\"m.e."<<i<<"\">&eacute;diter</a>"
-            << " <a href=\"m.i."<<i<<"\">tr. suiv.</a>"
-			<< " <a href=\"m.c."<<i<<"\">choisir</a> rejeter"
-			<< " <a href=\"m.r.m."<<i<<"\">le lemme</a> "
-			<< " <a href=\"m.r.f."<<i<<"\">la forme</a> "
-			<< " tr. <span style=\"color:darkred;font-style:italic\">"<<mf->tr()<<"</span>";
+        //fl	<< " <a href=\"m.e."<<i<<"\">&eacute;diter</a>"
+        fl  << "<input type=\"text\" id=\"editlem"<<i<<"\">"
+            << "<a href=\"m.e."<<i<<"\">&eacute;diter</a> "
+            << "<a href=\"m.i."<<i<<"\">tr. suiv.</a> "
+			<< "<a href=\"m.c."<<i<<"\">choisir</a> rejeter "
+			<< "<a href=\"m.r.m."<<i<<"\">le lemme</a> "
+			<< "<a href=\"m.r.f."<<i<<"\">la forme</a> "
+			<< "tr. <span style=\"color:darkred;font-style:italic\">"<<mf->tr()<<"</span>";
         ret.append(lin);
     }
     return ret.join("<br/>\n");

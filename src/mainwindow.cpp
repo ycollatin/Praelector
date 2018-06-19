@@ -16,6 +16,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QWebPage>
+#include <QtWebKitWidgets>
 
 #include "mainwindow.h"
 #include "phrase.h"
@@ -195,6 +196,15 @@ void MainWindow::calcul (QUrl url)
                 }
                 ienr = 0;
             }
+        }
+        // récupération éventuelle d'une traduction éditée du lemme
+        else if (cmd.startsWith("m.e."))
+        {
+            QString id = "#editlem";
+            id.append(cmd.at(4));
+            QWebFrame* wf = textBrowser->page()->mainFrame();
+            QWebElement ed = wf->findFirstElement(id);
+            qDebug()<<"édité:"<<ed.evaluateJavaScript("this.value").toString();
         }
         // éventuellement, enregistrer la commande dans trace
         else if (!relect) (ajTrace(cmd));
