@@ -69,6 +69,7 @@ class MainWindow : public QMainWindow
         void               ajTouches();
         void               ajTrace(QString cmd);
         QString            catalogue(QString rep);
+        void               clav();
 		QString            choixPhr(QString cmd);
         void               enr();
         bool               relect;
