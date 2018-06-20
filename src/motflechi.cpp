@@ -91,12 +91,26 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
             case 'v':
             case 'w':
                       {
+                          // TODO : les différences de morpho sont beaucoup plus nombreuses.
+                          //        Il faudra construire une grammaire.
                           fl = conjnat(c, _morpho);
+                          /*
                           QString mcond = _morpho;
                           mcond.replace("subjonctif imparfait", "conditionnel présent");
                           mcond.replace("impératif futur", "impératif présent");
-                          //mcond.replace("infinitif parfait", "indicatif présent 3ème singulier"); 
-                          if (mcond != _morpho) _trfl.append(conjnat(c, mcond));
+                          mcond.replace("infinitif parfait", "indicatif passé_composé 3ème singulier"); 
+                          fl = conjnat(c, mcond);
+                          */
+                          /*
+                          fl = conjnat(c, _morpho);
+                          mcond.replace("subjonctif imparfait", "conditionnel présent");
+                          mcond.replace("impératif futur", "impératif présent");
+                          mcond.replace("infinitif parfait", "indicatif passé_composé 3ème singulier"); 
+                          if (mcond != _morpho)
+                          {
+                              _trfl.append(conjnat(c, mcond));
+                          }
+                          */
                           break;
                       }
             default: fl = c;
@@ -686,12 +700,15 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
         QString el = lgr.at(i);
         if (el == "-")
         {
-            QString trf;
+            QString trf = _tr;
+            /*
             if (morph.isEmpty()) trf = _tr;
             else
             {
-                trf = conjnat(_trNue, morph);
+                //trf = conjnat(_trNue, morph);
+                trf = _tr;
             }
+            */
             if (_neg)
             {
                 // introduire le premier élément négatif en 
