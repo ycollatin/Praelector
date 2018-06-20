@@ -135,11 +135,11 @@ namespace Chaines {
 	const QString affichage = QString::fromUtf8
         ("%1%2<br/>"
 		 "<hr/><a href=\"-reinit\">réinitialiser</a>&nbsp;"
-         "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a><hr/>"
+         "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a>&nbsp;"
+         "<a href=\"-trace\">enregistrer</a><hr/>"
          "%3"
 		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%4"
-         "<a href=\"-trace\">enregistrer</a>&nbsp;"
-         "<a href=\"-quitter\">quitter</a>"
+         //"<a href=\"-quitter\">quitter</a>"
 		 "<hr/><strong>Liens syntaxiques</strong><br/>%5\n"
 		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n%6"
          "<hr/>%7");

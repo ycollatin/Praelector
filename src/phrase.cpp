@@ -33,6 +33,7 @@
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
+//        - Lien "quitter" à supprimer après l'analyse des mots;
 //        - Placer un menu de navigation *avant* la phrase : les lettres restent les mêmes !
 //        - Liens à ajouter :
 //          * clavier
