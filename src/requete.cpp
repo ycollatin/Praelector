@@ -592,21 +592,6 @@ QString Requete::tr()
     return ret;
 }
 
-/*
-QString Requete::trace()
-{
-    if (!close()) return "-";
-    QString ret;
-    QTextStream fl(&ret);
-    fl  << _super->mot()->rang()
-        << "->"
-        << _sub->mot()->rang()
-        << "[" << id() << "] "
-        << lemMorph();
-    return ret;
-}
-*/
-
 QString Requete::trSub()
 {
     if (_sub == 0) return "erreur, sub manquant";
@@ -619,7 +604,8 @@ QString Requete::trSub()
         morph.replace("infinitif", "indicatif");
         morph.append(" 3ème singulier");
     }
-    return ret.replace("<sub>", _sub->trGroupe(0, morph));
+    ret.replace("<sub>", _sub->trGroupe(0, morph));
+    return ret;
 }
 
 MotFlechi* Requete::ultima()
