@@ -630,7 +630,7 @@ id:propInf
 doc:les verbes de connaissance, d'opinion, de perception, de volonté peuvent avoir comme sub une proposition infinitive
 sens:>
 lsSup:propinf
-posSup:v
+posSup:v,w
 morphoSub:infinitif
 poids:80
 tr:<sup> que <sub>
