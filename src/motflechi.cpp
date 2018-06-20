@@ -95,6 +95,7 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
                           QString mcond = _morpho;
                           mcond.replace("subjonctif imparfait", "conditionnel présent");
                           mcond.replace("impératif futur", "impératif présent");
+                          //mcond.replace("infinitif parfait", "indicatif présent 3ème singulier"); 
                           if (mcond != _morpho) _trfl.append(conjnat(c, mcond));
                           break;
                       }
@@ -328,6 +329,11 @@ Lemme* MotFlechi::lemme()
 }
 
 QString MotFlechi::morpho()
+{
+    return _morpho;
+}
+
+QString MotFlechi::morphoHtml()
 {
     return _lemme->gr()+" <small>"+_pos+" "+ _morpho+"</small>";
 }
@@ -695,8 +701,6 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
                     trf.insert(trf.indexOf("'"), "e n");
                 else if (trf.contains(" ")) 
                     trf.insert(trf.indexOf(" "), " ne");
-                    //trf.insert(trf.indexOf(QRegularExpression("('| )")), " ne");
-                // ne j'aime
                 else trf.prepend("ne ");
             }
             lret.append (trf);

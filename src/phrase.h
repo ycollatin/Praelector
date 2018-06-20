@@ -115,6 +115,7 @@ class Phrase: public QObject
         QList<Mot*>       supersDe(Mot* m);
         QString           tr();
         MotFlechi*        vbRelative(MotFlechi* mf);
+        MotFlechi*        vbSuper(MotFlechi* mf);
     signals:
         void              repondu(const QString);
     public slots:
@@ -129,15 +130,14 @@ namespace Chaines {
 		 "<a href=\"-enr\">choisir une phrase enregistrée</a><br/>"
 		 "<a href=\"-nouvPhr\">Saisir une phrase</a><br/>"
          "<a href=\"-clav\">clavier</a><br/>"
-         "<a href=\"-init\">annuler</a> <a href=\"-quitter\">quitter</a><br/>"
-         "<hr/>");
+         "<a href=\"-init\">annuler</a> <a href=\"-quitter\">quitter</a><br/>");
 
 	const QString affichage = QString::fromUtf8
         ("%1%2<br/>"
-         "%3<br/>"
-		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%4"
 		 "<hr/><a href=\"-reinit\">réinitialiser</a>&nbsp;"
-         "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a>&nbsp;"
+         "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a><hr/>"
+         "%3"
+		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%4"
          "<a href=\"-trace\">enregistrer</a>&nbsp;"
          "<a href=\"-quitter\">quitter</a>"
 		 "<hr/><strong>Liens syntaxiques</strong><br/>%5\n"
@@ -191,7 +191,6 @@ namespace Chaines {
          */
 
 	const QString titrePraelector =
-		//"<h2 style=\"font-family:serif;letter-spacing:2em\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
 		"<h2 style=\"font-family:serif;\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
 
 	const QString affInit = QString::fromUtf8

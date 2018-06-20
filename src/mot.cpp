@@ -318,7 +318,7 @@ QString Mot::html()
         MotFlechi* mf = _flechis.at(i);
         if (mf->rejete()) continue;
 		fl << "<span style=\"color:green;font-style:italic\"> "
-           << mf->morpho() << "</span>";
+           << mf->morphoHtml() << "</span>";
         switch(mf->lemme()->pos().at(0).unicode())
         {
             case 'a': if (!mf->lemme()->pos().contains('n')) break;

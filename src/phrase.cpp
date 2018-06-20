@@ -21,7 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - omni uita : dét non proposé
+//        - traduction de l'inf parfait par flexfr.
 //        - 27 nullus dolor est quam : nombreuses erreurs.
 //          . quem est traduit deux fois ;
 //          . le déterminant fr s'accorde avec le masculin du latin dolor
@@ -33,6 +33,7 @@
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
+//        - Placer un menu de navigation *avant* la phrase : les lettres restent les mêmes !
 //        - Liens à ajouter :
 //          * clavier
 //          * voir la traduction enregistrée
@@ -1375,6 +1376,18 @@ MotFlechi* Phrase::vbRelative(MotFlechi* mf)
     {
         Requete* req = _requetes.at(i);
         if (req->valide() && req->aff() != "antecedent" && req->sub() == mf)
+            return req->super();
+    }
+    return 0;
+}
+
+MotFlechi* Phrase::vbSuper(MotFlechi* mf)
+{
+    for (int i=0;i<_requetes.count();++i)
+    {
+        Requete* req = _requetes.at(i);
+        if (req->valide() && req->sub() == mf
+            && QString("wv").contains(req->super()->pos()))
             return req->super();
     }
     return 0;

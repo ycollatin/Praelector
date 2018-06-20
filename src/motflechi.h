@@ -70,6 +70,7 @@ class MotFlechi: public QObject
         void            lance();
         Lemme*          lemme();
         QString         morpho();
+        QString         morphoHtml();
         Mot*            mot();
         int             nbCloses();
         int             nbReqSub();
