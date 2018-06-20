@@ -12,9 +12,8 @@
    A UN OBJET PARTICULIER.
    Pour plus de détail, voir la Licence Publique Générale GNU .
    Vous devez avoir reçu un exemplaire de la Licence Publique Générale GNU en
-   même
-   temps que ce programme ; si ce n'est pas le cas, écrivez à la
-   Free Software Foundation Inc., 675 Mass Ave, Cambridge, MA 02139, Etats-Unis.
+   même temps que ce programme ; si ce n'est pas le cas, écrivez à la Free
+   Software Foundation Inc., 675 Mass Ave, Cambridge, MA 02139, Etats-Unis.
    Pour tout contact avec l'auteur : yves.ouvrard@collatinus.org
    */
 
@@ -284,7 +283,7 @@ const QStringList temps = QStringList()
     << "futur"
     << "imparfait"
     << "parfait"  //"passé simple"
-    << "passé composé"
+    << "passé_composé"
     << "futur antérieur"
     << "PQP"
     << "passé antérieur";
@@ -588,7 +587,6 @@ QString Verbe::conjugue(int P, int T, int M, int V, bool pr, int g, int n)
         {
             if (T == pres)
                 return infinitif;
-                //result = infinitif;
             else if (T == pcompose)
                 result = compose(aux, P, pres, infin, actif);
         }
@@ -2322,10 +2320,10 @@ QString conjnat(QString inf, QString morpho)
     else if (morpho.contains("supin"))
         return "pour "+inf;
 
-    /*
-       if (!se  && inf.contains(" "))
-       return conjnat(inf.section(" ",0,0), morpho) +" "+ inf.section(" ",1);
-     */
+    morpho.replace("subjonctif imparfait", "conditionnel présent");
+    morpho.replace("impératif futur", "impératif présent");
+    morpho.replace("infinitif parfait", "indicatif passé_composé 3ème singulier"); 
+
     bool se = inf.startsWith("se ");
     if (inf.contains(" ") && !se)
     {
@@ -2341,6 +2339,8 @@ QString conjnat(QString inf, QString morpho)
     int v = 0;
     int g = 0;
 
+    // passé composé
+    // morpho.replace("passé composé", "passé_composé");
     QStringList lm = morpho.split(' ');
 
     foreach (QString trait, lm)
