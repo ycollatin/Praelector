@@ -157,14 +157,6 @@ void MainWindow::calcul (QUrl url)
 	}
     else if (cmd == "-clav")
     {
-        /*
-        clav();
-        if (clavier) parle(texteT);
-        else parle(texte);
-        */
-        // QEvent::Type type, int key, Qt::KeyboardModifiers modifiers
-        //keyPressEvent(new QKeyEvent(QEvent::KeyPress, Qt::Key_Slash, Qt::NoModifier));
-        //emit(QKeyEvent(QEvent::KeyPress, Qt::Key_Slash, Qt::NoModifier));
         clavier = !clavier;
         calcul(QUrl("-init"));
     }
@@ -206,6 +198,7 @@ void MainWindow::calcul (QUrl url)
                 ienr = 0;
             }
         }
+        /*
         // récupération éventuelle d'une traduction éditée du lemme
         else if (cmd.startsWith("m.e."))
         {
@@ -216,6 +209,7 @@ void MainWindow::calcul (QUrl url)
             cmd.append(".");
             cmd.append(ed.evaluateJavaScript("this.value").toString());
         }
+        */
         // éventuellement, enregistrer la commande dans trace
         else if (!relect) (ajTrace(cmd));
         // passer la commande à phrase

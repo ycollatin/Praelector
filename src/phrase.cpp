@@ -21,7 +21,6 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - traduction de l'inf parfait par flexfr.
 //        - 27 nullus dolor est quam : nombreuses erreurs.
 //          . quem est traduit deux fois ;
 //          . le déterminant fr s'accorde avec le masculin du latin dolor
@@ -33,13 +32,12 @@
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
-//        - Lien "quitter" à supprimer après l'analyse des mots;
-//        - Placer un menu de navigation *avant* la phrase : les lettres restent les mêmes !
+//        - déplacer la traduction en tête de liens du fléchi
+//        - récapitulation de traduction colorée
 //        - Liens à ajouter :
-//          * clavier
 //          * voir la traduction enregistrée
 //          * ligne de saisie, combo de traduction
-//        - Un <select> pour remplacer "traduction suivante"
+//        - Un <select><option> pour remplacer "traduction suivante"
 //        - Trace :
 //          * édition de traduction dans l'url d'enregistrement
 //          * Mentionner l'auteur de la trace ;
@@ -478,8 +476,11 @@ void Phrase::ecoute (QString m)
 							}
 						case 'e':  // éditer de la traduction
 							{
-                                if (eclats.count() > 2 && !eclats.at(3).isEmpty())
-                                    mf->setTr(eclats.at(3));
+                                if (eclats.count() > 2 && !eclats.at(2).isEmpty())
+                                {
+                                    QString t = saisie("traduction pour "+mf->gr(), mf->tr());
+                                    if (! t.isEmpty()) mf->setTr(t);
+                                }
 								break;
 							}
                         case 'i': // rotation de la traduction du fléchi
