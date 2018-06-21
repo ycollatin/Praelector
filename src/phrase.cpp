@@ -33,7 +33,7 @@
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //                           TODO
 //        - déplacer la traduction en tête de liens du fléchi
-//        - récapitulation de traduction colorée
+//        - Rendre plus pertinents les raccourcis clavier du menu (q quitter, p phrase, e enregisrée, etc.)
 //        - Liens à ajouter :
 //          * voir la traduction enregistrée
 //          * ligne de saisie, combo de traduction
@@ -364,7 +364,7 @@ void Phrase::ecoute (QString m)
     }
 	/* deux commandes de navigation */
     // 1. Avancer
-	else if (m == "-suiv")
+	else if (m == "-suiv" && _imot < _mots.count()-1)
 	{
         // tuer les requêtes clonées
         for (int i=0;i<_requetes.count();++i)
