@@ -125,23 +125,22 @@ class Phrase: public QObject
 namespace Chaines {
 
     const QString menu = QString::fromUtf8
-	    ("<hr/>"
-         "<a href=\"-corpus\">choisir une phrase</a><br/>"
+	    ("<a href=\"-corpus\">choisir une phrase</a><br/>"
 		 "<a href=\"-enr\">choisir une phrase enregistrée</a><br/>"
 		 "<a href=\"-nouvPhr\">Saisir une phrase</a><br/>"
          "<a href=\"-clav\">clavier</a><br/>"
-         "<a href=\"-init\">annuler</a> <a href=\"-quitter\">quitter</a><br/>");
+         "<a href=\"-init\">annuler</a> <a href=\"-quitter\">quitter</a>");
 
 	const QString affichage = QString::fromUtf8
-        ("%1%2<br/>"
-		 "<hr/><a href=\"-reinit\">réinitialiser</a>&nbsp;"
+        ("%1<hr/>%2<hr/>"
+		 "<a href=\"-reinit\">réinitialiser</a>&nbsp;"
          "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a>&nbsp;"
          "<a href=\"-trace\">enregistrer</a><hr/>"
          "%3"
 		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%4"
-         //"<a href=\"-quitter\">quitter</a>"
 		 "<hr/><strong>Liens syntaxiques</strong><br/>%5\n"
-		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n%6"
+		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n"
+         "<span style=\"color:darkred;\">%6</span>"
          "<hr/>%7");
 
 	const QString documentation = QString::fromUtf8

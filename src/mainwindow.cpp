@@ -233,6 +233,7 @@ QString MainWindow::catalogue(QString rep)
         QTextStream(&page)
             << Chaines::titrePraelector
             << Chaines::menu
+            << "<hr/>"
             << ls.join("<br/>");
         return page;
 }
@@ -287,7 +288,9 @@ QString MainWindow::choixPhr(QString c)
     QTextStream(&page)
         << Chaines::titrePraelector
         << Chaines::menu
+        << "<hr/>"
         << lp.join("<br/>\n")
+        << "<hr/>"
         << Chaines::menu;
 
     return page;
