@@ -31,12 +31,15 @@
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
+//
 //                           TODO
-//        - déplacer la traduction en tête de liens du fléchi
+//        - surligner dans la traduction le groupe du subordonné courant.
+//        - Possibilité de changer la place du groupe subordonné courant.
+//        - Lien phrase suivante. 
 //        - Rendre plus pertinents les raccourcis clavier du menu (q quitter, p phrase, e enregisrée, etc.)
 //        - Liens à ajouter :
 //          * voir la traduction enregistrée
-//          * ligne de saisie, combo de traduction
+//          * combo de traduction
 //        - Un <select><option> pour remplacer "traduction suivante"
 //        - Trace :
 //          * édition de traduction dans l'url d'enregistrement
@@ -46,9 +49,14 @@
 //              . un pronom sujet non exprimé peut avoir une apposition :
 //                ibam forte uia sacra nescio quid meditans....
 //              . un groupe elliptique dont le noyau est absent : homo homini lupus.
+//        - Lexique personnel
+//
+//                           XXX GRAMMAIRE
 //        - quid ergo ; opus est : règles particulières en include
 //        - opus est + datif : règle à trois pattes.
+//        - quid dulcius : quoi de plus doux ? Pas de règle.
 //        - phr interrogatives : inversion du sujet et adv interrogatif en première place.
+//        - vel dii : l'adv. porte sur le nom.
 //        - Réfléchir sur la forme négative :
 //            . elle pourrait être une propriété /neg/ de MotFlechi :
 //            . par défaut, la négation serait ne + vb + pas,
@@ -62,13 +70,8 @@
 //        - sic coord ? traiter sic ut.
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
-//        - Trouver un meilleur moyen d'ordonner les subs dans MotFlechi::trGroupe()
-//        - vel dii : l'adv. porte sur le nom.
-//        - Remplacer QRegex par QRegularExpresion ?
-//        - Lexique personnel
 //        - En vert : fonction des liens proposés
 //        - accorder la traduction de l'épithète
-//                           XXX
 //
 
 #include <QApplication>
