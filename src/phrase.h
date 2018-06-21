@@ -128,7 +128,7 @@ namespace Chaines {
 	    ("<a href=\"-corpus\">choisir une phrase</a><br/>"
 		 "<a href=\"-enr\">choisir une phrase enregistrée</a><br/>"
 		 "<a href=\"-nouvPhr\">Saisir une phrase</a><br/>"
-         "<a href=\"-clav\">clavier</a><br/>"
+         "<a href=\"-clav\">clavier</a> (touche '/')<br/>"
          "<a href=\"-init\">annuler</a> <a href=\"-quitter\">quitter</a>");
 
 	const QString affichage = QString::fromUtf8
