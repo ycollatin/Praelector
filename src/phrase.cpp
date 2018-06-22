@@ -1,6 +1,6 @@
 /* phrase.cpp */
 
-/* Copyright (C) 2015 Yves Ouvrard
+/* Copyright (C) 2018 Yves Ouvrard
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -21,11 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//        - 27 nullus dolor est quam : nombreuses erreurs.
-//          . quem est traduit deux fois ;
-//          . le déterminant fr s'accorde avec le masculin du latin dolor
-//          . la relative ne s'accroche pas à l'antécédent
-//          . minuat ac : la coord1 n'est pas traduite
+// 
+//        - Retour au premier mot, réinitialiser.
 //        - attrS de uidetur, et datif mihi non proposés
 //        - necesse : adj inv. ne peut s'accorder. Il faudrait au moins le déclarer nominatif
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
@@ -52,6 +49,11 @@
 //        - Lexique personnel
 //
 //                           XXX GRAMMAIRE
+//        - 27 nullus dolor est quam : nombreuses erreurs.
+//          . quem est traduit deux fois ;
+//          . le déterminant fr s'accorde avec le masculin du latin dolor
+//          . la relative ne s'accroche pas à l'antécédent
+//          . minuat ac : la coord1 n'est pas traduite
 //        - quid ergo ; opus est : règles particulières en include
 //        - opus est + datif : règle à trois pattes.
 //        - quid dulcius : quoi de plus doux ? Pas de règle.
