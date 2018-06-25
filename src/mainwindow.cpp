@@ -430,10 +430,8 @@ void MainWindow::surligne()
         from += 9;
         int to = texte.indexOf("\"", from);
         QString url = texte.mid(from, to-from);
-        //if (relue(url))
         if (url == trace.at(ienr))
         {
-            //texte.insert(to+2, "<span style=\"backgroundcolor:lightyellow;\">");
             texte.insert(to+2, "<span style=\"background-color:red;\">");
             to = texte.indexOf("</a>", to);
             texte.insert(to, "</span>");
