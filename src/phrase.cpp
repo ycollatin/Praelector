@@ -34,8 +34,6 @@
 //        - Rendre plus pertinents les raccourcis clavier du menu (q quitter, p phrase, e enregisrée, etc.)
 //        - Liens à ajouter :
 //          * voir la traduction enregistrée
-//          * combo de traduction
-//        - Un <select><option> pour remplacer "traduction suivante"
 //        - Trace :
 //          * édition de traduction dans l'url d'enregistrement
 //          * Mentionner l'auteur de la trace ;
