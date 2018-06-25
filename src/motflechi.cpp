@@ -142,26 +142,28 @@ QString MotFlechi::elideFr(QString s)
 {
     QString vv = "[aeéioôu]";
     // ta affaire -> ton affaire, sa->son
-    s.replace(QRegularExpression("(^|\\s)[st]a ("+vv+")"), "\\1ton \\2");
+    s.replace(QRegularExpression("(\\b)[st]a ("+vv+")"), "\\1ton \\2");
     // je->j'  te->t'  me->m' ne->n' se->s'
-    s.replace(QRegularExpression("(^|\\s)([jtmns])e ("+vv+")"), "\\1\\2'\\3");
+    s.replace(QRegularExpression("(\\b)([jtmns])e ("+vv+")"), "\\1\\2'\\3");
     // le->l'  la->l' 
-    s.replace(QRegularExpression("(^|\\s)(l[ea]) ("+vv+")"), "\\1\\2'\\3");
+    s.replace(QRegularExpression("(\\b)(l[ea]) ("+vv+")"), "\\1\\2'\\3");
     // de les->des XXX le regret *de les* quitter
-    s.replace(QRegularExpression("(^|\\s)de les "), "\\1des ");
+    s.replace(QRegularExpression("(\\b)de les "), "\\1des ");
     // de le->du
-    s.replace(QRegularExpression("(^|\\s)de le "), "\\1du ");
+    s.replace(QRegularExpression("(\\b)de le "), "\\1du ");
     // de un->d'un
-    s.replace(QRegularExpression("(^|\\s)de ("+vv+")"), "\\1d'\\2");
+    s.replace(QRegularExpression("(\\b)de ("+vv+")"), "\\1d'\\2");
     // que il|elle->qu'il|elle
-    s.replace(QRegularExpression("(^|\\s)que ("+vv+")"), "\\1qu'\\2");
+    s.replace(QRegularExpression("(\\b)que ("+vv+")"), "\\1qu'\\2");
     // pronoms objet 
-    s.replace(QRegularExpression("(^|\\s)(me|te|la|le|se|les) (je|tu|il|elle|on|nous|vous|ils|elles) "), "\\1\\3 \\2 ");
+    s.replace(QRegularExpression("(\\b)(me|te|la|le|se|les) (je|tu|il|elle|on|nous|vous|ils|elles) "), "\\1\\3 \\2 ");
     // pronoms datif
-    s.replace(QRegularExpression("(lui|leurs?|me|te|nous|vous) (ils?|elles?|on)"), "\\2 \\1");
+    s.replace(QRegularExpression("\\b(lui|leurs?|me|te|nous|vous) (ils?|elles?|on)"), "\\2 \\1");
     // à le à les
-    s.replace(QRegularExpression("(^|\\s)à le "), "\\1au ");
-    s.replace(QRegularExpression("(^|\\s)à les "), "\\1aux ");
+    s.replace(QRegularExpression("(\\b)à le "), "\\1au ");
+    s.replace(QRegularExpression("(\\b)à les "), "\\1aux ");
+    // ce est
+    s.replace(QRegularExpression("(\\b)ce est(\\b)"), "\\1c'est\\2");
 
     // je te n'aime pas, je le n'aime pas etc.
     s.replace(QRegularExpression("(je|tu|il|elle) ([tl])[ea] n'"), "\\1 ne \\2'");
