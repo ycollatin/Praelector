@@ -377,27 +377,27 @@ doc:uideo et quelques autres verbes admettent un datif s'ils sont au passif
 posSup:v
 morphoSup:passif
 lsSup:datp
-posSub:n,p
+posSub:n
 morphoSub:datif
 contig:12
 poids:70
 tr:<sup> pour <sub>
+tr:<sub> <sup>
 
 id:datifPr
-doc:Le français place volontiers la traduction du datif avant le verbe, en employant la forme tonique du pronom (moi, toi, lui, leur)
+aff:datif
+doc:Le français place volontiers la traduction du datif avant le verbe
 posSup:v,w,a
-lsSup:datif
+lsSup:datif,datp
 posSub:p
 morphoSub:datif
 poids:79
 tr:<sub> <sup>
-tr:<sup> pour <sub>
-tr:<sup> à <sub>
 
 id:det
 doc:beaucoup de pronoms peuvent jouer le rôle de déterminants : is, suus, iste, etc
 posSup:n
-posSub:p,a
+posSub:a
 accord:cgn
 lsSub:det
 contig:38

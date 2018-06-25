@@ -22,14 +22,17 @@
 
 //                          FIXME 
 // 
-//        - Retour au premier mot, réinitialiser.
-//        - attrS de uidetur, et datif mihi non proposés
+//        - flexfr, élision Ce est.
 //        - necesse : adj inv. ne peut s'accorder. Il faudrait au moins le déclarer nominatif
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //
 //                           TODO
+//        - couleurs de la traduction récapitulée :
+//            . le bleu ne doit pas être celui des hyperliens
+//            . le rouge doit indiquer le mot courant.
+//        - faire disparaître les hyperliens inutiles.
 //        - surligner dans la traduction le groupe du subordonné courant.
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - Lien phrase suivante. 
@@ -1183,12 +1186,14 @@ void Phrase::reinit()
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if ((req->super() != 0 && req->super()->mot()->rang() >= _imot)
-            || (req->sub() != 0 && req->sub()->mot()->rang() >= _imot))
-        {
+        if (req == 0) continue;
+        if (req->close()
+             && (req->super()->mot()->rang() >= _imot
+                 || req->sub()->mot()->rang() >= _imot))
+            {
             req->setRejetee(false);
             req->setValide(false);
-        }
+            }
     }
 }
 
@@ -1358,8 +1363,14 @@ QString Phrase::tr()
         Mot* m = _mots.at(i);
 		if (m->estSommet()) 
         {
+            QString g = m->trGroupe();
+            if (i == _imot)
+            {
+                g.prepend("<span style=\"color:darkblue;\">");
+                g.append("</span>");
+            }
             // le nouveau mot est sommet tant qu'un lien n'a pas été validé
-            sl.append(m->trGroupe());
+            sl.append(g);
         }
 	}
     _tr = sl.join("<br/>");

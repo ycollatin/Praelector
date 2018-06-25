@@ -32,7 +32,7 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
 {
     _mot = parent;
     _lemme = l;
-    _morpho = m;
+    QTextStream(&_morpho) << p << " " << m;
     _phrase = parent->phrase();
     _pos = p;
     QString tr;
@@ -91,11 +91,12 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
             case 'v':
             case 'w':
                       {
-                          // TODO : les différences de morpho sont beaucoup plus nombreuses.
-                          //        Il faudra construire une grammaire.
                           fl = conjnat(c, _morpho);
                           /*
+                          // TODO : les différences de morpho sont beaucoup plus nombreuses.
+                          //        Il faudra construire une grammaire.
                           QString mcond = _morpho;
+                          if (c == "paraître") _mcond.replace("passif", "actif");
                           mcond.replace("subjonctif imparfait", "conditionnel présent");
                           mcond.replace("impératif futur", "impératif présent");
                           mcond.replace("infinitif parfait", "indicatif passé_composé 3ème singulier"); 
@@ -349,7 +350,7 @@ QString MotFlechi::morpho()
 
 QString MotFlechi::morphoHtml()
 {
-    return _lemme->gr()+" <small>"+_pos+" "+ _morpho+"</small>";
+    return _lemme->gr()+" <small>"+_morpho+"</small>";
 }
 
 Mot* MotFlechi::mot()
@@ -689,7 +690,7 @@ QString MotFlechi::trfl()
  * règle syntagmatiques du français, pour aboutir à une
  * traduction la plus correcte possible.
  */
-QString MotFlechi::trGroupe(Requete* rtest, QString morph)
+QString MotFlechi::trGroupe(Requete* rtest)
 {
     QStringList lret;
     QStringList lgr = _phrase->lgr(_pos);
@@ -701,14 +702,6 @@ QString MotFlechi::trGroupe(Requete* rtest, QString morph)
         if (el == "-")
         {
             QString trf = _tr;
-            /*
-            if (morph.isEmpty()) trf = _tr;
-            else
-            {
-                //trf = conjnat(_trNue, morph);
-                trf = _tr;
-            }
-            */
             if (_neg)
             {
                 // introduire le premier élément négatif en 

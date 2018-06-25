@@ -218,7 +218,7 @@ QString Requete::fonction()
 {
     QString ret;
     QTextStream fl(&ret);
-    fl<< _sub->gr()<<" "<<_regle->aff()<<" "<<_super->gr();
+    fl<< _sub->gr()<<" "<<_sub->pos()<<" "<<_regle->aff()<<" "<<_super->gr()<<_super->pos();
     return ret;
 }
 
@@ -604,7 +604,7 @@ QString Requete::trSub()
         morph.replace("infinitif", "indicatif");
         morph.append(" 3ème singulier");
     }
-    ret.replace("<sub>", _sub->trGroupe(0, morph));
+    ret.replace("<sub>", _sub->trGroupe());
     return ret;
 }
 

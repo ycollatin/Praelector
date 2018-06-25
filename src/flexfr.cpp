@@ -2324,6 +2324,9 @@ QString conjnat(QString inf, QString morpho)
     morpho.replace("impératif futur", "impératif présent");
     morpho.replace("infinitif parfait", "indicatif passé_composé 3ème singulier"); 
 
+    // uideor - paraître. pê pas le bon endroit
+    if (inf == "paraître") morpho.replace("passif", "actif");
+
     bool se = inf.startsWith("se ");
     if (inf.contains(" ") && !se)
     {
