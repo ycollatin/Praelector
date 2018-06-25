@@ -22,18 +22,13 @@
 
 //                          FIXME 
 // 
-//        - flexfr, élision Ce est.
 //        - necesse : adj inv. ne peut s'accorder. Il faudrait au moins le déclarer nominatif
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //
 //                           TODO
-//        - couleurs de la traduction récapitulée :
-//            . le bleu ne doit pas être celui des hyperliens
-//            . le rouge doit indiquer le mot courant.
 //        - faire disparaître les hyperliens inutiles.
-//        - surligner dans la traduction le groupe du subordonné courant.
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - Lien phrase suivante. 
 //        - Rendre plus pertinents les raccourcis clavier du menu (q quitter, p phrase, e enregisrée, etc.)
@@ -1366,7 +1361,8 @@ QString Phrase::tr()
             QString g = m->trGroupe();
             if (i == _imot)
             {
-                g.prepend("<span style=\"color:darkblue;\">");
+                //                                        moccasin
+                g.prepend("<span style=\"background-color:peachpuff;\">");
                 g.append("</span>");
             }
             // le nouveau mot est sommet tant qu'un lien n'a pas été validé
