@@ -78,6 +78,7 @@ class MotFlechi: public QObject
         int             nbReqSupCloses();
         int             nbReqSupValides(Requete* rtest=0);
         int             nbSuper();
+        int             nbTr();
         bool            neg();
         void            nettoie();
         char            pos();

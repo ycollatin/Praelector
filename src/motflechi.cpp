@@ -381,6 +381,11 @@ int MotFlechi::nbSuper()
     return _phrase->nbSuper(this);
 }
 
+int MotFlechi::nbTr()
+{
+    return _trfl.count();
+}
+
 int MotFlechi::nbReqSupCloses()
 {
     return _phrase->lReqSup(this).count();

@@ -330,9 +330,10 @@ QString Mot::html()
             default:break;
         }
         fl	<< "tr. <span style=\"color:darkred;font-style:italic\">"<<mf->tr()<<"</span> "
-            << "<a href=\"m.e."<<i<<"\">&eacute;diter</a>"
-            << "<a href=\"m.i."<<i<<"\">tr. suiv.</a> "
-			<< "<a href=\"m.c."<<i<<"\">choisir</a> rejeter "
+            << "<a href=\"m.e."<<i<<"\">&eacute;diter</a>";
+        if (mf->nbTr() > 1)
+            fl << "<a href=\"m.i."<<i<<"\">tr. suiv.</a> ";
+        fl  << "<a href=\"m.c."<<i<<"\">choisir</a> rejeter "
 			<< "<a href=\"m.r.m."<<i<<"\">le lemme</a> "
 			<< "<a href=\"m.r.f."<<i<<"\">la forme</a>";
         ret.append(lin);
