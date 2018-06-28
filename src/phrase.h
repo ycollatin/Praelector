@@ -113,10 +113,11 @@ class Phrase: public QObject
         void              setGr(QString t);
         void              setLiens();
         QList<Mot*>       supersDe(Mot* m);
-        QString           tr();
+        QString           tr(bool color = true);
         MotFlechi*        vbRelative(MotFlechi* mf);
         MotFlechi*        vbSuper(MotFlechi* mf);
     signals:
+        void              editTr(QString t);
         void              repondu(const QString);
     public slots:
         void              traceReq();

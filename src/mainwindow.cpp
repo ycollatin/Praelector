@@ -50,6 +50,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
 	phrase = new Phrase("");
 	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
+	connect(phrase, SIGNAL(editTr(QString)),this,SLOT(traceMf(QString)));
 	connect(textBrowser, SIGNAL(linkClicked(QUrl)),this, SLOT(calcul(QUrl)));
     clavier = false;
     relect = false;
@@ -145,6 +146,7 @@ void MainWindow::calcul (QUrl url)
     texte.clear();
     texteT.clear();
 	QString cmd = url.toString();
+    // lecture d'une traduction éditée
     if (relect && cmd == trace.at(ienr)) ++ienr;
 	if (cmd == "-quitter") 
 	{
@@ -198,20 +200,11 @@ void MainWindow::calcul (QUrl url)
                 ienr = 0;
             }
         }
-        /*
-        // récupération éventuelle d'une traduction éditée du lemme
-        else if (cmd.startsWith("m.e."))
-        {
-            QString id = "#editlem";
-            id.append(cmd.at(4));
-            QWebFrame* wf = textBrowser->page()->mainFrame();
-            QWebElement ed = wf->findFirstElement(id);
-            cmd.append(".");
-            cmd.append(ed.evaluateJavaScript("this.value").toString());
-        }
-        */
         // éventuellement, enregistrer la commande dans trace
-        else if (!relect) (ajTrace(cmd));
+        else if (!relect)
+        {
+            ajTrace(cmd);
+        }
         // passer la commande à phrase
 		phrase->ecoute(cmd);
 	}
@@ -274,7 +267,7 @@ QString MainWindow::choixPhr(QString c)
 		}
 		else
         {
-            // TODO vérifier lin vide
+            // TODO vérifier lien vide
             QString aff;
             aff = lin;
             QTextStream fl(&p);
@@ -300,7 +293,7 @@ void MainWindow::enr()
 {
     trace.prepend(phrase->gr()+"<!--");
     trace.prepend(phrase->num());
-    trace.append(phrase->tr()+"-->");
+    trace.append(phrase->tr(false)+"-->");
     // joindre les cmd
     QString vest = trace.join(',');
     while (vest.endsWith('\n')) vest.chop(1);
@@ -430,12 +423,29 @@ void MainWindow::surligne()
         from += 9;
         int to = texte.indexOf("\"", from);
         QString url = texte.mid(from, to-from);
+        if (url.startsWith("m.e.")
+            && trace.at(ienr).startsWith("m.e.")
+            && trace.at(ienr).count(".") > 2)
+        {
+            texte.replace(from, url.length(), trace.at(ienr));
+            url = trace.at(ienr);
+            to = texte.indexOf("\"", from);
+        }
         if (url == trace.at(ienr))
         {
+            // TODO : modifier l'url dans la variable texte
             texte.insert(to+2, "<span style=\"background-color:red;\">");
             to = texte.indexOf("</a>", to);
             texte.insert(to, "</span>");
         }
         from = texte.indexOf("<a href=", to);
     }
+}
+
+void MainWindow::traceMf(QString t)
+{
+    QString ultc = trace.at(trace.count()-1);
+    ultc.append('.'+t);
+    trace.removeLast();
+    trace.append(ultc);
 }

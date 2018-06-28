@@ -50,7 +50,7 @@ class MotFlechi: public QObject
     public:
         MotFlechi(Lemme* l, char p, QString m, Mot* parent);
         ~MotFlechi();
-        bool            auxiliaire();
+        void            ajTrfl(QString t);
         QList<Requete*> closes();
         bool            contigu(MotFlechi* mf);
         QString static  elideFr(QString s);

@@ -28,6 +28,7 @@
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //
 //                           TODO
+//        - écrire une règle ppr (part. prés. substantivable ex. esurientes)
 //        - faire disparaître les hyperliens inutiles.
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - Lien phrase suivante. 
@@ -35,7 +36,6 @@
 //        - Liens à ajouter :
 //          * voir la traduction enregistrée
 //        - Trace :
-//          * édition de traduction dans l'url d'enregistrement
 //          * Mentionner l'auteur de la trace ;
 //          * Comparaision de traduction en fin de lecture
 //        - Comment lier ?
@@ -55,14 +55,6 @@
 //        - quid dulcius : quoi de plus doux ? Pas de règle.
 //        - phr interrogatives : inversion du sujet et adv interrogatif en première place.
 //        - vel dii : l'adv. porte sur le nom.
-//        - Réfléchir sur la forme négative :
-//            . elle pourrait être une propriété /neg/ de MotFlechi :
-//            . par défaut, la négation serait ne + vb + pas,
-//              'pas' peut être remplacé par 'jamais', 'rien', 'plus', 'personne' ou 'nulle part'
-//            . 'nisi' serait traduit par 'si' et basculerait la propriété /neg/ du v.
-//            . 'nunquam', serait traduit par 'jamais'
-//            . Il faudrait décider de la place de la traduction.
-//            . place entre aux et pp : n'est jamais vaincu
 //        - dans les cas des lemmes multipos : si une requête permet de savoir quel pos
 //          est utilisé, rejeter ou interdire les requêtes utilisant un autre pos.
 //        - sic coord ? traiter sic ut.
@@ -477,10 +469,18 @@ void Phrase::ecoute (QString m)
 							}
 						case 'e':  // éditer de la traduction
 							{
+                                qDebug()<<"éditer, m"<<m;
                                 if (eclats.count() > 2 && !eclats.at(2).isEmpty())
                                 {
-                                    QString t = saisie("traduction pour "+mf->gr(), mf->tr());
-                                    if (! t.isEmpty()) mf->setTr(t);
+                                    QString v = mf->tr();
+                                    if (eclats.count() > 3)
+                                        v = eclats.at(3);
+                                    QString t = saisie("traduction pour "+mf->gr(), v);
+                                    if (! t.isEmpty())
+                                    {
+                                        mf->ajTrfl(t);
+                                        emit(editTr(t));
+                                    }
                                 }
 								break;
 							}
@@ -725,11 +725,11 @@ void Phrase::ecoute (QString m)
 								break;
 					      	}
 						default: std::cerr << qPrintable(m)<<", erreur d'url lien"<<"\n"; break;
-					}
+					} // eclats[1}
 					break;
-				}
+				} // case 'l'
 			default: std::cerr << qPrintable (m) << ", commande mal formée\n"; break;
-		}
+		} // switch eclats[0]
         majAffichage();
         emit(repondu(_reponse));
         return;
@@ -1229,14 +1229,14 @@ Requete* Phrase::requete(int n)
  *   l est le label, s est la chaîne à éditer
  */
 
-QString Phrase::saisie (QString l, QString s)
+QString Phrase::saisie(QString l, QString s)
 {
 	s = s.simplified();
 	QString ret = s;
 	Dialogue* dialogue = new Dialogue ();
 	dialogue->setLabel (l);
 	dialogue->setText (s);
-	int res = dialogue->exec ();
+	int res = dialogue->exec();
 	if (res == QDialog::Accepted)
 		ret = dialogue->getText ().simplified();
 	delete dialogue;
@@ -1346,7 +1346,7 @@ QList<Mot*> Phrase::supersDe(Mot* m)
 }
 
 
-QString Phrase::tr()
+QString Phrase::tr(bool color)
 {
     _tr.clear();
     QTextStream fl(&_tr);
@@ -1357,7 +1357,7 @@ QString Phrase::tr()
 		if (m->estSommet()) 
         {
             QString g = m->trGroupe();
-            if (i == _imot)
+            if (i == _imot && color)
             {
                 //                                        moccasin
                 g.prepend("<span style=\"background-color:peachpuff;\">");

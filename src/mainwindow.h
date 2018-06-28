@@ -56,8 +56,10 @@ class MainWindow : public QMainWindow
         bool               clavier;
         QFile              fTrace;
         int                ienr;
+        int                iphr;
         QStringList        lenr;
         QStringList        lurl;
+        int               _nbphr;
 		Phrase*            phrase;
         QString            prefixe;
         QString            texte;
@@ -83,6 +85,7 @@ class MainWindow : public QMainWindow
 		void calcul (QUrl url);
         void closeEvent(QCloseEvent* event);
 		void parle (QString m);
+        void traceMf(QString t);
 };
 
 #endif // MAINWINDOW_H

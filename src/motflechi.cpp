@@ -133,6 +133,13 @@ MotFlechi::~MotFlechi()
     _trfl.clear();
 }
 
+void MotFlechi::ajTrfl(QString t)
+{
+    _trfl.append(t);
+    _itr = _trfl.count() - 2;
+    incItr();
+}
+
 bool MotFlechi::contigu(MotFlechi* mf)
 {
     return abs(rang() - mf->rang()) == 1;
@@ -637,6 +644,10 @@ void MotFlechi::setSujet()
 
 void MotFlechi::setTr(QString t)
 {
+    // TODO
+    // vérifier que t ne fait pas déjà partie des traductions
+    // l'ajouter en fin de liste des traductions
+    // régler itr
     _tr = t;
 }
 
