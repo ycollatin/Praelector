@@ -469,7 +469,6 @@ void Phrase::ecoute (QString m)
 							}
 						case 'e':  // éditer de la traduction
 							{
-                                qDebug()<<"éditer, m"<<m;
                                 if (eclats.count() > 2 && !eclats.at(2).isEmpty())
                                 {
                                     QString v = mf->tr();
