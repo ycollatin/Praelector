@@ -54,7 +54,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	connect(textBrowser, SIGNAL(linkClicked(QUrl)),this, SLOT(calcul(QUrl)));
     clavier = false;
     relect = false;
-    alphabet = "abcdefghijklmnopqrstuv";
+    alphabet = "pes/aqbcdfghijklmnortuv";
     wxyz = "wxyz";
     lurl = QStringList()
     << "-prec"
