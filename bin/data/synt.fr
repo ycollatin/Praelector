@@ -57,6 +57,7 @@ regimeAcc
 pos:v,w
 objetRel
 sujet
+sujetPart
 sujetRel
 sujetInf
 sujetPropInf
