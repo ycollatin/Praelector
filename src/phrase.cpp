@@ -28,11 +28,10 @@
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //
 //                           TODO
-//        - écrire une règle ppr (part. prés. substantivable ex. esurientes)
-//        - faire disparaître les hyperliens inutiles.
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - Lien phrase suivante. 
-//        - Rendre plus pertinents les raccourcis clavier du menu (q quitter, p phrase, e enregisrée, etc.)
+//        - Enregistrement des phrases collées ?
+//        - faire disparaître les hyperliens inutiles.
 //        - Liens à ajouter :
 //          * voir la traduction enregistrée
 //        - Trace :
