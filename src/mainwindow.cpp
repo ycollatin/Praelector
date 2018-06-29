@@ -293,10 +293,12 @@ void MainWindow::enr()
 {
     trace.prepend(phrase->gr()+"<!--");
     trace.prepend(phrase->num());
-    trace.append(phrase->tr(false)+"-->");
+    //trace.append(phrase->tr(false)+"-->");
     // joindre les cmd
     QString vest = trace.join(',');
     while (vest.endsWith('\n')) vest.chop(1);
+    vest.append(","+phrase->tr(false)+"-->");
+
     // chercher le fichier trace
     if (!fTrace.exists())
     {
