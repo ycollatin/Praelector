@@ -21,7 +21,9 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-// 
+//
+//        - L'enregistrement ѕe passe mal si la traduction est en plusieurs lignes.
+//          voir void MainWindow::enr()
 //        - necesse : adj inv. ne peut s'accorder. Il faudrait au moins le déclarer nominatif
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
