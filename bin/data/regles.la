@@ -764,6 +764,7 @@ poids:80
 tr:<sup> <sub>
 
 id:vInd
+aff:vSub
 doc:verbe d'une conjonctive à l'indicatif
 lsSup:conjind
 posSub:v,w
@@ -774,6 +775,7 @@ poids:80
 tr:<sup> <sub>
 
 id:vSubj
+aff:vSub
 doc:verbe d'une conjonctive au subjonctif
 lsSup:conjsubj
 morphoSub:subjonctif
