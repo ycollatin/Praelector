@@ -54,8 +54,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	connect(textBrowser, SIGNAL(linkClicked(QUrl)),this, SLOT(calcul(QUrl)));
     clavier = false;
     relect = false;
-    alphabet = "pes/aqr<>bcdfghijklmnotuv";
-    wxyz = "wxyz";
     lurl = QStringList()
     << "-prec"
     << "-suiv"
@@ -72,17 +70,31 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     << "l.t.";
 
     // construire la liste des clés alpha
+    alphabet = "ces/aqr<>bdfghijklmnoptuv";
+    /*
+       c choisir une phrase
+       e " enregistrée
+       s saisir une phrase
+       / clavier
+       a annuler
+       q quitter
+       r réinitialiser
+       < mot précédent
+       < mot suivant
+     */
+    wxyz = "wxyz";
     for (int i=0;i<alphabet.count();++i)
         clesL.append(alphabet.at(i));
     for (int i=0;i<4;++i)
     {
-        QChar prem = wxyz.at(i);
+        QString cle(wxyz.at(i));
         for (int j=0;j<alphabet.count();++j)
         {
-            QString cle;
-            cle.append(prem);
-            cle.append(alphabet.at(j));
-            clesL.append(cle);
+            clesL.append(cle+alphabet.at(j));
+        }
+        for (int j=0;j<wxyz.count();++j)
+        {
+            clesL.append(cle+wxyz.at(j));
         }
     }
 	phrase->ecoute("-init");
@@ -371,25 +383,31 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     if (t.isEmpty())
     {
         QMainWindow::keyPressEvent(ev);
-        prefixe.clear();
+        //prefixe.clear();
         return;
     }
-    if (ev->key() == Qt::Key_Slash)
+    if (ev->key() == Qt::Key_Escape)
+    {
+        prefixe.clear();
+    }
+    else if (ev->key() == Qt::Key_Slash && prefixe.isEmpty())
     {
         clav();
     }
-    else if (wxyz.contains(t))
+    else if (wxyz.contains(t) && prefixe.isEmpty())
     {
         prefixe = t;
     }
-    else if (clavier && clesL.contains(t))
+    else if (clavier
+             && (clesL.contains(t)
+                 || (!prefixe.isEmpty() && wxyz.contains(t))))
     {
         t.prepend(prefixe);
         QUrl url = urls[t];
         textBrowser->emet(url); 
         prefixe.clear();
     }
-    QMainWindow::keyPressEvent(ev);
+    else QMainWindow::keyPressEvent(ev);
 }
 
 void MainWindow::parle(QString m)
