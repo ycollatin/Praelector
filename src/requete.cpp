@@ -295,10 +295,12 @@ QString Requete::html(bool enr)
     if (enr) fl << "<div style=\"background-color:lightyellow;\">";
     else fl << "<div>";
     fl  << _sub->gr()<<"<small> " << _sub->morpho() << " </small>"
-        << _regle->aff() << " "
+        // en vert, aff de la règle
+        << "<span style=\"color:green;\">"<<_regle->aff()<<"</span> "
         << _super->gr() <<"<small> " << _super->morpho() << " </small>"
         // En ocre italique, traduction
-        << "<span style=\"color:"<<color<<";font-style:italic\">"<<MotFlechi::elideFr(_super->trGroupe(this))<<"</span> "
+        << "<span style=\"color:"<<color<<";font-style:italic\">"
+        <<MotFlechi::elideFr(_super->trGroupe(this))<<"</span> "
         // doc de la règle
         << "<a href=\"l.i."<<_num<<"\">doc</a> "
         // rotation de la traduction
