@@ -83,6 +83,7 @@ attrSP
 attrO
 abl
 datif
+datifPart
 prep
 propInf
 infObjet
