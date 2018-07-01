@@ -521,7 +521,8 @@ doc:Le locatif est utilisé pour le question ubi
 filtre:loc
 posSup:v,w
 posSub:n
-morphoSub:locatif
+morphoSub:genitif
+lsSub:loc
 x:attrS,genitif,sujet
 poids:88
 tr:<sup> à <sub>
