@@ -22,12 +22,13 @@
 
 //                          FIXME 
 //
-//        - Il reste des lignes vides dans le fichier enregistré.
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //
 //                           TODO
+//        - accorder la traduction de l'épithète : post equitem sedet *atra* cura : 
+//            si /cura/ est traduit par le masculin /souci/, /atra/ est traduit par "noir".
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - Lien phrase suivante. 
 //        - Enregistrement des phrases collées ?
@@ -61,7 +62,6 @@
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
 //        - En vert : fonction des liens proposés
-//        - accorder la traduction de l'épithète
 //
 
 #include <QApplication>
