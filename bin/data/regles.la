@@ -394,6 +394,18 @@ morphoSub:datif
 poids:79
 tr:<sub> <sup>
 
+id:datifPart
+aff:datif
+doc:un participe substantivé peut être complément au datif d'un autre verbe
+posSup:v,w,a
+lsSup:datif
+posSub:v
+lsSub:ppr
+morphoSub:datif
+poids:79
+tr:<sup> à <sub>
+tr:<sup> pour <sub>
+
 id:det
 doc:beaucoup de pronoms peuvent jouer le rôle de déterminants : is, suus, iste, etc
 posSup:n
