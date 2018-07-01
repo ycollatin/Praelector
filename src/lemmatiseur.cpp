@@ -895,13 +895,14 @@ void Lemmat::lisLexicoSyntaxe()
         {
             Lemme *l = lemme(eclats.at(0));
             QStringList lsynt = eclats.at(1).split(',',QString::SkipEmptyParts);
+            /*
             for (int i=0;i<lsynt.count();++i)
             {
                 // pos additionnels donnés par lexsynt : posa, posn, posr, etc.
                 QString s = lsynt.at(i);
                 if (s.startsWith("pos")) l->setPos(l->pos()+s.right(1));
             }
-            //l->setLexSynt(eclats.at(1).split(',',QString::SkipEmptyParts));
+            */
             l->setLexSynt(lsynt);
         }
     }

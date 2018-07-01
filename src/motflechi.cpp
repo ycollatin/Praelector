@@ -35,15 +35,27 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
     QTextStream(&_morpho) << p << " " << m;
     _phrase = parent->phrase();
     _pos = p;
-    QString tr;
+
+    // fixer _eqivPos
+    // adjectifs substantivables
+    if (p == 'a' && _lemme->synt("posn"))
+        _eqivPos.append('n');
+    // participes présents
+    if ((p == 'v' || p == 'w') && _lemme->synt("ppr"))
+        _eqivPos.append('n');
+    // participes
+    if ((p == 'v' || p == 'w') && m.contains("participe"))
+        _eqivPos.append('a');
+
     // traduction fléchie
+    QString tr;
     tr = l->traduction("fr", _pos);
     tr.remove(QRegExp("[(\\[][^)^\\]]*[)\\]]"));
     _traductions = tr.split(QRegExp("[,;]"));
-    //_traductions.removeDuplicates();
     _rejete = false;
     _valide = false;
     _neg    = false;
+
     // _trfl  : liste de traductions fléchies
     // _trNue : traduction courante sans déterminant ni sujet
     // _tr    : traduction courante
@@ -176,6 +188,11 @@ QString MotFlechi::elideFr(QString s)
     s.replace(QRegularExpression("(je|tu|il|elle) ([tl])[ea] n'"), "\\1 ne \\2'");
 
     return s;
+}
+
+QString MotFlechi::eqiv()
+{
+    return _eqivPos;
 }
 
 bool MotFlechi::estSub()
@@ -591,7 +608,7 @@ void MotFlechi::setDet(bool f)
 	bool initVoc = QString ("aehiouâéêAEHIOUÂÉÊ").contains (_trNue.at (0));
     bool plur = _morpho.contains("plur");
 	// déterminant
-	if (_lemme->pos().contains('n'))
+    if (_pos == 'n')
 	{
         if (zero) // passer à indef
         {

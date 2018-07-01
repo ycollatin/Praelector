@@ -319,9 +319,9 @@ QString Mot::html()
         if (mf->rejete()) continue;
 		fl << "<span style=\"color:green;font-style:italic\"> "
            << mf->morphoHtml() << "</span>";
-        switch(mf->lemme()->pos().at(0).unicode())
+        switch(mf->pos())
         {
-            case 'a': if (!mf->lemme()->pos().contains('n')) break;
+            //case 'a': if (!mf->lemme()->pos().contains('n')) break;
             case 'n': fl << " <a href=\"m.d."<<i<<"\">det.</a> "; break;
             case 'w':
             case 'v': if (mf->morpho().contains('3'))
@@ -525,12 +525,21 @@ void Mot::setFlechis(MapLem m)
                 char p = pl.at(ip).toLatin1();
                 MotFlechi* mf = new MotFlechi(l, p, morpho, this);
                 ajFlechi(mf);
+                // équivalents des fléchis
+                QString eqiv = mf->eqiv(); 
+                if (!eqiv.isEmpty()) for (int ie=0;ie<eqiv.length();++ie)
+                {
+                    MotFlechi* nmf = new MotFlechi(l, eqiv.at(ie).toLatin1(), morpho, this);
+                    ajFlechi(nmf);
+                }
             }
         }
     }
     // trier les fléchis
     qSort(_flechis.begin(), _flechis.end(), sortF);
 }
+
+//MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
 
 void Mot::setReqLancees(bool r)
 {

@@ -27,6 +27,10 @@
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //
 //                           TODO
+//        - Pour éviter la multiplication des règles, créer un champ
+//          char MotFlechi::equiv, qui donnera le pos possible d'une forme. Il fonctionnera
+//          comme le champ aff de Regle, qui est un substitut de Regle::id, et qui renvoie
+//          id si aff n'est pas défini.
 //        - accorder la traduction de l'épithète : post equitem sedet *atra* cura : 
 //            si /cura/ est traduit par le masculin /souci/, /atra/ est traduit par "noir".
 //        - Possibilité de changer la place du groupe subordonné courant.
