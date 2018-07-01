@@ -303,22 +303,20 @@ QString MainWindow::choixPhr(QString c)
 
 void MainWindow::enr()
 {
-    trace.prepend(phrase->gr()+"<!--");
-    trace.prepend(phrase->num());
-    //trace.append(phrase->tr(false)+"-->");
-    // joindre les cmd
-    QString vest = trace.join(',');
-    while (vest.endsWith('\n')) vest.chop(1);
-    vest.append(","+phrase->tr(false)+"-->");
+    QString vest;
+    QTextStream flv(&vest);
+    flv << phrase->num()<<","<<phrase->gr() << "<!--," << trace.join(',')
+        << "," << phrase->tr(false)<<"-->";
 
-    // chercher le fichier trace
+    // si le fichier trace n'existe pas
     if (!fTrace.exists())
     {
         fTrace.open(QIODevice::WriteOnly);
-        QTextStream (&fTrace) << vest << "\n";;
+        QTextStream (&fTrace)<< vest << "\n";;
         fTrace.close();
         return;
     }
+
     fTrace.open(QIODevice::ReadOnly);
     // lire les lignes
     QTextStream fl(&fTrace);
@@ -353,7 +351,7 @@ void MainWindow::enr()
             ins = true;
         }
         // puis enregistrer la ligne lue 
-        neotrace.append(lin);
+        if (!lin.isEmpty()) neotrace.append(lin);
     }
     while (!lin.isNull());
 
@@ -363,6 +361,7 @@ void MainWindow::enr()
         neotrace.append(vest);
     }
     fTrace.close();
+
     // enregistrer neotrace
     fTrace.open(QIODevice::WriteOnly);
     QTextStream flneo(&fTrace);
