@@ -372,7 +372,7 @@ void MainWindow::enr()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    //phrase->traceReq();
+    phrase->traceReq();
     QMainWindow::closeEvent(event);
 }
 
