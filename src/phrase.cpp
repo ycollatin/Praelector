@@ -21,7 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
-//
+//        - Nil contemnit esuriens : esuriens traduit par "avoir faim" parce qu'il
+//          a le pos n. Il faudrait fléchir le français en se servant du pos du lemme.
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
@@ -107,7 +108,7 @@ bool Phrase::accord(MotFlechi* ma, MotFlechi* mb, QString cgn)
     if (cgn.contains('p'))
     {
         // trouver le non-verbe
-        if (!ma->lemme()->pos().contains('v') && !ma->lemme()->pos().contains('w'))
+        if (!QString("vw").contains(ma->pos()))
         {
             if (ma->gr() == "ego") cma.append(" 1ère");
             else if (ma->gr() == "tu") cma.append(" 2ème");
@@ -1309,7 +1310,6 @@ void Phrase::setGr(QString t)
 
 void Phrase::setLiens()
 {
-    //Mot* mc = _mots.at(_imot);
     Mot* mc = motCourant();
     // essai de résolution des requêtes en attente.
     for (int im=0;im<mc->nbFlechis();++im)
