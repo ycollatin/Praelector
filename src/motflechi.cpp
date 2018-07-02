@@ -63,7 +63,10 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
     {
         QString c = _traductions.at(i).simplified();
         QString fl = c;
-        switch(_pos)
+        // le pos d'un fléchi peut différer du pos d'origine (ppr, posn, etc.)
+        // mais la flexion reste celle du pos d'origine.
+        // switch(_pos)
+        switch(_lemme->pos().at(0).toLatin1())
         {
             case 'p':
                 if (l->gr()=="je")
@@ -585,7 +588,7 @@ bool MotFlechi::resout(Requete* req)
                 }
                 if (!ac) return false;
             }
-            else if (!accord.isEmpty() && !(_phrase->accord(this, req->super(), accord)))
+            else if (!_phrase->accord(this, req->super(), accord))
                 return false;
         }
         // règle
