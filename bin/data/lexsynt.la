@@ -34,6 +34,7 @@
 ! - loc : peut être fléchi au locatif
 ! - posn,posc,posa : le lemme peut avoir aussi le pos a, c, n, etc.
 ! - ppr : le participe présent du verbe est substantivable
+! - ppp : le participe parfait du verbe est substantivable
 ! - prep : bien que n'étant pas verbe, le mot peut avoir un complément prépositionnel
 ! - prepabl  : la préposition gouverne l'ablatif
 ! - prepacc  : la préposition gouverne l'accusatif
@@ -934,7 +935,7 @@ agninus:
 agnitio:
 agnosco:
 agnus:
-ago:
+ago:ppp
 Agonalis2:
 Agonis:
 Agonius:
