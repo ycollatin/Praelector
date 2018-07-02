@@ -229,7 +229,9 @@ bool Regle::estSub(MotFlechi* mf)
     if (subExclu(cle)) return false;
     if (!_lemmeSub.empty() && !_lemmeSub.contains(cle)) return false;
     // pos
-    if (!_posSub.isEmpty() && !_posSub.contains(mf->pos()))
+    if (!_posSub.isEmpty()
+        && !_posSub.contains(mf->pos())
+        && !_posSub.contains(mf->posO()))
         return false;
     // morpho
     QString m = mf->morpho();
@@ -254,7 +256,8 @@ bool Regle::estSuper(MotFlechi* mf)
     QString cle = l->cle();
     if (!_lemmeSup.empty() && !_lemmeSup.contains(cle)) return false;
     // pos
-    if (!_posSup.isEmpty() && (!_posSup.contains(mf->pos())
+    if (!_posSup.isEmpty()
+        && (!_posSup.contains(mf->pos()) && !_posSup.contains(mf->posO())
         && !(_posSup.contains("w") && mf->lemme()->synt("attr"))))
     {
         return false;
