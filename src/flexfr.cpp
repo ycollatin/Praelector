@@ -1627,7 +1627,7 @@ QString TVsavoir::SubjPres(int P)
 
 QString TVsavoir::ImperPres(int P)
 {
-    QString D[7] = {"", "e", "", "ons", "ez", ""};
+    QString D[7] = {"", "", "e", "", "ons", "ez", ""};
     if (D[P] > "") return otedernieres(inf, 4) + "ch" + D[P];
     return "";
 }
@@ -2320,9 +2320,11 @@ QString conjnat(QString inf, QString morpho)
     else if (morpho.contains("supin"))
         return "pour "+inf;
 
+    // particularités de la morpho latine.
     morpho.replace("subjonctif imparfait", "conditionnel présent");
     morpho.replace("impératif futur", "impératif présent");
     morpho.replace("infinitif parfait", "indicatif passé_composé 3ème singulier"); 
+    morpho.replace("impératif futur", "impératif présent");
 
     // uideor - paraître. pê pas le bon endroit
     if (inf == "paraître") morpho.replace("passif", "actif");
