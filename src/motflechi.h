@@ -41,6 +41,7 @@ class MotFlechi: public QObject
         QString         _morpho;
         bool            _neg;
         char            _pos;
+        char            _posO;
         Phrase*         _phrase;
         bool            _rejete;
         QStringList     _traductions;
@@ -84,6 +85,7 @@ class MotFlechi: public QObject
         bool            neg();
         void            nettoie();
         char            pos();
+        char            posO();
         int             rang();
         bool            rejete();
         Requete*        reqSub(int i);

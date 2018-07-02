@@ -35,17 +35,19 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
     QTextStream(&_morpho) << p << " " << m;
     _phrase = parent->phrase();
     _pos = p;
+    _posO = _pos;
 
     // fixer _eqivPos
     // adjectifs substantivables
     if (p == 'a' && _lemme->synt("posn"))
         _eqivPos.append('n');
     // participes présents
-    if ((p == 'v' || p == 'w') && _lemme->synt("ppr"))
+    if ((p == 'v' || p == 'w')
+        && (_lemme->synt("ppr") || _lemme->synt("ppp")))
         _eqivPos.append('n');
     // participes
     if ((p == 'v' || p == 'w') && m.contains("participe"))
-        _eqivPos.append('a');
+            _eqivPos.append('a');
 
     // traduction fléchie
     QString tr;
@@ -456,6 +458,11 @@ void MotFlechi::nettoie()
 char MotFlechi::pos()
 {
     return _pos;
+}
+
+char MotFlechi::posO()
+{
+    return _posO;
 }
 
 int MotFlechi::rang()
