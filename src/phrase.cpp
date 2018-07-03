@@ -21,16 +21,19 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
+//        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //
 //                           TODO
-//        - accorder la traduction de l'épithète : post equitem sedet *atra* cura : 
-//            si /cura/ est traduit par le masculin /souci/, /atra/ est traduit par "noir".
+//        - L'affichage ne tient pas compte des ponctuations internes.
+//        - Ajouter présentation et licence sous le menu d'accueil de Praelector
+//        - un à-propos dans le menu ?
+//        - Possibilité de forcer un lien syntaxique entre deux mots ?
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - Lien phrase suivante. 
-//        - Enregistrement des phrases collées ?
+//        - Enregistrement des phrases collées ou saisies ?
 //        - faire disparaître les hyperliens inutiles.
 //        - Liens à ajouter :
 //          * voir la traduction enregistrée
@@ -42,6 +45,8 @@
 //                ibam forte uia sacra nescio quid meditans....
 //              . un groupe elliptique dont le noyau est absent : homo homini lupus.
 //        - Lexique personnel
+//        - accorder la traduction de l'épithète : post equitem sedet *atra* cura : 
+//            si /cura/ est traduit par le masculin /souci/, /atra/ est traduit par "noir".
 //
 //                           XXX GRAMMAIRE
 //        - règle nisi ubi : sauf quand ; nisi + nom.
@@ -55,8 +60,6 @@
 //        - quid dulcius : quoi de plus doux ? Pas de règle.
 //        - phr interrogatives : inversion du sujet et adv interrogatif en première place.
 //        - vel dii : l'adv. porte sur le nom.
-//        - dans les cas des lemmes multipos : si une requête permet de savoir quel pos
-//          est utilisé, rejeter ou interdire les requêtes utilisant un autre pos.
 //        - sic coord ? traiter sic ut.
 //        - une étiquette dans lexsynt.la pour les verbes à ppp substantivables (acta agis) ?
 //          par ex. subst
