@@ -157,7 +157,7 @@ void MainWindow::calcul (QUrl url)
 {
     texte.clear();
     texteT.clear();
-	QString cmd = url.toString();
+    QString cmd = url.fromPercentEncoding(url.toString().toUtf8());
     // lecture d'une traduction éditée
     if (relect && cmd == trace.at(ienr)) ++ienr;
 	if (cmd == "-quitter") 
@@ -282,8 +282,10 @@ QString MainWindow::choixPhr(QString c)
             // TODO vérifier lien vide
             QString aff;
             aff = lin;
+            QString url = QUrl::toPercentEncoding(lin);
+            //url.replace(":","%3A");
             QTextStream fl(&p);
-            fl << "<a href=\"-phr"<<i<<"_"<<aff<<"\">"<<i<<"-</a> "<< aff;
+            fl << "<a href=\"-phr"<<i<<"_"<<url<<"\">"<<i<<"-</a> "<< aff;
             ++i;
         }
 		lp.append (p);
