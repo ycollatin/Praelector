@@ -21,13 +21,13 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME 
+//        - Requêtes doublonnées, pê après un retour arrière.
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //
 //                           TODO
-//        - L'affichage ne tient pas compte des ponctuations internes.
 //        - Ajouter présentation et licence sous le menu d'accueil de Praelector
 //        - un à-propos dans le menu ?
 //        - Possibilité de forcer un lien syntaxique entre deux mots ?
@@ -314,9 +314,16 @@ bool Phrase::contigus(Mot *a, Mot *b)
 
 QString Phrase::droite(Mot *m)
 {
+    if (m == 0) return "";
     if (m->rang() >= entreMots.count())
+    {
         return "";
-    else return entreMots.at(m->rang() + 1);
+    }
+    else if (m->rang()+1 < entreMots.count())
+    {
+        return entreMots.at(m->rang() + 1);
+    }
+    else return "";
 }
 
 /*
@@ -839,7 +846,8 @@ QString Phrase::grLu()
 		else if (i > _imot)
 			fl << " <span style=\"color:lightgrey;\">";
 		else fl << " <span>";
-		fl << _mots.at(i)->gr() << "</span> ";
+		//fl << _mots.at(i)->gr() << "</span> ";
+		fl << _mots.at(i)->gr() << droite(_mots.at(i)) << "</span> ";
 	}
 	return ret;
 }
@@ -1253,9 +1261,11 @@ void Phrase::setGr(QString t)
 {
     // initialisations
     _gr = t.simplified();
+    /*
     // Ajouter une ponctuation finale manquante 
     if (_gr.at(_gr.length()-1).isLetter())
         _gr.append('.');
+    */
     // ôter les balises html
     _gr.remove(QRegExp("<[^>]*>"));
     // et les espaces de début de ligne
@@ -1282,7 +1292,25 @@ void Phrase::setGr(QString t)
     for (int i=0;i<_gr.length();++i)
     {
         QChar c = _gr.at(i);
-        if (c.isLetter())
+        bool lettre = c.isLetter();
+        if (i == _gr.length()-1)
+        {
+            if (lettre)
+            {
+                nm.append(c);
+            }
+            else
+            {
+                ne.append(c);
+            }
+            if (!nm.isEmpty())
+            {
+                _mots.append(new Mot(nm, dm, i, _mots.count(), this));
+            }
+            if (!ne.isEmpty())
+                entreMots.append(ne);
+        }
+        else if (lettre)
         {
             if (!ne.isEmpty() || i==0)
             {
