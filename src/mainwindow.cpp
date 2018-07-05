@@ -48,7 +48,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     setCentralWidget(centralWidget);
 
-	phrase = new Phrase("");
+	phrase = new Phrase();
 	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
 	connect(phrase, SIGNAL(editTr(QString)),this,SLOT(traceMf(QString)));
 	connect(textBrowser, SIGNAL(linkClicked(QUrl)),this, SLOT(calcul(QUrl)));

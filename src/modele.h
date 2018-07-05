@@ -46,11 +46,9 @@ class Desinence : public QObject
     Desinence(QString d, int morph, int nr, Modele *parent = 0);
     QString gr();
     QString grq();
-    int     rarete();
     Modele *modele();
     int     morphoNum();
     int     numRad();
-    void    setModele(Modele *m);
 };
 
 class Modele : public QObject
@@ -68,7 +66,6 @@ class Modele : public QObject
 
    public:
     Modele(QStringList ll, Lemmat *parent = 0);
-    bool               absent(int a);
     QList<int>         absents();
     QList<int>         clesR();
     Desinence         *clone(Desinence *d);

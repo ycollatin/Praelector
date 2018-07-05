@@ -17,7 +17,6 @@ namespace Ch
         <<"Ser"<<"Sex"<<"S"<<"St"<<"Ti"<<"T"<<"V"
         <<"Vol"<<"Vop"<<"Pl";
     QString           accentue(QString l);
-    QStringList       ajoute(QString mot, QStringList liste);
     void              allonge(QString *f);
     QStringList const anteposes = QStringList()
         << "la"
@@ -51,14 +50,11 @@ namespace Ch
         << "participe"
         << "gérondif"
         << "adjectif verbal";
-    QString           communes(QString g);
     void              deQuant(QString *c);
     QString const     consonnes = "bcdfgjklmnpqrstvxz";
     QStringList const genres = QStringList()
         << "masculin" << "féminin" << "neutre";
-    void              genStrNum(const QString s, QString *ch, int *n);
     QString           deramise(QString r);
-    QString           deAccent(QString c);
     void              elide(QString *mp);
     QStringList const nombres = QStringList()
         << "singulier" << "pluriel";
@@ -67,7 +63,6 @@ namespace Ch
     const QRegExp     reLettres("\\w");
     const QRegExp     rePonct("([\\.?!;:]|\\n\\n)");
     QChar const       separSyll = 0x02CC;
-    bool              sort_i(const QString &a, const QString &b);
     QString           transforme(QString k);
     QString           versPC(QString k);
     QString           versPedeCerto(QString k);

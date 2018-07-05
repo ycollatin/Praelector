@@ -82,28 +82,21 @@ class Lemme : public QObject
     void                ajIrreg(Irreg* irr);
     void                ajRadical(int i, Radical* r);
     void                ajTrad(QString t, QString l);
-    QString             ambrogio();
     QString             cle();
     QList<int>          clesR();
-    bool                estDeponent();
     bool                estIrregExcl(int nm);
     int                 freq() const;
-    QString             getHyphen (); // Accesseurs pour les césures étymologiques
     QString             genre();
     QString             gr();
     QString             grq();
     QString             grModele();
     QString             humain(bool html = false, QString l = "fr");
-    QString             indMorph();
-    QString             irreg(int i, bool* excl);
     Modele*             modele();
-    int                 nh();
     int                 origin();
     QString static      oteNh(QString g, int& nh);
     QString             pos();
     QList<Radical*>     radical(int r);
     QString             renvoi();
-    void                setHyphen (QString h);
     void                setLexSynt(QStringList m);
     void                setPos(QString p);
     bool                synt(QString s);

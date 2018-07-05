@@ -32,18 +32,6 @@
 #include <QDebug>
 
 /**
- * \fn Ch::ajoute (QString mot, QStringList liste)
- * \brief Ajoute mot au début de chaque item de liste.
- */
-QStringList Ch::ajoute(QString mot, QStringList liste)
-{
-    QStringList res;
-    foreach (QString s, liste)
-        res.append(s.prepend(mot));
-    return res;
-}
-
-/**
  * \fn Ch::allonge(QString *f)
  * \brief modifie f pour que sa dernière voyelle
  *        devienne longue.
@@ -117,27 +105,6 @@ QString Ch::atone(QString a, bool bdc)
 }
 
 /**
- * \fn Ch:communes(QString g)
- * \brief note comme communes toutes les voyelles qui ne portent pas de quantité.
- */
-QString Ch::communes(QString g)
-{
-    bool maj = g[0].isUpper();
-    g = g.toLower();
-    if (g.contains("a") || g.contains("e") || g.contains("i") || g.contains("o") || g.contains("u") || g.contains("y"))
-    {
-        g.replace("a","ā̆");
-        g.replace("[^āăō]e","ē̆");
-        g.replace("i","ī̆");
-        g.replace("o","ō̆");
-        g.replace("[^āēq]u","ū̆");
-        g.replace("[^ā]y","ȳ̆");
-    }
-    if (maj) g[0] = g[0].toUpper();
-    return g;
-}
-
-/**
  * \fn Ch::deQuant(QString *c)
  * \brief utilisée en cas d'élision.
  * supprime la quantité de la voyelle finale de la chaine c
@@ -153,19 +120,6 @@ void Ch::deQuant(QString *c)
     c->replace(QRegExp("[\u014d\u014f](m?)$"), "o\\1");
     c->replace(QRegExp("[\u016b\u016d](m?)$"), "u\\1");
     c->replace(QRegExp("[\u0232\u0233](m?)$"), "y\\1");
-}
-
-/**
- * \fn Ch::deAccent(QString *c)
- * \brief Supprime tous les accents d'un texte (acute, macron, breve)
- */
-QString Ch::deAccent(QString c)
-{
-    c = c.normalized(QString::NormalizationForm_D, QChar::currentUnicodeVersion());
-    c.remove("\u0301");
-    c.remove("\u0306");
-    c.remove("\u0304");
-    return c;
 }
 
 /**
@@ -210,29 +164,6 @@ void Ch::elide(QString *mp)
         mp->insert(taille - 1, '[');
         mp->append(']');
     }
-}
-
-void Ch::genStrNum(const QString s, QString *ch, int *n)
-{
-    ch->clear();
-    *n = 0;
-    for (int i = 0; i < s.length(); ++i)
-        if (!s.at(i).isNumber())
-            ch->append(s.at(i));
-        else
-        {
-            *n = s.mid(i).toInt();
-            break;
-        }
-}
-
-/**
- * \fn Ch::sort_i(const QString &a, const QString &b)
- * \brief compare a et b sans tenire compte des diacritiques ni de la casse.
- */
-bool Ch::sort_i(const QString &a, const QString &b)
-{
-    return QString::compare(atone(a), atone(b), Qt::CaseInsensitive) < 0;
 }
 
 QString Ch::jviu(QString ch)

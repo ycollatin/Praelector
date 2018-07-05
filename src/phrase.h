@@ -62,7 +62,7 @@ class Phrase: public QObject
         bool static             sortR(Requete* ra, Requete* rb);
 
     public:
-        Phrase(QString t);
+        Phrase(QString t="");
         bool static       accord(MotFlechi* ma, MotFlechi* mb, QString cgn);
         void              additions();
         void              ajRequete(Requete* req, bool force=false);
@@ -125,6 +125,9 @@ class Phrase: public QObject
 
 namespace Chaines {
 
+	const QString titrePraelector =
+		"<h2 style=\"font-family:serif;\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
+
     const QString menu = QString::fromUtf8
 	    ("<a href=\"-corpus\">choisir une phrase</a><br/>"
 		 "<a href=\"-enr\">choisir une phrase enregistrée</a><br/>"
@@ -137,8 +140,8 @@ namespace Chaines {
         ("%1<hr/>%2<hr/>"
 		 "<a href=\"-reinit\">réinitialiser</a>&nbsp;"
          "<a href=\"-prec\">reculer</a> <a href=\"-suiv\">avancer</a>&nbsp;"
-         "<a href=\"-trace\">enregistrer</a><hr/>"
-         "%3"
+         "<a href=\"-trace\">enregistrer</a>"
+         "<hr/>%3"
 		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%4"
 		 "<hr/><strong>Liens syntaxiques</strong><br/>%5\n"
 		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n"
@@ -146,20 +149,9 @@ namespace Chaines {
          "<hr/>%7");
 
 	const QString documentation = QString::fromUtf8
-		(
-		 "<a href=\"-init\">Menu</a><br/>\n"
-		 "<strong>Saisie de la phrase</strong><br/>\n"
-		 "Un clic sur le lien <em>Saisir une phrase</em> "
-		 "permet non seulement de saisir, mais aussi de coller "
-		 "la phrase qu'on veut lire. Pour valider, la touche "
-		 "<em>Entrée</em> est l'équivalent d'un clic sur le bouton OK."
-		 "De même, la touche <em>Échapp</em> est l'équivalent d'un "
-		 "clic sur le bouton Cancel.<br/>\n"
-		 "<strong>Pilotage</strong><br/>\n"
-         "On peut piloter Praelector à la souris, mais en saisissant "
+		("<div>On peut piloter Praelector à la souris, mais en saisissant "
          "le caractère /, L'interface affiche en rouge des caractères "
          "qui, saisis au clavier, activent le lien qui les suit.<br/>"
-		 "<strong>Morphologie et sémantique</strong><br/>\n"
 		 "Les liens <em>Reculer</em> et <em>Avancer</em> permettent "
 		 "de se déplacer dans la phrase. Il est conseillé de faire "
 		 "le plus de choix possibles avant de passer au mot suivant."
@@ -167,10 +159,9 @@ namespace Chaines {
 		 "caractères de soulignement qui précèdent chaque mot déjà "
 		 "lu. Parmi les choix, <ul>"
 		 "<li> choix du déterminant ou du sujet ;"
-		 "<li> choix de la traduction ; "
+		 "<li> choix ou édition de la traduction ; "
 		 "<li> Rejet de la morphologie proposéë, ou validation "
 		 "comme seule morphologie possible.</ul>"
-		 "<strong>Liens syntaxiques</strong><br/>\n"
 		 "À partir du deuxième mot de la phrase, tous les "
 		 "liens syntaxiques possibles sont proposés. On peut "
 		 "rejeter ceux qui paraissent impossibles ou incorrects, "
@@ -180,19 +171,9 @@ namespace Chaines {
 		 "que leur traduction, qui est souvent approximative. Des liens "
 		 "permettent de déplacer, d'ajouter et de supprimer des éléments "
 		 "de ces traductions. L'état de la traduction est affiché au "
-		 "bas de la fenêtre. Bon courage !");
-
-         /*
-         // test
-         "<br/><select>"
-         "<option>un</option>"
-         "<option>deux</option>"
-         "<option>trois</option>"
-         "</select>"
-         */
-
-	const QString titrePraelector =
-		"<h2 style=\"font-family:serif;\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
+		 "bas de la fenêtre.<br/>"
+         "Praelector est développé par Yves Ouvrard, et placé sous licence GPL."
+         "<em>Macte!</em></div>");
 
 	const QString affInit = QString::fromUtf8
 		("Saisis ci-dessous la phrase à lire");

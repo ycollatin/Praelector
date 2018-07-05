@@ -99,20 +99,6 @@ int Desinence::numRad()
     return _numR;
 }
 
-int Desinence::rarete()
-{
-    return _rarete;
-}
-
-/**
- * \fn void Desinence::setModele (Modele *m)
- * \brief Attribue un modèle à la désinence.
- */
-void Desinence::setModele(Modele *m)
-{
-    _modele = m;
-}
-
 ////////////
 // MODELE //
 ////////////
@@ -290,15 +276,6 @@ Modele::Modele(QStringList ll, Lemmat *parent)
         _lemmatiseur->ajDesinence(dsuf);
     }
 }
-
-/**
- * \fn bool Modele::absent (int a)
- * \brief Renvoie true si la morpho de rang a
- *        n'existe pas dans le modèle. Certains
- *        modèles, par exemple, n'ont pas de singulier,
- *        certains verbes n'ont pas de passif.
- */
-bool Modele::absent(int a) { return _absents.contains(a); }
 
 /**
  * \fn QList<int> Modele::absents ()

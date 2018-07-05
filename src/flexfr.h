@@ -924,8 +924,6 @@ class Pronom
 };
 
 QString accorde(QString adj, QString m);
-bool    est_verbe(QString inf);
 bool    pas_de_passif(QString inf);
 QString pluriel(QString l, QString n);
-QString tableau(QString verbe, int voix);
 #endif

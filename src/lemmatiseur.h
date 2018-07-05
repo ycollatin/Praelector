@@ -62,9 +62,7 @@ class Lemmat : public QObject
     void lisIrreguliers();
     void lisLexicoSyntaxe();
     void lisLexique();
-    void lisExtension();
     void lisModeles();
-    //void lisParPos();
     void lisTraductions(bool base, bool extension);
     void posCf();
     // variables et utils
@@ -73,11 +71,9 @@ class Lemmat : public QObject
     QStringList                      cherchePieds(int nbr, QString ligne, int i, bool pentam);
     QMap<QString, QString>          _contractions;
     QMultiMap<QString, Desinence *> _desinences;
-    QString                          decontracte(QString d);
     QStringList                      formeq(QString forme, bool *nonTrouve, bool debPhr, int accent = 0);
-    bool                             inv(Lemme *l, const MapLem ml);
     QMultiMap<QString, Irreg *>     _irregs;
-    QString                         _cible;  // langue courante, 2 caractères
+    QString                         _cible;
     QMap<QString, QString>          _cibles;
     QMap<QString, Lemme *>          _lemmes;
     QMap<QString, QChar>             mapPos;
@@ -104,56 +100,24 @@ class Lemmat : public QObject
     void                   ajRadicaux(Lemme *l);
     QString                assim(QString a);
     QString                assimq(QString a);
-    QString                cible();
     QMap<QString, QString> cibles();
     QString                desassim(QString a);
     QString                desassimq(QString a);
     static QString         deramise(QString r);
     QStringList            frequences(QString txt);
     MapLem                 lemmatise(QString f);  // lemmatise une forme
-    QString                lemmatiseFichier(QString f, bool alpha = false,
-                                            bool cumVocibus = false, bool cumMorpho = false,
-                                            bool nreconnu = true);
     QStringList            lemmatiseF(QString f, bool deb);
-    // lemmatiseM lemmatise une forme en contexte
     MapLem                 lemmatiseM(QString f, bool debPhr = true);
-    QString                lemmatiseMHtml(QString f, bool debPhr = true);
-    // lemmatiseT lemmatise un texte
-    QString                lemmatiseT(QString t, bool alpha = false, bool cumVocibus = false,
-                                      bool cumMorpho = false, bool nreconnu = false);
     Lemme                 *lemme(QString l);
-    QStringList            lemmes(MapLem ml);
     QStringList            lignesFichier(QString nf);
     void                   lisFichierLexique(QString filepath);
     Modele                *modele(QString m);
     QString                morpho(int i);
-    //QString              parPos(QString f);
     QChar                  posChar(QString p);
     QString                posString(QChar p);
     QString                scandeTxt(QString texte, int accent = 0, bool stats = false);
     QMap<QString, QString> suffixes;
     QString                variable(QString v);
-    // Lire un fichier de césures étymologiques (non-phonétiques)
-    void                   lireHyphen (QString fichierHyphen);
-
-    // accesseurs d'options
-    bool                   optAlpha();
-    bool                   optHtml();
-    bool                   optFormeT();
-    bool                   optMajPert();
-    bool                   optMorpho();
-    bool                   optExtension();
-
-   public slots:
-    // modificateur       s d'options
-    void setAlpha(bool a);
-    void setCible(QString c);
-    void setHtml(bool h);
-    void setFormeT(bool f);
-    void setMajPert(bool mp);
-    void setMorpho(bool m);
-    void setNonRec(bool n);
-    void setExtension(bool e);
 };
 
 #endif

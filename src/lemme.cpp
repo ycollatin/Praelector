@@ -76,14 +76,14 @@ Lemme *Radical::lemme() { return _lemme; }
  * \fn Modele* Radical::modele ()
  * \brief Le modèle de flexion du radical
  */
-
 Modele *Radical::modele() { return _lemme->modele(); }
+
 /**
  * \fn int Radical::numRad ()
  * \brief Le numéro du radical.
  */
-
 int Radical::numRad() { return _numero; }
+
 ///////////
 // LEMME //
 ///////////
@@ -214,30 +214,6 @@ void Lemme::ajTrad(QString t, QString l)
 }
 
 /**
- * \fn QString Lemme::ambrogio()
- * \brief Renvoie dans une chaîne un résumé
- *        de la traduction du lemme dans toutes les
- *        langues cibles disponibles.
- */
-QString Lemme::ambrogio()
-{
-    QString retour;
-    QTextStream ss(&retour);
-    ss << "<hr/>" << humain() << "<br/>";
-    ss << "<table>";
-    foreach (QString lang, _traduction.keys())
-    {
-        QString trad = _traduction[lang];
-        QString langue = _lemmatiseur->cibles()[lang];
-        if (!trad.isEmpty())
-            ss << "<tr><td>- " << langue << "</td><td>&nbsp;" << trad
-               << "</td></tr>\n";
-    }
-    ss << "</table>";
-    return retour;
-}
-
-/**
  * \fn QString Lemme::cle ()
  * \brief Renvoie la clé sous laquel le
  *        lemme est enregistré dans le lemmatiseur parent.
@@ -255,11 +231,6 @@ QString Lemme::cle()
 QList<int> Lemme::clesR()
 {
     return _radicaux.keys();
-}
-
-bool Lemme::estDeponent()
-{
-    return _pos.contains('v') && _gr.endsWith("or");
 }
 
 /**
@@ -338,29 +309,6 @@ QString Lemme::humain(bool html, QString l)
     return res;
 }
 
-QString Lemme::indMorph()
-{
-    return _indMorph;
-}
-
-/**
- * \fn QString Lemme::irreg (int i, bool *excl)
- * \brief Renvoie la forme irrégulière de morpho i. excl devient
- *        true si elle est exclusive, false sinon.
- */
-QString Lemme::irreg(int i, bool *excl)
-{
-    foreach (Irreg *ir, _irregs)
-    {
-        if (ir->morphos().contains(i))
-        {
-            *excl = ir->exclusif();
-            return ir->grq();
-        }
-    }
-    return "";
-}
-
 /**
  * \fn Modele* Lemme::modele ()
  * \brief Renvoie l'objet modèle du lemme.
@@ -368,15 +316,6 @@ QString Lemme::irreg(int i, bool *excl)
 Modele *Lemme::modele()
 {
     return _modele;
-}
-
-/**
- * \fn int Lemme::nh()
- * \brief Renvoie le numéro d'homonymie du lemme.
- */
-int Lemme::nh()
-{
-    return _nh;
 }
 
 int Lemme::origin()
@@ -398,8 +337,6 @@ QString Lemme::oteNh(QString g, int &nh)
         nh = c;
         g.chop(1);
     }
-    else
-        c = 1;
     return g;
 }
 
@@ -490,16 +427,6 @@ QString Lemme::traduction(QString l, QChar pos)
     return traduction(l, p);
 }
 
-/**
- * @brief Lemme::setHyphen
- * @param h : indique où se fait la césure.
- * \brief stocke l'information sur la césure étymologique du lemme
- */
-void Lemme::setHyphen(QString h)
-{
-    _hyphen = h;
-}
-
 void Lemme::setLexSynt(QStringList m)
 {
     _lexSynt = m;
@@ -508,13 +435,4 @@ void Lemme::setLexSynt(QStringList m)
 void Lemme::setPos(QString p)
 {
     _pos = p;
-}
-
-/**
- * @brief Lemme::getHyphen
- * @return la césure étymologique du lemme
- */
-QString Lemme::getHyphen()
-{
-    return _hyphen;
 }

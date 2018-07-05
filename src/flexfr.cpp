@@ -225,10 +225,11 @@ QString otedernieres(QString s, int n)
     return s;
 }
 
+
 /**
   Renvoie le numéro d'item de la chaîne s dans
   le tableau t de taille limite.
-  */
+*/
 int index_t(QString t[], QString s, int limite)
 {
     for (int i = 0; i <= limite; i++)
@@ -237,13 +238,6 @@ int index_t(QString t[], QString s, int limite)
             return i;
         }
     return -1;
-}
-
-// élargit la chaîne s jusqu'à la largeur l
-QString augmente(QString s, int l = 25)
-{
-    while (s.length() < l) s.push_back(' ');
-    return s;
 }
 
 bool IsLast(QString chaine, QString mot)
@@ -1480,9 +1474,7 @@ QString TVpleuvoir::RadPs()
 
 QString TVpleuvoir::IndPs(int P)
 {
-    // if P == 3 || P == 6: return RD(RadPs(), GetDesPsU(P))
     return RD(RadPs(), GetDesPsU(P));
-    return "";
 }
 
 QString TVpleuvoir::IndImpf(int P)
@@ -2366,39 +2358,6 @@ QString conjnat(QString inf, QString morpho)
     return conjugue(inf, p, t, m, v, (p != 3 && p != 6), g, n);
 }
 
-QString tableau(QString verbe, int voix)
-{
-    // wostringstream flux;
-    QString ret;
-    QTextStream flux(&ret);
-    Verbe *v = verbe_m(verbe);
-    for (int m = 1; m < 5; m++)
-    {
-        flux << endl << mode[m] << endl;
-        for (int t = 1; t < 5; t++) flux << augmente(temps[t]);
-        flux << endl;
-        for (int p = 1; p < 7; p++)
-        {
-            for (int t = 1; t < 5; t++)
-                flux << augmente(v->conjugue(p, t, m, voix, true));
-            flux << endl;
-        }
-        flux << endl;
-
-        for (int t = 5; t < 9; t++) flux << augmente(temps[t]);
-        flux << endl;
-        for (int p = 1; p < 7; p++)
-        {
-            for (int t = 5; t < 9; t++)
-                flux << augmente(v->conjugue(p, t, m, voix, true));
-            flux << endl;
-        }
-    }
-    delete v;
-    return ret;
-    // return flux.str ();
-}
-
 // ------------------------------------------------------------
 //  Flexion des noms
 // ------------------------------------------------------------
@@ -2526,8 +2485,7 @@ QString Adjectif::pluriel(bool fem)
         nom = new Nom(feminin());
     else
         nom = nom_m(graphie);
-    QString result = nom->pluriel();
-    return result;
+    return nom->pluriel();
 }
 
 QString Adjectif::accorde(int g, int n, int d)
@@ -2707,11 +2665,6 @@ QString Pronom::accorde(QString p, QString m)
         ret = map.value(p).section(',', 1, 1);
     if (ret.isEmpty()) ret = p;
     return ret;
-}
-
-bool est_verbe(QString inf)
-{
-    return inf.contains(QRegExp("([ei]r|re)$"));
 }
 
 QString pluriel(QString l, QString n)

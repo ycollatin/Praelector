@@ -28,8 +28,6 @@
 //        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //
 //                           TODO
-//        - Ajouter présentation et licence sous le menu d'accueil de Praelector
-//        - un à-propos dans le menu ?
 //        - Possibilité de forcer un lien syntaxique entre deux mots ?
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - Lien phrase suivante. 
@@ -991,9 +989,10 @@ void Phrase::majAffichage()
     // TODO - ajouter un texte d'accueil et d'aide
 	if (_mots.empty())
 		//_reponse = Chaines::initAff.arg (Chaines::titrePraelector);
-        _reponse = QString("%1%2")
+        _reponse = QString("%1%2%3")
             .arg(Chaines::titrePraelector)
-            .arg(Chaines::menu);
+            .arg(Chaines::menu)
+            .arg(Chaines::documentation);
 	else 
     {
         _reponse = Chaines::affichage
