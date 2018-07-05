@@ -26,9 +26,9 @@ de permettre à l'élève de voir dans les détails comment un maître lit,
 et d'essayer de l'imiter.
 
 ### Utilisation
-Toute l'interface de Praelector est basée sur les hyperliens. Pour ceux qui
-utilisent plus le clavier que la souris, la touche "/" fait correspondre une
-touche avec chaque hyperlien de la page affichée.
+Toute l'interface de Praelector est basée sur les hyperliens.
+Pour ceux qui le clavier plutôt que la souris, la touche "/" fait
+correspondre une touche avec chaque hyperlien de la page affichée.
 
 On avance dans la phrase grâce à un hyperlien,
 mais on peut aussi reculer. À chaque mot, Praelector
