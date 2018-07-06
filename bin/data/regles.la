@@ -587,6 +587,7 @@ posSup:v
 morphoSup:actif
 poids:75
 tr:<sup> <sub>
+tr:<sub> <sup>
 
 id:objetRel
 aff:objet
