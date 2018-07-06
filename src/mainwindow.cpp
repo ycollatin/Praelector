@@ -199,7 +199,6 @@ void MainWindow::calcul (QUrl url)
         {
             trace.clear();
             // séparer éventuellement la phrase de l'enregistrement maître
-            qDebug()<<"relect ? cmd"<<cmd;
             relect = cmd.contains("<!--,");
             if (relect)
             {
