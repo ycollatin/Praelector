@@ -199,10 +199,11 @@ void MainWindow::calcul (QUrl url)
         {
             trace.clear();
             // séparer éventuellement la phrase de l'enregistrement maître
-            relect = cmd.contains("%3C!--,");
+            qDebug()<<"relect ? cmd"<<cmd;
+            relect = cmd.contains("<!--,");
             if (relect)
             {
-                QRegExp re = QRegExp("(-phr)(\\d)+_\\d*,([^%]*)%3C!--,(.*)--%3E$");
+                QRegExp re = QRegExp("(-phr)(\\d)+_\\d*,([^%]*)<!--,(.*)-->$");
                 int pos = re.indexIn(cmd);
                 if (pos > -1)
                 {
