@@ -67,8 +67,7 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
         QString fl = c;
         // le pos d'un fléchi peut différer du pos d'origine (ppr, posn, etc.)
         // mais la flexion reste celle du pos d'origine.
-        // switch(_pos)
-        switch(_lemme->pos().at(0).toLatin1())
+        switch(_pos) 
         {
             case 'p':
                 if (l->gr()=="je")
