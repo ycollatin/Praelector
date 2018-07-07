@@ -212,6 +212,11 @@ void MainWindow::calcul (QUrl url)
                 ienr = 0;
             }
         }
+        // phrases saisies
+        else if (cmd == "-nouvPhr")
+        {
+            setFTrace("saisie");
+        }
         // éventuellement, enregistrer la commande dans trace
         else if (!relect)
         {
