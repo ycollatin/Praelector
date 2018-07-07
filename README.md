@@ -11,7 +11,7 @@ On ne passe au mot suivant que lorsqu'on a
 tiré le maximum du précédent. C'est William G. Hale
 (1849-1928) qui a clairement posé dans son manifeste
 [The Art Of Reading Latin](https://archive.org/details/TheArtOfReadingLatin)
-les principes d'une telle lecture, qui diffère radicalement de celle de nos
+les principes d'une telle lecture, radicalement différente de celle de nos
 langues modernes. 
 
 La langue latine est très compacte, souvent elliptique, et sa structure
