@@ -2593,10 +2593,14 @@ QString Mon::feminin()
 
 QString Mon::pluriel(bool fem)
 {
-    if (fem)
-    {
-    };  // éviter un avertissement du compilateur;
+    if (fem) {};  // éviter un avertissement du compilateur;
     return otedernieres(graphie, 2) + "es";
+}
+
+QString Notre::pluriel(bool fem)
+{
+    if (fem) {}; // éviter avertissement
+    return otedernieres(graphie, 3) + "s";
 }
 
 QString Bon::feminin()
@@ -2726,6 +2730,10 @@ QString accorde(QString adj, QString m)
               << "ton"
               << "son").contains(adj))
         inst = new Mon(adj);
+    else if ((QStringList()
+              << "notre"
+              << "votre").contains(adj))
+        inst = new Notre(adj);
     else if (IsLast("ien", adj) || IsLast("on", adj) || IsLast("yen", adj))
         inst = new Bon(adj);
     else if (adj == "tout")

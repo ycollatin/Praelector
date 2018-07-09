@@ -810,7 +810,7 @@ class Adjectif
     virtual QString accorde(int g, int n, int d=1);
 };
 
-// irrgularits :
+// irrégularits :
 // gu - gu
 
 class Aigu : public Adjectif
@@ -897,6 +897,13 @@ class Mon : public Adjectif
     Mon(QString a) : Adjectif(a) {}
     virtual QString feminin();
     virtual QString pluriel(bool fem);
+};
+
+class Notre : public Adjectif
+{
+    public:
+        Notre(QString a) : Adjectif(a) {}
+        virtual QString pluriel(bool fem=false);
 };
 
 class Bon : public Adjectif
