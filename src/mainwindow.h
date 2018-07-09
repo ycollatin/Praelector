@@ -54,6 +54,7 @@ class MainWindow : public QMainWindow
         QString            alphabet;
         QStringList        clesL;
         bool               clavier;
+        QFont              font;
         QFile              fTrace;
         int                ienr;
         int                iphr;
@@ -74,6 +75,7 @@ class MainWindow : public QMainWindow
         void               clav();
 		QString            choixPhr(QString cmd);
         void               enr();
+        void               lisSettings();
         bool               relect;
         void               setFTrace(QString nf);
         void               surligne();

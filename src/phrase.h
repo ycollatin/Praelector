@@ -133,8 +133,8 @@ namespace Chaines {
 		 "<a href=\"-enr\">choisir une phrase enregistrée</a><br/>"
 		 "<a href=\"-nouvPhr\">Saisir une phrase</a><br/>"
          "<a href=\"-clav\">clavier</a> (touche '/')<br/>"
+         "taille <a href=\"-zoom\">+</a>&nbsp;<a href=\"-dezoom\">-</a>&nbsp;"
          "<a href=\"-init\">annuler</a> <a href=\"-quitter\">quitter</a>");
-    // pesaq (phrase-enregisrée-saisir-annuler-quitter)
 
 	const QString affichage = QString::fromUtf8
         ("%1<hr/>%2<hr/>"

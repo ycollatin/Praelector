@@ -16,6 +16,7 @@
 #include <QDebug>
 #include <QDir>
 #include <QWebPage>
+#include <QSettings>
 #include <QtWebKitWidgets>
 
 #include "mainwindow.h"
@@ -35,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     resize(834, 734);
     centralWidget = new QWidget();
-    QFont font;
+    //QFont font;
     font.setPointSize(14);
 	centralWidget->setFont (font);
 
@@ -47,6 +48,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     verticalLayout->addWidget(textBrowser);
 
     setCentralWidget(centralWidget);
+    // chercher un paramétrage dans QSettings
+    lisSettings();
 
 	phrase = new Phrase();
 	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
@@ -70,7 +73,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     << "l.t.";
 
     // construire la liste des clés alpha
-    alphabet = "ces/aqr<>bdfghijklmnoptuv";
+    alphabet = "ces/+-aqr<>bdfghijklmnoptuv";
     /*
        c choisir une phrase
        e " enregistrée
@@ -192,6 +195,16 @@ void MainWindow::calcul (QUrl url)
     {
         enr();
     }
+    else if (cmd == "-zoom")
+    {
+        //textBrowser->zoomIn();
+        textBrowser->setZoomFactor(textBrowser->zoomFactor()+0.2);
+    }
+    else if (cmd == "-dezoom")
+    {
+        //textBrowser->zoomOut();
+        textBrowser->setZoomFactor(textBrowser->zoomFactor()-0.2);
+    }
 	else 
 	{
         // nouvelle phrase : réinitaliser la trace 
@@ -308,6 +321,20 @@ QString MainWindow::choixPhr(QString c)
     return page;
 }
 
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    //phrase->traceReq();
+    QSettings settings("Collatinus", "praelector");
+    settings.beginGroup("fenetre");
+    settings.setValue("geometry", saveGeometry());
+    settings.setValue("windowState", saveState());
+    settings.endGroup();
+    settings.beginGroup("interface");
+    settings.setValue("zoom", textBrowser->zoomFactor());
+    settings.endGroup();
+    QMainWindow::closeEvent(event);
+}
+
 void MainWindow::enr()
 {
     QString vest;
@@ -377,12 +404,6 @@ void MainWindow::enr()
     fTrace.close();
 }
 
-void MainWindow::closeEvent(QCloseEvent *event)
-{
-    //phrase->traceReq();
-    QMainWindow::closeEvent(event);
-}
-
 void MainWindow::keyPressEvent(QKeyEvent *ev)
 {
     QString t = ev->text();
@@ -414,6 +435,19 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
         prefixe.clear();
     }
     else QMainWindow::keyPressEvent(ev);
+}
+
+void MainWindow::lisSettings()
+{
+    QSettings settings("Collatinus", "praelector");
+    // état de la fenêtre
+    settings.beginGroup("fenetre");
+    restoreGeometry(settings.value("geometry").toByteArray());
+    restoreState(settings.value("windowState").toByteArray());
+    settings.endGroup();
+    settings.beginGroup("interface");
+    textBrowser->setZoomFactor(settings.value("zoom").toReal());
+    settings.endGroup();
 }
 
 void MainWindow::parle(QString m)
