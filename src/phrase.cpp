@@ -23,15 +23,11 @@
 //                          FIXME 
 //        - Requêtes doublonnées, pê après un retour arrière.
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
-//        - Aléatoire : Iussitque ut : ut conjsub iussit requête prétendue nulle 
-//        - iussitque ut in : in prep iussit proposée : activer blocage ?
-//        - Alexander, quo iure : quis, bien que pron et adj, ne prend en compte que le pronom
 //
 //                           TODO
 //        - Possibilité de forcer un lien syntaxique entre deux mots ?
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - Lien phrase suivante. 
-//        - Enregistrement des phrases collées ou saisies ?
 //        - faire disparaître les hyperliens inutiles.
 //        - Liens à ajouter :
 //          * voir la traduction enregistrée
@@ -48,6 +44,7 @@
 //
 //                           XXX GRAMMAIRE
 //        - règle nisi ubi : sauf quand ; nisi + nom.
+//        - iussitque ut in : in prep iussit proposée : activer blocage ?
 //        - 27 nullus dolor est quam : nombreuses erreurs.
 //          . quem est traduit deux fois ;
 //          . le déterminant fr s'accorde avec le masculin du latin dolor
