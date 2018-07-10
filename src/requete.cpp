@@ -576,6 +576,15 @@ bool Requete::subRequis()
     return _subRequis;
 }
 
+// dans la traduction choisie, <sub> est-il avant <sup> ?
+bool Requete::subSup()
+{
+    QString tr = _regle->tr(_itr); 
+    if (tr.indexOf("<sub>") < tr.indexOf("<sup>"))
+        return true;
+    return false;
+}
+
 MotFlechi* Requete::super()
 {
     return _super;
@@ -596,6 +605,7 @@ QString Requete::tr()
 
 QString Requete::trSub()
 {
+    bool debog = _num==53;
     if (_sub == 0) return "erreur, sub manquant";
     QString ret = _regle->tr(_itr); 
     ret.remove("<sup>");
