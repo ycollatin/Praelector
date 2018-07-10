@@ -107,27 +107,31 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
             case 'v':
             case 'w':
                       {
-                          fl = conjnat(c, _morpho);
-                          /*
-                          // TODO : les différences de morpho sont beaucoup plus nombreuses.
-                          //        Il faudra construire une grammaire.
-                          QString mcond = _morpho;
-                          if (c == "paraître") _mcond.replace("passif", "actif");
-                          mcond.replace("subjonctif imparfait", "conditionnel présent");
-                          mcond.replace("impératif futur", "impératif présent");
-                          mcond.replace("infinitif parfait", "indicatif passé_composé 3ème singulier"); 
-                          fl = conjnat(c, mcond);
-                          */
-                          /*
-                          fl = conjnat(c, _morpho);
-                          mcond.replace("subjonctif imparfait", "conditionnel présent");
-                          mcond.replace("impératif futur", "impératif présent");
-                          mcond.replace("infinitif parfait", "indicatif passé_composé 3ème singulier"); 
-                          if (mcond != _morpho)
+
+                          // Un verbe est souvent traduit par plusieurs mots.
+                          // praesto:l'emporter sur, être garant, fournir (praestat : imp. : il vaut mieux)
+                          // Il faut pouvoir trouver quel est le verbe, ne
+                          // conjuguer que lui, et le remettre à sa place.
+                          // infinitif, adjectif verbal :
+                          if (_morpho.contains("adjectif verbal"))
                           {
-                              _trfl.append(conjnat(c, mcond));
+                              fl = "à "+c;
+                              break;
                           }
-                          */
+                          else if (_morpho.contains("supin"))
+                          {
+                              fl = "pour "+c;
+                              break;
+                          }
+                          // particularités de la morpho latine.
+                          _morpho.replace("subjonctif imparfait", "conditionnel présent");
+                          _morpho.replace("subjonctif parfait", "subjonctif passé_composé");
+                          _morpho.replace("impératif futur", "impératif présent");
+                          _morpho.replace("infinitif parfait", "indicatif passé_composé 3ème singulier"); 
+                          _morpho.replace("impératif futur", "impératif présent");
+                          // uideor - paraître. pê pas le bon endroit
+                          if (c == "paraître") _morpho.replace("passif", "actif");
+                          fl = conjnat(c, _morpho);
                           break;
                       }
             default: fl = c;
@@ -785,9 +789,10 @@ QString MotFlechi::trGroupe(Requete* rtest)
                 else
                 {
                     // placer les pronoms antéposés avant leur verbe
-                    if (Ch::anteposes.contains(r->sub()->tr())
+                    if ((Ch::anteposes.contains(r->sub()->tr())
                         && (inoyau > -1)
                         && (el == "objet" || el == "datif"))
+                        || r->subSup())
                     {
                         lret.insert(inoyau, r->trSub());
                         // TODO : si un pronom sujet a été ajouté, insérer
