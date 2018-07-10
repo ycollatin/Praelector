@@ -332,7 +332,10 @@ QString Mot::html()
         fl	<< "tr. <span style=\"color:darkred;font-style:italic\">"<<mf->tr()<<"</span> "
             << "<a href=\"m.e."<<i<<"\">&eacute;diter</a>";
         if (mf->nbTr() > 1)
+        {
+            fl << mf->trs();
             fl << "<a href=\"m.i."<<i<<"\">tr. suiv.</a> ";
+        }
         fl  << "<a href=\"m.c."<<i<<"\">choisir</a> rejeter "
 			<< "<a href=\"m.r.m."<<i<<"\">le lemme</a> "
 			<< "<a href=\"m.r.f."<<i<<"\">la forme</a>";

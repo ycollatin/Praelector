@@ -817,6 +817,22 @@ QString MotFlechi::trNue()
     return _trNue;
 }
 
+QString MotFlechi::trs()
+{
+    QStringList ret;
+    for (int i=0;i<_trfl.count();++i)
+    {
+        QString t = _trfl.at(i);
+        if (i == _itr)
+        {
+            t.prepend("<span style=\"color:darkred;\">");
+            t.append("</span>");
+        }
+        ret.append(t);
+    }
+    return ret.join(" ");
+}
+
 bool MotFlechi::valide()
 {
     return _valide;
