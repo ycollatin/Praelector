@@ -50,7 +50,7 @@ class MotFlechi: public QObject
         QString         _tr;
         bool            _valide;
     public:
-        MotFlechi(Lemme* l, char p, QString m, Mot* parent);
+        MotFlechi(Lemme* l, char p, QString m, Mot* parent, char=0x00);
         ~MotFlechi();
         void            ajTrfl(QString t);
         QList<Requete*> closes();

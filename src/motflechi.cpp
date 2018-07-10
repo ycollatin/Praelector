@@ -28,14 +28,16 @@
       Classe MotFlechi
  **********************/
 
-MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
+MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent, char po)
 {
     _mot = parent;
     _lemme = l;
     QTextStream(&_morpho) << p << " " << m;
     _phrase = parent->phrase();
     _pos = p;
-    _posO = _pos;
+    if (po == 0x00)  
+        _posO = p;
+    else _posO = po;
 
     // fixer _eqivPos
     // adjectifs substantivables
@@ -44,7 +46,9 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
     // participes présents
     if ((p == 'v' || p == 'w')
         && (_lemme->synt("ppr") || _lemme->synt("ppp")))
+    {
         _eqivPos.append('n');
+    }
     // participes
     if ((p == 'v' || p == 'w') && m.contains("participe"))
             _eqivPos.append('a');
@@ -67,7 +71,7 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
         QString fl = c;
         // le pos d'un fléchi peut différer du pos d'origine (ppr, posn, etc.)
         // mais la flexion reste celle du pos d'origine.
-        switch(_pos) 
+        switch(_posO) 
         {
             case 'p':
                 if (l->gr()=="je")
@@ -107,7 +111,6 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent)
             case 'v':
             case 'w':
                       {
-
                           // Un verbe est souvent traduit par plusieurs mots.
                           // praesto:l'emporter sur, être garant, fournir (praestat : imp. : il vaut mieux)
                           // Il faut pouvoir trouver quel est le verbe, ne

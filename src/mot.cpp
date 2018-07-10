@@ -529,7 +529,7 @@ void Mot::setFlechis(MapLem m)
                 QString eqiv = mf->eqiv(); 
                 if (!eqiv.isEmpty()) for (int ie=0;ie<eqiv.length();++ie)
                 {
-                    MotFlechi* nmf = new MotFlechi(l, eqiv.at(ie).toLatin1(), morpho, this);
+                    MotFlechi* nmf = new MotFlechi(l, eqiv.at(ie).toLatin1(), morpho, this, mf->posO());
                     ajFlechi(nmf);
                 }
             }
