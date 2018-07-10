@@ -18474,7 +18474,7 @@ quianam:pourquoi ?
 quia:parce que
 quibuscum:avec lesquels, avec lesquelles (= cum quibus)
 quicum:avec qui (=cum quo)
-quicumque:qui que ce soit, quoi que ce soit
+quicumque:qui que ce soit que, qui que ce soit, quoi que ce soit
 quidam:un certain, quelqu'un, quelque chose
 quidem:certes ; (ne- : ne ...) même pas
 quidni:pourquoi donc?
