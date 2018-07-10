@@ -605,7 +605,6 @@ QString Requete::tr()
 
 QString Requete::trSub()
 {
-    bool debog = _num==53;
     if (_sub == 0) return "erreur, sub manquant";
     QString ret = _regle->tr(_itr); 
     ret.remove("<sup>");
