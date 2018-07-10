@@ -2306,6 +2306,7 @@ QString conjnat(QString inf, QString morpho)
     inf = inf.simplified();
     if (inf.isEmpty()) return "requête vide, conjugaison impossible";
 
+    /*
     // infinitif, adjectif verbal :
     if (morpho.contains("adjectif verbal"))
         return "à "+inf;
@@ -2314,12 +2315,14 @@ QString conjnat(QString inf, QString morpho)
 
     // particularités de la morpho latine.
     morpho.replace("subjonctif imparfait", "conditionnel présent");
+    morpho.replace("subjonctif parfait", "subjonctif passé_composé");
     morpho.replace("impératif futur", "impératif présent");
     morpho.replace("infinitif parfait", "indicatif passé_composé 3ème singulier"); 
     morpho.replace("impératif futur", "impératif présent");
 
     // uideor - paraître. pê pas le bon endroit
     if (inf == "paraître") morpho.replace("passif", "actif");
+    */
 
     bool se = inf.startsWith("se ");
     if (inf.contains(" ") && !se)
