@@ -410,5 +410,5 @@ bool Regle::supExclu(QString s)
 
 QString Regle::tr(int i)
 {
-    return _tr.at(i); 
+    return _tr.at(i);
 }

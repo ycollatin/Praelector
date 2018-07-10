@@ -20,14 +20,14 @@
 // bin/data/regles.la
 // bin/corpus/phrases.txt
 
-//                          FIXME 
+//                          FIXME
 //        - Requêtes doublonnées, pê après un retour arrière.
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
 //        - Possibilité de forcer un lien syntaxique entre deux mots ?
 //        - Possibilité de changer la place du groupe subordonné courant.
-//        - Lien phrase suivante. 
+//        - Lien phrase suivante.
 //        - faire disparaître les hyperliens inutiles.
 //        - Liens à ajouter :
 //          * voir la traduction enregistrée
@@ -39,7 +39,7 @@
 //                ibam forte uia sacra nescio quid meditans....
 //              . un groupe elliptique dont le noyau est absent : homo homini lupus.
 //        - Lexique personnel
-//        - accorder la traduction de l'épithète : post equitem sedet *atra* cura : 
+//        - accorder la traduction de l'épithète : post equitem sedet *atra* cura :
 //            si /cura/ est traduit par le masculin /souci/, /atra/ est traduit par "noir".
 //
 //                           XXX GRAMMAIRE
@@ -114,7 +114,7 @@ bool Phrase::accord(MotFlechi* ma, MotFlechi* mb, QString cgn)
         }
 
     }
-        
+
     QString lch = "cgnpm";
     for (int ich=0;ich<cgn.size();++ich)
     {
@@ -124,7 +124,7 @@ bool Phrase::accord(MotFlechi* ma, MotFlechi* mb, QString cgn)
         switch(p)
         {
             case 0: liste = Ch::cas;       break;
-            case 1: liste = Ch::genres;    break; 
+            case 1: liste = Ch::genres;    break;
             case 2: liste = Ch::nombres;   break;
             case 3: liste = Ch::personnes; break;
             case 4: liste = Ch::modes;     break;
@@ -198,9 +198,9 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
     {
         Requete* req = _requetes.at(i);
         if (req == 0 || req->rejetee()) continue;
-        if (req->subRequis()) 
+        if (req->subRequis())
         {
-            if (req->sub() != 0 
+            if (req->sub() != 0
                 && req->sub()->mot() == m && req->sub()->lemme() == l)
             {
                 if (req->close()) req->annuleRequis("lemme rejeté");
@@ -212,7 +212,7 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
         }
         else
         {
-            if (req->super() != 0 
+            if (req->super() != 0
                 && req->super()->mot() == m && req->super()->lemme() == l)
             {
                 if (req->close()) req->annuleRequis("lemme rejeté");
@@ -371,7 +371,7 @@ void Phrase::ecoute (QString m)
             {
                 req->setRejetee(true, "clone obsolète");
             }
-        } 
+        }
         // passer au mot suivant
         ++_imot;
         // résolution des requêtes
@@ -619,17 +619,17 @@ void Phrase::ecoute (QString m)
                             }
 						case 'v':   // pos 1, valider
 							{
-                                if (req == 0) 
+                                if (req == 0)
                                 {
                                     std::cerr << qPrintable("requête nulle");
                                 }
-                                else 
+                                else
                                 {
                                     choixReq(req);
                                 }
 								break;
 							}
-							// x y et z servent à éditer le gabarit du lien : 
+							// x y et z servent à éditer le gabarit du lien :
                             // avant, entre et après les 2 nœuds père et fils.
 						case 'x':
 						    {
@@ -700,7 +700,7 @@ void Phrase::ecoute (QString m)
 								   {
 								   break;
 								   }
-								   default: std::cerr << qPrintable (m) <<", édition de lien syntaxique, erreur d'Url\n"; 
+								   default: std::cerr << qPrintable (m) <<", édition de lien syntaxique, erreur d'Url\n";
 								   break;
 								   }
 								   if  (!subs.empty())
@@ -752,7 +752,7 @@ bool Phrase::estVbRelative(MotFlechi* mf)
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if (req->super() == mf 
+        if (req->super() == mf
             && req->valide() && req->id() != "antecedent"
             && req->sub()->lemme()->cle() == "qui2")
             return true;
@@ -867,7 +867,7 @@ QList<Requete*> Phrase::homolexes(Requete* req)
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* ri = _requetes.at(i);
-        if (ri->close() 
+        if (ri->close()
             && ri != req
             && ri->super()->mot() == req->super()->mot()
             && ri->sub()->mot() == req->sub()->mot())
@@ -882,7 +882,7 @@ QList<Requete*> Phrase::homonymes(Requete* req)
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* ri = _requetes.at(i);
-        if (ri->close() 
+        if (ri->close()
             && ri != req
             && ri->super()->mot() == req->super()->mot()
             && ri->id() == req->id()
@@ -990,7 +990,7 @@ void Phrase::majAffichage()
             .arg(Chaines::titrePraelector)
             .arg(Chaines::menu)
             .arg(Chaines::documentation);
-	else 
+	else
     {
         _reponse = Chaines::affichage
 	        .arg(Chaines::titrePraelector)
@@ -1117,8 +1117,8 @@ void Phrase::peupleRegles(QString nf)
             lin.remove(0,1);
             QStringList ecl = lin.split('=');
             vars[ecl.at(0)] = ecl.at(1);
-        }         
-        else 
+        }
+        else
         {
             if (lin.startsWith("id:") || i==lr.count()-1)
             {
@@ -1211,7 +1211,7 @@ QList<Requete*> Phrase::reqCC(Mot* m)
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* ri = _requetes.at(i);
-        if (ri->close() 
+        if (ri->close()
             && (ri->sub()->mot() == m)
             && (ri->aff() == "coord1"))
         {
@@ -1258,7 +1258,7 @@ void Phrase::setGr(QString t)
     // initialisations
     _gr = t.simplified();
     /*
-    // Ajouter une ponctuation finale manquante 
+    // Ajouter une ponctuation finale manquante
     if (_gr.at(_gr.length()-1).isLetter())
         _gr.append('.');
     */
@@ -1344,7 +1344,7 @@ void Phrase::setLiens()
             if (r != 0 && !r->close()) listeR.append(r);
         }
 
-        while (!listeR.empty()) 
+        while (!listeR.empty())
         {
             Requete *req = listeR.takeFirst();
             if (mf->resout(req))
@@ -1378,7 +1378,7 @@ QString Phrase::tr(bool color)
     for(int i=0;i<=_imot;++i)
 	{
         Mot* m = _mots.at(i);
-		if (m->estSommet()) 
+		if (m->estSommet())
         {
             QString g = m->trGroupe();
             if (i == _imot && color)

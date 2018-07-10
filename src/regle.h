@@ -60,7 +60,7 @@ class Regle : public QObject
         QString     _posSup;
         QChar       _sens;
         QStringList _tr;
-       
+
     public:
         Regle(QStringList ll);
         QString      accord();

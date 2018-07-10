@@ -1,0 +1,2 @@
+#!/bin/sh
+vim regles.la lexsynt.la lemmes.la lemmes.fr feminin.fr lexsynt.la loc.la modeles.la synt.fr

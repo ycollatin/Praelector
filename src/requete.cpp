@@ -93,7 +93,7 @@ Requete* Requete::clone()
         if (_subRequis) nreq = new Requete(_super, 0, _regle);
         else nreq = new Requete(0, _sub, _regle);
     }
-    else 
+    else
     {
         nreq = new Requete(_super, _sub, _regle);
     }
@@ -148,7 +148,7 @@ bool Requete::croise(Requete* req)
 
 bool Requete::homonyme(Requete* req)
 {
-    return id() == req->id() 
+    return id() == req->id()
         && _super->mot() == req->super()->mot()
         && _sub->mot() == req->sub()->mot();
 }
@@ -508,13 +508,13 @@ void Requete::setRequis(MotFlechi *m, QString cause)
         if (nul) _sub = 0;
         else setSub(m);
     }
-    else 
+    else
     {
         if (nul) _super = 0;
         else setSuper(m);
     }
     if (nul) ajHist("ANNULATION du requis, "+cause);
-    else 
+    else
     {
         ajHist("REQUIS adopté ("+cause+") "+m->gr()+", "+m->morpho());
     }
@@ -545,7 +545,7 @@ void Requete::setSuperRequis()
 void Requete::setValide(bool v)
 {
     _valide = v;
-    if (v) 
+    if (v)
     {
         // négation
         if (_sub->lemme()->synt("neg"))
@@ -579,7 +579,7 @@ bool Requete::subRequis()
 // dans la traduction choisie, <sub> est-il avant <sup> ?
 bool Requete::subSup()
 {
-    QString tr = _regle->tr(_itr); 
+    QString tr = _regle->tr(_itr);
     if (tr.indexOf("<sub>") < tr.indexOf("<sup>"))
         return true;
     return false;
@@ -606,7 +606,7 @@ QString Requete::tr()
 QString Requete::trSub()
 {
     if (_sub == 0) return "erreur, sub manquant";
-    QString ret = _regle->tr(_itr); 
+    QString ret = _regle->tr(_itr);
     ret.remove("<sup>");
     QString morph;
     if (id()=="propInf")

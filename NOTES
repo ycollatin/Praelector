@@ -1,0 +1,104 @@
+PRAELECTOR -- notes de développement
+   mercredi 26 août 2015 - lundi 14 septembre 2015 
+   repris le 15 mars 2018, avec le moteur de C11
+
+LIENS VALIDABLES
+    sans que le fléchi de chaque noeud soit encore établi.
+    Se produit surtout pour les épithètes et les appositions.
+    Dans chaque possibilité, l'accord est possible entre sup est sub.
+    Ex. /ultima hora/, au nominatif ou à l'abl. singuliers.
+    Un cas typique est celui du nom+épithète au datif ou abl. pluriels.
+
+ENREGISTREMENT DE LA LECTURE D'UNE PHRASE
+    - texte de la phrase
+    - mouvements : avance, recul, aller au mot n°n
+    - requête choisie, par numéro, ou par sup id sub
+      mais plutôt par le raccourci clavier.
+
+    - Il faudrait pouvoir charger un corpus de phrases + session
+    enregistrée ;
+    - et une marque signalant l'hyperlien choisi par celui qui a enregistré
+    la session.
+
+RELECTURE D'UNE PHRASE ENREGISTRÉE
+    - changer Chaines::affichage : on n'enregistre pas une relecture
+    - mettre en valeur par la couleur de fond de la ligne choisie « relire »
+    - un lien pour la mise en valeur, occasionnelle ou systématique 
+    - « toujours relire » <-> « relire à la demande »
+
+FLEXFR
+  - PPP de voir
+  - traduction du subj non lié : cedant arma togae
+  - flexion de notre-nos, votre-vos, mon-mes, ton-tes
+  - consecutus sans traduction.
+  - nuptae -> marier
+  - denuntiari : annonçant !
+  - participe passé des déponents : ortus, a, um : aux. être
+  - envisager la traduction du parfait par le passé composé
+
+MORPHO
+  - chiffres romains : XX
+  - vérifier la dés. -om
+
+SYNTAXE
+  - Verberat nos et lacerat fortuna : coord non traduite Verberat et lacerat
+  - Bogue : le relatif n'a qu'un antécédent : omnia quae secum ... pauperibus (pas ant.)
+  - Le relatif ne devrait pas jouer le rôle de pronom objet.
+  - La lecture d'un relatif doit empêcher la liaison d'un fils qui le suit
+  - Traiter l'attr du sujet est difficile : Non sunt diuitiae bonum.
+  - traiter les interrogatives indirectes
+  - épithète d'un (pro)nom non exprimé, typiquement un sujet 1ère ou 2ème personne
+    avec un père qui le précède. Idem pour les conj sub. (projectivité)
+  - La préposition n'a qu'un régime, la conjonction qu'un verbe
+  - Prise en compte de /qui/ adjectif interr. : Ciuium Romanorum quae uoluntas est ?
+  - attribut de l'objet : amariorem enim me senectus facit.
+  - infinitif sujet : iniuriam persequi non placet.
+  - ad + gérondif : ad resistendum me paro.
+  - Que faire de l'ablatif absolu ?
+  - quater et tricies = trente-quatre fois.
+  - tour sum + datif
+  - accord de l'épithète dans les traductions ?
+  - Chiffres romains
+  - Traiter les liens conditionnels : tam ← tamadj ← adj ← quamsubj ← subj
+    if (adj->dependDe().contains (tamadj) ...
+  - "Nihil tam firmum est, cui periculum non sit etiam ab invalido."
+    Très peu de liens repérés !
+  - activer le niveau 1 : un lien à contresens est possible : 
+    audacia cum magna, quod postea, nomine in Hectoreo, etc.
+  - Donner la possibilité de créer de toutes pièces un lien syntaxique ?
+  - Ajouter, pour traduire cum + subj impf et PQP, une traduction à l'indicatif.
+  - -que : ajouter "et " à gauche de la traduction.
+
+INTERFACE
+  - Mode exercice + solution ?
+  - Historique ?
+  - Résoudre les différences de genre entre latin et français : dans les liens
+    et non dans les morphos.
+  - Montrer les parenthèses dans les traductions, mais non hyperliées. 
+  - Passer une phrase comme paramètre ?
+    En modifiant void Phrase::ecoute (QString m)
+	en
+    void Phrase::ecoute (QString m, QString m2="")
+	Ce m2 pourrait servir à beaucoup de choses, mais avec m==-nouvPhr,
+	le m2 serait le texte de la phrase, facile à passer avec main ().
+  - Mieux séparer les traductions
+  - Écrire une présentation.
+  - Saisie des données : on peut ajouter une entrée si rien n'est reconnu, mais
+    * ajouter une règle syntaxique ;
+	* ajouter une entrée même si d'autres sont reconnues.
+  - Étudier les couleurs.
+  - ? Regrouper les morphos par lemme, pour choisir un lemme et une traduction à fléchir.
+    Une fois choisie, la traduction est fléchie pour toutes les morphos, qui n'ont plus
+	qu'une traduction à afficher. libCollatinus a été modifiée pour que les
+	analyses morphos soient regroupées par lemme, et non par ligne entière.
+  - Étudier la possibilité de remplacer QTextBrowser par QWebView.
+
+CODE et DATA
+  - Changement de format du champ tr des règles de liens.la. Exemple pour sum + datif
+    tr:F P/sum=avoir
+  - le champ tr: de lemmata.la pourrait donner des consignes de morpho pour la traduction française.
+    Ce serait capital par exemple pour la tr. de la prop. inf.
+  - les flèches : "<a href=\"l.g.%3\">&#x2190;</a>" << "<a href=\"l.d.%3\">&#x2192;</a>," 
+  - éliminer ui_mainwindow, et placer le tout dans mainwindow.*
+  - rationaliser l'affichage avec setStyleSheet = "..."
+  - écrire les destructeurs ? si Q_OBJECT ne le fait pas.

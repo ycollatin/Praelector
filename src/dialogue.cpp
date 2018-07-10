@@ -1,4 +1,4 @@
-/*  dialogue.cpp 
+/*  dialogue.cpp
  *
  *  This file is part of PRAELECTOR
  *
@@ -15,7 +15,7 @@
  *  You should have received a copy of the GNU General Public License
  *  along with PRAELECTOR; if not, write to the Free Software
  *  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
- * 
+ *
  */
 
 #include <QFont>
@@ -49,11 +49,11 @@ Dialogue::Dialogue ()
 
 	connect (buttonBox,SIGNAL(accepted()),this,SLOT(accept()));
 	connect (buttonBox,SIGNAL(rejected()),this,SLOT(reject()));
-} 
+}
 
 bool Dialogue::eventFilter(QObject *obj, QEvent *event)
 {
-    if (obj == plainTextEdit) 
+    if (obj == plainTextEdit)
 	{
         if (event->type() == QEvent::KeyPress) {
             QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);

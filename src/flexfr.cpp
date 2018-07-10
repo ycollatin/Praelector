@@ -2317,7 +2317,7 @@ QString conjnat(QString inf, QString morpho)
     morpho.replace("subjonctif imparfait", "conditionnel présent");
     morpho.replace("subjonctif parfait", "subjonctif passé_composé");
     morpho.replace("impératif futur", "impératif présent");
-    morpho.replace("infinitif parfait", "indicatif passé_composé 3ème singulier"); 
+    morpho.replace("infinitif parfait", "indicatif passé_composé 3ème singulier");
     morpho.replace("impératif futur", "impératif présent");
 
     // uideor - paraître. pê pas le bon endroit
@@ -2345,15 +2345,15 @@ QString conjnat(QString inf, QString morpho)
 
     foreach (QString trait, lm)
     {
-        if (personnes.contains(trait))    p = personnes.indexOf(trait)+1; 
+        if (personnes.contains(trait))    p = personnes.indexOf(trait)+1;
         else if (nombres.contains(trait)) n = nombres.indexOf(trait)+1;
         else if (temps.contains(trait))   t = temps.indexOf(trait)+1;
         else if (modes.contains(trait))   m = modes.indexOf(trait)+1;
         else if (voix.contains(trait))    v = voix.indexOf(trait)+1;
         else if (genres.contains(trait))  g = genres.indexOf(trait)+1;
     }
-    if (p > 0 && n > 1) p+=3; 
-    if (se) 
+    if (p > 0 && n > 1) p+=3;
+    if (se)
     {
         return conjugue(inf.section(" ",0,1), p, t, m, v, (p!=3 && p!=6), g, n)
             + " " + inf.section(" ",2);

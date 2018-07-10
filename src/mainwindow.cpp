@@ -1,15 +1,15 @@
 /* Copyright (C) 2015 Yves Ouvrard
-   
+
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
    the Free Software Foundation, either version 3 of the License, or
    (at your option) any later version.
-   
+
    This program is distributed in the hope that it will be useful,
    but WITHOUT ANY WARRANTY; without even the implied warranty of
    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
    GNU General Public License for more details.
-   
+
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
@@ -134,7 +134,7 @@ void MainWindow::ajTouches()
             }
             fl<<"<a href=\""<<url;
         }
-        else 
+        else
         {
             fl << t.at(0);
             t.remove(0,1);
@@ -163,7 +163,7 @@ void MainWindow::calcul (QUrl url)
     QString cmd = url.fromPercentEncoding(url.toString().toUtf8());
     // lecture d'une traduction éditée
     if (relect && cmd == trace.at(ienr)) ++ienr;
-	if (cmd == "-quitter") 
+	if (cmd == "-quitter")
 	{
 		// TODO : détruire MainWindow (et donc phrase), mais pê dans main.cpp.
 		close ();
@@ -205,9 +205,9 @@ void MainWindow::calcul (QUrl url)
         //textBrowser->zoomOut();
         textBrowser->setZoomFactor(textBrowser->zoomFactor()-0.2);
     }
-	else 
+	else
 	{
-        // nouvelle phrase : réinitaliser la trace 
+        // nouvelle phrase : réinitaliser la trace
         if (cmd.startsWith("-phr"))
         {
             trace.clear();
@@ -269,7 +269,7 @@ void MainWindow::clav()
         if (texteT.isEmpty()) ajTouches();
         textBrowser->setHtml(texteT);
     }
-    else 
+    else
     {
         textBrowser->setHtml(texte);
     }
@@ -384,7 +384,7 @@ void MainWindow::enr()
             neotrace.append(vest);
             ins = true;
         }
-        // puis enregistrer la ligne lue 
+        // puis enregistrer la ligne lue
         if (!lin.isEmpty()) neotrace.append(lin);
     }
     while (!lin.isNull());
@@ -431,7 +431,7 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     {
         t.prepend(prefixe);
         QUrl url = urls[t];
-        textBrowser->emet(url); 
+        textBrowser->emet(url);
         prefixe.clear();
     }
     else QMainWindow::keyPressEvent(ev);

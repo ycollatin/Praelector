@@ -1,0 +1,2 @@
+./praelector > reqs.txt 2> debog.txt
+vim debog.txt

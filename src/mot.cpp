@@ -79,7 +79,7 @@ void Mot::annuleLemme(Lemme* lem)
 {
     for (int i=0;i<_flechis.count();++i)
     {
-        MotFlechi* mf = _flechis.at(i); 
+        MotFlechi* mf = _flechis.at(i);
         if (mf->lemme() == lem)
         {
             mf->setRejete(true);
@@ -92,7 +92,7 @@ void Mot::choixFlechi(MotFlechi* mf)
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* f = _flechis.at(i);
-        if (f != mf) 
+        if (f != mf)
         {
             f->setRejete(true);
         }
@@ -103,7 +103,7 @@ void Mot::choixLemme(Lemme* l)
 {
     for (int i=0;i<_flechis.count();++i)
     {
-        MotFlechi* mf = _flechis.at(i); 
+        MotFlechi* mf = _flechis.at(i);
         if (mf->lemme() != l)
         {
             mf->setRejete(true);
@@ -526,7 +526,7 @@ void Mot::setFlechis(MapLem m)
                 MotFlechi* mf = new MotFlechi(l, p, morpho, this);
                 ajFlechi(mf);
                 // équivalents des fléchis
-                QString eqiv = mf->eqiv(); 
+                QString eqiv = mf->eqiv();
                 if (!eqiv.isEmpty()) for (int ie=0;ie<eqiv.length();++ie)
                 {
                     MotFlechi* nmf = new MotFlechi(l, eqiv.at(ie).toLatin1(), morpho, this, mf->posO());
@@ -600,7 +600,7 @@ QString Mot::trGroupe(Requete* rtest)
         }
         return lret.join("\n");
     }
-    return trs(); 
+    return trs();
 }
 
 QString Mot::trs()

@@ -120,7 +120,7 @@ class Requete : public QObject
         bool        superRequis();
         QString     tr();
         QString     trace();
-        QString     trSub(); // traduction 
+        QString     trSub(); // traduction
         MotFlechi*  ultima();
         bool        valide();
 };
