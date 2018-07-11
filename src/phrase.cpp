@@ -25,6 +25,7 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
+//        - l'application du champ tr des règles est complexe et mal contrôlé.
 //        - Possibilité de forcer un lien syntaxique entre deux mots ?
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - Lien phrase suivante.
