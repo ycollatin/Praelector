@@ -576,6 +576,7 @@ bool Requete::subRequis()
     return _subRequis;
 }
 
+/*
 // dans la traduction choisie, <sub> est-il avant <sup> ?
 bool Requete::subSup()
 {
@@ -584,6 +585,7 @@ bool Requete::subSup()
         return true;
     return false;
 }
+*/
 
 MotFlechi* Requete::super()
 {

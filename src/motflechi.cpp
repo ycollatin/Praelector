@@ -748,10 +748,11 @@ QString MotFlechi::trfl()
  */
 QString MotFlechi::trGroupe(Requete* rtest)
 {
-    QStringList lret;
+    QStringList lante;
+    QStringList lpost;
+    bool ante = true;
     QStringList lgr = _phrase->lgr(_pos);
     int inoyau = -1;
-
     for (int i = 0;i<lgr.count();++i)
     {
         QString el = lgr.at(i);
@@ -769,8 +770,9 @@ QString MotFlechi::trGroupe(Requete* rtest)
                     trf.insert(trf.indexOf(" "), " ne");
                 else trf.prepend("ne ");
             }
-            lret.append (trf);
-            inoyau = lret.count()-1;
+            lante.append (trf);
+            inoyau = lante.count()-1;
+            ante = false;
         }
         else
         {
@@ -786,35 +788,39 @@ QString MotFlechi::trGroupe(Requete* rtest)
                         MotFlechi* mfv = _phrase->vbRelative(r->sub());
                         if (mfv != 0)
                         {
-                            lret.append(mfv->trGroupe());
+                            if (ante) lante.append(mfv->trGroupe());
+                            else lpost.append(mfv->trGroupe());
                         }
                     }
                     else
                     {
-                        lret.append(r->trSub());
+                        if (ante) lante.append(r->trSub());
+                        else lpost.append(r->trSub());
                     }
                 }
                 else
                 {
                     // placer les pronoms antéposés avant leur verbe
-                    if ((Ch::anteposes.contains(r->sub()->tr())
+                    if (Ch::anteposes.contains(r->sub()->tr())
                         && (inoyau > -1)
                         && (el == "objet" || el == "datif"))
-                        || r->subSup())
                     {
-                        lret.insert(inoyau, r->trSub());
+                        if (ante) lante.insert(inoyau, r->trSub());
+                        else lpost.insert(inoyau, r->trSub());
                         // TODO : si un pronom sujet a été ajouté, insérer
                         // l'objet après ce pronom.
                     }
                     else
                     {
-                        lret.append(r->trSub());
+                        if (ante) lante.append(r->trSub());
+                        else lpost.append(r->trSub());
                     }
                 }
             }
         }
     }
-    return elideFr(lret.join(" ").simplified());
+    QStringList liste = lante + lpost;
+    return elideFr(liste.join(" ").simplified());
 }
 
 QString MotFlechi::trNue()

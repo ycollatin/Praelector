@@ -21,6 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
+//        - in propose un second régime après validation du premier : 
+//          uenitur in eum locum quem...
 //        - Requêtes doublonnées, pê après un retour arrière.
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //

@@ -104,7 +104,6 @@ class Requete : public QObject
         QChar       sens();
         bool        separeparVConj();
         void        setCoord1(Requete* req);
-        //void        setNum(int n);
         void        setOrigine(Requete* req);
         void        setRejetee(bool r, QString cause="");
         void        setRequis(MotFlechi* m, QString cause="cause inconnue");
@@ -115,7 +114,7 @@ class Requete : public QObject
         void        setValide(bool v);
         MotFlechi*  sub();
         bool        subRequis();
-        bool        subSup();
+        //bool        subSup();
         MotFlechi*  super();
         bool        superRequis();
         QString     tr();
