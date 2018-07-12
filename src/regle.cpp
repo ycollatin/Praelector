@@ -150,6 +150,7 @@ Regle::Regle(QStringList ll)
        if (f.startsWith("antep"))
            _antepos = f.mid(5).toInt();
     }
+    _multi = _filtre.contains("multi");
 }
 
 QString Regle::accord()
@@ -361,6 +362,11 @@ QStringList Regle::morphoSub()
 QStringList Regle::morphoSup()
 {
     return _morphoSup;
+}
+
+bool Regle::multi()
+{
+    return _multi;
 }
 
 int Regle::nbLsSub()

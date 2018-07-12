@@ -252,7 +252,7 @@ bool MotFlechi::estSuperDe(MotFlechi* m)
     for (int i=0;i<lreqSup.count();++i)
     {
         Requete* req = lreqSup.at(i);
-        if (req->close() && req->sub() == m)
+        if (req->valide() && req->sub() == m)
             return true;
     }
     return false;
@@ -264,7 +264,7 @@ bool MotFlechi::estSuperParAff(QString aff)
     for (int i=0;i<lreqSup.count();++i)
     {
         Requete* req = lreqSup.at(i);
-        if (req->close() && req->aff() == aff)
+        if (req->valide() && req->aff() == aff)
             return true;
     }
     return false;
@@ -367,7 +367,10 @@ void MotFlechi::lance()
     for (int i=0;i<_phrase->nbRegles();++i)
     {
         Regle* r = _phrase->regle(i);
-        if (r->estSuper(this) && r->sens() != '<')
+        if (r->estSuper(this) && r->sens() != '<'
+            // vérifier que la fonction n'est pas déjà occupée
+            // par une règle non multi
+            && (!r->multi() || !estSuperParAff(r->aff())))
         {
             Requete* nr = new Requete(this, 0, r);
             _phrase->ajRequete(nr);

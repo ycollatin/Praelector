@@ -46,6 +46,7 @@ class Regle : public QObject
         QStringList _filtre;
         QStringList _lemmeSub;
         QStringList _lemmeSup;
+        bool        _multi;
         QString     _subEstSup;
         QString     _supEstSub;
         QStringList _supEstSup;
@@ -88,6 +89,7 @@ class Regle : public QObject
         QString      lsSup(int i);
         QStringList  morphoSub();
         QStringList  morphoSup();
+        bool         multi();
         int          nbLsSub();
         int          nbLsSup();
         int          nbTr();
