@@ -21,15 +21,18 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
+//        - magnorum montium : la tr <sub> <sup> est inefficace.
+//        - risisse est traduit par un indicatif passé composé : confusion de la morpho latine
+//          et de son équivalent calculé pour le français.
 //        - Requêtes doublonnées, pê après un retour arrière.
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
+//        - Possibilité de changer la place du groupe subordonné courant.
 //        - vérifier la mise à jour des requêtes proposées après validation
 //          de l'une d'entre elles.
 //        - l'application du champ tr des règles est complexe et mal contrôlé.
 //        - Possibilité de forcer un lien syntaxique entre deux mots ?
-//        - Possibilité de changer la place du groupe subordonné courant.
 //        - Lien phrase suivante.
 //        - faire disparaître les hyperliens inutiles.
 //        - Liens à ajouter :
