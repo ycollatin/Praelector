@@ -33,6 +33,7 @@ coordV
 pos:n,p
 det
 num
+epithete
 -
 nihil
 prepn
@@ -64,6 +65,7 @@ sujetPropInf
 sujetPr
 sujetEgo
 sujetTu
+objet
 datifPr
 -
 negation
