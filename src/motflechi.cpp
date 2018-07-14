@@ -199,7 +199,6 @@ QString MotFlechi::elideFr(QString s)
     s.replace(QRegularExpression("(\\b)à les "), "\\1aux ");
     // ce est
     s.replace(QRegularExpression("(\\b)ce est(\\b)"), "\\1c'est\\2");
-
     // je te n'aime pas, je le n'aime pas etc.
     s.replace(QRegularExpression("(je|tu|il|elle) ([tl])[ea] n'"), "\\1 ne \\2'");
 
@@ -755,7 +754,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
     QStringList lpost;
     bool ante = true;
     QStringList lgr = _phrase->lgr(_pos);
-    int inoyau = -1;
+    //int inoyau = -1;
     for (int i = 0;i<lgr.count();++i)
     {
         QString el = lgr.at(i);
@@ -774,7 +773,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
                 else trf.prepend("ne ");
             }
             lante.append (trf);
-            inoyau = lante.count()-1;
+            //inoyau = lante.count()-1;
             ante = false;
         }
         else
@@ -803,21 +802,8 @@ QString MotFlechi::trGroupe(Requete* rtest)
                 }
                 else
                 {
-                    // placer les pronoms antéposés avant leur verbe
-                    if (Ch::anteposes.contains(r->sub()->tr())
-                        && (inoyau > -1)
-                        && (el == "objet" || el == "datif"))
-                    {
-                        if (ante) lante.insert(inoyau, r->trSub());
-                        else lpost.insert(inoyau, r->trSub());
-                        // TODO : si un pronom sujet a été ajouté, insérer
-                        // l'objet après ce pronom.
-                    }
-                    else
-                    {
-                        if (ante) lante.append(r->trSub());
-                        else lpost.append(r->trSub());
-                    }
+                    if (ante && r->subSup()) lante.append(r->trSub());
+                    else if (!ante && !r->subSup()) lpost.append(r->trSub());
                 }
             }
         }
