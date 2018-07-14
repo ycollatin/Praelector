@@ -2,6 +2,10 @@ PRAELECTOR -- notes de développement
    mercredi 26 août 2015 - lundi 14 septembre 2015 
    repris le 15 mars 2018, avec le moteur de C11
 
+TRGROUPE
+    Il y a une contradiction dans la chaîne de traduction des règles
+    (id tr) et les directives du fichier bin/data/synt.fr.
+
 LIENS VALIDABLES
     sans que le fléchi de chaque noeud soit encore établi.
     Se produit surtout pour les épithètes et les appositions.
