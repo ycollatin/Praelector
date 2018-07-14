@@ -114,7 +114,7 @@ class Requete : public QObject
         void        setValide(bool v);
         MotFlechi*  sub();
         bool        subRequis();
-        //bool        subSup();
+        bool        subSup();
         MotFlechi*  super();
         bool        superRequis();
         QString     tr();
