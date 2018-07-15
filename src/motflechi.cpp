@@ -131,15 +131,7 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent, char po)
                               fl = "on vient";
                               break;
                           }
-                          // particularités de la morpho latine.
-                          _morpho.replace("subjonctif imparfait", "conditionnel présent");
-                          _morpho.replace("subjonctif parfait", "subjonctif passé_composé");
-                          _morpho.replace("impératif futur", "impératif présent");
-                          _morpho.replace("infinitif parfait", "indicatif passé_composé 3ème singulier"); 
-                          _morpho.replace("impératif futur", "impératif présent");
-                          // uideor - paraître. pê pas le bon endroit
-                          if (c == "paraître") _morpho.replace("passif", "actif");
-                          fl = conjnat(c, _morpho);
+                          fl = conjnat(c, morphoLatFr(_morpho));
                           break;
                       }
             default: fl = c;
