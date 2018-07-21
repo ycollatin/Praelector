@@ -16,6 +16,7 @@
 !
 
 pos:a
+tamAdv
 -
 ablAdj
 adv
@@ -98,6 +99,7 @@ vInd
 vSubj
 
 pos:d
+tamAdv
 -
 negation
 cquam
