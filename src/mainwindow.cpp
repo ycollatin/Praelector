@@ -15,22 +15,21 @@
 
 #include <QDebug>
 #include <QDir>
-#include <QWebPage>
 #include <QSettings>
-#include <QtWebKitWidgets>
 
 #include "mainwindow.h"
 #include "phrase.h"
 
-Editeur::Editeur(QWidget *parent) : QWebView(parent)
+Editeur::Editeur(QWidget *parent) : QWebEngineView(parent)
 {
-    page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
 }
 
 void Editeur::emet(QUrl url)
 {
     emit linkClicked(url);
 }
+
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
@@ -44,8 +43,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     verticalLayout->setSpacing(6);
     verticalLayout->setContentsMargins(11, 11, 11, 11);
 
-    textBrowser = new Editeur(centralWidget);
-    verticalLayout->addWidget(textBrowser);
+    engin = new Editeur(centralWidget);
+    verticalLayout->addWidget(engin);
 
     setCentralWidget(centralWidget);
     // chercher un paramétrage dans QSettings
@@ -54,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	phrase = new Phrase();
 	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
 	connect(phrase, SIGNAL(editTr(QString)),this,SLOT(traceMf(QString)));
-	connect(textBrowser, SIGNAL(linkClicked(QUrl)),this, SLOT(calcul(QUrl)));
+	connect(engin, SIGNAL(linkClicked(QUrl)),this, SLOT(calcul(QUrl)));
     clavier = false;
     relect = false;
     lurl = QStringList()
@@ -158,6 +157,7 @@ void MainWindow::ajTrace(QString cmd)
  */
 void MainWindow::calcul (QUrl url)
 {
+    //acceptNavigationRequest(url, QWebEnginePage::NavigationTypeLinkClicked, true);
     texte.clear();
     texteT.clear();
     QString cmd = url.fromPercentEncoding(url.toString().toUtf8());
@@ -197,13 +197,13 @@ void MainWindow::calcul (QUrl url)
     }
     else if (cmd == "-zoom")
     {
-        //textBrowser->zoomIn();
-        textBrowser->setZoomFactor(textBrowser->zoomFactor()+0.2);
+        //engin->zoomIn();
+        engin->setZoomFactor(engin->zoomFactor()+0.2);
     }
     else if (cmd == "-dezoom")
     {
-        //textBrowser->zoomOut();
-        textBrowser->setZoomFactor(textBrowser->zoomFactor()-0.2);
+        //engin->zoomOut();
+        engin->setZoomFactor(engin->zoomFactor()-0.2);
     }
 	else
 	{
@@ -267,11 +267,11 @@ void MainWindow::clav()
     if (clavier)
     {
         if (texteT.isEmpty()) ajTouches();
-        textBrowser->setHtml(texteT);
+        engin->setHtml(texteT);
     }
     else
     {
-        textBrowser->setHtml(texte);
+        engin->setHtml(texte);
     }
     prefixe.clear();
 }
@@ -330,7 +330,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.setValue("windowState", saveState());
     settings.endGroup();
     settings.beginGroup("interface");
-    settings.setValue("zoom", textBrowser->zoomFactor());
+    settings.setValue("zoom", engin->zoomFactor());
     settings.endGroup();
     QMainWindow::closeEvent(event);
 }
@@ -431,7 +431,7 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     {
         t.prepend(prefixe);
         QUrl url = urls[t];
-        textBrowser->emet(url);
+        engin->emet(url);
         prefixe.clear();
     }
     else QMainWindow::keyPressEvent(ev);
@@ -446,7 +446,7 @@ void MainWindow::lisSettings()
     restoreState(settings.value("windowState").toByteArray());
     settings.endGroup();
     settings.beginGroup("interface");
-    textBrowser->setZoomFactor(settings.value("zoom").toReal());
+    engin->setZoomFactor(settings.value("zoom").toReal());
     settings.endGroup();
 }
 
@@ -460,9 +460,9 @@ void MainWindow::parle(QString m)
     if (clavier)
     {
         ajTouches();
-	    textBrowser->setHtml(texteT);
+	    engin->setHtml(texteT);
     }
-    else textBrowser->setHtml(texte);
+    else engin->setHtml(texte);
 }
 
 void MainWindow::setFTrace(QString nf)
