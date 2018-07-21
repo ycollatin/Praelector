@@ -748,15 +748,12 @@ contig:10
 poids:88
 tr:<sub> <sup>
 
-!id:sujetPart
-!aff:sujet
-!posSup:v
-!morphoSup:indicatif,subjonctif
-!posSub:v,w
-!morphoSub:nominatif
-!lsSub:ppr
-!poids:70
-!tr:<sub> <sup>
+id:tamAdv
+aff:adv
+posSup:d,a
+lemmeSub:tam
+sens:<
+tr:<sub> <sup>
 
 id:tempsAbl
 aff:abl
