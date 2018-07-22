@@ -21,7 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
-//        - magnorum montium : la tr <sub> <sup> est inefficace.
+//        - magnorum montium proceritas : on peut antéposer ante par tr. suiv., mais le déterminant
+//          devrait précéder "grandes".
 //        - risisse est traduit par un indicatif passé composé : confusion de la morpho latine
 //          et de son équivalent calculé pour le français.
 //        - Requêtes doublonnées, pê après un retour arrière.
