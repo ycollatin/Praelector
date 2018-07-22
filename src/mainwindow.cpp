@@ -1,3 +1,5 @@
+/*                  mainwindow.cpp  */
+
 /* Copyright (C) 2015 Yves Ouvrard
 
    This program is free software: you can redistribute it and/or modify
@@ -28,8 +30,6 @@ void Editeur::emet(QUrl url)
 {
     emit linkClicked(url);
 }
-
-
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
