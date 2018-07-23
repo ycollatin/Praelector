@@ -42,7 +42,6 @@ class MainWindow : public QMainWindow
 
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
-    //QTextBrowser *textBrowser;
     Editeur* textBrowser;
 
 	public:

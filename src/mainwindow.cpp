@@ -70,17 +70,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     << "l.t.";
 
     // construire la liste des clés alpha
-    alphabet = "ces/+-aqr<>bdfghijklmnoptuv";
+    alphabet = "cen/+-aqrpsbdfghijklmotuv";
     /*
        c choisir une phrase
        e " enregistrée
-       s saisir une phrase
+       n saisir une phrase
        / clavier
        a annuler
        q quitter
        r réinitialiser
-       < mot précédent
-       < mot suivant
+       p mot précédent
+       s mot suivant
      */
     wxyz = "wxyz";
     for (int i=0;i<alphabet.count();++i)
@@ -195,12 +195,10 @@ void MainWindow::calcul (QUrl url)
     else if (cmd == "-zoom")
     {
         textBrowser->zoomIn();
-        //textBrowser->setHtml(textBrowser->toHtml());
     }
     else if (cmd == "-dezoom")
     {
         textBrowser->zoomOut();
-        //textBrowser->setHtml(textBrowser->toHtml());
     }
 	else
 	{
@@ -298,7 +296,6 @@ QString MainWindow::choixPhr(QString c)
             QString aff;
             aff = lin;
             QString url = QUrl::toPercentEncoding(lin);
-            //url.replace(":","%3A");
             QTextStream fl(&p);
             fl << "<a href=\"-phr"<<i<<"_"<<url<<"\">"<<i<<"-</a> "<< aff;
             ++i;
