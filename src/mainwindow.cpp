@@ -15,28 +15,25 @@
 
 #include <QDebug>
 #include <QDir>
-#include <QWebPage>
 #include <QSettings>
-#include <QtWebKitWidgets>
 
 #include "mainwindow.h"
 #include "phrase.h"
 
-Editeur::Editeur(QWidget *parent) : QWebView(parent)
+Editeur::Editeur(QWidget *parent) : QTextBrowser(parent)
 {
-    page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+    setOpenLinks(false);
 }
 
 void Editeur::emet(QUrl url)
 {
-    emit linkClicked(url);
+    emit anchorClicked(url);
 }
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     resize(834, 734);
     centralWidget = new QWidget();
-    //QFont font;
     font.setPointSize(14);
 	centralWidget->setFont (font);
 
@@ -54,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	phrase = new Phrase();
 	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
 	connect(phrase, SIGNAL(editTr(QString)),this,SLOT(traceMf(QString)));
-	connect(textBrowser, SIGNAL(linkClicked(QUrl)),this, SLOT(calcul(QUrl)));
+	connect(textBrowser, SIGNAL(anchorClicked(QUrl)),this, SLOT(calcul(QUrl)));
     clavier = false;
     relect = false;
     lurl = QStringList()
@@ -88,7 +85,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     wxyz = "wxyz";
     for (int i=0;i<alphabet.count();++i)
         clesL.append(alphabet.at(i));
-    for (int i=0;i<4;++i)
+    for (int i=0;i<wxyz.length();++i)
     {
         QString cle(wxyz.at(i));
         for (int j=0;j<alphabet.count();++j)
@@ -197,13 +194,13 @@ void MainWindow::calcul (QUrl url)
     }
     else if (cmd == "-zoom")
     {
-        //textBrowser->zoomIn();
-        textBrowser->setZoomFactor(textBrowser->zoomFactor()+0.2);
+        textBrowser->zoomIn();
+        //textBrowser->setHtml(textBrowser->toHtml());
     }
     else if (cmd == "-dezoom")
     {
-        //textBrowser->zoomOut();
-        textBrowser->setZoomFactor(textBrowser->zoomFactor()-0.2);
+        textBrowser->zoomOut();
+        //textBrowser->setHtml(textBrowser->toHtml());
     }
 	else
 	{
@@ -330,7 +327,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.setValue("windowState", saveState());
     settings.endGroup();
     settings.beginGroup("interface");
-    settings.setValue("zoom", textBrowser->zoomFactor());
+    settings.setValue("zoom", textBrowser->font().pointSize());
     settings.endGroup();
     QMainWindow::closeEvent(event);
 }
@@ -446,7 +443,9 @@ void MainWindow::lisSettings()
     restoreState(settings.value("windowState").toByteArray());
     settings.endGroup();
     settings.beginGroup("interface");
-    textBrowser->setZoomFactor(settings.value("zoom").toReal());
+    QFont font;
+    font.setPointSize(settings.value("zoom").toInt());
+    textBrowser->setFont(font);
     settings.endGroup();
 }
 
