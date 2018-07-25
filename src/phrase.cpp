@@ -21,6 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
+//        - Dans phrases:txt, Ad Icarium et Erigonam, les deux cprep ad... et in... ne peuvent coexister
 //        - magnorum montium proceritas : on peut antéposer ante par tr. suiv., mais le déterminant
 //          devrait précéder "grandes".
 //        - risisse est traduit par un indicatif passé composé : confusion de la morpho latine
@@ -497,6 +498,13 @@ void Phrase::ecoute (QString m)
                         case 'i': // rotation de la traduction du fléchi
                             {
                                 cour->flechi(num)->incItr();
+                                break;
+                            }
+                        case 't':
+                            {
+								QMessageBox mb;
+								mb.setText(cour->flechi(num)->trs());
+								mb.exec();
                                 break;
                             }
 						case 'r': // rejeter m.r.m = le lemme ; m.r.f la forme
