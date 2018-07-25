@@ -21,7 +21,6 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
-//        - Dans phrases:txt, Ad Icarium et Erigonam, les deux cprep ad... et in... ne peuvent coexister
 //        - magnorum montium proceritas : on peut antéposer ante par tr. suiv., mais le déterminant
 //          devrait précéder "grandes".
 //        - risisse est traduit par un indicatif passé composé : confusion de la morpho latine

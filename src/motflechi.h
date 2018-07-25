@@ -99,7 +99,7 @@ class MotFlechi: public QObject
         void            setTr(QString t);
         void            setValide(bool v);
         bool            sommet();
-        Requete*        sub(QString id, Requete* rtest=0);
+        QList<Requete*> sub(QString id, Requete* rtest=0);
         QString         trfl();
         QString         tr();
         QString         trs();

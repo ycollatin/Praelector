@@ -699,18 +699,19 @@ bool MotFlechi::sommet()
     return true;
 }
 
-Requete* MotFlechi::sub(QString id, Requete* rtest)
+QList<Requete*> MotFlechi::sub(QString id, Requete* rtest)
 {
     QList<Requete*> lreqSup = _phrase->lReqSup(this, true);
+    QList<Requete*> ret;
     for (int i=0;i<lreqSup.count();++i)
     {
         Requete* req = lreqSup.at(i);
         if (req != 0 && (req->valide() || req == rtest) && req->id() == id)
         {
-            return req;
+            ret.append(req);
         }
     }
-    return 0;
+    return ret;
 }
 
 QString MotFlechi::tr()
@@ -770,9 +771,10 @@ QString MotFlechi::trGroupe(Requete* rtest)
         }
         else
         {
-            Requete* r = sub(el, rtest);
-            if (r != 0)
-            {
+            QList<Requete*> lr = sub(el, rtest);
+            for (int j=0;j<lr.count();++j)
+            { 
+                Requete* r = lr.at(j);
                 // relatifs
                 if (el=="antecedent" || el=="isqui")
                 {
@@ -822,7 +824,7 @@ QString MotFlechi::trs()
         }
         ret.append(t);
     }
-    return ret.join(" ");
+    return ret.join("<br/>");
 }
 
 bool MotFlechi::valide()
