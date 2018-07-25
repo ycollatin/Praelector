@@ -333,8 +333,9 @@ QString Mot::html()
             << "<a href=\"m.e."<<i<<"\">&eacute;diter</a>";
         if (mf->nbTr() > 1)
         {
-            fl << mf->trs();
+            //fl << mf->trs();
             fl << "<a href=\"m.i."<<i<<"\">tr. suiv.</a> ";
+            fl << "<a href=\"m.t."<<i<<"\">toutes</a> ";
         }
         fl  << "<a href=\"m.c."<<i<<"\">choisir</a> rejeter "
 			<< "<a href=\"m.r.m."<<i<<"\">le lemme</a> "
