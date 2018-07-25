@@ -20,34 +20,20 @@
 
 #include <QApplication>
 #include <QMainWindow>
-#include <QWebEngineView>
+#include <QTextBrowser>
 #include <QVBoxLayout>
 #include <QWidget>
 
 #include <QUrl>
 #include <phrase.h>
 
-class Editeur : public QWebEngineView
+class Editeur : public QTextBrowser
 {
     Q_OBJECT
 
     public:
         Editeur(QWidget *parent = Q_NULLPTR);
         void emet(QUrl url);
-
-        bool acceptNavigationRequest(const QUrl & url, QWebEnginePage::NavigationType type, bool)
-        {
-            if (type == QWebEnginePage::NavigationTypeLinkClicked)
-            {
-                //QDesktopServices::openUrl(url);
-                emit linkClicked(url);
-                return false;
-            }
-            return true;
-        }
-
-signals:
-        void linkClicked(const QUrl&);
 };
 
 class MainWindow : public QMainWindow
@@ -56,7 +42,7 @@ class MainWindow : public QMainWindow
 
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
-    Editeur* engin;
+    Editeur* textBrowser;
 
 	public:
     	explicit MainWindow(QWidget *parent = 0);

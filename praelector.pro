@@ -6,7 +6,6 @@ DEPENDPATH += $$PWD/src
 INCLUDEPATH += $$PWD/src 
 
 QT += widgets
-QT += webenginewidgets
 
 # CONFIG += release_binary
 CONFIG += debug

@@ -22,20 +22,20 @@
 #include "mainwindow.h"
 #include "phrase.h"
 
-Editeur::Editeur(QWidget *parent) : QWebEngineView(parent)
+Editeur::Editeur(QWidget *parent) : QTextBrowser(parent)
 {
+    setOpenLinks(false);
 }
 
 void Editeur::emet(QUrl url)
 {
-    emit linkClicked(url);
+    emit anchorClicked(url);
 }
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     resize(834, 734);
     centralWidget = new QWidget();
-    //QFont font;
     font.setPointSize(14);
 	centralWidget->setFont (font);
 
@@ -43,8 +43,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     verticalLayout->setSpacing(6);
     verticalLayout->setContentsMargins(11, 11, 11, 11);
 
-    engin = new Editeur(centralWidget);
-    verticalLayout->addWidget(engin);
+    textBrowser = new Editeur(centralWidget);
+    verticalLayout->addWidget(textBrowser);
 
     setCentralWidget(centralWidget);
     // chercher un paramétrage dans QSettings
@@ -53,7 +53,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 	phrase = new Phrase();
 	connect(phrase, SIGNAL(repondu(QString)),this,SLOT(parle(QString)));
 	connect(phrase, SIGNAL(editTr(QString)),this,SLOT(traceMf(QString)));
-	connect(engin, SIGNAL(linkClicked(QUrl)),this, SLOT(calcul(QUrl)));
+	connect(textBrowser, SIGNAL(anchorClicked(QUrl)),this, SLOT(calcul(QUrl)));
     clavier = false;
     relect = false;
     lurl = QStringList()
@@ -72,22 +72,22 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     << "l.t.";
 
     // construire la liste des clés alpha
-    alphabet = "ces/+-aqr<>bdfghijklmnoptuv";
+    alphabet = "cen/+-aqrpsbdfghijklmotuv";
     /*
        c choisir une phrase
        e " enregistrée
-       s saisir une phrase
+       n saisir une phrase
        / clavier
        a annuler
        q quitter
        r réinitialiser
-       < mot précédent
-       < mot suivant
+       p mot précédent
+       s mot suivant
      */
     wxyz = "wxyz";
     for (int i=0;i<alphabet.count();++i)
         clesL.append(alphabet.at(i));
-    for (int i=0;i<4;++i)
+    for (int i=0;i<wxyz.length();++i)
     {
         QString cle(wxyz.at(i));
         for (int j=0;j<alphabet.count();++j)
@@ -157,7 +157,7 @@ void MainWindow::ajTrace(QString cmd)
  */
 void MainWindow::calcul (QUrl url)
 {
-    //acceptNavigationRequest(url, QWebEnginePage::NavigationTypeLinkClicked, true);
+    //acceptNavigationRequest(url, QWebtextBrowserePage::NavigationTypeLinkClicked, true);
     texte.clear();
     texteT.clear();
     QString cmd = url.fromPercentEncoding(url.toString().toUtf8());
@@ -197,13 +197,11 @@ void MainWindow::calcul (QUrl url)
     }
     else if (cmd == "-zoom")
     {
-        //engin->zoomIn();
-        engin->setZoomFactor(engin->zoomFactor()+0.2);
+        textBrowser->zoomIn();
     }
     else if (cmd == "-dezoom")
     {
-        //engin->zoomOut();
-        engin->setZoomFactor(engin->zoomFactor()-0.2);
+        textBrowser->zoomOut();
     }
 	else
 	{
@@ -267,11 +265,11 @@ void MainWindow::clav()
     if (clavier)
     {
         if (texteT.isEmpty()) ajTouches();
-        engin->setHtml(texteT);
+        textBrowser->setHtml(texteT);
     }
     else
     {
-        engin->setHtml(texte);
+        textBrowser->setHtml(texte);
     }
     prefixe.clear();
 }
@@ -301,7 +299,6 @@ QString MainWindow::choixPhr(QString c)
             QString aff;
             aff = lin;
             QString url = QUrl::toPercentEncoding(lin);
-            //url.replace(":","%3A");
             QTextStream fl(&p);
             fl << "<a href=\"-phr"<<i<<"_"<<url<<"\">"<<i<<"-</a> "<< aff;
             ++i;
@@ -330,7 +327,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     settings.setValue("windowState", saveState());
     settings.endGroup();
     settings.beginGroup("interface");
-    settings.setValue("zoom", engin->zoomFactor());
+    settings.setValue("zoom", textBrowser->font().pointSize());
     settings.endGroup();
     QMainWindow::closeEvent(event);
 }
@@ -431,7 +428,7 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     {
         t.prepend(prefixe);
         QUrl url = urls[t];
-        engin->emet(url);
+        textBrowser->emet(url);
         prefixe.clear();
     }
     else QMainWindow::keyPressEvent(ev);
@@ -446,7 +443,9 @@ void MainWindow::lisSettings()
     restoreState(settings.value("windowState").toByteArray());
     settings.endGroup();
     settings.beginGroup("interface");
-    engin->setZoomFactor(settings.value("zoom").toReal());
+    QFont font;
+    font.setPointSize(settings.value("zoom").toInt());
+    textBrowser->setFont(font);
     settings.endGroup();
 }
 
@@ -460,9 +459,9 @@ void MainWindow::parle(QString m)
     if (clavier)
     {
         ajTouches();
-	    engin->setHtml(texteT);
+	    textBrowser->setHtml(texteT);
     }
-    else engin->setHtml(texte);
+    else textBrowser->setHtml(texte);
 }
 
 void MainWindow::setFTrace(QString nf)
