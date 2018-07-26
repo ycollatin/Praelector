@@ -74,19 +74,18 @@ SYNTAXE
   - -que : ajouter "et " à gauche de la traduction.
 
 INTERFACE
+  - Choix de la traduction d'un fléchi. Jusqu'à présent, "tr. suiv", et un
+    messageBox de toutes les tr. Remplacer par une traduction afficher et
+    un lien "choisir une tr.".
+        . Ne pourra se faire que sur un fléchi choisi ;
+        . Si le lien est cliqué, l'interface donne des liens de choix pour les 
+          traductions données par lemmes.fr + flexfr, et aussi un lien "nouvelle",
+          qui provoque un dialogue de saisie.
   - Mode exercice + solution ?
   - Historique ?
   - Résoudre les différences de genre entre latin et français : dans les liens
     et non dans les morphos.
   - Montrer les parenthèses dans les traductions, mais non hyperliées. 
-  - Passer une phrase comme paramètre ?
-    En modifiant void Phrase::ecoute (QString m)
-	en
-    void Phrase::ecoute (QString m, QString m2="")
-	Ce m2 pourrait servir à beaucoup de choses, mais avec m==-nouvPhr,
-	le m2 serait le texte de la phrase, facile à passer avec main ().
-  - Mieux séparer les traductions
-  - Écrire une présentation.
   - Saisie des données : on peut ajouter une entrée si rien n'est reconnu, mais
     * ajouter une règle syntaxique ;
 	* ajouter une entrée même si d'autres sont reconnues.
