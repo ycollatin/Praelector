@@ -29,6 +29,7 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
+//        - Traduction du fléchi : voir NOTES
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - vérifier la mise à jour des requêtes proposées après validation
 //          de l'une d'entre elles.
