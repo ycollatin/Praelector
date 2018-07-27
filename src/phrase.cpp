@@ -21,6 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
+//        - phrases.txt, /ira furor brevis est/ : la relecture échoue à brevis.
 //        - magnorum montium proceritas : on peut antéposer ante par tr. suiv., mais le déterminant
 //          devrait précéder "grandes".
 //        - risisse est traduit par un indicatif passé composé : confusion de la morpho latine
