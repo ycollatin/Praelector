@@ -21,7 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
-//        - phrases.txt, /ira furor brevis est/ : la relecture échoue à brevis.
+//        - /ira furor breuis/ : Il semble que la relecture, en cas de choix autre que celui qui
+//          est surligné, se met à surligner plusieurs autres choix.
 //        - magnorum montium proceritas : on peut antéposer ante par tr. suiv., mais le déterminant
 //          devrait précéder "grandes".
 //        - risisse est traduit par un indicatif passé composé : confusion de la morpho latine
