@@ -643,6 +643,14 @@ void MotFlechi::setDet(bool f)
 	}
 }
 
+void MotFlechi::setItr(int i)
+{
+    _itr = i;
+    if (_itr < 0 || _itr >= _trfl.count()) return; 
+    _trNue = _trfl.at(_itr);
+    _tr = _trNue;
+}
+
 void MotFlechi::setNeg(bool n)
 {
     _neg = n;
@@ -733,6 +741,18 @@ QString MotFlechi::trfl()
     ret += l.join(", ");
     ret += ")";
     return ret;
+}
+
+QString MotFlechi::trfl(int i)
+{
+    if (_trfl.count() == 1)
+        return _trfl.at(0);
+    QStringList l = _trfl;
+    if (_trfl.isEmpty())
+    {
+        return "traduction manquante pour "+_lemme->gr();
+    }
+    return _trfl.at(i);
 }
 
 /**

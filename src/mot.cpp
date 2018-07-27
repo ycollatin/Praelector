@@ -309,7 +309,35 @@ QString Mot::html()
 		return "mot non reconnu <a href=\"m.a."
 			+ QString::number(_rang)
 			+ "\">ajouter une entrée</a>";
-
+    MotFlechi* mfu = unique();
+    if (mfu != 0)
+    {
+        QString lin;
+        int i = _flechis.indexOf(mfu);
+        QTextStream fl(&lin);
+        fl << "<span style=\"color:green;font-style:italic\"> "
+           << mfu->morphoHtml() << "</span>";
+        switch(mfu->pos())
+        {
+            case 'n': fl << " <a href=\"m.d."<<i<<"\">det.</a> "; break;
+            case 'w':
+            case 'v': if (mfu->morpho().contains('3'))
+						  fl << " <a href=\"m.s."<<i<<"\">suj.</a> ";
+                      break;
+            default:break;
+        }
+        fl	<< "tr. <span style=\"color:darkred;font-style:italic\">"<<mfu->tr()<<"</span> "
+            << "<a href=\"m.e."<<i<<"\">&eacute;diter</a>";
+        if (mfu->nbTr() > 1)
+        {
+            for (int j=0;j<mfu->nbTr();++j)
+            {
+                fl << "<a href=\"m.i."<<i<<"."<<j<<"\">"+mfu->trfl(j)+"</a><br/>";
+            }
+            fl << "<a hrf=\"m.e"<<i<<"\">&eacute;diter</a>";
+        }
+        return lin;
+    }
     QStringList ret;
     for (int i=0;i<_flechis.count();++i)
     {
@@ -321,7 +349,6 @@ QString Mot::html()
            << mf->morphoHtml() << "</span>";
         switch(mf->pos())
         {
-            //case 'a': if (!mf->lemme()->pos().contains('n')) break;
             case 'n': fl << " <a href=\"m.d."<<i<<"\">det.</a> "; break;
             case 'w':
             case 'v': if (mf->morpho().contains('3'))
@@ -333,9 +360,7 @@ QString Mot::html()
             << "<a href=\"m.e."<<i<<"\">&eacute;diter</a>";
         if (mf->nbTr() > 1)
         {
-            //fl << mf->trs();
-            fl << "<a href=\"m.i."<<i<<"\">tr. suiv.</a> ";
-            fl << "<a href=\"m.t."<<i<<"\">toutes</a> ";
+            fl << "<a href=\"m.t."<<i<<"\">traductions</a> ";
         }
         fl  << "<a href=\"m.c."<<i<<"\">choisir</a> rejeter "
 			<< "<a href=\"m.r.m."<<i<<"\">le lemme</a> "
@@ -618,4 +643,19 @@ QString Mot::trs()
     }
     ret.removeDuplicates();
     return ret.join(" / ");
+}
+
+MotFlechi* Mot::unique()
+{
+    QList<MotFlechi*> lmf;
+    for (int i=0;i<_flechis.count();++i)
+    {
+        MotFlechi* mf = _flechis.at(i);
+        if (!mf->rejete()) lmf.append(mf);
+    }
+    if (lmf.count() == 1)
+    {
+        return lmf.at(0);
+    }
+    return 0;
 }

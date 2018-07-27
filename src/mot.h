@@ -100,6 +100,7 @@ class Mot : public QObject
         MotFlechi*        super();
         QString           trGroupe(Requete* rtest=0);
         QString           trs();
+        MotFlechi*        unique();
 };
 
 #endif

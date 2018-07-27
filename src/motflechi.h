@@ -93,6 +93,7 @@ class MotFlechi: public QObject
         Requete*        reqSup(int i);
         bool            resout(Requete* req);
         void            setDet(bool f=false);
+        void            setItr(int i);
         void            setNeg(bool n);
         void            setRejete(bool r);
         void            setSujet();
@@ -101,6 +102,7 @@ class MotFlechi: public QObject
         bool            sommet();
         QList<Requete*> sub(QString id, Requete* rtest=0);
         QString         trfl();
+        QString         trfl(int i);
         QString         tr();
         QString         trs();
         QString         trGroupe(Requete* rtest=0);
