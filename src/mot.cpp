@@ -327,14 +327,13 @@ QString Mot::html()
             default:break;
         }
         fl	<< "tr. <span style=\"color:darkred;font-style:italic\">"<<mfu->tr()<<"</span> ";
-            //<< "<a href=\"m.e."<<i<<"\">&eacute;diter</a>";
         if (mfu->nbTr() > 1)
         {
             for (int j=0;j<mfu->nbTr();++j)
             {
                 fl << "<a href=\"m.i."<<i<<"."<<j<<"\">"+mfu->trfl(j)+"</a><br/>";
             }
-            fl << "<a href=\"m.e"<<i<<"."<<mfu->tr()<<"\">&eacute;diter</a>";
+            fl << "<a href=\"m.e."<<i<<"."<<mfu->tr()<<"\">&eacute;diter</a>";
         }
         return lin;
     }

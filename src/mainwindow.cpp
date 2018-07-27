@@ -162,7 +162,10 @@ void MainWindow::calcul (QUrl url)
     texteT.clear();
     QString cmd = url.fromPercentEncoding(url.toString().toUtf8());
     // lecture d'une traduction éditée
-    if (relect && cmd == trace.at(ienr)) ++ienr;
+    if (relect && cmd == trace.at(ienr))
+    {
+        ++ienr;
+    }
 	if (cmd == "-quitter")
 	{
 		// TODO : détruire MainWindow (et donc phrase), mais pê dans main.cpp.
@@ -504,7 +507,8 @@ void MainWindow::surligne()
 void MainWindow::traceMf(QString t)
 {
     QString ultc = trace.at(trace.count()-1);
-    ultc.append('.'+t);
+    // remplacer le 3ème champ par la saisie
+    ultc.replace(QRegExp("\\.\\w*$"), "."+t);
     trace.removeLast();
     trace.append(ultc);
 }
