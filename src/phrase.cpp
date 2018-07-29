@@ -31,7 +31,7 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
-//        - il faut pouvoir éditer la traduction d'un fléchi qui n'en a qu'une. 
+//        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - vérifier la mise à jour des requêtes proposées après validation
 //          de l'une d'entre elles.
