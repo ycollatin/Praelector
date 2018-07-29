@@ -552,6 +552,10 @@ void Requete::setValide(bool v)
         {
             _super->setNeg(true);
         }
+        if (_super->gr() == "nisi")
+        {
+            _sub->setNeg(true);
+        }
         ajHist("VALIDÉE\n"+doc());
     }
     else

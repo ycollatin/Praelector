@@ -14494,8 +14494,8 @@ Nireus:Nirée [roi de Samos]
 Nisaeus:de Nisus
 Niseis:fille de Nisus
 Niseus:de Nisus.
-ni:si (...) ne (...) pas
-nisi:si (...) ne (...) pas ; excepté
+ni:si (... ne ... pas)
+nisi:si (... ne ... pas) ; excepté
 Nisus3:Nisus (père du cinquième Bacchus, roi de Mégare; père de Scylla changé en épervier; Troyen, ami d'Euryale)
 nisus:effort
 nitedula:petite souris, petit mulot
