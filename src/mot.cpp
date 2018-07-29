@@ -326,15 +326,17 @@ QString Mot::html()
                       break;
             default:break;
         }
-        fl	<< "tr. <span style=\"color:darkred;font-style:italic\">"<<mfu->tr()<<"</span> ";
+        fl	<< "tr. <span style=\"color:darkred;font-style:italic\">"<<mfu->tr()<<"</span>";
         if (mfu->nbTr() > 1)
         {
+            fl << "<br/>";
             for (int j=0;j<mfu->nbTr();++j)
-            {
-                fl << "<a href=\"m.i."<<i<<"."<<j<<"\">"+mfu->trfl(j)+"</a><br/>";
-            }
-            fl << "<a href=\"m.e."<<i<<"."<<mfu->tr()<<"\">&eacute;diter</a>";
+                if (j != mfu->itr())
+                {
+                    fl << "<a href=\"m.i."<<i<<"."<<j<<"\">"+mfu->trfl(j)+"</a><br/>";
+                }
         }
+        fl << "<a href=\"m.e."<<i<<"."<<mfu->tr()<<"\">&eacute;diter</a>";
         return lin;
     }
     QStringList ret;
@@ -355,13 +357,13 @@ QString Mot::html()
                       break;
             default:break;
         }
-        fl	<< "tr. <span style=\"color:darkred;font-style:italic\">"<<mf->tr()<<"</span> "
-            << "<a href=\"m.e."<<i<<"\">&eacute;diter</a>";
+        fl	<< "tr. <span style=\"color:darkred;font-style:italic\">"<<mf->tr()<<"</span> ";
         if (mf->nbTr() > 1)
         {
             fl << "<a href=\"m.t."<<i<<"\">traductions</a> ";
         }
-        fl  << "<a href=\"m.c."<<i<<"\">choisir</a> rejeter "
+        fl  << "<a href=\"m.e."<<i<<"\">&eacute;diter</a>"
+            << "<a href=\"m.c."<<i<<"\">choisir</a> rejeter "
 			<< "<a href=\"m.r.m."<<i<<"\">le lemme</a> "
 			<< "<a href=\"m.r.f."<<i<<"\">la forme</a>";
         ret.append(lin);

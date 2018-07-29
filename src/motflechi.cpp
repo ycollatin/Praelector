@@ -353,6 +353,11 @@ bool MotFlechi::intersect(QString a, QString b)
     return false;
 }
 
+int MotFlechi::itr()
+{
+    return _itr;
+}
+
 void MotFlechi::lance()
 {
     for (int i=0;i<_phrase->nbRegles();++i)

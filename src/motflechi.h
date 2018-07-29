@@ -70,6 +70,7 @@ class MotFlechi: public QObject
         QString         htmlLiens();
         void            incItr();
         bool static     intersect(QString a, QString b);
+        int             itr();
         void            lance();
         Lemme*          lemme();
         QString         morpho();
