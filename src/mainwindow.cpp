@@ -508,8 +508,7 @@ void MainWindow::traceMf(QString t)
 {
     QString ultc = trace.at(trace.count()-1);
     // remplacer le 3ème champ par la saisie
-    // essayer avec QRegExp("\\.[^.]*$")
-    ultc.replace(QRegExp("\\..*$"), "."+t);
+    ultc.replace(QRegExp("\\.[^.]*$"), "."+t);
     trace.removeLast();
     trace.append(ultc);
 }
