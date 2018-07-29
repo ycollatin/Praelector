@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     /*
        c choisir une phrase
        e " enregistrée
-       n saisir une phrase
+       n saisir une Nouvelle phrase
        / clavier
        a annuler
        q quitter
