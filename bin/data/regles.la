@@ -365,7 +365,7 @@ id:datif
 doc:De nombreux verbes et quelques adjectifs acceptent comme subordonné un datif qui indique un destinataire
 posSup:v,w,a
 lsSup:datif
-posSub:n
+posSub:n,p
 morphoSub:datif
 poids:79
 tr:<sup> à <sub>
