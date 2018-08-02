@@ -735,13 +735,13 @@ QString MotFlechi::tr()
 
 QString MotFlechi::trfl()
 {
-    if (_trfl.count() == 1)
-        return _trfl.at(0);
-    QStringList l = _trfl;
     if (_trfl.isEmpty())
     {
         return "traduction manquante pour "+_lemme->gr();
     }
+    if (_trfl.count() == 1)
+        return _trfl.at(0);
+    QStringList l = _trfl;
     QString ret = l.takeFirst()+" (";
     ret += l.join(", ");
     ret += ")";
@@ -750,13 +750,13 @@ QString MotFlechi::trfl()
 
 QString MotFlechi::trfl(int i)
 {
-    if (_trfl.count() == 1)
-        return _trfl.at(0);
-    QStringList l = _trfl;
     if (_trfl.isEmpty())
     {
         return "traduction manquante pour "+_lemme->gr();
     }
+    if (_trfl.count() == 1)
+        return _trfl.at(0);
+    QStringList l = _trfl;
     return _trfl.at(i);
 }
 
