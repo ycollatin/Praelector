@@ -400,7 +400,6 @@ QString Lemme::traduction(QString l, QString pos)
 {
     if (!_indMorph.contains(pos))
         return traduction(l);
-    //if (!_pos.contains(pos)) return traduction(l);
     const QString lpos = "(adj|conj|excl|interj|num|pron|prép|adv| n|nt|subst| v|vb|intr)";
     QString t = traduction(l);
     // supprimer les parenthèses dans la ligne de bin/data/lemmes.fr
