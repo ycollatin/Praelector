@@ -21,7 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
-//        - phrases.txt : "In omnem uitam unguento..." lien abstinemus - conj -> quoniam non proposé.
+//        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
 //        - /ira furor breuis/ : Il semble que la relecture, en cas de choix autre que celui qui
 //          est surligné, se met à surligner plusieurs autres choix.
 //        - magnorum montium proceritas : on peut antéposer ante par tr. suiv., mais le déterminant
@@ -32,8 +32,8 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
+//        - Permettre le chargement d'un texte sans retour à la ligne entre chaque phrase.
 //        - L'utilisateur peut créer un lien sans que l'appli l'ait proposé, et lui donner le nom qu'il veut.
-//        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - vérifier la mise à jour des requêtes proposées après validation
 //          de l'une d'entre elles.
