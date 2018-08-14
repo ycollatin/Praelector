@@ -213,6 +213,17 @@ bool MotFlechi::estSub()
     return false;
 }
 
+bool MotFlechi::estSuper()
+{
+    QList<Requete*> lreqSup = _phrase->lReqSup(this);
+    for (int i=0;i<lreqSup.count();++i)
+    {
+        Requete* req = lreqSup.at(i);
+        if (req != 0 && req->valide()) return true;
+    }
+    return false;
+}
+
 bool MotFlechi::estSubParAff(QString aff)
 {
     QList<Requete*> lreqSub = _phrase->lReqSub(this);
@@ -360,12 +371,13 @@ int MotFlechi::itr()
 
 void MotFlechi::lance()
 {
+    // les prépositons et les conjsub ne peuvent avoir qu'un sub
+    if ((_pos == 'r' || _pos == 'c') && estSuper())
+        return;
     for (int i=0;i<_phrase->nbRegles();++i)
     {
         Regle* r = _phrase->regle(i);
         if (r->estSuper(this) && r->sens() != '<'
-            // vérifier que la fonction n'est pas déjà occupée
-            // par une règle non multi
             && (!r->multi() || !estSuperParAff(r->aff())))
         {
             Requete* nr = new Requete(this, 0, r);

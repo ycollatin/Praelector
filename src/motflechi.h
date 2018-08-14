@@ -60,6 +60,7 @@ class MotFlechi: public QObject
         bool            estSub();
         bool            estSubParAff(QString aff);
         bool            estSubParId(QString id);
+        bool            estSuper();
         bool            estSuperDe(MotFlechi* m);
         bool            estSuperParAff(QString aff);
         bool            estSuperParId(QString id);
