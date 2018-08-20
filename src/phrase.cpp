@@ -32,9 +32,10 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
-//        - Permettre le chargement d'un texte sans retour à la ligne entre chaque phrase.
+//        - réunir toutes les fonctions épithète-noyau en une seule.
 //        - L'utilisateur peut créer un lien sans que l'appli l'ait proposé, et lui donner le nom qu'il veut.
 //        - Possibilité de changer la place du groupe subordonné courant.
+//        - Permettre le chargement d'un texte sans retour à la ligne entre chaque phrase.
 //        - vérifier la mise à jour des requêtes proposées après validation
 //          de l'une d'entre elles.
 //        - l'application du champ tr des règles est complexe et mal contrôlé.
