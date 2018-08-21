@@ -187,8 +187,8 @@ QString MotFlechi::elideFr(QString s)
     // pronoms datif
     s.replace(QRegularExpression("\\b(lui|leurs?|me|te|nous|vous) (ils?|elles?|on)"), "\\2 \\1");
     // à le à les
-    s.replace(QRegularExpression("(\\b)à le "), "\\1au ");
-    s.replace(QRegularExpression("(\\b)à les "), "\\1aux ");
+    s.replace(QRegularExpression("à le "), "au ");
+    s.replace(QRegularExpression("à les "), "aux ");
     // ce est
     s.replace(QRegularExpression("(\\b)ce est(\\b)"), "\\1c'est\\2");
     // je te n'aime pas, je le n'aime pas etc.
