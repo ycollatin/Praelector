@@ -167,7 +167,7 @@ bool MotFlechi::contigu(MotFlechi* mf)
 
 QString MotFlechi::elideFr(QString s)
 {
-    QString vv = "[aeéioôu]";
+    QString vv = "[aeéêioôu]";
     // ta affaire -> ton affaire, sa->son
     s.replace(QRegularExpression("(\\b)[st]a ("+vv+")"), "\\1ton \\2");
     // je->j'  te->t'  me->m' ne->n' se->s'
