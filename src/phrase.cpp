@@ -21,6 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
+//        - motflechi.cpp : elidefr(), contraction à le : exclure "là le".
 //        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
 //        - /ira furor breuis/ : Il semble que la relecture, en cas de choix autre que celui qui
 //          est surligné, se met à surligner plusieurs autres choix.
@@ -32,7 +33,7 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
-//        - réunir toutes les fonctions épithète-noyau en une seule.
+//        - Conseil : supprimer des requêtes
 //        - L'utilisateur peut créer un lien sans que l'appli l'ait proposé, et lui donner le nom qu'il veut.
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - Permettre le chargement d'un texte sans retour à la ligne entre chaque phrase.
