@@ -551,7 +551,6 @@ void Mot::setFlechis(MapLem m)
             for (int ip=0;ip<pl.count();++ip)
             {
                 QString morpho = m[l].at(im).morpho;
-                //char p = m[l].at(im).pos;
                 char p = pl.at(ip).toLatin1();
                 MotFlechi* mf = new MotFlechi(l, p, morpho, this);
                 ajFlechi(mf);
