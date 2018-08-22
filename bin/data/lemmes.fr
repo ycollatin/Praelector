@@ -18294,7 +18294,7 @@ putris:pourri, vermoulu
 pycta:pugiliste
 pygargus:pygargue (sorte d'aigle, espèce de gazelle)
 pygesiacus:relatif au croupion
-Pygmaeus:Pygmée, de Pygmée
+Pygmaeus:de Pygmée, subst. Pygmée
 Pygmalion:Pygmalion (frère de Didon; statuaire)
 Pylades:Pylade
 Pylae2:les Thermopyles, Pylae (îles près de la Troglodytique, ville d'Arcadie)

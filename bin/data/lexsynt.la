@@ -18314,7 +18314,8 @@ putris:
 pycta:
 pygargus:
 pygesiacus:
-Pygmaeus:posn
+!Pygmaeus:posn
+Pygmaeus:
 Pygmalion:
 Pylades:
 Pylae2:
