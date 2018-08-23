@@ -32,6 +32,7 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent, char po)
 {
     _mot = parent;
     _lemme = l;
+    _det.clear();
     QTextStream(&_morpho) << p << " " << m;
     _phrase = parent->phrase();
     _pos = p;
@@ -632,31 +633,33 @@ bool MotFlechi::resout(Requete* req)
     return false;
 } // resout
 
+/*
+    \fn void MotFlechi::setDet(bool f)
+    \brief rotation du déterminant. f = féminin
+ */
 void MotFlechi::setDet(bool f)
 {
     // TODO : redondance avec ::elidefr ?
-    bool zero = _tr == _trNue;
-    bool indef = _tr.startsWith ("un ") || _tr.startsWith ("une ") || _tr.startsWith ("des ");
-	bool initVoc = QString ("aehiouâéêAEHIOUÂÉÊ").contains (_trNue.at (0));
+    bool zero = _det.isEmpty();
+    bool indef = _det == "un " || _det == "une " || _det == "des ";
     bool plur = _morpho.contains("plur");
+
 	// déterminant
     if (_pos == 'n')
 	{
         if (zero) // passer à indef
         {
-            if (plur) _tr.prepend("des ");
-            else if (f) _tr.prepend("une ");
-            else _tr.prepend("un ");
+            if (plur) _det = "des ";
+            else if (f) _det = "une ";
+            else _det = "un ";
         }
 		else if (indef) // passer à def
 		{
-            _tr = _trNue;
-		    if (plur) _tr.prepend("les ");
-            else if (initVoc) _tr.prepend("l'");
-            else if (f) _tr.prepend("la ");
-            else _tr.prepend("le ");
+		    if (plur) _det = "les ";
+            else if (f) _tr = "la ";
+            else _tr = "le ";
 		} // pas de déterminant
-        else _tr = _trNue;
+        else _det.clear();
 	}
 }
 
@@ -805,6 +808,10 @@ QString MotFlechi::trGroupe(Requete* rtest)
             lante.append (trf);
             //inoyau = lante.count()-1;
             ante = false;
+        }
+        else if (el == "det" && !_det.isEmpty())
+        {
+            lante.append(_det);
         }
         else
         {

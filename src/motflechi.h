@@ -35,8 +35,9 @@ class MotFlechi: public QObject
 {
     private:
         Mot*            _mot;
-        int             _itr;
+        QString         _det;
         QString         _eqivPos;
+        int             _itr;
         Lemme*          _lemme;
         QString         _morpho;
         bool            _neg;
@@ -53,7 +54,6 @@ class MotFlechi: public QObject
         MotFlechi(Lemme* l, char p, QString m, Mot* parent, char=0x00);
         ~MotFlechi();
         void            ajTrfl(QString t);
-        QList<Requete*> closes();
         bool            contigu(MotFlechi* mf);
         QString static  elideFr(QString s);
         QString         eqiv();
