@@ -25,16 +25,12 @@
 //        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
 //        - /ira furor breuis/ : Il semble que la relecture, en cas de choix autre que celui qui
 //          est surligné, se met à surligner plusieurs autres choix.
-//        - magnorum montium proceritas : on peut antéposer ante par tr. suiv., mais le déterminant
-//          devrait précéder "grandes".
 //        - risisse est traduit par un indicatif passé composé : confusion de la morpho latine
 //          et de son équivalent calculé pour le français.
 //        - Requêtes doublonnées, pê après un retour arrière.
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
-//        - l'épithète antéposée est entre le déterminant et le nom : envisager l'ajout artificiel
-//          d'une requête-lien sans mot latin, mais avec le mot français comme sub ou comme super ?
 //        - Ajouter un conseil : supprimer toutes les requêtes impossibles
 //        - L'utilisateur peut créer un lien sans que l'appli l'ait proposé, et lui donner le nom qu'il veut.
 //        - Possibilité de changer la place du groupe subordonné courant.

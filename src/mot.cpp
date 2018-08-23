@@ -635,11 +635,11 @@ QString Mot::trGroupe(Requete* rtest)
 QString Mot::trs()
 {
     QStringList ret;
-    if (_flechis.count() == 1) return _flechis.at(0)->tr();
+    //if (_flechis.count() == 1) return _flechis.at(0)->trGroupe();
     for (int i=0;i<_flechis.count();++i)
     {
         MotFlechi* mf = _flechis.at(i);
-        if (!mf->rejete()) ret.append(mf->tr());
+        if (!mf->rejete()) ret.append(mf->trGroupe());
     }
     ret.removeDuplicates();
     return ret.join(" / ");

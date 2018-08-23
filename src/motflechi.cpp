@@ -639,9 +639,8 @@ bool MotFlechi::resout(Requete* req)
  */
 void MotFlechi::setDet(bool f)
 {
-    // TODO : redondance avec ::elidefr ?
     bool zero = _det.isEmpty();
-    bool indef = _det == "un " || _det == "une " || _det == "des ";
+    bool indef = _det == "un" || _det == "une" || _det == "des";
     bool plur = _morpho.contains("plur");
 
 	// déterminant
@@ -649,15 +648,15 @@ void MotFlechi::setDet(bool f)
 	{
         if (zero) // passer à indef
         {
-            if (plur) _det = "des ";
-            else if (f) _det = "une ";
-            else _det = "un ";
+            if (plur) _det = "des";
+            else if (f) _det = "une";
+            else _det = "un";
         }
 		else if (indef) // passer à def
 		{
-		    if (plur) _det = "les ";
-            else if (f) _tr = "la ";
-            else _tr = "le ";
+		    if (plur) _det = "les";
+            else if (f) _det = "la";
+            else _det = "le";
 		} // pas de déterminant
         else _det.clear();
 	}
@@ -791,7 +790,11 @@ QString MotFlechi::trGroupe(Requete* rtest)
     for (int i = 0;i<lgr.count();++i)
     {
         QString el = lgr.at(i);
-        if (el == "-")
+        if (el == "det" && !_det.isEmpty())
+        {
+            lante.append(_det);
+        }
+        else if (el == "-")
         {
             QString trf = _tr;
             if (_neg)
@@ -806,12 +809,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
                 else trf.prepend("ne ");
             }
             lante.append (trf);
-            //inoyau = lante.count()-1;
             ante = false;
-        }
-        else if (el == "det" && !_det.isEmpty())
-        {
-            lante.append(_det);
         }
         else
         {
