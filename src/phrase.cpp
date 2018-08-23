@@ -33,8 +33,9 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
-//        - l'épithète antéposée est entre le déterminant et le nom.
-//        - Conseil : supprimer toutes les requêtes impossibles
+//        - l'épithète antéposée est entre le déterminant et le nom : envisager l'ajout artificiel
+//          d'une requête-lien sans mot latin, mais avec le mot français comme sub ou comme super ?
+//        - Ajouter un conseil : supprimer toutes les requêtes impossibles
 //        - L'utilisateur peut créer un lien sans que l'appli l'ait proposé, et lui donner le nom qu'il veut.
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - Permettre le chargement d'un texte sans retour à la ligne entre chaque phrase.
@@ -970,6 +971,11 @@ QStringList Phrase::lgr(char pos)
     return QStringList() << "-";
 }
 
+/**
+ * \fn QList<Requete*> Phrase::lReqSub(MotFlechi* mf, bool closes)
+ * \brief Liste des requêtes dont mf est sub. Si 'closes', seules
+ *  sont renvoyées les requêtes closes.
+ */
 QList<Requete*> Phrase::lReqSub(MotFlechi* mf, bool closes)
 {
     QList<Requete*> ret;
@@ -982,6 +988,11 @@ QList<Requete*> Phrase::lReqSub(MotFlechi* mf, bool closes)
     return ret;
 }
 
+/**
+ * \fn QList<Requete*> Phrase::lReqSup(MotFlechi* mf, bool closes)
+ * \brief Liste des requêtes dont mf est sup. Si 'closes', seules
+ *  sont renvoyées les requêtes closes.
+ */
 QList<Requete*> Phrase::lReqSup(MotFlechi* mf, bool closes)
 {
     QList<Requete*> ret;
