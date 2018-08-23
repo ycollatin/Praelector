@@ -33,7 +33,8 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
-//        - Conseil : supprimer des requêtes
+//        - l'épithète antéposée est entre le déterminant et le nom.
+//        - Conseil : supprimer toutes les requêtes impossibles
 //        - L'utilisateur peut créer un lien sans que l'appli l'ait proposé, et lui donner le nom qu'il veut.
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - Permettre le chargement d'un texte sans retour à la ligne entre chaque phrase.
