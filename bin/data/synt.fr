@@ -32,6 +32,7 @@ coordInit
 coordV
 
 pos:n,p
+vel
 det
 num
 epithete
