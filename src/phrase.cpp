@@ -31,6 +31,7 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
+//        - Phrase enregistrer : il faudrait que l'auteur de l'enregistrement puisse expliquer son choix.
 //        - Ajouter un conseil : supprimer toutes les requêtes impossibles
 //        - L'utilisateur peut créer un lien sans que l'appli l'ait proposé, et lui donner le nom qu'il veut.
 //        - Possibilité de changer la place du groupe subordonné courant.
