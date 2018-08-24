@@ -67,3 +67,13 @@ lemmeSub:a,ab
 contig:35
 poids:75
 
+id:vel
+aff:adv
+posSup:n
+posSub:d
+lemmeSub:uel
+contig:80
+sens:<
+poids:80
+tr:<sub> <sup>
+
