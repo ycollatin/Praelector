@@ -309,36 +309,6 @@ QString Mot::html()
 		return "mot non reconnu <a href=\"m.a."
 			+ QString::number(_rang)
 			+ "\">ajouter une entrée</a>";
-    MotFlechi* mfu = unique();
-    if (mfu != 0)
-    {
-        QString lin;
-        int i = _flechis.indexOf(mfu);
-        QTextStream fl(&lin);
-        fl << "<span style=\"color:green;font-style:italic\"> "
-           << mfu->morphoHtml() << "</span>";
-        switch(mfu->pos())
-        {
-            case 'n': fl << " <a href=\"m.d."<<i<<"\">det.</a> "; break;
-            case 'w':
-            case 'v': if (mfu->morpho().contains('3'))
-						  fl << " <a href=\"m.s."<<i<<"\">suj.</a> ";
-                      break;
-            default:break;
-        }
-        fl	<< "tr. <span style=\"color:darkred;font-style:italic\">"<<mfu->tr()<<"</span>";
-        if (mfu->nbTr() > 1)
-        {
-            fl << "<br/>";
-            for (int j=0;j<mfu->nbTr();++j)
-                if (j != mfu->itr())
-                {
-                    fl << "<a href=\"m.i."<<i<<"."<<j<<"\">"+mfu->trfl(j)+"</a><br/>";
-                }
-        }
-        fl << "<a href=\"m.e."<<i<<"."<<mfu->tr()<<"\">&eacute;diter</a>";
-        return lin;
-    }
     QStringList ret;
     for (int i=0;i<_flechis.count();++i)
     {
@@ -348,6 +318,7 @@ QString Mot::html()
         if (mf->rejete()) continue;
 		fl << "<span style=\"color:green;font-style:italic\"> "
            << mf->morphoHtml() << "</span>";
+        // déterminants pour les noms, sujets pour les verbes
         switch(mf->pos())
         {
             case 'n': fl << " <a href=\"m.d."<<i<<"\">det.</a> "; break;
@@ -362,11 +333,30 @@ QString Mot::html()
         {
             fl << "<a href=\"m.t."<<i<<"\">traductions</a> ";
         }
+
+
         fl  << "<a href=\"m.e."<<i<<"\">&eacute;diter</a>"
             << "<a href=\"m.c."<<i<<"\">choisir</a> rejeter "
 			<< "<a href=\"m.r.m."<<i<<"\">le lemme</a> "
 			<< "<a href=\"m.r.f."<<i<<"\">la forme</a>";
         ret.append(lin);
+    }
+    if (_lemmeUnique)
+    { 
+        MotFlechi* mf = _flechis.at(0);
+        if (mf->nbTr() > 1)
+        {
+            QString lin;
+            QTextStream fl(&lin);
+            fl << "<br/>";
+            for (int j=0;j<mf->nbTr();++j)
+                if (j != mf->itr())
+                {
+                    fl << "<a href=\"m.i.0."<<j<<"\">"+mf->trfl(j)+"</a><br/>";
+                }
+            ret << lin;
+        }
+        ret << "<a href=\"m.e.0."<<mf->tr()<<"\">&eacute;diter</a>";
     }
     return ret.join("<br/>\n");
 }
@@ -540,6 +530,7 @@ void Mot::rmFlechi(MotFlechi* mf)
 void Mot::setFlechis(MapLem m)
 {
     _morphos = m;
+    _lemmeUnique = m.keys().count() == 1;
     // calcul de tous les fléchis de mc
     for (int il=0;il<m.keys().count();++il)
     {
@@ -645,6 +636,7 @@ QString Mot::trs()
     return ret.join(" / ");
 }
 
+/*
 MotFlechi* Mot::unique()
 {
     QList<MotFlechi*> lmf;
@@ -659,3 +651,4 @@ MotFlechi* Mot::unique()
     }
     return 0;
 }
+*/

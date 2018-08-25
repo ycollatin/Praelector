@@ -38,6 +38,7 @@ class Mot : public QObject
         int                 _dm;
         QList<MotFlechi*>   _flechis;
         int                 _fm;
+        bool                _lemmeUnique;
         bool                _reqLancees;
         Phrase*             _phrase;
         int                 _rang;
@@ -100,7 +101,7 @@ class Mot : public QObject
         MotFlechi*        super();
         QString           trGroupe(Requete* rtest=0);
         QString           trs();
-        MotFlechi*        unique();
+        //MotFlechi*        unique();
 };
 
 #endif
