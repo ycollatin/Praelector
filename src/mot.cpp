@@ -346,15 +346,14 @@ QString Mot::html()
         MotFlechi* mf = _flechis.at(0);
         if (mf->nbTr() > 1)
         {
-            QString lin;
-            QTextStream fl(&lin);
-            fl << "<br/>";
             for (int j=0;j<mf->nbTr();++j)
                 if (j != mf->itr())
                 {
-                    fl << "<a href=\"m.i.0."<<j<<"\">"+mf->trfl(j)+"</a><br/>";
+                    QString lin;
+                    QTextStream fl(&lin);
+                    fl << "<a href=\"m.i.0."<<j<<"\">"+mf->trfl(j)+"</a>";
+                    ret << lin;
                 }
-            ret << lin;
         }
         ret << "<a href=\"m.e.0."<<mf->tr()<<"\">&eacute;diter</a>";
     }
