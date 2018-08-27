@@ -174,7 +174,7 @@ QString MotFlechi::elideFr(QString s)
     // je->j'  te->t'  me->m' ne->n' se->s'
     s.replace(QRegularExpression("(\\b)([jtmns])e ("+vv+")"), "\\1\\2'\\3");
     // le->l'  la->l' 
-    s.replace(QRegularExpression("(\\b)(l[ea]) ("+vv+")"), "\\1\\2'\\3");
+    s.replace(QRegularExpression("(\\b)([ld])[ea] ("+vv+")"), "\\1\\2'\\3");
     // de les->des XXX le regret *de les* quitter
     s.replace(QRegularExpression("(\\b)de les "), "\\1des ");
     // de le->du
