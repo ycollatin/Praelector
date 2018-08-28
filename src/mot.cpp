@@ -96,6 +96,7 @@ void Mot::choixFlechi(MotFlechi* mf)
         {
             f->setRejete(true);
         }
+        else f->setValide(true);
     }
 }
 
@@ -344,6 +345,12 @@ QString Mot::html()
     if (_lemmeUnique)
     { 
         MotFlechi* mf = _flechis.at(0);
+        int numfl = 0;
+        for (int i=0;i<_flechis.count();++i)
+        {
+            if (_flechis.at(i)->valide())
+                numfl = i;
+        }
         if (mf->nbTr() > 1)
         {
             for (int j=0;j<mf->nbTr();++j)
@@ -351,11 +358,12 @@ QString Mot::html()
                 {
                     QString lin;
                     QTextStream fl(&lin);
-                    fl << "<a href=\"m.i.0."<<j<<"\">"+mf->trfl(j)+"</a>";
+                    fl << "<a href=\"m.i."<<numfl<<"."<<j<<"\">"+mf->trfl(j)+"</a>";
                     ret << lin;
                 }
         }
-        ret << "<a href=\"m.e.0."<<mf->tr()<<"\">&eacute;diter</a>";
+        QString lin = "<a href=\"m.e."+QString::number(numfl)+"\">&eacute;diter</a>";
+        ret << lin;
     }
     return ret.join("<br/>\n");
 }
