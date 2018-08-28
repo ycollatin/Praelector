@@ -166,6 +166,13 @@ bool MotFlechi::contigu(MotFlechi* mf)
     return abs(rang() - mf->rang()) == 1;
 }
 
+QString MotFlechi::det()
+{
+    if (!_det.isEmpty())
+        return _det+" ";
+    return "";
+}
+
 QString MotFlechi::elideFr(QString s)
 {
     QString vv = "[aeéêioôu]";
