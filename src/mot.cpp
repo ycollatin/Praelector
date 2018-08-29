@@ -550,7 +550,6 @@ void Mot::rmFlechi(MotFlechi* mf)
 void Mot::setFlechis(MapLem m)
 {
     _morphos = m;
-    //_lemmeUnique = m.keys().count() == 1;
     // calcul de tous les fléchis de mc
     for (int il=0;il<m.keys().count();++il)
     {
