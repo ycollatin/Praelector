@@ -342,15 +342,15 @@ QString Mot::html()
 			<< "<a href=\"m.r.f."<<i<<"\">la forme</a>";
         ret.append(lin);
     }
-    if (_lemmeUnique)
+    if (lemmeUnique())
     { 
-        MotFlechi* mf = _flechis.at(0);
         int numfl = 0;
         for (int i=0;i<_flechis.count();++i)
         {
             if (_flechis.at(i)->valide())
                 numfl = i;
         }
+        MotFlechi* mf = _flechis.at(numfl);
         if (mf->nbTr() > 1)
         {
             for (int j=0;j<mf->nbTr();++j)
@@ -377,6 +377,19 @@ void Mot::lance()
         if (!mf->rejete()) mf->lance();
     }
     _reqLancees = true;
+}
+
+bool Mot::lemmeUnique()
+{
+    // permet, en cas de retour true,
+    // d'afficher les choix de traduction
+    // du seul lemme [valide]
+    for (int i=0;i<_flechis.count();++i)
+    {
+        MotFlechi* mf = _flechis.at(i);
+        if (mf->valide()) return true;
+    }
+    return _morphos.keys().count() == 1;
 }
 
 QList<Requete*> Mot::lReqSupCloses()
@@ -537,7 +550,7 @@ void Mot::rmFlechi(MotFlechi* mf)
 void Mot::setFlechis(MapLem m)
 {
     _morphos = m;
-    _lemmeUnique = m.keys().count() == 1;
+    //_lemmeUnique = m.keys().count() == 1;
     // calcul de tous les fléchis de mc
     for (int il=0;il<m.keys().count();++il)
     {

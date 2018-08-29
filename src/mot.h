@@ -75,6 +75,7 @@ class Mot : public QObject
         QString           gr();
         QString           html();
         void              lance();
+        bool              lemmeUnique();
         QList<Requete*>   lReqSupCloses();
         QList<MotFlechi*> mfLies();
         bool              monomorphe();
