@@ -34,7 +34,7 @@
 //        - Trouver une règle pour tum ... cum.
 //        - Lecture enregistrée : il faudrait que l'auteur de l'enregistrement puisse expliquer ses choix.
 //        - Ajouter un conseil : supprimer toutes les requêtes impossibles
-//        - L'utilisateur peut créer un lien sans que l'appli l'ait proposé, et lui donner le nom qu'il veut.
+//        - L'utilisateur devrait pouvoir créer un lien sans que l'appli l'ait proposé, et lui donner le nom qu'il veut.
 //        - Possibilité de changer la place du groupe subordonné courant.
 //        - Permettre le chargement d'un texte sans retour à la ligne entre chaque phrase.
 //        - vérifier la mise à jour des requêtes proposées après validation
