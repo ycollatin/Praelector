@@ -508,7 +508,8 @@ void MainWindow::traceMf(QString t)
 {
     QString ultc = trace.at(trace.count()-1);
     // remplacer le 3ème champ par la saisie
-    ultc.replace(QRegExp("\\.[^.]*$"), "."+t);
+    if (ultc.at(ultc.count()-1).isDigit()) ultc.append("."+t);
+    else ultc.replace(QRegExp("\\.[^.]*$"), "."+t);
     trace.removeLast();
     trace.append(ultc);
 }
