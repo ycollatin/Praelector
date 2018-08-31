@@ -182,6 +182,7 @@ void MainWindow::calcul (QUrl url)
     }
 	else if (cmd == "-corpus" || cmd == "-enr")
 	{
+        // supprimer le préfixe '-'
         cmd.remove(0,1);
 		// charger la liste des fichiers du rép.
         QString page = catalogue(cmd);
@@ -243,6 +244,8 @@ void MainWindow::calcul (QUrl url)
 
 QString MainWindow::catalogue(QString rep)
 {
+        QString titre = "Choisir une phrase";
+        if (rep == "enr")  titre.append(" enregistrée");
         rep = QString("%1/%2").arg(qApp->applicationDirPath()).arg(rep);
         QDir repertoire = QDir(rep);
     	QStringList ls = repertoire.entryList(QDir::Files);
@@ -258,6 +261,7 @@ QString MainWindow::catalogue(QString rep)
             << Chaines::titrePraelector
             << Chaines::menu
             << "<hr/>"
+            << titre << "<br/>"
             << ls.join("<br/>");
         return page;
 }
