@@ -6960,7 +6960,7 @@ divisio:partage, répartition, distribution
 divisor:celui qui sépare, celui qui partage, distributeur d'argent [au nom d'un candidat], diviseur [math.]
 divisus:régulier, planifié
 divitatio:enrichissement
-divitiae:biens, richesses, fortune.
+divitiae:biens, richesses, fortune
 Divodurum:Divodurum (ville de Gaule Belgique, auj. Metz)
 divorse:en sens opposés, en s'écartant
 divortium:divorce
