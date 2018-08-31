@@ -31,6 +31,7 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
+//        - remettre à l'indicatif ou au subj. la tr. du verbe de la proposition infinitive
 //        - Trouver une règle pour tum ... cum.
 //        - Lecture enregistrée : il faudrait que l'auteur de l'enregistrement puisse expliquer ses choix.
 //        - Ajouter un conseil : supprimer toutes les requêtes impossibles
