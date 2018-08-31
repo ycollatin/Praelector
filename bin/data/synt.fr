@@ -58,6 +58,7 @@ regimeAbl
 regimeAcc
 
 pos:v,w
+inter
 objetRel
 sujet
 sujetPart

@@ -577,7 +577,7 @@ morphoSup:indicatif
 filtre:tete
 sens:<
 poids:70
-tr:<sup> <sub>
+tr:<sub> <sup>
 
 id:objet
 doc:nom objet d'un verbe transitif
