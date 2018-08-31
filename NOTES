@@ -2,7 +2,15 @@ PRAELECTOR -- notes de développement
    mercredi 26 août 2015 - lundi 14 septembre 2015 
    repris le 15 mars 2018, avec le moteur de C11
 
-DONNÉES PERSONNELLES : lexique, traductions, règles
+ARCHITECTURE
+
+    Développer séparément :
+    - l'analyse morpho
+    - l'analyse syntaxique
+    - la syntaxe française
+    - l'interface utilisateur
+
+DONNÉES UTILISATEUR : lexique, traductions, règles
 
     Pour lemmes.la :
     tigris=tī̆grĭs|miles|tī̆grĭd||is et idis, m.|18

@@ -1,4 +1,11 @@
 !               handicap.la
+!
+!  De nombreuses formes latines sont ambiguës parce qu'elles
+!  peuvent être générées par plusieurs lemmes. il y a souvent une forte
+!  différence de probabilité entre ces lemmes, jusqu'à rendre quasi
+!  impossible certaines lemmatisation. Le fichier handicap.la permet
+!  de chiffrer le handicap donné à ces lemmatisations.
+!
 !   format :
 ! <forme>:<lemme>:<handicap>     la forme <forme>, issue du lemme <lemme> reçoit le handicap <handicap>
 ! <forme>:-<lemme>:<handicap>     la forme <forme>, non issue du lemme <lemme> reçoit le handicap <handicap>
