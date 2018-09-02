@@ -91,6 +91,7 @@ lemmeSub:-nec,-non,-nec,-neque,-et,-quam
 filtre:multi
 poids:60
 tr:<sup> <sub>
+tr:<sub> <sup>
 
 id:antecedent
 doc:l'antécédent précède le relatif, qui s'accorde avec lui en genre et nombre
@@ -609,6 +610,7 @@ posSub:r
 filtre:multi
 poids:75
 tr:<sup> <sub>
+tr:<sub> <sup>
 
 id:prepn
 aff:prep

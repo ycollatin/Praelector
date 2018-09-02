@@ -60,6 +60,8 @@ regimeAcc
 pos:v,w
 inter
 objetRel
+adv
+prep
 sujet
 sujetPart
 sujetRel
