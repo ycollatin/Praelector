@@ -584,7 +584,8 @@ id:objet
 doc:nom objet d'un verbe transitif
 posSub:n,p
 morphoSub:accusatif
-lemmeSub:-qui2,-quis
+!lemmeSub:-qui2,-quis
+lemmeSub:-qui2
 posSup:v
 morphoSup:actif
 poids:75
