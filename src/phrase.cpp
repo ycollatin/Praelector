@@ -770,6 +770,12 @@ bool Phrase::estFeminin(QString n)
 	return _feminins.contains(n.toLower());
 }
 
+/**
+ * \fn bool Phrase::estVbRelative(MotFlechi* mf)
+ * \brief permet de savoir si mf est le verbe d'une relative
+ *  dont le relatif a un antécédent. Permet de ne pas
+ *  déclarer mf comme sommet.
+ */
 bool Phrase::estVbRelative(MotFlechi* mf)
 {
     bool antec = false;
@@ -786,12 +792,6 @@ bool Phrase::estVbRelative(MotFlechi* mf)
             antec = antec || req->id() == "antecedent";
         }
         if (antec && qui2) return true;
-
-        /*
-            && req->valide() && req->id() != "antecedent"
-            && req->sub()->lemme()->cle() == "qui2")
-            return true;
-        */
     }
     return false;
 }
