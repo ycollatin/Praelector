@@ -845,8 +845,14 @@ QString MotFlechi::trGroupe(Requete* rtest)
                 }
                 else
                 {
-                    if (ante && r->subSup()) lante.append(r->trSub());
-                    else if (!ante && !r->subSup()) lpost.append(r->trSub());
+                    if (ante && r->subSup())
+                    {
+                        lante.append(r->trSub());
+                    }
+                    else if (!ante && !r->subSup())
+                    {
+                        lpost.append(r->trSub());
+                    }
                 }
             }
         }

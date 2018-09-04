@@ -772,13 +772,26 @@ bool Phrase::estFeminin(QString n)
 
 bool Phrase::estVbRelative(MotFlechi* mf)
 {
+    bool antec = false;
+    bool qui2 = false;
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if (req->super() == mf
+        if (req->super() == mf && req->valide())
+        {
+            qui2 = qui2 || req->sub()->lemme()->cle() == "qui2";
+        }
+        if (req->sub() == mf && req->valide())
+        {
+            antec = antec || req->id() == "antecedent";
+        }
+        if (antec && qui2) return true;
+
+        /*
             && req->valide() && req->id() != "antecedent"
             && req->sub()->lemme()->cle() == "qui2")
             return true;
+        */
     }
     return false;
 }
@@ -1414,6 +1427,7 @@ QString Phrase::tr(bool color)
 		if (m->estSommet())
         {
             QString g = m->trGroupe();
+            // si la coloration est demandée
             if (i == _imot && color)
             {
                 //                                        moccasin
