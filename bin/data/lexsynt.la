@@ -26,7 +26,7 @@
 ! - abl : le verbe peut avoir comme sub un ablatif seul
 ! - attr : le verbe peut avoir un attribut du sujet
 ! - attro : le verbe peut avoir comme sub un attribut de l'objet
-! - dat : le verbe peut avoir comme sub un datif seul
+! - datif : le verbe peut avoir comme sub un datif seul
 ! - datp : le verbe au passif peut avoir comme sub un datif seul
 ! - dblacc : le verbe peut avoir deux accusatifs comme subs (double accusatif)
 ! - det : le pronom peut servir de déterminant
@@ -13898,7 +13898,7 @@ mons:
 monstrabilis:
 monstrator:
 monstrifer:
-monstro:
+monstro:datif
 monstrosus:
 monstrum:
 monstruosus:
