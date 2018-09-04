@@ -253,6 +253,7 @@ QString morphoLatFr(QString lat)
     lat.replace("impératif futur", "impératif présent");
     lat.replace("infinitif parfait", "indicatif passé_composé 3ème singulier"); 
     lat.replace("impératif futur", "impératif présent");
+    lat.replace("gérondif génitif", "infinitif présent actif");
     // uideor - paraître. pê pas le bon endroit
     //if (c == "paraître") lat.replace("passif", "actif");
     return lat;
