@@ -19052,7 +19052,8 @@ respectus:pensée, considération
 respergo:éclabousser
 respicio:regarder derrière soi
 respiratio:respiration
-respiro:exhaler, respirer, reprendre haleine, se reposer
+!respiro:exhaler, respirer, reprendre haleine, se reposer
+respiro:expirer, respirer, se reposer
 resplendeo:resplendir, reluire
 respondeo:répondre
 responsio:réponse
