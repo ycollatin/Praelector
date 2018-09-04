@@ -19618,7 +19618,7 @@ Sapiens3:le Sage (surnom de plusieurs jurisconsultes).
 sapiens:sage
 sapienter:sagement
 sapientia:sagesse
-sapio:avoir du goût, de l'intelligence
+sapio:avoir du goût, avoir de l'intelligence; connaître
 sapor:goût, saveur, odeur, parfum
 Sapphicus:de Sapho
 Sappho:Sapho (ou Sappho, poétesse de Lesbos)
