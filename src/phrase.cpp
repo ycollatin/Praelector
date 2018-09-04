@@ -778,20 +778,14 @@ bool Phrase::estFeminin(QString n)
  */
 bool Phrase::estVbRelative(MotFlechi* mf)
 {
-    bool antec = false;
-    bool qui2 = false;
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if (req->super() == mf && req->valide())
-        {
-            qui2 = qui2 || req->sub()->lemme()->cle() == "qui2";
-        }
-        if (req->sub() == mf && req->valide())
-        {
-            antec = antec || req->id() == "antecedent";
-        }
-        if (antec && qui2) return true;
+        if ((req->super() == mf)
+            && req->valide() 
+            && (req->sub()->lemme()->cle() == "qui2")
+            && (req->sub()->estSubParId("antecedent")))
+            return true;
     }
     return false;
 }
