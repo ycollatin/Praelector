@@ -61,6 +61,7 @@ pos:v,w
 inter
 objetRel
 adv
+locatif
 prep
 sujet
 sujetPart
@@ -93,6 +94,7 @@ abl
 datif
 datifPart
 prep
+locatif
 propInf
 infObjet
 conjSub

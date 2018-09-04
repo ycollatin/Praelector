@@ -482,6 +482,7 @@ morphoSub:gérondif génitif
 lsSup:gergen
 poids:87
 tr:<sup> de <sub>
+tr:<sup> pour <sub>
 
 id:gerondIn
 doc:id + gérondif à l'accusatif pour la simultanéité
@@ -523,11 +524,12 @@ doc:Le locatif est utilisé pour le question ubi
 filtre:loc
 posSup:v,w
 posSub:n
-morphoSub:genitif
+morphoSub:locatif
 lsSub:loc
 x:attrS,genitif,sujet
 poids:88
 tr:<sup> à <sub>
+tr:à <sub> <sup>
 
 id:negation
 doc:l'adv. 'non' se place habituellement avant le verbe
