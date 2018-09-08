@@ -50,16 +50,19 @@ class MainWindow : public QMainWindow
 
 	private:
         QString            alphabet;
+        QString            alpha2;
         QStringList        clesL;
         bool               clavier;
         QFont              font;
+        QString           _fCorpus;
         QFile              fTrace;
         int                ienr;
-        int                iphr;
+        //int                iphr;
         QStringList        lenr;
         QStringList        lurl;
         int               _nbphr;
 		Phrase*            phrase;
+        QStringList       _phrases;
         QString            prefixe;
         QString            texte;
         QString            texteT; // texte avec reccourcis

@@ -138,6 +138,7 @@ namespace Chaines {
 
 	const QString affichage = QString::fromUtf8
         ("%1<hr/>%2<hr/>"
+         "<a href=\"-pprec\">phr. précédente</a>&nbsp;<a href=\"-psuiv\">suivante</a><br/>"
 		 "<a href=\"-reinit\">réinitialiser</a>&nbsp;"
          "mot <a href=\"-prec\">précédent</a> <a href=\"-suiv\">suivant</a>&nbsp;"
          "<a href=\"-trace\">enregistrer</a>"

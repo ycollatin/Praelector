@@ -58,6 +58,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     lurl = QStringList()
     << "-prec"
     << "-suiv"
+    << "-pprec"
+    << "-psuiv"
     << "i."
     << "m.r.m."
     << "m.r.f."
@@ -71,7 +73,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     << "l.t.";
 
     // construire la liste des clés alpha
-    alphabet = "cen/+-aqrpsbdfghijklmotuv";
+    alphabet = "cen/+-aqhlrpsbdfgijkmotuv";
+    alpha2 = "abcdefghijklmnopqrstuvwxyz";
     /*
        c choisir une phrase
        e " enregistrée
@@ -79,6 +82,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
        / clavier
        a annuler
        q quitter
+       j phrase précédente
+       l phrase suivante
        r réinitialiser
        p mot précédent
        s mot suivant
@@ -89,9 +94,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     for (int i=0;i<wxyz.length();++i)
     {
         QString cle(wxyz.at(i));
-        for (int j=0;j<alphabet.count();++j)
+        for (int j=0;j<alpha2.count();++j)
         {
-            clesL.append(cle+alphabet.at(j));
+            clesL.append(cle+alpha2.at(j));
         }
         for (int j=0;j<wxyz.count();++j)
         {
@@ -183,6 +188,8 @@ void MainWindow::calcul (QUrl url)
 	{
         // supprimer le préfixe '-'
         cmd.remove(0,1);
+        // nom du fichier de corpus
+        _fCorpus = cmd;
 		// charger la liste des fichiers du rép.
         QString page = catalogue(cmd);
         parle(page);
@@ -206,11 +213,31 @@ void MainWindow::calcul (QUrl url)
     {
         textBrowser->zoomOut();
     }
+    else if (cmd=="-pprec")
+    {
+        int np = phrase->num().toInt();
+        --np;
+        if (np > 2)
+        {
+            cmd = _phrases.at(np-1);
+            calcul(cmd);
+        }
+    }
+    else if (cmd=="-psuiv")
+    {
+        int np = phrase->num().toInt();
+        ++np;
+        if (np <= _phrases.count())
+        {
+            cmd = _phrases.at(np-1);
+            calcul(cmd);
+        }
+    }
 	else
 	{
-        // nouvelle phrase : réinitaliser la trace
         if (cmd.startsWith("-phr"))
         {
+            // nouvelle phrase : réinitaliser la trace
             trace.clear();
             // séparer éventuellement la phrase de l'enregistrement maître
             relect = cmd.contains("<!--,");
@@ -282,12 +309,12 @@ void MainWindow::clav()
 
 QString MainWindow::choixPhr(QString c)
 {
-	//c.remove (0,2);
 	QFile f(c);
 	f.open (QIODevice::ReadOnly|QIODevice::Text);
 	QTextStream fluxD (&f);
 	QStringList lp;
 	int i=1;
+    _phrases.clear();
 	while (!fluxD.atEnd ())
 	{
 		QString lin = fluxD.readLine().simplified ();
@@ -307,6 +334,10 @@ QString MainWindow::choixPhr(QString c)
             QString url = QUrl::toPercentEncoding(lin);
             QTextStream fl(&p);
             fl << "<a href=\"-phr"<<i<<"_"<<url<<"\">"<<i<<"-</a> "<< aff;
+            qDebug()<<p;
+            QString phr;
+            QTextStream(&phr)<<"-phr"<<i<<"_"<<url;
+            _phrases.append(phr);
             ++i;
         }
 		lp.append (p);

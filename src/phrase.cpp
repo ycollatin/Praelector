@@ -43,7 +43,6 @@
 //          de l'une d'entre elles.
 //        - l'application du champ tr des règles est complexe et mal contrôlé.
 //        - Possibilité de forcer un lien syntaxique entre deux mots ?
-//        - Lien phrase suivante.
 //        - faire disparaître les hyperliens inutiles.
 //        - Liens à ajouter :
 //          * voir la traduction enregistrée
