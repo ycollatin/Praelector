@@ -147,7 +147,9 @@ void Lemmat::ajRadicaux(Lemme *l)
     {
         QList<Radical *> lr = l->radical(i);
         foreach (Radical *r, lr)
+        {
             _radicaux.insert(Ch::deramise(r->gr()), r);
+        }
     }
     // pour chaque radical du modèle
     // test avec ăvellāna=ăvēllāna,ăbēllāna|uita|||ae, f.|2
@@ -556,6 +558,7 @@ QStringList Lemmat::lignesFichier(QString nf)
     QFile f(nf);
     f.open(QFile::ReadOnly);
     QTextStream flux(&f);
+    flux.setCodec("UTF-8");
     QStringList retour;
     while (!flux.atEnd())
     {
@@ -625,8 +628,11 @@ void Lemmat::lisLexicoSyntaxe()
         if (eclats.count() > 1)
         {
             Lemme *l = lemme(eclats.at(0));
-            QStringList lsynt = eclats.at(1).split(',',QString::SkipEmptyParts);
-            l->setLexSynt(lsynt);
+            if (l != 0)
+            {
+                QStringList lsynt = eclats.at(1).split(',',QString::SkipEmptyParts);
+                l->setLexSynt(lsynt);
+            }
         }
     }
 }
