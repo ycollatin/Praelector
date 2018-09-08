@@ -20,7 +20,6 @@
 #include <QSettings>
 
 #include "mainwindow.h"
-#include "phrase.h"
 
 Editeur::Editeur(QWidget *parent) : QTextBrowser(parent)
 {
@@ -188,11 +187,11 @@ void MainWindow::calcul (QUrl url)
         QString page = catalogue(cmd);
         parle(page);
 	}
-	else if (cmd.startsWith("@"))
+	else if (cmd.startsWith("f."))
 	{
         lenr.clear();
-        parle(choixPhr(cmd));
-        QString nf = cmd.remove(0,1);
+        QString nf = cmd.remove(0,2);
+        parle(choixPhr(nf));
         setFTrace(nf);
 	}
     else if (cmd.startsWith("-trace"))
@@ -253,7 +252,7 @@ QString MainWindow::catalogue(QString rep)
 		{
 			QString nf = ls.at(i);
 			QString lin;
-            QTextStream(&lin) << "<a href=\"@"<<rep<<"/"<<nf <<"\">"<<nf<<"</a>";
+            QTextStream(&lin) << "<a href=\"f."<<rep<<"/"<<nf <<"\">"<<nf<<"</a>";
 			ls[i] = lin;
 		}
         QString page;
@@ -283,7 +282,7 @@ void MainWindow::clav()
 
 QString MainWindow::choixPhr(QString c)
 {
-	c.remove (0,1);
+	//c.remove (0,2);
 	QFile f(c);
 	f.open (QIODevice::ReadOnly|QIODevice::Text);
 	QTextStream fluxD (&f);
