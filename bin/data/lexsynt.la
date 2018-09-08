@@ -19,9 +19,9 @@
 !Foundation, Inc., 59 Temple Place, Suite 3inv, Boston, MA  02111-1307  USA
 !© Yves Ouvrard, 2011 - 2018
 !
-!  Format 
+!  Format
 ! lemme:propriété1,propriété2,… propriétén,…
-! 
+!
 !  Propriétés :
 ! - abl : le verbe peut avoir comme sub un ablatif seul
 ! - attr : le verbe peut avoir un attribut du sujet
