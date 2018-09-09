@@ -24,9 +24,13 @@ DONNÉES UTILISATEUR : lexique, traductions, règles
     liste des traductions. Si plusieurs pos, faire précéder de l'abr. du pos les 
     traductions de ce pos.
 
-TRGROUPE
+TRGROUPE ET SYNTAXE FRANÇAISE
+
     Il y a une contradiction dans la chaîne de traduction des règles
     (id tr) et les directives du fichier bin/data/synt.fr.
+
+    Modifier synt.la pour ranger les éléments d'un groupe non seulement selon 
+    leur fonction, mais aussi leur POS, ou leur lemme.
 
 LIENS VALIDABLES
     sans que le fléchi de chaque noeud soit encore établi.
