@@ -793,6 +793,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
     QStringList lpost;
     bool ante = true;
     QStringList lgr = _phrase->lgr(_pos);
+    QString rel;
     //int inoyau = -1;
     for (int i = 0;i<lgr.count();++i)
     {
@@ -801,6 +802,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
         {
             lante.append(_det);
         }
+        // relatif en tête
         else if (el == "-")
         {
             QString trf = _tr;
@@ -824,7 +826,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
             for (int j=0;j<lr.count();++j)
             { 
                 Requete* r = lr.at(j);
-                // relatifs
+                // lien antécédent 
                 if (el=="antecedent" || el=="isqui")
                 {
                     int nbsup = _phrase->nbSuper(r->sub());
@@ -839,13 +841,22 @@ QString MotFlechi::trGroupe(Requete* rtest)
                     }
                     else
                     {
-                        if (ante) lante.append(r->trSub());
+                        if (ante)
+                        {
+                            lante.append(r->trSub());
+                        }
                         else lpost.append(r->trSub());
                     }
                 }
                 else
                 {
-                    if (ante && r->subSup())
+                    // le relatif doit être en tête de groupe.
+                    // On le met en réserve
+                    if (r->sub()->lemme()->cle() == "qui2")
+                    {
+                        rel = r->sub()->tr();
+                    }
+                    else if (ante && r->subSup())
                     {
                         lante.append(r->trSub());
                     }
@@ -857,6 +868,8 @@ QString MotFlechi::trGroupe(Requete* rtest)
             }
         }
     }
+    // restitution du relatif
+    lante.prepend(rel);
     QStringList liste = lante + lpost;
     return elideFr(liste.join(" ").simplified());
 }
