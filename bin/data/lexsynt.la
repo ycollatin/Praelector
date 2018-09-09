@@ -11562,7 +11562,7 @@ inutiliter:
 Inuus:
 inuado:
 inualesco:
-inualidus:
+inualidus:posn
 inuecticius:
 inuectio:
 inueho:
@@ -21393,7 +21393,7 @@ Sulpicius:
 sulpureus:
 sultis:
 sumen:
-sum:attr,gen
+sum:attr,gen,datif
 summa:
 summano:
 Summanus:
