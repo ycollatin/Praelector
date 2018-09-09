@@ -334,7 +334,6 @@ QString MainWindow::choixPhr(QString c)
             QString url = QUrl::toPercentEncoding(lin);
             QTextStream fl(&p);
             fl << "<a href=\"-phr"<<i<<"_"<<url<<"\">"<<i<<"-</a> "<< aff;
-            qDebug()<<p;
             QString phr;
             QTextStream(&phr)<<"-phr"<<i<<"_"<<url;
             _phrases.append(phr);
