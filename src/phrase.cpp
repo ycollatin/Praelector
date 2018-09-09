@@ -21,7 +21,6 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
-//        - sup + datif : pas de lien.
 //        - motflechi.cpp : elidefr(), contraction à le : exclure "là le".
 //        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
 //        - /ira furor breuis/ : Il semble que la relecture, en cas de choix autre que celui qui
@@ -32,7 +31,6 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
-//        - "Nihil tam firmum est" ex "quidtu.txt" : voir la place du relatif au datif.
 //        - Revoir l'algo de mise à la forme négative.
 //        - remettre à l'indicatif ou au subj. la tr. du verbe de la proposition infinitive
 //        - Trouver une règle pour tum ... cum.
