@@ -26,21 +26,26 @@ de permettre à l'élève de voir dans les détails comment un maître lit,
 et d'essayer de l'imiter.
 
 ### Utilisation
-Toute l'interface de Praelector est basée sur les hyperliens.
-Pour ceux qui le clavier plutôt que la souris, la touche "/" fait
-correspondre une touche avec chaque hyperlien de la page affichée.
+L'interface de Praelector est basée sur les hyperliens, elle fonctionne
+comme une page web. Pour ceux qui préfèrent le clavier à la souris, la
+touche '/' affiche un raccourci clavier devant chaque hyperlien.
 
-On avance dans la phrase grâce à un hyperlien,
-mais on peut aussi reculer. À chaque mot, Praelector
-propose, toujours sous forme d'hyperliens
+On peut ainsi avancer ou reculer d'un mot, ou même sauter directement à un
+mot plus éloigné. Les déplacement les plus courants sont le passage au mot
+suivant, le recul à un mot déjà lu pour affiner sa traduction, et le retour
+au dernier mot lu. À chaque mot sont proposées :
 - une liste des lemmatisations du mot, et un choix de traductions ;
 - une liste de liens syntaxiques ordonnés du
   plus au moins probable, et l'utilisateur sélectionne le lien qui lui
   convient le plus. La traduction globale de la phrase se construit en
   même temps.
-- Si un maître a déjà lu la phrase dans Praelector, toutes ses actions
-  ont été enregistrées dans un fichier. L'élève qui charge à son tour
-  ce fichier dans Praelector se retrouve devant une phrase à traduire,
-  et la lit exactement comme si elle venait d'un fichier texte, à ceci
-  près qu'il peut comparer ses choix à ceux qu'a faits avant lui le maître.
+
+Après avoir lu une phrase dans Praelector, on peut enregistrer son parcours
+dans un fichier. L'élève qui charge à son tour ce fichier dans Praelector
+se retrouve devant une phrase à traduire, mais tous les choix du maître sont
+surlignés. Inversement, le maître peut relire le parcours de l'élève et
+identifier ce qu'il a compris et ce qui lui manque.
+
+Praelector est encore en phase de développement, et cette version est une
+version de test. Vous êtes invité à donner votre avis à l'auteur.
 
