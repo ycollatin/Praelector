@@ -6,6 +6,8 @@ DEPENDPATH += $$PWD/src
 INCLUDEPATH += $$PWD/src 
 
 QT += widgets
+QMAKE_CXXFLAGS += -Wall -Wextra -pedantic -fstack-protector-strong
+QMAKE_CPPFLAGS += -U_FORTIFY_SOURCE -D_FORTIFY_SOURCE=2
 
 CONFIG += release_binary
 #CONFIG += debug
