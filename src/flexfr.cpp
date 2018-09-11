@@ -2671,7 +2671,7 @@ QString Flechisseur::pluriel(QString l, QString n)
                          "madame",   "mademoiselle", "monsieur"};
     QString irregp[6] = {"bonshommes", "grands-mères",   "grands-pères",
                          "mesdames",   "mesdemoiselles", "messieurs"};
-    int i = index_t(irregs, l, 6);
+    int i = index_t(irregs, l, 5);
     if (i > -1) return irregp[i];
     QString result;
     Nom *nom = nom_m(l);
