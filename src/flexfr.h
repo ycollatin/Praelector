@@ -24,11 +24,30 @@ Pour tout contact avec l'auteur : yves.ouvrard@collatinus.org
 #include <QString>
 #include <QStringList>
 
+class Nom;
+
+class Flechisseur : public QObject
+{
+
+    Q_OBJECT
+
+    protected:
+        int     index_t(QString t[], QString s, int limite);
+        Nom*    nom_m(QString n);
+
+    public:
+        Flechisseur(QObject *parent = 0);
+        QString accorde(QString adj, QString m);
+        QString conjnat(QString inf, QString morpho);
+        QString conjugue(QString inf, int P, int T, int M, int V, bool Pr, int g, int n);
+        QString pluriel(QString l, QString n);
+};
+
 /**
 Verbe est la classe de base. J'ai pris le premier groupe comme référence,
  puisqu'il représente la majorité des verbes}
  */
-class Verbe
+class Verbe: public Flechisseur
 {
    protected:
     QString inf;
@@ -791,25 +810,26 @@ class NomAUEU : public Nom
     virtual QString pluriel();
 };
 
-Nom* nom_m(QString n);
+//Nom* nom_m(QString n);
 
 // ------------------------------------------------------------
 //  Flexion des adjectifs
 // ------------------------------------------------------------
 
-class Adjectif
+class Adjectif : public Flechisseur
 {
-   protected:
-    QString graphie;
-    QString modele;
 
-   public:
-    Adjectif(QString a);
-    virtual ~Adjectif();
-    virtual QString getModele();
-    virtual QString feminin();
-    virtual QString pluriel(bool fem);
-    virtual QString accorde(int g, int n, int d=1);
+    protected:
+        QString graphie;
+        QString modele;
+
+    public:
+        Adjectif(QString a);
+        virtual ~Adjectif();
+        virtual QString getModele();
+        virtual QString feminin();
+        virtual QString pluriel(bool fem);
+        virtual QString accorde(int g, int n, int d=1);
 };
 
 // irrégularits :
@@ -932,15 +952,4 @@ class Pronom
     QString accorde(QString p, QString m);
 };
 
-class Flechisseur : public QObject
-{
-    Q_OBJECT
-
-    public:
-        Flechisseur(QObject *parent = 0);
-        QString accorde(QString adj, QString m);
-        QString conjnat(QString inf, QString morpho);
-        QString conjugue(QString inf, int P, int T, int M, int V, bool Pr, int g, int n);
-        QString pluriel(QString l, QString n);
-};
 #endif

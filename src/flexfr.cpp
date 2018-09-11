@@ -230,6 +230,7 @@ QString otedernieres(QString s, int n)
   Renvoie le numéro d'item de la chaîne s dans
   le tableau t de taille limite.
 */
+/*
 int index_t(QString t[], QString s, int limite)
 {
     for (int i = 0; i <= limite; i++)
@@ -239,6 +240,7 @@ int index_t(QString t[], QString s, int limite)
         }
     return -1;
 }
+*/
 
 bool IsLast(QString chaine, QString mot)
 {
@@ -2346,6 +2348,7 @@ QString NomAUEU::pluriel()
     return sing + "x";
 }
 
+/*
 Nom *nom_m(QString n)
 {
     QString als[11] = {"bal", "cal", "carnaval", "cérémonial", "chacal",
@@ -2377,6 +2380,7 @@ Nom *nom_m(QString n)
         nom = new Nom(n);
     return nom;
 }
+*/
 
 // ------------------------------------------------------------
 //  Flexion des adjectifs
@@ -2667,6 +2671,48 @@ QString Flechisseur::conjnat(QString inf, QString morpho)
             + " " + inf.section(" ",2);
     }
     return conjugue(inf, p, t, m, v, (p != 3 && p != 6), g, n);
+}
+
+int Flechisseur::index_t(QString t[], QString s, int limite)
+{
+    for (int i = 0; i <= limite; i++)
+        if (t[i] == s)
+        {
+            return i;
+        }
+    return -1;
+}
+
+Nom* Flechisseur::nom_m(QString n)
+{
+    QString als[11] = {"bal", "cal", "carnaval", "cérémonial", "chacal",
+                       "festival", "pal", "récital", "régal", "santal"};
+    QString ail[7] = {"bail", "corail", "émail", "soupirail",
+                      "travail", "vantail", "vitrail"};
+    QString aueus[6] = {"landau", "sarrau", "bleu",
+                        "pneu",   "émeu",   "lieu (poisson)"};
+    QString oux[7] = {"bijou", "caillou", "chou", "genou",
+                      "hibou", "joujou",  "pou"};
+    QString inex = "pas de plurie";
+    QString result = "nom_m Échec de la recherche";
+    // QString nom = Nom(n);
+    Nom *nom = NULL;
+    QChar d = derniere(n);
+    if (QString("sxz").contains(d))
+        nom = new NomSXZ(n);
+    else if (deuxder(n) == "al" && index_t(als, n, 9) < 0)
+        nom = new NomAL(n);
+    else if (n == "bétail")
+        result = inex;
+    else if (dernieres(n, 3) == "ail" && index_t(ail, n, 6) > -1)
+        nom = new NomAIL(n);
+    else if ((IsLast("eu", n) || IsLast("au", n)) && index_t(aueus, n, 5) < 0)
+        nom = new NomAUEU(n);
+    else if (index_t(oux, n, 6) > -1)
+        nom = new NomAUEU(n);  // result = n + "x";
+    else
+        nom = new Nom(n);
+    return nom;
 }
 
 QString Flechisseur::pluriel(QString l, QString n)
