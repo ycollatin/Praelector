@@ -23,6 +23,7 @@
 #include <QString>
 
 #include <dialogue.h>
+#include <flexfr.h>
 #include <handicap.h>
 #include <motflechi.h>
 #include <regle.h>
@@ -40,6 +41,7 @@ class Phrase: public QObject
 	    QString                    _chAdditions;
         QStringList                _feminins;
         QString                    _gr;
+        Flechisseur*               _flechisseur;
         QMap<QString,Handicap*>    _handicaps;
         int                        _imot;
         Lemmat*                    _lemmatiseur;
@@ -77,6 +79,7 @@ class Phrase: public QObject
         void              ecoute (QString m);
         bool              estVbRelative(MotFlechi* mf);
         bool              filtre(Requete* req);
+        Flechisseur*      flechisseur();
         QString           gauche(Mot *m);
         QString           gr();
         QString           grLu();

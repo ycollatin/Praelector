@@ -95,6 +95,7 @@
 Phrase::Phrase(QString t)
 {
     _lemmatiseur = new Lemmat(this);
+    _flechisseur = new Flechisseur(this);
     initFeminins();
     initLgr();
     peupleRegles("regles.la");
@@ -787,6 +788,11 @@ bool Phrase::estVbRelative(MotFlechi* mf)
             return true;
     }
     return false;
+}
+
+Flechisseur* Phrase::flechisseur()
+{
+    return _flechisseur;
 }
 
 void Phrase::initFeminins()

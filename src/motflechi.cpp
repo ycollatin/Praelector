@@ -102,10 +102,10 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent, char po)
                     delete pr;
                 }
                 break;
-            case 'a': fl = accorde(c, _morpho); break;
+            case 'a': fl = _phrase->flechisseur()->accorde(c, _morpho); break;
             case 'n':
                       {
-                          if (_morpho.contains("plur")) fl = pluriel(c, _morpho);
+                          if (_morpho.contains("plur")) fl = _phrase->flechisseur()->pluriel(c, _morpho);
                           else fl = c;
                           break;
                       }
@@ -132,7 +132,7 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent, char po)
                               fl = "on vient";
                               break;
                           }
-                          fl = conjnat(c, morphoLatFr(_morpho));
+                          fl = _phrase->flechisseur()->conjnat(c, morphoLatFr(_morpho));
                           break;
                       }
             default: fl = c;

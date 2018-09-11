@@ -19,6 +19,7 @@ Pour tout contact avec l'auteur : yves.ouvrard@collatinus.org
 #ifndef LIBFLEXFR_H
 #define LIBFLEXFR_H
 
+#include <QObject>
 #include <QMap>
 #include <QString>
 #include <QStringList>
@@ -32,7 +33,8 @@ class Verbe
    protected:
     QString inf;
     QString modele;
-    int pronominal;
+    bool    pas_de_passif(QString inf);
+    int     pronominal;
 
    public:
     Verbe(QString i);
@@ -930,7 +932,15 @@ class Pronom
     QString accorde(QString p, QString m);
 };
 
-QString accorde(QString adj, QString m);
-bool    pas_de_passif(QString inf);
-QString pluriel(QString l, QString n);
+class Flechisseur : public QObject
+{
+    Q_OBJECT
+
+    public:
+        Flechisseur(QObject *parent = 0);
+        QString accorde(QString adj, QString m);
+        QString conjnat(QString inf, QString morpho);
+        QString conjugue(QString inf, int P, int T, int M, int V, bool Pr, int g, int n);
+        QString pluriel(QString l, QString n);
+};
 #endif
