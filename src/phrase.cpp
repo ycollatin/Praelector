@@ -33,7 +33,6 @@
 //                           TODO
 //        - Déplacement d'un groupe sub dans son sup.
 //        - Mise en place d'un lien non catalogué : sup, sub, traduction
-//        - raccourcis < et > pour le changement de phrase
 //        - Revoir l'algo de mise à la forme négative.
 //        - remettre à l'indicatif ou au subj. la tr. du verbe de la proposition infinitive
 //        - Trouver une règle pour tum ... cum.
