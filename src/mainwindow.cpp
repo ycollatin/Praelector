@@ -73,7 +73,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     << "l.t.";
 
     // construire la liste des clés alpha
-    alphabet = "cen/+-aqhlrpsbdfgijkmotuv";
+    //alphabet = "cen/+-aq;,lrpsbdfgijkmotuv";
+    alphabet = "CEN/ْ+-qPSapsbcdefghijklmnortuv";
     alpha2 = "abcdefghijklmnopqrstuvwxyz";
     /*
        c choisir une phrase
@@ -121,6 +122,7 @@ void MainWindow::ajTouches()
     {
         if (t.startsWith("<a href"))
         {
+            // calcul de l'url
             QString url;
             t.remove(0,9);
             while (t.at(0) != '"')
@@ -128,6 +130,7 @@ void MainWindow::ajTouches()
                 url.append(t.at(0));
                 t.remove(0,1);
             }
+            // calcul des raccourcis
             if (i < clesL.count())
             {
                 QString cle = clesL.at(i);
