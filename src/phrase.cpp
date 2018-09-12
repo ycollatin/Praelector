@@ -971,7 +971,7 @@ QString Phrase::htmlLiens()
         ll.append(req->html());
     }
     ll.removeDuplicates();
-    if (_imot > 0) ll.append("<a href=\"-lien\">créer un lien</a><br/>\n");
+    //if (_imot > 0) ll.append("<a href=\"-lien\">créer un lien</a><br/>\n");
     return ll.join("\n");
 }
 
