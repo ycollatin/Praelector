@@ -37,6 +37,7 @@ det
 num
 epithete
 -
+epithete
 nihil
 prepn
 epithete
