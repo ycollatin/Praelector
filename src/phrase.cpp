@@ -21,6 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
+//        - synt.fr : ante et post pour l'épithète : dans le choix post, ante apparaît aussi
 //        - motflechi.cpp : elidefr(), contraction à le : exclure "là le".
 //        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
 //        - /ira furor breuis/ : Il semble que la relecture, en cas de choix autre que celui qui
@@ -31,8 +32,9 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
+//        - On doit pouvoir choisir les différentes traductions d'un lien syntaxique
 //        - Déplacement d'un groupe sub dans son sup.
-//        - Mise en place d'un lien non catalogué : sup, sub, traduction
+//        - En français, l'épithète antéposée vient après le déterminant
 //        - Revoir l'algo de mise à la forme négative.
 //        - remettre à l'indicatif ou au subj. la tr. du verbe de la proposition infinitive
 //        - Trouver une règle pour tum ... cum.
