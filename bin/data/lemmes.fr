@@ -18478,7 +18478,7 @@ quicumque:qui que ce soit que, qui que ce soit, quoi que ce soit
 quidam:un certain, quelqu'un, quelque chose
 quidem:certes ; (ne- : ne ...) même pas
 quidni:pourquoi donc?
-quid:pourquoi ?
+quid:pourquoi ?, quoi ?
 quiesco:se reposer, dormir
 quies:repos, tranquillité
 quiete:paisiblement
