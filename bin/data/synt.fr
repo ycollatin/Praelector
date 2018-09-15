@@ -40,7 +40,6 @@ epithete
 epithete
 nihil
 prepn
-epithete
 epitheteV
 genitif
 gerondGen
