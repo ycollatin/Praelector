@@ -99,10 +99,6 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
         {
             clesL.append(cle+alpha2.at(j));
         }
-        for (int j=0;j<wxyz.count();++j)
-        {
-            clesL.append(cle+wxyz.at(j));
-        }
     }
 	phrase->ecoute("-init");
 }
