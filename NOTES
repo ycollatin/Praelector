@@ -100,6 +100,12 @@ SYNTAXE
   - -que : ajouter "et " à gauche de la traduction.
 
 INTERFACE
+  - Comment ajouter un lien non détecté, et saisir une traduction ?
+    L'ajout est facilement déclenché par un hyperlien +sub (url m.+.i), mais
+    il faut pouvoir
+    . désigner le fléchi super ;
+    . ajouter éventuellement préposition
+    . et surtout, désigner son rang dans la liste des subs.
   - Choix de la traduction d'un fléchi. Jusqu'à présent, "tr. suiv", et un
     messageBox de toutes les tr. Remplacer par une traduction afficher et
     un lien "choisir une tr.".

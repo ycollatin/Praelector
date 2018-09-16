@@ -339,7 +339,8 @@ QString Mot::html()
         fl  << "<a href=\"m.e."<<i<<"\">&eacute;diter</a>&nbsp;"
             << "<a href=\"m.c."<<i<<"\">choisir</a>&nbsp;rejeter&nbsp;"
 			<< "<a href=\"m.r.m."<<i<<"\">le lemme</a>&nbsp;"
-			<< "<a href=\"m.r.f."<<i<<"\">la forme</a>";
+			<< "<a href=\"m.r.f."<<i<<"\">la forme</a>&nbsp;";
+            //<< "<a href=\"m.+."<<i<<"\">+sub</a>";
         ret.append(lin);
     }
     if (lemmeUnique())

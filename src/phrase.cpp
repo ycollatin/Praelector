@@ -31,6 +31,8 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
+//        - Ajout d'un lien non détecté :
+//              "subordonner ce mot à un autre" "ajouter un subordonné"
 //        - On doit pouvoir choisir les différentes traductions d'un lien syntaxique
 //        - Déplacement d'un groupe sub dans son sup.
 //        - En français, l'épithète antéposée vient après le déterminant
@@ -546,14 +548,13 @@ void Phrase::ecoute (QString m)
 								mf->setSujet();
 								break;
 							}
-						case 'v':
-							if (eclats.count() > 3)
-							{
-								// l'une des traductions proposée a été cliquée
-								//cour->setTradLemPostag (num, eclats.at (3));
-							}
-							//else cour->valideTr (num);
-							break;
+                        /*
+                        case '+':
+                            {
+                                qDebug()<<"subordonner à"; 
+                            }
+                            break;
+                        */
 						default: std::cerr << qPrintable (m)
 								 << " erreur d'url morpho"<<"\n"; break;
 					}
