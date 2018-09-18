@@ -14301,6 +14301,7 @@ navo:faire avec soin
 navus:diligent, actif, zélé
 Naxius:de Naxos
 Naxos:Naxos (île de la mer Égée; ville de Sicile)
+ne:adv. même pas (ne ... quidem)
 ne2:que (verbes de crainte et d'empêchement), de ne pas (verbes de volonté), de peur que, pour que [... ne ... pas]
 Neaera:Neaera (nom de femme)
 Nealces:Nealces (nom d'un peintre)
@@ -14357,7 +14358,6 @@ negotium:affaire, mission
 Neleius:de Nélée
 Nemeaeus:de Némée
 Nemea:Nemea (fleuve du Péloponnèse)
-ne:même pas (ne ... quidem)
 Nemesis:Nemesis (déesse vengeresse des crimes; femme chantée par Tibulle)
 Nemetes:Némètes (peuple de Germanie)
 Nemetocenna:Nemetocenna (ville des Atrébates)
@@ -18469,7 +18469,7 @@ Querquetulanus2:Querquetulanus (surnom du mont Caelius)
 querquetum:chênaie, forêt de chênes
 querulus:plaintif, chagrin, maussade
 questus:plainte
-qui2:qui, que (cuius = dont) (quoi, lequel, celui qui, celui que)
+qui2:qui, que, celui qui, celui que (cuius = dont) (quoi, lequel)
 quianam:pourquoi ?
 quia:parce que
 quibuscum:avec lesquels, avec lesquelles (= cum quibus)
@@ -23562,7 +23562,7 @@ victrix:victorieuse
 victus:nourriture
 vicus:quartier, village, rue
 videlicet:bien sûr, sans doute
-video:voir, (passif) paraître, sembler
+video:voir, prendre garde, (au passif) paraître, sembler
 Vidibius:Vidibius
 vidua:veuve
 viduertas:infécondité du sol, stérilité
