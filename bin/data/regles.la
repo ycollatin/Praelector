@@ -2,6 +2,7 @@
 !
 !   Format :
 !
+! include:<nom_fichier> Inclusion du fichier de règles nom_fichier
 ! id:<chaîne> (sert d'étiquette de la branche)
 ! lemmeSup:<lemme>,<lemme>,... Un lemme précédé de '-' entraine la nullité de la règle pour ce lemme
 ! posSup:<pos>,<pos>,...
@@ -45,7 +46,7 @@ tr:<sup> à cause de <sub>
 tr:<sup> grâce à <sub>
 tr:<sup> avec <sub>
 tr:<sup> de <sub>
-tr:<sup> par <sub>
+tr:<sup> en <sub>
 
 id:ablabs
 posSup:v,w
