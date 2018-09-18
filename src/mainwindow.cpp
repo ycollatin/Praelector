@@ -74,13 +74,15 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // construire la liste des clés alpha
     //alphabet = "cen/+-aq;,lrpsbdfgijkmotuv";
-    alphabet = "CEN/ْ+-qPSapsbcdefghijklmnortuv";
+    alphabet = "CEN/+-QPSrapsebcdfghijklmnoqtuv";
     alpha2 = "abcdefghijklmnopqrstuvwxyz";
     /*
        c choisir une phrase
        e " enregistrée
        n saisir une Nouvelle phrase
        / clavier
+       + taille police
+       - taille police
        a annuler
        q quitter
        j phrase précédente
@@ -89,9 +91,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
        p mot précédent
        s mot suivant
      */
-    wxyz = "wxyz";
     for (int i=0;i<alphabet.count();++i)
+    {
         clesL.append(alphabet.at(i));
+    }
+    wxyz = "wxyz";
     for (int i=0;i<wxyz.length();++i)
     {
         QString cle(wxyz.at(i));

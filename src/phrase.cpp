@@ -31,7 +31,7 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
-//        - Ajout d'un lien non détecté :
+//        - Ajout d'un lien non détecté ?
 //              "subordonner ce mot à un autre" "ajouter un subordonné"
 //        - On doit pouvoir choisir les différentes traductions d'un lien syntaxique
 //        - Déplacement d'un groupe sub dans son sup.
@@ -549,6 +549,7 @@ void Phrase::ecoute (QString m)
 								break;
 							}
                         /*
+                        // pour l'ajout d'un lien non détecté
                         case '+':
                             {
                                 qDebug()<<"subordonner à"; 
