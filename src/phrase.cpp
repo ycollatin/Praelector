@@ -552,7 +552,7 @@ void Phrase::ecoute (QString m)
                         // pour l'ajout d'un lien non détecté
                         case '+':
                             {
-                                qDebug()<<"subordonner à"; 
+                                // code
                             }
                             break;
                         */
