@@ -137,12 +137,12 @@ namespace Chaines {
 		 "<a href=\"-nouvPhr\">Saisir une phrase</a><br/>"
          "<a href=\"-clav\">clavier</a> (touche '/')<br/>"
          "taille <a href=\"-zoom\">+</a>&nbsp;<a href=\"-dezoom\">-</a>&nbsp;"
-         "<a href=\"-init\">annuler</a> <a href=\"-quitter\">quitter</a>");
+         "<a href=\"-quitter\">quitter</a>");
 
 	const QString affichage = QString::fromUtf8
         ("%1<hr/>%2<hr/>"
          "<a href=\"-pprec\">phr. précédente</a>&nbsp;<a href=\"-psuiv\">suivante</a><br/>"
-		 "<a href=\"-reinit\">réinitialiser</a>&nbsp;"
+         "<a href=\"-reinit\">réinitialiser</a>&nbsp;<a href=\"-init\">annuler</a><br/>"
          "mot <a href=\"-prec\">précédent</a> <a href=\"-suiv\">suivant</a>&nbsp;"
          "<a href=\"-trace\">enregistrer</a>"
          "<hr/>%3"
