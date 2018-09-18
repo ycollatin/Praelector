@@ -31,6 +31,7 @@
 ! - dblacc : le verbe peut avoir deux accusatifs comme subs (double accusatif)
 ! - det : le pronom peut servir de déterminant
 ! - gen : le verbe, l'adjectif ou le nom peut avoir comme sub un génitif (memini)
+! - infobj : le verbe peut avoir un infinitif objet
 ! - loc : peut être fléchi au locatif
 ! - posn,posc,posa : le lemme peut avoir aussi le pos a, c, n, etc.
 ! - ppr : le participe présent du verbe est substantivable
@@ -5200,7 +5201,7 @@ contemptor:
 contemptrix:
 contemptus2:
 contemptus:
-contendo:
+contendo:infobj
 contente:
 contentio:
 contentiosus:
@@ -14377,7 +14378,8 @@ negotium:
 Neleius:
 Nemeaeus:
 Nemea:
-ne:conjsub,posd
+ne:posd
+ne2:conjsubj
 Nemesis:
 Nemetes:
 Nemetocenna:
