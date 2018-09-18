@@ -244,7 +244,12 @@ bool Regle::estSub(MotFlechi* mf)
     if (!_lsSub.empty())
     {
         for (int i=0;i<_lsSub.count();++i)
-            if (l->synt(_lsSub.at(i))) return true;
+        {
+            if (l->synt(_lsSub.at(i)))
+            {
+                return true;
+            }
+        }
         return false;
     }
     return true;
