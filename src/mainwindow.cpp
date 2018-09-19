@@ -15,7 +15,7 @@
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>. */
 
-// débogage : voir traceReq
+//#define TRACEREQ
 
 #include <QDebug>
 #include <QDir>
@@ -361,7 +361,9 @@ QString MainWindow::choixPhr(QString c)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
-    //phrase->traceReq();
+# ifdef TRACEREQ
+    phrase->traceReq();
+# endif
     QSettings settings("Collatinus", "praelector");
     settings.beginGroup("fenetre");
     settings.setValue("geometry", saveGeometry());
