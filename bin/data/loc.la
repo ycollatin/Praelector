@@ -67,6 +67,14 @@ lemmeSub:a,ab
 contig:35
 poids:75
 
+id:quoque
+aff:adv
+posSup:n,p
+lemmeSub:quoque
+contig:80
+sens:>
+tr:<sup> <sub>
+
 id:vel
 aff:adv
 posSup:n
