@@ -43,6 +43,7 @@ prepn
 epitheteV
 genitif
 gerondGen
+quoque
 app
 antecedent
 isqui
