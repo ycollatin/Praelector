@@ -1,4 +1,4 @@
-VERSION = "0.0" 
+VERSION = "beta.2"
 
 TEMPLATE = app
 TARGET = praelector
