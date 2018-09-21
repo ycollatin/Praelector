@@ -31,10 +31,11 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
+//        - Déplacement d'un groupe sub dans son sup, en particulier de la relative dans les maximes et proverbes,
+//          pê en ajoutant un correcteur de position dans MotFlechi.
 //        - Ajout d'un lien non détecté ?
 //              "subordonner ce mot à un autre" "ajouter un subordonné"
 //        - On doit pouvoir choisir les différentes traductions d'un lien syntaxique
-//        - Déplacement d'un groupe sub dans son sup.
 //        - En français, l'épithète antéposée vient après le déterminant
 //        - Revoir l'algo de mise à la forme négative.
 //        - remettre à l'indicatif ou au subj. la tr. du verbe de la proposition infinitive
