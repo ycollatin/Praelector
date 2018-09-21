@@ -26,6 +26,12 @@ DONNÉES UTILISATEUR : lexique, traductions, règles
 
 TRGROUPE ET SYNTAXE FRANÇAISE
 
+    vendredi 21 septembre 2018
+    Réécriture de MotFlechi::trGroupe()
+    - remplacer les liste ante et post par des listeѕ de fléchis
+    - ajouter à Motfléchi un indice de correction
+    - trouver un moyen de rendre aisé l'interface contrôlant cette correction
+
     Il y a une contradiction dans la chaîne de traduction des règles
     (id tr) et les directives du fichier bin/data/synt.fr.
 
@@ -71,6 +77,8 @@ MORPHO
   - vérifier la dés. -om
 
 SYNTAXE
+  - Les contractions et agglutinations : 
+    -que ; mecum tecum nobiscum uobiscum : modifier le texte latin avant traitement ?
   - Verberat nos et lacerat fortuna : coord non traduite Verberat et lacerat
   - Bogue : le relatif n'a qu'un antécédent : omnia quae secum ... pauperibus (pas ant.)
   - Le relatif ne devrait pas jouer le rôle de pronom objet.
@@ -97,7 +105,6 @@ SYNTAXE
     audacia cum magna, quod postea, nomine in Hectoreo, etc.
   - Donner la possibilité de créer de toutes pièces un lien syntaxique ?
   - Ajouter, pour traduire cum + subj impf et PQP, une traduction à l'indicatif.
-  - -que : ajouter "et " à gauche de la traduction.
 
 INTERFACE
   - Comment ajouter un lien non détecté, et saisir une traduction ?
