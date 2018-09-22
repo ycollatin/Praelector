@@ -31,8 +31,11 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
-//        - Déplacement d'un groupe sub dans son sup, en particulier de la relative dans les maximes et proverbes,
-//          pê en ajoutant un correcteur de position dans MotFlechi.
+//        - Ajouter une règle pour l'interrogative indirecte, et donc le
+//          moyen de traduire un subj. latin par un indicatif français.
+//        - Déplacement d'un groupe sub dans son sup, en particulier de la
+//          relative dans les maximes et proverbes, pê en ajoutant un
+//          correcteur de position dans MotFlechi.
 //        - Ajout d'un lien non détecté ?
 //              "subordonner ce mot à un autre" "ajouter un subordonné"
 //        - On doit pouvoir choisir les différentes traductions d'un lien syntaxique
