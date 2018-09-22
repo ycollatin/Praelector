@@ -202,16 +202,23 @@ bool Requete::egale(Requete* req)
     return true;
 }
 
-/*
-bool Requete::egale(QString tr)
-{
-    return trace() == tr;
-}
-*/
-
 bool Requete::enConflit(QString id)
 {
     return _regle->conflit(id);
+}
+
+/**
+ * \fn bool Requete::exclut(Requete* req)
+ * \brief application de la propriété x:<id> de Regle
+ */
+bool Requete::exclut(Requete* req)
+{
+    if (!close()) return false;
+    if (!req->close()) return false;
+    if (_super != req->super()) return false;
+    if (_sub != req->sub()) return false;
+    if (_regle->exclut(req->regle()->id())) return true;
+    return false;
 }
 
 QString Requete::fonction()

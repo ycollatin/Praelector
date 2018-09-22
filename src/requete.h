@@ -68,8 +68,7 @@ class Requete : public QObject
         bool        egale(Requete* req);
         bool        egale(QString tr);
         bool        enConflit(QString id);
-        bool        estEx(MotFlechi* mf);
-        MotFlechi*  ex(int i);
+        bool        exclut(Requete* req);
         QString     fonction();
         int         freq();
         QString     gv(QString format="dot");

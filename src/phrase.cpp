@@ -1406,6 +1406,17 @@ void Phrase::setLiens()
                 req->setRequis(mf, "résolue");
             }
         }
+        // exclusions (propriété x:<id> des règles)
+        for (int i = 0;i<_requetes.count();++i)
+        {
+            Requete* ri = _requetes.at(i);
+            for (int ix=0;ix<_requetes.count();++ix)
+            {
+                if (i == ix) continue;
+                Requete* rx = _requetes.at(ix);
+                if (ri->exclut(rx)) rx->setRequis(0);
+            }
+        }
     }
 }
 
