@@ -183,9 +183,10 @@ id:attrSTu
 aff:attrS
 doc:le sujet des 1ère et 2ème personne est souvent omisx
 posSup:w
-morphoSup:2ème
+morphoSup:2ème,1ère
 posSub:a,n,p
 morphoSub:nominatif
+x:attrSN
 poids:70
 tr:<sup> <sub>
 
