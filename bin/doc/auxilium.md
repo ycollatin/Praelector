@@ -1,7 +1,10 @@
 ### PRAELECTOR
 
+<a name="index">index</a>    
+
 - [Navigation dans la phrase](#nav)
 - [La syntaxe ](#syntaxe)
+- [Préparer les phrases à lire](#phrases)
 - [Morphologie et traduction du mot](#mots)
 - [Les liens syntaxiques](#liens)
 - [Enregistrement et relecture](#enr)
@@ -26,6 +29,7 @@ précédent_, et tous les choix morphologiques, sémantiques et syntaxiques
 possibles sont proposés par des liens. Ces choix ne peuvent pas être
 toujours exhaustifs ni exacts, et l'on peut les corriger.
 
+[index](#index)
 ## <a id="syntaxe">La syntaxe : noyau, subordonné</a>
 Les principes syntaxiques appliqués sont très classiques, et s'inspirent de
 la grammaire de dépendance : à un mot peuvent être subordonnés un ou
@@ -50,6 +54,21 @@ qui a pour conséquence d'éliminer tous les autres. Un mot, en effet, ne
 peut être subordonné qu'à un seul autre mot. La seule exception est celle
 du pronom relatif, qui est subordonné à la fois à son antécédent, et à un
 autre mot de la proposition relative.
+
+[index](#index)
+## <a id="phrases">Préparer les phrases à lire</a>
+Il y a deux méthodes pour charger dans Praelector la phrase qu'on a
+l'intention de lire. La plus simple est de cliquer sur le lien
+_Saisir une phrase_, et de la saisir dans le dialogue que s'ouvre. Le plus
+simple est même de la copier à partir d'un document ou d'une page web, et
+de la coller dans le dialogue. Dès qu'on valide la saisie, la lecture peut
+commencer. Toute ligne commençant par un point d'exclamation sera affichée,
+mais ne sera pas considérée comme une phrase latine à lire.
+
+L'autre méthode, plus organisée, consiste à construire un fichier où chaque
+phrase occupe une ligne. On placera ce fichier dans le répertoire _corpus/_.
+Lorqu'on choisira ensuite ce fichier en cliquant sur _choisir une phrase_,
+toutes les phrases apparaîtront numérotées, et il suffira d'en sélectionner une.
 
 ## <a id="mots">Morphologies et traductions du mot</a>
 
@@ -77,8 +96,8 @@ traduction, dans la mesure du possible, est _fléchie_, c'est à dire
 accordée ou conjuguée. Lorsque c'est possible, on peut choisir une
 traduction, ou même en ajouter une.
 
+[index](#index)
 ## <a id="liens">Les liens syntaxiques</a>
-
 À la lecture d'un mot, c'est à dire le premier quand la lecture commence,
 et le suivant si on demande la suite de la lecture, Praelector fait deux
 opérations et affiche les résultats.
@@ -103,6 +122,18 @@ des règles est abondante. Cette liste n'est donc pas affichée.
 autour des noyaux, et en essayant de respecter la syntaxe française, avec,
 hélas, des erreurs encore trop nombreuses.
 
+[index](#index)
 ## <a id="enr">Enregistrement et relecture</a>
+Le lien _enregistrer_ permet de consigner dans le fichier homonyme du
+répertoire _enr/_ la lecture d'une phrase, avec tous ses choix,
+ses allers et retours et ses traductions. Pour relire cet enregistrement,
+il faut suivre le lien _choisir une phrase enregistrée_. La fenêtre
+ressemblera alors à la fenêtre habituelle, mais le lien sélectionné par le
+lecteur qui a enregistré sera surligné en rouge, on pourra le sélectionner
+et poursuiver sa lecture.
 
+[index](#index)
 ## <a id="prog">Pour les programmeurs</a>
+Toutes les données utilisées par Praelectore sont dans _data/_. Parmi elles,
+quelques fichiers sont issus de Collatinus. Les autres servent aux règles et
+au traductions. Leur format est commenté en tête de chaque fichier.
