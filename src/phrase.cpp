@@ -374,12 +374,18 @@ QString Phrase::droite(Mot *m)
 void Phrase::ecoute (QString m)
 {
     _reponse.clear();
+    bool aux = false;
 	if (m.isEmpty() || m == "-init")
 	{
 		majAffichage ();
 		emit (repondu(_reponse));
 		return;
 	}
+    // aide
+    else if (m=="-aux")
+    {
+        aux = true;
+    }
     /* Réinitialisation à partir du mot courant */
     else if (m == "-reinit")
     {
@@ -766,11 +772,11 @@ void Phrase::ecoute (QString m)
 				} // case 'l'
 			default: std::cerr << qPrintable (m) << ", commande mal formée\n"; break;
 		} // switch eclats[0]
-        majAffichage();
+        majAffichage(aux);
         emit(repondu(_reponse));
         return;
 	}
-	majAffichage();
+	majAffichage(aux);
 	emit(repondu(_reponse));
 }
 
@@ -1037,15 +1043,18 @@ void Phrase::lemmatise()
     }
 }
 
-void Phrase::majAffichage()
+void Phrase::majAffichage(bool aux)
 {
+    QString lienRet;
+    if (aux) lienRet = "<br/><a href=\"-reinit\">retour</a>";
     // TODO - ajouter un texte d'accueil et d'aide
-	if (_mots.empty())
+	if (_mots.empty() || aux)
 		//_reponse = Chaines::initAff.arg (Chaines::titrePraelector);
-        _reponse = QString("%1%2%3")
+        _reponse = QString("%1%2%3%4")
             .arg(Chaines::titrePraelector)
             .arg(Chaines::menu)
-            .arg(Chaines::documentation);
+            .arg(Chaines::documentation) 
+            .arg(lienRet);
 	else
     {
         _reponse = Chaines::affichage

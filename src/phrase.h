@@ -60,7 +60,7 @@ class Phrase: public QObject
         bool                    estFeminin(QString n);
         void                    initFeminins ();
         void                    initLgr();
-        void                    majAffichage();
+        void                    majAffichage(bool aux=false);
         bool static             sortR(Requete* ra, Requete* rb);
 
     public:
@@ -129,7 +129,7 @@ class Phrase: public QObject
 namespace Chaines {
 
 	const QString titrePraelector =
-		"<h2 style=\"font-family:serif;\"><center>&#x2619; PRAELECTOR &#x2767;</center></h2>";
+		"<h2 style=\"font-family:serif;\"><center>&#x2619; <a href=\"-aux\">PRAELECTOR</a> &#x2767;</center></h2>";
 
     const QString menu = QString::fromUtf8
 	    ("<a href=\"-corpus\">choisir une phrase</a><br/>"

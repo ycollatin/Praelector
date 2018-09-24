@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // construire la liste des clés alpha
     //alphabet = "cen/+-aq;,lrpsbdfgijkmotuv";
-    alphabet = "CEN/+-QPSrapsebcdfghijklmnoqtuv";
+    alphabet = "ACEN/+-QPSrapsebcdfghijklmnoqtuv";
     alpha2 = "abcdefghijklmnopqrstuvwxyz";
     /*
        c choisir une phrase
