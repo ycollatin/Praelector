@@ -2,9 +2,8 @@
 
 - [Navigation dans la phrase](#nav)
 - [La syntaxe ](#syntaxe)
-- [Les noms](#noms)
-- [Les verbes](#verbes)
-- [Traduction](#traduction)
+- [Morphologie et traduction du mot](#mots)
+- [Les liens syntaxiques](#liens)
 - [Enregistrement et relecture](#enr)
 - [Pour les programmeurs](#prog)
 
@@ -52,11 +51,57 @@ peut être subordonné qu'à un seul autre mot. La seule exception est celle
 du pronom relatif, qui est subordonné à la fois à son antécédent, et à un
 autre mot de la proposition relative.
 
-## <a id="noms">Les noms</a>
+## <a id="mots">Morphologies et traductions du mot</a>
 
-## <a id="verbes">Les verbes</a>
+Comme le français, les mots latins sont souvent ambigus. En français, un
+mot comme _suis_ peut ête une forme du verbe _être_, mais aussi du verbe
+_suivre_. Le mot _avions_ est le plus souvent l'imparfait du verbe _avoir_,
+mais il est aussi le pluriel du nom _avion_. En latin, le mot _arma_ est
+une forme de _arma, orum _: « les armes », mais c'est aussi, beaucoup plus
+rarement, l'impératif du verbe _armo_. _cano_ est un verbe qui signifie
+« chanter », mais c'est aussi une forme de l'adjectif _canus_, « blanc ».
 
-## <a id="traduction">La traduction</a>
+D'autre part, plusieurs morphologies du même mot peuvent avoir la même
+graphie. _uitae_, par exemple peut être le génitif singulier, le datif
+singulier, le nominatif pluriel ou le vocatif pluriel de _uita_.
+
+Praelector propose, en essayant de les ordonner par fréquences, toutes les
+possibilités d'interprétation d'une forme. On peut choisir définitivement
+l'une d'entre elles, ou en rejeter une ou plusieurs.
+
+Dès qu'un choix est fait dans cette partie de l'interface, les liens
+partant et aboutissant à ce mot sont mis à jour.
+
+Praelector essaie de traduire chaque possibilité en français, et cette
+traduction, dans la mesure du possible, est _fléchie_, c'est à dire
+accordée ou conjuguée. Lorsque c'est possible, on peut choisir une
+traduction, ou même en ajouter une.
+
+## <a id="liens">Les liens syntaxiques</a>
+
+À la lecture d'un mot, c'est à dire le premier quand la lecture commence,
+et le suivant si on demande la suite de la lecture, Praelector fait deux
+opérations et affiche les résultats.
+
+* Il consulte la liste des syntagmes incomplets, et exæmine si le mot
+pourrait convenir pour que le syntagme soit complet. IL affiche ensuite
+toutes les possibilités. Quelquefois, il n'y en a qu'une, qu'il ne faudra
+pas nécessairement valider. Il y en aura plus souvent plusieurs, et il est
+conseillé de rejeter les solutions qui sont manifestement fausses.
+Lorsqu'on est sûr qu'une solution est la bonne, on la valide, et si le mot
+est un subordonné, tous les autres candidats pour être son noyau disparaissent.
+Chåque syntagme possible est donc affiché, accompagné de sa traduction. Si
+plusieurs traductions sont possibles, le lien _tr. suiv._ permet d'en changer.
+
+* Il consulte sa liste de règles, et retient celles dont le mot pourrait
+être le noyau, ou le subordonné. Mais le syntagme que formerait le mot avec
+un autre, qu'il soit noyau ou subordonné, est incomplet. Il lance donc
+l'hypothèse. Ces hypothèse sont souvent très nombreuses, parce que la base
+des règles est abondante. Cette liste n'est donc pas affichée.
+
+* Il récapitule la traduction de la phrase, en regroupant les syntagmes
+autour des noyaux, et en essayant de respecter la syntaxe française, avec,
+hélas, des erreurs encore trop nombreuses.
 
 ## <a id="enr">Enregistrement et relecture</a>
 
