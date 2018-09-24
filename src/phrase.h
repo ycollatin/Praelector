@@ -173,9 +173,8 @@ namespace Chaines {
 		 "liens concurrents sont possibles. Pour choisir, il "
 		 "faut examiner avec soin la fonction des liens proposés, plus "
 		 "que leur traduction, qui est souvent approximative. Des liens "
-		 "permettent de déplacer, d'ajouter et de supprimer des éléments "
-		 "de ces traductions. L'état de la traduction est affiché au "
-		 "bas de la fenêtre.<br/>"
+		 "permettent de choisir la traduction d'un mot, ou de l'éditer."
+		 "L'état de la traduction est affiché au bas de la fenêtre.<br/>"
          "Praelector est développé par Yves Ouvrard, et placé sous licence GPL."
          "<em>Macte!</em></div>");
 
