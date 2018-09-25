@@ -98,6 +98,7 @@
 #include <iostream>
 #include <QDebug>
 
+#include <aide.h>
 #include <ch.h>
 #include <dialogue.h>
 #include <lemmatiseur.h>
@@ -385,7 +386,10 @@ void Phrase::ecoute (QString m)
     // aide
     else if (m=="-aux")
     {
-        aux = true;
+	    Aide* aide = new Aide ();
+        int res = aide->exec();
+        if (res == QDialog::Accepted)
+            delete aide;
     }
     /* Réinitialisation à partir du mot courant */
     else if (m == "-reinit")

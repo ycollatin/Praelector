@@ -16,7 +16,8 @@ DESTDIR = bin
 OBJECTS_DIR = obj
 MOC_DIR = moc
 
-HEADERS  += src/dialogue.h \
+HEADERS  += src/aide.h \
+            src/dialogue.h \
 			src/flexfr.h \
             src/ch.h \
             src/handicap.h \
@@ -31,7 +32,8 @@ HEADERS  += src/dialogue.h \
             src/regle.h \
             src/requete.h
 
-SOURCES  += src/dialogue.cpp \
+SOURCES  += src/aide.cpp \
+            src/dialogue.cpp \
 			src/flexfr.cpp \ 
             src/ch.cpp \
             src/handicap.cpp \

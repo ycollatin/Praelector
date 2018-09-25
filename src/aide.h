@@ -1,4 +1,4 @@
-/* dialogue.h
+/*                        aide.h
  *
  *  This file is part of PRAELECTOR.
  *
@@ -18,31 +18,25 @@
  *
  */
 
-#ifndef DIALOGUE_H
-#define DIALOGUE_H
+#ifndef AIDE_H
+#define AIDE_H 
 
 #include <QtWidgets/QDialog>
 #include <QtWidgets/QDialogButtonBox>
-#include <QtWidgets/QLabel>
 #include <QtWidgets/QPlainTextEdit>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
 
-class Dialogue: public QDialog
+class Aide: public QDialog
 {
 	Q_OBJECT
 
 	private:
     	QVBoxLayout *verticalLayout;
-    	QLabel *label;
-    	QPlainTextEdit *plainTextEdit;
+    	QTextBrowser *textBrowser;
     	QDialogButtonBox *buttonBox;
-	protected:
-		bool eventFilter(QObject *obj, QEvent *ev);
 	public:
-			Dialogue ();
-			void    setLabel (QString l);
-			void    setText (QString t);
-			QString getText ();
+		Aide ();
 };
 
 #endif
