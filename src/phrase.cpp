@@ -21,6 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
+//        - ago vu comme un nom !
 //        - motflechi.cpp : elidefr(), contraction à le : exclure "là le".
 //        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
 //        - /ira furor breuis/ : Il semble que la relecture, en cas de choix autre que celui qui
@@ -97,6 +98,7 @@
 #include <iostream>
 #include <QDebug>
 
+#include <aide.h>
 #include <ch.h>
 #include <dialogue.h>
 #include <lemmatiseur.h>
@@ -384,7 +386,10 @@ void Phrase::ecoute (QString m)
     // aide
     else if (m=="-aux")
     {
-        aux = true;
+	    Aide* aide = new Aide ();
+        int res = aide->exec();
+        if (res == QDialog::Accepted)
+            delete aide;
     }
     /* Réinitialisation à partir du mot courant */
     else if (m == "-reinit")
