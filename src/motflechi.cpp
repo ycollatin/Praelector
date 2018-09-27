@@ -46,7 +46,7 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent, char po)
         _eqivPos.append('n');
     // participes présents
     if ((p == 'v' || p == 'w')
-        && (_lemme->synt("ppr") || _lemme->synt("ppp")))
+        && ((_lemme->synt("ppr") || _lemme->synt("ppp")) && (_morpho.contains("part"))))
     {
         _eqivPos.append('n');
     }
