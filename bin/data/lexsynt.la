@@ -10218,7 +10218,7 @@ ignominia:
 ignominiosus:
 ignorantia:
 ignoratio:
-ignoro:propinf
+ignoro:propinf,supint
 ignosco:datif
 ignotus:
 Iguini:
@@ -18575,7 +18575,7 @@ quisquam:
 quisque:
 quisquilia:
 quisquiliae:
-quis:det
+quis:det,subint
 quisquis:
 quiuis:
 quoad:
