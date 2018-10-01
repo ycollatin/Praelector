@@ -263,8 +263,9 @@ bool Regle::estSuper(MotFlechi* mf)
     if (!_lemmeSup.empty() && !_lemmeSup.contains(cle)) return false;
     // pos
     if (!_posSup.isEmpty()
-        && (!_posSup.contains(mf->pos()) && !_posSup.contains(mf->posO())
-        && !(_posSup.contains("w") && mf->lemme()->synt("attr"))))
+        && !_posSup.contains(mf->pos())
+        && !_posSup.contains(mf->posO())
+        && !(_posSup.contains("w") && mf->lemme()->synt("attr")))
     {
         return false;
     }
