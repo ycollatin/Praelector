@@ -1047,8 +1047,29 @@ QStringList Phrase::lgr(char pos, char posO)
         }
         else post.append(el);
     }
-    ante.removeDuplicates();
-    post.removeDuplicates();
+    // doublons
+    for (int i=0;i<ante.count();++i)
+        for (int j=0;j<ante.count();++j)
+        {
+            if (j == i) continue;
+            if (ante.at(i).startsWith(ante.at(j))
+                || ante.at(j).startsWith(ante.at(i)))
+            {
+                ante.removeAt(j);
+                --j;
+            }
+        }
+    for (int i=0;i<post.count();++i)
+        for (int j=0;j<post.count();++j)
+        {
+            if (j == i) continue;
+            if (post.at(i).startsWith(post.at(j))
+                || post.at(j).startsWith(post.at(i)))
+            {
+                post.removeAt(j);
+                --j;
+            }
+        }
     return ante + post;
 }
 

@@ -54,8 +54,10 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent, char po)
         _eqivPos.append('n');
     }
     // participes
+    /*
     if ((p == 'v' || p == 'w') && m.contains("participe"))
             _eqivPos.append('a');
+    */
 
     // traduction fléchie
     QString tr;
@@ -795,10 +797,9 @@ QString MotFlechi::trGroupe(Requete* rtest)
     QStringList lante;
     QStringList lpost;
     bool ante = true;
-    QStringList lgr = _phrase->lgr(_pos);
     // la liste des subs doit tenir compte du pos et 
     // du pos emprunté _posO
-    if (_posO != _pos) lgr += _phrase->lgr(_pos, _posO);
+    QStringList lgr = _phrase->lgr(_pos, _posO);
     QString rel;
     //int inoyau = -1;
     for (int i = 0;i<lgr.count();++i)
@@ -877,7 +878,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
             }
         }
     }
-    // restitution du relatif
+    // restitution du lien relatif (qui peut être nul)
     lante.prepend(rel);
     QStringList liste = lante + lpost;
     return elideFr(liste.join(" ").simplified());
