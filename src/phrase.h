@@ -89,6 +89,7 @@ class Phrase: public QObject
         QList<Requete*>   homonymes(QString id);
         QString           htmlLiens();
         QStringList       lgr(char pos);
+        QStringList       lgr(char pos, char posO);
         bool              isomorph(QString ma, QString mb);
         void              lemmatise();
         QList<Requete*>   lReqSub(MotFlechi* mf, bool closes=false);
@@ -118,7 +119,7 @@ class Phrase: public QObject
         QList<Mot*>       supersDe(Mot* m);
         QString           tr(bool color = true);
         MotFlechi*        vbRelative(MotFlechi* mf);
-        MotFlechi*        vbSuper(MotFlechi* mf);
+        //MotFlechi*        vbSuper(MotFlechi* mf);
     signals:
         void              editTr(QString t);
         void              repondu(const QString);
@@ -148,7 +149,7 @@ namespace Chaines {
          "<hr/>%3"
 		 "<hr/><strong>Morphologies et traductions du mot</strong><br/>\n%4"
 		 "<hr/><strong>Liens syntaxiques</strong><br/>%5\n"
-		 "<hr/><strong>&Eacute;tat de la traduction</strong><br/>\n"
+		 "<hr/><strong>état de la traduction</strong><br/>\n"
          "<span style=\"color:darkred;\">%6</span>"
          "<hr/>%7");
 

@@ -36,6 +36,9 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent, char po)
     QTextStream(&_morpho) << p << " " << m;
     _phrase = parent->phrase();
     _pos = p;
+    // _posO est destiné à conserver la pos d'origine des lemmes qui
+    // sont utilisé comme ayant un autre pos. Par exemple un verbe
+    // au participe considéré comme nom, ou un adjectif substantivé.
     if (po == 0x00)  
         _posO = p;
     else _posO = po;
@@ -793,6 +796,9 @@ QString MotFlechi::trGroupe(Requete* rtest)
     QStringList lpost;
     bool ante = true;
     QStringList lgr = _phrase->lgr(_pos);
+    // la liste des subs doit tenir compte du pos et 
+    // du pos emprunté _posO
+    if (_posO != _pos) lgr += _phrase->lgr(_pos, _posO);
     QString rel;
     //int inoyau = -1;
     for (int i = 0;i<lgr.count();++i)

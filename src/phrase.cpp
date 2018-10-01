@@ -21,6 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
+//        - /licetne/ traduction proposée "que" au lieu de "bien que".
+//        - traductions en doublons pour les fléchis à 2 pos (pos + posO).
 //        - motflechi.cpp : elidefr(), contraction à le : exclure "là le".
 //        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
 //        - /ira furor breuis/ : Il semble que la relecture, en cas de choix autre que celui qui
@@ -229,11 +231,11 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
             if (req->sub() != 0
                 && req->sub()->mot() == m && req->sub()->lemme() == l)
             {
-                if (req->close()) req->annuleRequis("lemme rejeté");
+                if (req->close()) req->annuleRequis("lemme rejeté A");
             }
             else if (req->super()->mot() == m && req->super()->lemme() == l)
             {
-                req->setRejetee(true, "lemme rejeté");
+                req->setRejetee(true, "lemme rejeté B");
             }
         }
         else
@@ -241,11 +243,11 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
             if (req->super() != 0
                 && req->super()->mot() == m && req->super()->lemme() == l)
             {
-                if (req->close()) req->annuleRequis("lemme rejeté");
+                if (req->close()) req->annuleRequis("lemme rejeté C");
             }
             else if (req->sub()->mot() == m && req->sub()->lemme() == l)
             {
-                req->setRejetee(true, "lemme rejeté");
+                req->setRejetee(true, "lemme rejeté D");
             }
         }
     }
@@ -255,15 +257,17 @@ void Phrase::annuleLemme(Mot* m, Lemme* l)
 void Phrase::choixFlechi(MotFlechi* mf)
 {
     Mot* m = mf->mot();
+    // rejeter toutes les requêtes en attente
+    // qui n'utilisent pas ce fléchi du même mot.
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
-        if (req == 0 || req->rejetee()) continue;
+        if (req == 0 || req->rejetee() || req->valide()) continue;
         MotFlechi* msup = req->super();
         MotFlechi* msub = req->sub();
         if ((msup != 0 && msup->mot() == m && msup != mf)
             || (msub != 0 && msub->mot() == m && msub != mf))
-            req->setRejetee(true, "choix du fléchi "+mf->morpho());
+            req->setRejetee(true, "choix du fléchi D"+mf->morpho());
     }
     m->choixFlechi(mf);
 }
@@ -287,21 +291,21 @@ void Phrase::choixReq(Requete* req)
         {
             continue;
         }
-        // requêtes non closes, mais en contradiction avec req
-        if (r->superRequis() && r->sub() == req->sub() && r->sub()->lemme()->cle() != "qui2")
-           //|| (r->subRequis() && r->super()->mot() == req->super()->mot() && (!req->multi())))
-        {
-            r->setRejetee(true, "requête incompatible choisie "+req->doc());
-        }
+        // la requête n'est pas close, elle demeure
         if (!r->close()) continue;
-            // même super, même aff, un seul sub permis sauf règles multi
-        if ((r->super()->mot() == mfsup->mot() && r->aff() == req->aff() && !req->multi())
+        // même super, et le sub n'est pas un relatif
+        if (r->superRequis() && r->sub() == req->sub() && r->sub()->lemme()->cle() != "qui2")
+        {
+            r->setRejetee(true, "requête incompatible choisie E"+req->doc());
+        }
+             // même super, même aff, un seul sub permis sauf règles multi
+        else if ((r->super()->mot() == mfsup->mot() && r->aff() == req->aff() && !req->multi())
             // même super, même sub, id différents
             ||(r->sub() == req->sub() && r->super() == mfsup && r->id() != req->id())
             // même sub, requête non validée, exc. antécédent
             ||(r->sub()->mot() == msub && !r->valide() && !req->sub()->mot()->estRelatif()))
         {
-            r->setRejetee(true, "req. incompatible choisie");
+            r->setRejetee(true, "req. incompatible choisie F");
         }
     }
 }
@@ -404,7 +408,7 @@ void Phrase::ecoute (QString m)
             Requete* req = _requetes.at(i);
             if (!req->rejetee() && !req->multi() && req->clonee() && req->origine()->valide())
             {
-                req->setRejetee(true, "clone obsolète");
+                req->setRejetee(true, "clone obsolète G");
             }
         }
         // passer au mot suivant
@@ -765,7 +769,7 @@ void Phrase::ecoute (QString m)
                                 req->annuleRequis("rejet demandé");
                                 if (req->requerant() == cour)
                                 {
-                                    req->setRejetee(true, "rejet explicite");
+                                    req->setRejetee(true, "rejet explicite H");
                                 }
 								break;
 					      	}
@@ -1001,6 +1005,51 @@ QStringList Phrase::lgr(char pos)
             return _mapLgr.value(cle);
     }
     return QStringList() << "-";
+}
+
+/**
+ * \fn QStringList Phrase::lgr(char pos)
+ * \brief donne les id de toutes les règles pouvant donner un sub 
+ *   à une forme pos et pos0
+ */
+QStringList Phrase::lgr(char pos, char posO)
+{
+    QStringList ret = lgr(pos);
+    if (pos == posO) return ret;
+
+    // le fléchi appelant lgr a changé de pos.
+    // ëx. participe substantivé
+    // le pos d'origine est posO, le nouveau est pos, 
+    QStringList retO = lgr(posO);
+    QStringList ante;
+    QStringList post;
+    // liste des ante et post de ret
+    bool noyau = false;
+    for (int i=0;i<ret.count();++i)
+    {
+        QString el = ret.at(i);
+        if (!noyau)
+        {
+            ante.append(el);
+            if (el == "-") noyau = true;
+        }
+        else post.append(el);
+    }
+    // liste des ante et post de ret0
+    noyau = false;
+    for (int i=0;i<retO.count();++i)
+    {
+        QString el = retO.at(i);
+        if (!noyau)
+        {
+            if (el == "-") noyau = true;
+            else ante.append(el);
+        }
+        else post.append(el);
+    }
+    ante.removeDuplicates();
+    post.removeDuplicates();
+    return ante + post;
 }
 
 /**
@@ -1449,6 +1498,11 @@ QList<Mot*> Phrase::supersDe(Mot* m)
 }
 
 
+/**
+ * \fn QString Phrase::tr(bool color)
+ * \brief récapitule l'état de la traduction de la phrase.
+ * Chaque ѕommet est sur une ligne séparée.
+ */
 QString Phrase::tr(bool color)
 {
     _tr.clear();
@@ -1497,14 +1551,16 @@ MotFlechi* Phrase::vbRelative(MotFlechi* mf)
     return 0;
 }
 
+/*
 MotFlechi* Phrase::vbSuper(MotFlechi* mf)
 {
     for (int i=0;i<_requetes.count();++i)
     {
         Requete* req = _requetes.at(i);
         if (req->valide() && req->sub() == mf
-            && QString("wv").contains(req->super()->pos()))
+            && (QString("wv").contains(req->super()->posO())))
             return req->super();
     }
     return 0;
 }
+*/
