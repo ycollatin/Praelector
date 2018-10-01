@@ -523,6 +523,12 @@ tr:<sup> <sub>
 tr:<sup> de <sub>
 tr:<sup> à <sub>
 
+id:interrInd
+doc:L'interrogation indirecte est introduite par un pronom ou adverbe interrogatif 
+lsSup:supint
+lsSub:subint
+tr:<sup> <sub>
+
 id:isqui
 aff:antecedent
 doc:qui placé juste après is rend obligatoire le lien antécédent
