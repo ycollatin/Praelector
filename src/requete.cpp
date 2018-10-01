@@ -225,7 +225,7 @@ QString Requete::fonction()
 {
     QString ret;
     QTextStream fl(&ret);
-    fl<< _sub->gr()<<" "<<_sub->pos()<<" "<<_regle->aff()<<" "<<_super->gr()<<_super->pos();
+    fl<< _sub->gr()<<" "<<_sub->pos()<<" "<<_regle->aff()<<" "<<_super->gr()<<" "<<_super->pos();
     return ret;
 }
 
@@ -504,7 +504,7 @@ void Requete::setRejetee(bool r, QString cause)
 {
     _rejetee = r;
     if (r) _hist.append("rejetée "+cause);
-    else _hist.append("rejet annulé");
+    else _hist.append("rejet annulé "+cause);
 }
 
 void Requete::setRequis(MotFlechi *m, QString cause)
