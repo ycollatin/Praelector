@@ -22,7 +22,6 @@
 
 //                          FIXME
 //        - /licetne/ traduction proposée "que" au lieu de "bien que".
-//        - traductions en doublons pour les fléchis à 2 pos (pos + posO).
 //        - motflechi.cpp : elidefr(), contraction à le : exclure "là le".
 //        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
 //        - /ira furor breuis/ : Il semble que la relecture, en cas de choix autre que celui qui
