@@ -12481,7 +12481,7 @@ licentia:liberté, pouvoir, licence
 licentiosus:libre, déréglé, licencieux
 liceo:être en vente, mettre en vente (rare)
 liceor:offrir un prix, se porter acquéreur, apprécier, évaluer
-licet:il est permis ; (conj. + subj.) bien que
+licet:il est permis
 licet2:bien que, encore que
 Lichas:Lichas (esclave d'Hercule)
 Licinia:Licinia (nom de femme)
