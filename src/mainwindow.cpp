@@ -33,6 +33,76 @@ void Editeur::emet(QUrl url)
     emit anchorClicked(url);
 }
 
+Raccourcis::Raccourcis()
+{
+    alpha  = "abcdefghijklmnopqrstuv";
+    alpha2 = "abcdefghijklmnopqrstuvwxyz";
+    wxyz   = "xyz";
+    reinit();
+}
+
+QString Raccourcis::racc(QString url)
+{
+    if (url.isEmpty()) return "";
+    if (url=="-zoom") return "+";
+    if (url=="-dezoom") return "-";
+    int p = 0;
+    while (!(url.at(p).isLetter() || url.at(p).isDigit()) && p < url.length()) ++p;
+    QChar c = url.at(p).toLower();
+    if (!c.isLetter()) return "";
+    if (a.isEmpty())
+    {
+        if (z == "-")
+        {
+            z = "w";
+        }
+        else if (wxyz.isEmpty() && a2.isEmpty()) return "";
+        else if (a2.isEmpty())
+        {
+            z.clear();
+            z.append(wxyz.at(0));
+            wxyz.remove(0,1);
+            a2 = alpha2;
+        }
+        QString ret;
+        ret.append(z);
+        if (a2.contains(c))
+        {
+            ret.append(c);
+            a2.remove(c);
+            return ret;
+        }
+        else
+        {
+            ret.append(a2.at(0));
+            a2.remove(0,1);
+            return ret;
+        }
+    }
+    else if (a.contains(c))
+    {
+        a.remove(c);
+        return QString(c);
+    }
+    else
+    {
+        QString ret;
+        ret.append(a.at(0));
+        a.remove(0,1);
+        return ret;
+    }
+    return "";
+}
+
+void Raccourcis::reinit()
+{
+    a  = alpha;
+    a2 = alpha2;
+    z = "-";
+    wxyz = "xyz";
+}
+
+
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     resize(834, 734);
@@ -48,6 +118,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
     verticalLayout->addWidget(textBrowser);
 
     setCentralWidget(centralWidget);
+    raccourcis = new Raccourcis;
     // chercher un paramétrage dans QSettings
     lisSettings();
 
@@ -76,8 +147,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 
     // construire la liste des clés alpha
     //alphabet = "cen/+-aq;,lrpsbdfgijkmotuv";
+    /*
     alphabet = "ACEN/+-QPSrapsebcdfghijklmnoqtuv";
     alpha2 = "abcdefghijklmnopqrstuvwxyz";
+    */
     /*
        c choisir une phrase
        e " enregistrée
@@ -93,6 +166,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
        p mot précédent
        s mot suivant
      */
+    /*
     for (int i=0;i<alphabet.count();++i)
     {
         clesL.append(alphabet.at(i));
@@ -106,11 +180,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
             clesL.append(cle+alpha2.at(j));
         }
     }
+    */
 	phrase->ecoute("-init");
 }
 
 MainWindow::~MainWindow()
 {
+    delete raccourcis;
 }
 
 void MainWindow::ajTouches()
@@ -120,6 +196,8 @@ void MainWindow::ajTouches()
     int i = 0;
     QString t = texte;
     QTextStream fl(&texteT);
+    raccourcis->reinit();
+    urls.clear();
     while (!t.isEmpty())
     {
         if (t.startsWith("<a href"))
@@ -133,13 +211,14 @@ void MainWindow::ajTouches()
                 t.remove(0,1);
             }
             // calcul des raccourcis
-            if (i < clesL.count())
-            {
-                QString cle = clesL.at(i);
+            //if (i < clesL.count())
+            //{
+                //QString cle = clesL.at(i);
+                QString cle = raccourcis->racc(url);
                 fl << lien.arg(cle);
                 urls.insert(cle, url);
                 ++i;
-            }
+            //}
             fl<<"<a href=\""<<url;
         }
         else
@@ -447,10 +526,11 @@ void MainWindow::enr()
 void MainWindow::keyPressEvent(QKeyEvent *ev)
 {
     QString t = ev->text();
+    QString prfs = "wxyz";
     if (t.isEmpty())
     {
         QMainWindow::keyPressEvent(ev);
-        //prefixe.clear();
+        prefixe.clear();
         return;
     }
     if (ev->key() == Qt::Key_Escape)
@@ -461,13 +541,12 @@ void MainWindow::keyPressEvent(QKeyEvent *ev)
     {
         clav();
     }
-    else if (wxyz.contains(t) && prefixe.isEmpty())
+    else if (prfs.contains(t) && prefixe.isEmpty())
     {
         prefixe = t;
     }
-    else if (clavier
-             && (clesL.contains(t)
-                 || (!prefixe.isEmpty() && wxyz.contains(t))))
+    else if (clavier && (urls.contains(t)
+             || (!prefixe.isEmpty() && prfs.contains(t))))
     {
         t.prepend(prefixe);
         QUrl url = urls[t];

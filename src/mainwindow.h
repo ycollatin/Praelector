@@ -27,6 +27,8 @@
 #include <QUrl>
 #include <phrase.h>
 
+
+
 class Editeur : public QTextBrowser
 {
     Q_OBJECT
@@ -36,10 +38,28 @@ class Editeur : public QTextBrowser
         void emet(QUrl url);
 };
 
+class Raccourcis : public QObject
+{
+    Q_OBJECT
+
+    private:
+        QString alpha;
+        QString alpha2;
+        QString wxyz;
+        QString a;
+        QString a2;
+        QString z;
+    public:
+        Raccourcis();
+        void    reinit();
+        QString racc(QString url);
+};
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
+    private:
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout;
     Editeur* textBrowser;
@@ -49,15 +69,14 @@ class MainWindow : public QMainWindow
     	~MainWindow();
 
 	private:
-        QString            alphabet;
-        QString            alpha2;
-        QStringList        clesL;
+        //QString            alphabet;
+        //QString            alpha2;
+        //QStringList        clesL;
         bool               clavier;
         QFont              font;
         QString           _fCorpus;
         QFile              fTrace;
         int                ienr;
-        //int                iphr;
         QStringList        lenr;
         QStringList        lurl;
         int               _nbphr;
@@ -69,6 +88,7 @@ class MainWindow : public QMainWindow
         QStringList        trace;
         QMap<QString,QUrl> urls;
         QString            wxyz;
+        Raccourcis*        raccourcis;
 
         void               ajTouches();
         void               ajTrace(QString cmd);
