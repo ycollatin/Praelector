@@ -32,6 +32,8 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
+//        - système des raccourcis clavier : détecter la première lettre de chaque lien; la donner si elle
+//          est libre, prendre la suivante si elle ne l'est pas.
 //        - Ajouter une règle pour l'interrogative indirecte, et donc le
 //          moyen de traduire un subj. latin par un indicatif français.
 //        - Déplacement d'un groupe sub dans son sup, en particulier de la
