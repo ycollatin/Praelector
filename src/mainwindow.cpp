@@ -210,15 +210,11 @@ void MainWindow::ajTouches()
                 url.append(t.at(0));
                 t.remove(0,1);
             }
-            // calcul des raccourcis
-            //if (i < clesL.count())
-            //{
-                //QString cle = clesL.at(i);
-                QString cle = raccourcis->racc(url);
-                fl << lien.arg(cle);
-                urls.insert(cle, url);
-                ++i;
-            //}
+            // une instance de la classe Raccourcis renvoie le raccourci clavier
+            QString cle = raccourcis->racc(url);
+            fl << lien.arg(cle);
+            urls.insert(cle, url);
+            ++i;
             fl<<"<a href=\""<<url;
         }
         else
