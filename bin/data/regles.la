@@ -405,12 +405,13 @@ id:datifPr
 aff:datif
 doc:Le français place volontiers la traduction du datif avant le verbe
 posSup:v,w,a
-lsSup:datif,datp
+lsSup:datif
 posSub:p
 morphoSub:datif
 poids:79
 tr:<sub> <sup>
-tr:à <sub> <sup>
+tr:<sup> pour <sub>
+tr:<sup> à <sub>
 
 id:datifPart
 aff:datif
