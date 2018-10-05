@@ -93,6 +93,7 @@ attrO
 genSum
 abl
 datif
+datifPr
 datifPart
 prep
 locatif
