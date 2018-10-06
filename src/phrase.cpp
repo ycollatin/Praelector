@@ -23,6 +23,7 @@
 //                          FIXME
 //        - Gutta cauat lapidem : lien sujet non proposé
 //        - motflechi.cpp : elidefr(), contraction à le : exclure "là le".
+//                                     de même, tête est -> têt'est.
 //        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
 //        - /ira furor breuis/ : Il semble que la relecture, en cas de choix autre que celui qui
 //          est surligné, se met à surligner plusieurs autres choix.
@@ -986,7 +987,6 @@ QString Phrase::htmlLiens()
         ll.append(req->html());
     }
     ll.removeDuplicates();
-    //if (_imot > 0) ll.append("<a href=\"-lien\">créer un lien</a><br/>\n");
     return ll.join("\n");
 }
 
@@ -1565,17 +1565,3 @@ MotFlechi* Phrase::vbRelative(MotFlechi* mf)
     }
     return 0;
 }
-
-/*
-MotFlechi* Phrase::vbSuper(MotFlechi* mf)
-{
-    for (int i=0;i<_requetes.count();++i)
-    {
-        Requete* req = _requetes.at(i);
-        if (req->valide() && req->sub() == mf
-            && (QString("wv").contains(req->super()->posO())))
-            return req->super();
-    }
-    return 0;
-}
-*/
