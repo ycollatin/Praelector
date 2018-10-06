@@ -184,7 +184,7 @@ QString MotFlechi::elideFr(QString s)
     // ta affaire -> ton affaire, sa->son
     s.replace(QRegularExpression("(\\b)[st]a ("+vv+")"), "\\1ton \\2");
     // je->j'  te->t'  me->m' ne->n' se->s'
-    s.replace(QRegularExpression("(\\b)([jtmns])e ("+vv+")"), "\\1\\2'\\3");
+    s.replace(QRegularExpression("([\\s\\b])([jtmns])e ("+vv+")"), "\\1\\2'\\3");
     // le->l'  la->l' 
     s.replace(QRegularExpression("(\\b)([ld])[ea] ("+vv+")"), "\\1\\2'\\3");
     // de les->des XXX le regret *de les* quitter
@@ -200,10 +200,10 @@ QString MotFlechi::elideFr(QString s)
     // pronoms datif
     s.replace(QRegularExpression("\\b(lui|leurs?|me|te|nous|vous) (ils?|elles?|on)"), "\\2 \\1");
     // à le à les
-    s.replace(QRegularExpression("à le "), "au ");
-    s.replace(QRegularExpression("à les "), "aux ");
+    s.replace(QRegularExpression("([\\s\\b])(à le )"), "\\1au ");
+    s.replace(QRegularExpression("([\\s\\b])(à les )"), "\\1aux ");
     // ce est
-    s.replace(QRegularExpression("(\\b)ce est(\\b)"), "\\1c'est\\2");
+    s.replace(QRegularExpression("([\\s\\b])ce est(\\b)"), "\\1c'est\\2");
     // je te n'aime pas, je le n'aime pas etc.
     s.replace(QRegularExpression("(je|tu|il|elle) ([tl])[ea] n'"), "\\1 ne \\2'");
 
