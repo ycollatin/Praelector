@@ -21,7 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
-//        - fragiles sunt arbores : la relative et l'antécédent sont devenus incompatibles.
+//        - Gutta cauat lapidem : lien sujet non proposé
 //        - motflechi.cpp : elidefr(), contraction à le : exclure "là le".
 //        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
 //        - /ira furor breuis/ : Il semble que la relecture, en cas de choix autre que celui qui
@@ -32,8 +32,6 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
-//        - système des raccourcis clavier : détecter la première lettre de chaque lien; la donner si elle
-//          est libre, prendre la suivante si elle ne l'est pas.
 //        - Ajouter une règle pour l'interrogative indirecte, et donc le
 //          moyen de traduire un subj. latin par un indicatif français.
 //        - Déplacement d'un groupe sub dans son sup, en particulier de la
@@ -72,11 +70,6 @@
 //                           XXX GRAMMAIRE
 //        - règle nisi ubi : sauf quand ; nisi + nom.
 //        - iussitque ut in : in prep iussit proposée : activer blocage ?
-//        - 27 nullus dolor est quam : nombreuses erreurs.
-//          . quem est traduit deux fois ;
-//          . le déterminant fr s'accorde avec le masculin du latin dolor
-//          . la relative ne s'accroche pas à l'antécédent
-//          . minuat ac : la coord1 n'est pas traduite
 //        - quid ergo ; opus est : règles particulières en include
 //        - opus est + datif : règle à trois pattes.
 //        - quid dulcius : quoi de plus doux ? Pas de règle.
