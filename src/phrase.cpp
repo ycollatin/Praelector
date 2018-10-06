@@ -23,7 +23,6 @@
 //                          FIXME
 //        - Gutta cauat lapidem : lien sujet non proposé
 //        - motflechi.cpp : elidefr(), contraction à le : exclure "là le".
-//                                     de même, tête est -> têt'est.
 //        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
 //        - /ira furor breuis/ : Il semble que la relecture, en cas de choix autre que celui qui
 //          est surligné, se met à surligner plusieurs autres choix.
