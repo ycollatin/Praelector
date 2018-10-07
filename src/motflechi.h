@@ -41,6 +41,7 @@ class MotFlechi: public QObject
         Lemme*          _lemme;
         QString         _morpho;
         bool            _neg;
+        int             _num;
         char            _pos;
         char            _posO;
         Phrase*         _phrase;
@@ -87,6 +88,7 @@ class MotFlechi: public QObject
         int             nbTr();
         bool            neg();
         void            nettoie();
+        int             num();
         char            pos();
         char            posO();
         int             rang();

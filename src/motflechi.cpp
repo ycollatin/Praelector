@@ -472,6 +472,11 @@ bool MotFlechi::neg()
     return _neg;
 }
 
+int MotFlechi::num()
+{
+    return _mot->indexOf(this);
+}
+
 void MotFlechi::nettoie()
 {
     // nettoyer les subs :

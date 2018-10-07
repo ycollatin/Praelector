@@ -59,6 +59,7 @@ class Requete : public QObject
         bool        clonee();
         int         cloneeDe();
         bool        close();
+        QString     code();
         bool        contigue();
         Requete*    coord1();
         bool        croise(Requete* req);

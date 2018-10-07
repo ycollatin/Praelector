@@ -234,10 +234,10 @@ void MainWindow::ajTrace(QString cmd)
         }
 }
 
-/*
- * MainWindow::calcul (Qurl url) traite l'hyperlien cliqué.
+/**
+ * \fn MainWindow::calcul (Qurl url)
+ * \brief traite l'hyperlien cliqué.
  * Il le renvoie si nécessaire à la méhtode homonyme de Phrase.
- *
  */
 void MainWindow::calcul (QUrl url)
 {
@@ -450,6 +450,11 @@ void MainWindow::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
+/**
+ * \fn void MainWindow::enr()
+ * \brief enregistre la trace de la lecture courante dans le répertoire
+ *  ./enr/, à la bonne place dans un fichier homonyme de suffixe .enr.
+ */
 void MainWindow::enr()
 {
     QString vest;

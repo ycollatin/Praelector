@@ -73,6 +73,7 @@ class Mot : public QObject
         QList<MotFlechi*> flValides(Requete* rtest);
         QString           gr();
         QString           html();
+        int               indexOf(MotFlechi* mf);
         void              lance();
         bool              lemmeUnique();
         QList<Requete*>   lReqSupCloses();

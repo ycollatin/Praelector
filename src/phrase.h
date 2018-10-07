@@ -76,7 +76,7 @@ class Phrase: public QObject
         bool              contigue(Requete* req);
         bool              contigus(Mot *a, Mot *b);
         QString           droite(Mot* m);
-        void              ecoute (QString m);
+        void              ecoute(QString m);
         bool              estVbRelative(MotFlechi* mf);
         bool              filtre(Requete* req);
         Flechisseur*      flechisseur();
@@ -113,6 +113,7 @@ class Phrase: public QObject
         void              reinit();
         QList<Requete*>   reqCC(Mot* m);
         Requete*          requete(int n);
+        Requete*          requete(QString codeR);
         QString static    saisie (QString l, QString s);
         void              setGr(QString t);
         void              setLiens();

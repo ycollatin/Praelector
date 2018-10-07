@@ -369,6 +369,14 @@ QString Mot::html()
     return ret.join("<br/>\n");
 }
 
+int Mot::indexOf(MotFlechi* mf)
+{
+    for (int i=0;i<_flechis.count();++i)
+        if (_flechis.at(i) == mf)
+            return i;
+    return -1;
+}
+
 void Mot::lance()
 {
     if (_reqLancees) return;

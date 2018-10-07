@@ -371,7 +371,7 @@ QString Phrase::droite(Mot *m)
  *        affectées par le lien
  */
 
-void Phrase::ecoute (QString m)
+void Phrase::ecoute(QString m)
 {
     _reponse.clear();
     bool aux = false;
@@ -591,13 +591,13 @@ void Phrase::ecoute (QString m)
 			case 'l':      // l == lien
 				{
 					QStringList lv;
-					if (eclats.count() > 3)
-						lv = eclats.at (3).split (',');
+                    QString codeR;
+					if (eclats.count() > 2) codeR = eclats.at(2);
                     // liste des morphos affectées passées par m[3]
                     QList<Requete*> lreq;
 					char gd = eclats.at(1).at(0).unicode();   // m[2] : opération à réaliser
-                    int rang = eclats.at(2).toInt();
-                    Requete* req = requete(rang);
+                    //int rang = eclats.at(2).toInt();
+                    Requete* req = requete(codeR);
 					switch (gd)      // pos 1, idgp info et déplacement
 					{
 						case 'd':    // déplacement d'un groupe à droite
@@ -759,7 +759,7 @@ void Phrase::ecoute (QString m)
 					      	{
                                 if (req == 0)
                                 {
-                                    std::cerr << qPrintable("Requête introuvable, rang ")<<rang;
+                                    std::cerr << qPrintable("Requête introuvable, codeR ")<<qPrintable(codeR);
                                     return;
                                 }
                                 req->annuleRequis("rejet demandé");
@@ -1358,6 +1358,18 @@ Requete* Phrase::requete(int n)
 {
     if (n < _requetes.count())
         return _requetes.at(n);
+    return 0;
+}
+
+Requete* Phrase::requete(QString codeR)
+{
+    for (int i=0;i<_requetes.count();++i)
+    {
+        Requete* req = _requetes.at(i);
+        if (!req->close()) continue;
+        if (req->code() == codeR)
+            return req;
+    }
     return 0;
 }
 

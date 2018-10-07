@@ -120,6 +120,18 @@ bool Requete::close()
     return (_super != 0 && _sub != 0);
 }
 
+QString Requete::code()
+{
+    QString ret;
+    QTextStream fl(&ret);
+    fl  << _super->mot()->rang()
+        << "-" << _super->num()
+        << "-" << id()
+        << "-" << _sub->mot()->rang()
+        << "-" << _sub->num();
+    return ret;
+}
+
 bool Requete::contigue()
 {
     if (!close()) return false;
@@ -301,6 +313,7 @@ QString Requete::html(bool enr)
     else color = "black";
     if (enr) fl << "<div style=\"background-color:lightyellow;\">";
     else fl << "<div>";
+    QString codeR = code();
     fl  << _sub->gr()<<"<small> " << _sub->morpho() << " </small>"
         // en vert, aff de la règle
         << "<span style=\"color:green;\">"<<_regle->aff()<<"</span> "
@@ -309,13 +322,13 @@ QString Requete::html(bool enr)
         << "<span style=\"color:"<<color<<";font-style:italic\">"
         <<MotFlechi::elideFr(_super->trGroupe(this))<<"</span> "
         // doc de la règle
-        << "<a href=\"l.i."<<_num<<"\">doc</a> "
+        << "<a href=\"l.i."<<codeR<<"\">doc</a> "
         // rotation de la traduction
-        << "<a href=\"l.t."<<_num<<"\">tr. suiv</a> "
+        << "<a href=\"l.t."<<codeR<<"\">tr. suiv</a> "
         // lien valider
-        << "<a href=\"l.v."<<_num<<"\">valider</a> "
+        << "<a href=\"l.v."<<codeR<<"\">valider</a> "
         // lien rejeter
-        << "<a href=\"l.r."<<_num<<"\">rejeter</a>";
+        << "<a href=\"l.r."<<codeR<<"\">rejeter</a>";
     fl << "</div>";
     return ret;
 }
