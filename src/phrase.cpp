@@ -21,6 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
+//        - forme négative /inter pygmaeos non pudet/ : on n'a honte pas.
+//          Il faudrait mettre 'pas' après le 1er mot du v. fr. 
 //        - L'ajout d'une règle rend caducs tous les enregistrements. Il faudrait
 //          Que l'enregistrement fournisse l'url, et non le numéro de la solution.
 //        - Gutta cauat lapidem : lien sujet non proposé (initiale capitale)
