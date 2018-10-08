@@ -109,6 +109,7 @@ class MotFlechi: public QObject
         QString         trfl();
         QString         trfl(int i);
         QString         tr();
+        QString         trdet();
         QString         trs();
         QString         trGroupe(Requete* rtest=0);
         QString         trNue();

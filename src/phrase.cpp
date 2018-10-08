@@ -34,7 +34,6 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
-//        - appliquer les contractions-élisions à la partie lemmatisation.
 //        - Ajouter une règle pour l'interrogative indirecte, et donc le
 //          moyen de traduire un subj. latin par un indicatif français.
 //        - Déplacement d'un groupe sub dans son sup, en particulier de la

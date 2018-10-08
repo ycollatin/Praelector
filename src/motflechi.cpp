@@ -764,6 +764,11 @@ QString MotFlechi::tr()
     return _tr;
 }
 
+QString MotFlechi::trdet()
+{
+    return elideFr(det()+tr());
+}
+
 QString MotFlechi::trfl()
 {
     if (_trfl.isEmpty())
