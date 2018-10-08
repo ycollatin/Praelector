@@ -7324,7 +7324,7 @@ Egeria:Egérie (nymphe qu'inspira le roi Numa au cours de ses entrevues)
 Egerius:Egerius (frère de Tarquin l'Ancien)
 egero:(tr.) emporter dehors, retirer, enlever
 Egesta:Égeste [en Sicile, plus tard Ségeste]
-egestas:manque, défaut, privation, disette, pénurie ; l'indigence, misère, besoin, détresse, indigence
+egestas:manque, défaut, privation, disette, pénurie ; indigence, misère, besoin, détresse
 egestio:restitution (action de rendre)
 egigno:produire; [pass.] croître de, sortir de
 ego:moi, me
