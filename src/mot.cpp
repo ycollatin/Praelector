@@ -329,7 +329,7 @@ QString Mot::html()
                       break;
             default:break;
         }
-        fl	<< "tr. <span style=\"color:darkred;font-style:italic\">"<<mf->det()<<mf->tr()<<"</span> ";
+        fl	<< "tr. <span style=\"color:darkred;font-style:italic\">"<<mf->trdet()<<"</span> ";
         if (mf->nbTr() > 1)
         {
             fl << "<a href=\"m.t."<<i<<"\">traductions</a> ";
