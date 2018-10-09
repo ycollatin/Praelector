@@ -2577,7 +2577,6 @@ QString Flechisseur::conjugue(QString inf, int P, int T, int M, int V, bool Pr, 
 
 QString Flechisseur::conjnat(QString inf, QString morpho, QString neg)
 {
-    qDebug()<<"conjnat"<<inf<<morpho<<neg;
     // Un verbe est souvent traduit par plusieurs mots.
     // praesto:l'emporter sur, être garant, fournir (praestat : imp. : il vaut mieux)
     // Il faut pouvoir trouver quel est le verbe, ne
@@ -2585,13 +2584,14 @@ QString Flechisseur::conjnat(QString inf, QString morpho, QString neg)
     inf = inf.simplified();
     if (inf.isEmpty()) return "requête vide, conjugaison impossible";
 
+    QString ret;
     if (inf == "paraître") morpho.replace("passif", "actif");
 
     // formes réfléchies
     bool se = inf.startsWith("se ");
     if (inf.contains(" ") && !se)
     {
-        QString ret = conjnat(inf.section(" ",0,0), morpho) +" "+ inf.section(" ",1);
+        ret = conjnat(inf.section(" ",0,0), morpho) +" "+ inf.section(" ",1);
         if (!neg.isEmpty())
         {
             ret.insert(ret.indexOf(" "), " "+neg);
@@ -2608,6 +2608,7 @@ QString Flechisseur::conjnat(QString inf, QString morpho, QString neg)
 
     // passé composé
     // morpho.replace("passé composé", "passé_composé");
+    // TODO : gérer la négation entre aux. et PP.
     QStringList lm = morpho.split(' ');
 
     foreach (QString trait, lm)
@@ -2622,10 +2623,12 @@ QString Flechisseur::conjnat(QString inf, QString morpho, QString neg)
     if (p > 0 && n > 1) p+=3;
     if (se)
     {
-        return conjugue(inf.section(" ",0,1), p, t, m, v, (p!=3 && p!=6), g, n)
+        ret = conjugue(inf.section(" ",0,1), p, t, m, v, (p!=3 && p!=6), g, n)
             + " " + inf.section(" ",2);
     }
-    return conjugue(inf, p, t, m, v, (p != 3 && p != 6), g, n);
+    ret = conjugue(inf, p, t, m, v, (p != 3 && p != 6), g, n);
+    if (!neg.isEmpty()) ret.append(" "+neg);
+    return ret;
 }
 
 int Flechisseur::index_t(QString t[], QString s, int limite)
