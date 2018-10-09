@@ -174,13 +174,6 @@ bool MotFlechi::contigu(MotFlechi* mf)
     return abs(rang() - mf->rang()) == 1;
 }
 
-QString MotFlechi::det()
-{
-    if (!_det.isEmpty())
-        return _det+" ";
-    return "";
-}
-
 QString MotFlechi::elideFr(QString s)
 {
     QString vv = "[aeéêioôu]";
@@ -771,7 +764,11 @@ QString MotFlechi::tr()
 
 QString MotFlechi::trdet()
 {
-    return elideFr(det()+tr());
+    if (!_det.isEmpty()) 
+        return elideFr(_det+" "+tr());
+    if (!_suj.isEmpty())
+        return elideFr(_suj+" "+tr());
+    return tr();
 }
 
 QString MotFlechi::trfl()
@@ -841,7 +838,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
             }
             if (!_suj.isEmpty()) trf.prepend(_suj+" ");
             //je, tu, nous, vous
-            else trf.replace(QRegExp("\\b(ne) (je|tu|nous|vous)\\b"), "\\2 \\1");
+            else trf.replace(QRegExp("\\b(ne) (je|tu|nous|vous|on)\\b"), "\\2 \\1");
             lante.append (trf);
             ante = false;
         }

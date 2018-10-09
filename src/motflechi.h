@@ -57,7 +57,6 @@ class MotFlechi: public QObject
         ~MotFlechi();
         void            ajTrfl(QString t);
         bool            contigu(MotFlechi* mf);
-        QString         det();
         QString static  elideFr(QString s);
         QString         eqiv();
         bool            estSub();
