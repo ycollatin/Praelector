@@ -761,9 +761,6 @@ class TVbattre : public TVtir
 bool IsLast(QString chaine, QString mot);
 QString morphoLatFr(QString lat);
 Verbe* verbe_m(QString inf);
-QString conjugue(QString inf, int P = 1, int T = 1, int M = 1, int V = 1,
-                 bool Pr = false, int g = 0, int n = 0);
-QString conjnat(QString inf, QString morpho);
 
 // ------------------------------------------------------------
 //  Flexion des noms
