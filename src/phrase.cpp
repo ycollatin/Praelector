@@ -21,7 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
-//        - forme négative : la montrer dans la partie morpho
+//        - L'édition de la traduction d'une forme verbale provoque un plantage.
 //        - L'ajout d'une règle rend caducs tous les enregistrements. Il faudrait
 //          Que l'enregistrement fournisse l'url, et non le numéro de la solution.
 //        - Gutta cauat lapidem : lien sujet non proposé (initiale capitale)
