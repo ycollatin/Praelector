@@ -38,7 +38,7 @@ class Flechisseur : public QObject
     public:
         Flechisseur(QObject *parent = 0);
         QString accorde(QString adj, QString m);
-        QString conjnat(QString inf, QString morpho);
+        QString conjnat(QString inf, QString morpho, QString neg="");
         QString conjugue(QString inf, int P, int T, int M, int V, bool Pr, int g, int n);
         QString pluriel(QString l, QString n);
 };

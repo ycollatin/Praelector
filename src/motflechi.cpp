@@ -64,6 +64,9 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent, char po)
     tr = l->traduction("fr", _pos);
     tr.remove(QRegExp("[(\\[][^)^\\]]*[)\\]]"));
     _traductions = tr.split(QRegExp("[,;]"));
+    if (_traductions.isEmpty())
+        _itr = -1;
+    else _itr = 0;
     _rejete = false;
     _valide = false;
     _neg    = false;
@@ -825,6 +828,12 @@ QString MotFlechi::trGroupe(Requete* rtest)
             QString trf = _tr;
             if (_neg)
             {
+                QList<Requete*> lsub = sub("negation");
+                if (!lsub.isEmpty())
+                {
+                    trf = _phrase->flechisseur()->conjnat(_traductions.at(_itr),
+                                                          _morpho, lsub.at(0)->sub()->tr()); 
+                }
                 trf.replace(QRegExp("^(je|tu|ils?|on|elles?|nous|vous)( .*$)"),"\\1 ne\\2");
                 QList<Requete*> lnet = sub("negation"); 
             }

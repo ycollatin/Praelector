@@ -2575,8 +2575,9 @@ QString Flechisseur::conjugue(QString inf, int P, int T, int M, int V, bool Pr, 
     return "";
 }
 
-QString Flechisseur::conjnat(QString inf, QString morpho)
+QString Flechisseur::conjnat(QString inf, QString morpho, QString neg)
 {
+    qDebug()<<"conjnat"<<inf<<morpho<<neg;
     // Un verbe est souvent traduit par plusieurs mots.
     // praesto:l'emporter sur, être garant, fournir (praestat : imp. : il vaut mieux)
     // Il faut pouvoir trouver quel est le verbe, ne
@@ -2590,7 +2591,12 @@ QString Flechisseur::conjnat(QString inf, QString morpho)
     bool se = inf.startsWith("se ");
     if (inf.contains(" ") && !se)
     {
-        return conjnat(inf.section(" ",0,0), morpho) +" "+ inf.section(" ",1);
+        QString ret = conjnat(inf.section(" ",0,0), morpho) +" "+ inf.section(" ",1);
+        if (!neg.isEmpty())
+        {
+            ret.insert(ret.indexOf(" "), " "+neg);
+        }
+        return ret;
     }
 
     int p = 0;
