@@ -702,23 +702,24 @@ void MotFlechi::setRejete(bool r)
 }
 
 /* rotation du sujet des formes v. à la 3ème pers */
+
 void MotFlechi::setSujet()
 {
-    bool zero = _tr == _trNue;
+    bool zero = _suj.isEmpty();
     bool plur = _morpho.contains("plur");
     if (plur)
     {
-        if (zero) _tr.prepend("elles ");
-        else if (_tr.startsWith("elles "))
-            _tr = "ils " + _trNue;
-        else _tr = _trNue;
+        if (zero) _suj = "elles";
+        else if (_suj == "elles")
+            _suj = "ils";
+        else _suj.clear();
     }
     else
     {
-        if (zero) _tr.prepend("elle ");
-        else if (_tr.startsWith("elle "))
-            _tr = "il " + _trNue;
-        else _tr = _trNue;
+        if (zero) _suj = "elle"; 
+        else if (_suj.startsWith("elle"))
+            _suj = "il";
+        else _suj.clear();
     }
 }
 
@@ -815,6 +816,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
     // du pos emprunté _posO
     QStringList lgr = _phrase->lgr(_pos, _posO);
     QString rel;
+    bool negencl = false; // négation enclavée
     for (int i = 0;i<lgr.count();++i)
     {
         QString el = lgr.at(i);
@@ -826,17 +828,20 @@ QString MotFlechi::trGroupe(Requete* rtest)
         else if (el == "-")
         {
             QString trf = _tr;
-            if (_neg)
+            if (_neg) 
             {
                 QList<Requete*> lsub = sub("negation");
+                QString neg2 = lsub.at(0)->sub()->tr();
                 if (!lsub.isEmpty())
                 {
-                    trf = _phrase->flechisseur()->conjnat(_traductions.at(_itr),
-                                                          _morpho, lsub.at(0)->sub()->tr()); 
+                    trf = _phrase->flechisseur()->conjnat(_traductions.at(_itr), _morpho, neg2); 
+                    negencl = true;
                 }
-                trf.replace(QRegExp("^(je|tu|ils?|on|elles?|nous|vous)( .*$)"),"\\1 ne\\2");
-                QList<Requete*> lnet = sub("negation"); 
+                trf.prepend("ne ");
             }
+            if (!_suj.isEmpty()) trf.prepend(_suj+" ");
+            //je, tu, nous, vous
+            else trf.replace(QRegExp("\\b(ne) (je|tu|nous|vous)\\b"), "\\2 \\1");
             lante.append (trf);
             ante = false;
         }
@@ -871,6 +876,7 @@ QString MotFlechi::trGroupe(Requete* rtest)
                         }
                     }
                 }
+                else if (el == "negation" && negencl) continue;
                 else
                 {
                     // le relatif doit être en tête de groupe.

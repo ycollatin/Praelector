@@ -46,6 +46,7 @@ class MotFlechi: public QObject
         char            _posO;
         Phrase*         _phrase;
         bool            _rejete;
+        QString         _suj;
         QStringList     _traductions;
         QStringList     _trfl;
         QString         _trNue;
