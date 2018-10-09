@@ -690,6 +690,7 @@ void MotFlechi::setItr(int i)
 void MotFlechi::setNeg(bool n)
 {
     _neg = n;
+    // passer la traduction à la forme négative
 }
 
 void MotFlechi::setRejete(bool r)
@@ -811,7 +812,6 @@ QString MotFlechi::trGroupe(Requete* rtest)
     // du pos emprunté _posO
     QStringList lgr = _phrase->lgr(_pos, _posO);
     QString rel;
-    //int inoyau = -1;
     for (int i = 0;i<lgr.count();++i)
     {
         QString el = lgr.at(i);
@@ -825,14 +825,8 @@ QString MotFlechi::trGroupe(Requete* rtest)
             QString trf = _tr;
             if (_neg)
             {
-                // introduire le premier élément négatif en 
-                // seconde position, après le pronom sujet 
-                // ou après l'auxiliaire.
-                if (trf.contains("'"))
-                    trf.insert(trf.indexOf("'"), "e n");
-                else if (trf.contains(" ")) 
-                    trf.insert(trf.indexOf(" "), " ne");
-                else trf.prepend("ne ");
+                trf.replace(QRegExp("^(je|tu|ils?|on|elles?|nous|vous)( .*$)"),"\\1 ne\\2");
+                QList<Requete*> lnet = sub("negation"); 
             }
             lante.append (trf);
             ante = false;
