@@ -21,7 +21,7 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
-//        - forme négative la rotation du sujet ne marche plus.
+//        - forme négative : la montrer dans la partie morpho
 //        - L'ajout d'une règle rend caducs tous les enregistrements. Il faudrait
 //          Que l'enregistrement fournisse l'url, et non le numéro de la solution.
 //        - Gutta cauat lapidem : lien sujet non proposé (initiale capitale)
