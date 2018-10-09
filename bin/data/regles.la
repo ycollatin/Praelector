@@ -560,7 +560,6 @@ doc:l'adv. 'non' se place habituellement avant le verbe
 posSup:v,w
 morphoSup:1ère,2ème,3ème,infinitif
 sens:<
-!lemmeSub:non,nondum,nunquam
 lsSub:neg
 poids:100
 tr:<sup> <sub>
