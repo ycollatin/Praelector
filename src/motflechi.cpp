@@ -695,7 +695,20 @@ void MotFlechi::setRejete(bool r)
 }
 
 /* rotation du sujet des formes v. à la 3ème pers */
+void MotFlechi::setSujet()
+{
+    bool plur = _morpho.contains("plur");
+    QStringList ls;
+    if (plur) ls << "ils" << "elles" << "";
+    else      ls << "il" << "elle" << "on" << "";
+    int i = ls.indexOf(_suj);
+    ++i;
+    if (i >= ls.count()) i = 0;
+    _suj = ls.at(i);
+}
 
+
+/*
 void MotFlechi::setSujet()
 {
     bool zero = _suj.isEmpty();
@@ -715,6 +728,7 @@ void MotFlechi::setSujet()
         else _suj.clear();
     }
 }
+*/
 
 void MotFlechi::setTr(QString t)
 {
