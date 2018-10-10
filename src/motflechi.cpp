@@ -707,29 +707,6 @@ void MotFlechi::setSujet()
     _suj = ls.at(i);
 }
 
-
-/*
-void MotFlechi::setSujet()
-{
-    bool zero = _suj.isEmpty();
-    bool plur = _morpho.contains("plur");
-    if (plur)
-    {
-        if (zero) _suj = "elles";
-        else if (_suj == "elles")
-            _suj = "ils";
-        else _suj.clear();
-    }
-    else
-    {
-        if (zero) _suj = "elle"; 
-        else if (_suj.startsWith("elle"))
-            _suj = "il";
-        else _suj.clear();
-    }
-}
-*/
-
 void MotFlechi::setTr(QString t)
 {
     // TODO
