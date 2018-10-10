@@ -21,7 +21,8 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
-//        - L'édition de la traduction d'une forme verbale provoque un plantage.
+//        - L'édition de la traduction d'une forme verbale provoque un plantage :
+//          demander la saisie d'un infinitif, au moins en 1er mot, + contrôle de saisie.
 //        - L'ajout d'une règle rend caducs tous les enregistrements. Il faudrait
 //          Que l'enregistrement fournisse l'url, et non le numéro de la solution.
 //        - Gutta cauat lapidem : lien sujet non proposé (initiale capitale)
@@ -511,10 +512,11 @@ void Phrase::ecoute(QString m)
 							{
                                 if (eclats.count() > 2 && !eclats.at(2).isEmpty())
                                 {
+                                    QString l = "traduction pour %1";
                                     QString v = mf->tr();
                                     if (eclats.count() > 3)
                                         v = eclats.at(3);
-                                    QString t = saisie("traduction pour "+mf->gr(), v);
+                                    QString t = saisie(l.arg(mf->gr()), v);
                                     if (! t.isEmpty())
                                     {
                                         mf->ajTrfl(t);
@@ -1375,21 +1377,20 @@ Requete* Phrase::requete(QString codeR)
 }
 
 /*
- * QString Phrase::saisie (QString l, QString s)
+ * QString Phrase::saisie (MotFlechi* mf, QString s)
  *   saisie par ouverture d'un dialogue
- *   l est le label, s est la chaîne à éditer
+ *   mf est le fléchi à traduire, s est la chaîne à éditer
  */
 
 QString Phrase::saisie(QString l, QString s)
 {
-	s = s.simplified();
-	QString ret = s;
+	QString ret = s.simplified();
 	Dialogue* dialogue = new Dialogue ();
 	dialogue->setLabel (l);
 	dialogue->setText (s);
 	int res = dialogue->exec();
 	if (res == QDialog::Accepted)
-		ret = dialogue->getText ().simplified();
+	    ret = dialogue->getText().simplified();
 	delete dialogue;
 	return ret;
 }
