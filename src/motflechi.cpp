@@ -180,7 +180,7 @@ QString MotFlechi::elideFr(QString s)
     // ta affaire -> ton affaire, sa->son
     s.replace(QRegExp("(\\b)[st]a ("+vv+")"), "\\1ton \\2");
     // je->j'  te->t'  me->m' ne->n' se->s'
-    s.replace(QRegExp("([\\s\\b])([jtmns])e ("+vv+")"), "\\1\\2'\\3");
+    s.replace(QRegExp("(\\b)([jtmns])e ("+vv+")"), "\\1\\2'\\3");
     // le->l'  la->l' 
     s.replace(QRegExp("(\\b)([ld])[ea] ("+vv+")"), "\\1\\2'\\3");
     // de les->des XXX le regret *de les* quitter
