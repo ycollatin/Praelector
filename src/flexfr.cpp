@@ -2626,7 +2626,7 @@ QString Flechisseur::conjnat(QString inf, QString morpho, QString neg)
         ret = conjugue(inf.section(" ",0,1), p, t, m, v, (p!=3 && p!=6), g, n)
             + " " + inf.section(" ",2);
     }
-    ret = conjugue(inf, p, t, m, v, (p != 3 && p != 6), g, n);
+    else ret = conjugue(inf, p, t, m, v, (p != 3 && p != 6), g, n);
     if (!neg.isEmpty()) ret.append(" "+neg);
     return ret;
 }
