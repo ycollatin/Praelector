@@ -21,10 +21,6 @@
 // bin/corpus/phrases.txt
 
 //                          FIXME
-//        - L'édition de la traduction d'une forme verbale provoque un plantage :
-//          demander la saisie d'un infinitif, au moins en 1er mot, + contrôle de saisie.
-//        - L'ajout d'une règle rend caducs tous les enregistrements. Il faudrait
-//          Que l'enregistrement fournisse l'url, et non le numéro de la solution.
 //        - Gutta cauat lapidem : lien sujet non proposé (initiale capitale)
 //        - motflechi.cpp : elidefr(), contraction à le : exclure "là le".
 //        - L'ablatif absolu postposé n'est pas proposé, même après validation. epitheteV ?
@@ -36,6 +32,7 @@
 //        - Échec pour les phrases longues : Socrates quidem dicebat multos homines, etc.
 //
 //                           TODO
+//        - le déterminant nullus d'un sub doit provoquer un "ne" négatif du v. français.
 //        - Ajouter une règle pour l'interrogative indirecte, et donc le
 //          moyen de traduire un subj. latin par un indicatif français.
 //        - Déplacement d'un groupe sub dans son sup, en particulier de la
