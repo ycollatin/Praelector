@@ -60,8 +60,7 @@ MotFlechi::MotFlechi(Lemme* l, char p, QString m, Mot* parent, char po)
     */
 
     // traduction fléchie
-    QString tr;
-    tr = l->traduction("fr", _pos);
+    QString tr = l->traduction("fr", _pos);
     tr.remove(QRegExp("[(\\[][^)^\\]]*[)\\]]"));
     _traductions = tr.split(QRegExp("[,;]"));
     if (_traductions.isEmpty())
