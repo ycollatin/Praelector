@@ -413,7 +413,6 @@ QString Lemme::traduction(QString l, QString pos)
     return t;
 }
 
-
 /**
  *  \fn QString Lemme::traduction(QString l, QChar pos)
  *  \brief appelle traduction(QString l, QString pos)
