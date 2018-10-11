@@ -819,9 +819,9 @@ QString MotFlechi::trGroupe(Requete* rtest)
             if (_neg) 
             {
                 QList<Requete*> lsub = sub("negation");
-                QString neg2 = lsub.at(0)->sub()->tr();
                 if (!lsub.isEmpty())
                 {
+                    QString neg2 = lsub.at(0)->sub()->tr();
                     trf = _phrase->flechisseur()->conjnat(_traductions.at(_itr), _morpho, neg2); 
                     negencl = true;
                 }

@@ -976,11 +976,10 @@ QString Phrase::htmlLiens()
     {
         Requete* req = _requetes.at(i);
         if (req->close() && !req->rejetee()
-            //&& (req->requerant() == mc || req->requis() == mc))
             && (req->requis() == mc))
-            {
-                lr.append(req);
-            }
+        {
+            lr.append(req);
+        }
     }
     // tri en fonction de la probabilité
     qSort(lr.begin(), lr.end(), sortR);
