@@ -47,9 +47,9 @@ class MotFlechi: public QObject
         Phrase*         _phrase;
         bool            _rejete;
         QString         _suj;
-        QStringList     _traductions;
-        QStringList     _trfl;
-        QString         _trNue;
+        QStringList     _traductions; // prises dans lemmes.fr
+        QStringList     _trfl;        // traductions fléchies
+        QString         _trNue;       // traduction sans det ni sujet
         QString         _tr;
         bool            _valide;
     public:

@@ -821,7 +821,10 @@ QString MotFlechi::trGroupe(Requete* rtest)
                 if (!lsub.isEmpty())
                 {
                     QString neg2 = lsub.at(0)->sub()->tr();
-                    trf = _phrase->flechisseur()->conjnat(_traductions.at(_itr), _morpho, neg2); 
+                    if (_itr < _traductions.count())
+                        trf = _phrase->flechisseur()->conjnat(_traductions.at(_itr), _morpho, neg2); 
+                    // une traduction fléchie a été ajoutée :
+                    else trf = _trfl.at(_itr);
                     negencl = true;
                 }
                 trf.prepend("ne ");

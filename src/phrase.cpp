@@ -504,7 +504,7 @@ void Phrase::ecoute(QString m)
 								mf->setDet(estFeminin(mf->trNue()));
 								break;
 							}
-						case 'e':  // éditer de la traduction
+						case 'e':  // éditer la traduction
 							{
                                 if (eclats.count() > 2 && !eclats.at(2).isEmpty())
                                 {
