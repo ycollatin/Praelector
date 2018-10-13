@@ -14686,7 +14686,7 @@ numero2:vite, promptement, trop vite, trop tôt
 numero:compter ; donner en présent
 numerosus:nombreux, en grand nombre, multiple, varié
 numerus:nombre
-num:est-ce que par hasard, est-ce que
+num:est-ce que, est-ce que par hasard
 Numicius:Numicius (nom de famille; rivière du Latium)
 Numicus:Numicus (rivière du Latium)
 Numida:Numide
