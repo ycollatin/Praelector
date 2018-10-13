@@ -2589,7 +2589,7 @@ QString Flechisseur::conjnat(QString inf, QString morpho, QString neg)
 
     // formes réfléchies
     bool se = inf.startsWith("se ");
-    if (inf.contains(" ") && !se)
+    if (inf.contains(" ") && !se && !morpho.contains("passif"))
     {
         ret = conjnat(inf.section(" ",0,0), morpho) +" "+ inf.section(" ",1);
         if (!neg.isEmpty())
@@ -2611,8 +2611,9 @@ QString Flechisseur::conjnat(QString inf, QString morpho, QString neg)
     // TODO : gérer la négation entre aux. et PP.
     QStringList lm = morpho.split(' ');
 
-    foreach (QString trait, lm)
+    for(int i=0;i<lm.count();++i)
     {
+        QString trait = lm.at(i);
         if (personnes.contains(trait))    p = personnes.indexOf(trait)+1;
         else if (nombres.contains(trait)) n = nombres.indexOf(trait)+1;
         else if (temps.contains(trait))   t = temps.indexOf(trait)+1;
@@ -2621,13 +2622,22 @@ QString Flechisseur::conjnat(QString inf, QString morpho, QString neg)
         else if (genres.contains(trait))  g = genres.indexOf(trait)+1;
     }
     if (p > 0 && n > 1) p+=3;
+    bool pr = p != 3 && p != 6;
     if (se)
     {
-        ret = conjugue(inf.section(" ",0,1), p, t, m, v, (p!=3 && p!=6), g, n)
+        ret = conjugue(inf.section(" ",0,1), p, t, m, v, pr, g, n)
             + " " + inf.section(" ",2);
     }
-    else ret = conjugue(inf, p, t, m, v, (p != 3 && p != 6), g, n);
-    if (!neg.isEmpty()) ret.append(" "+neg);
+    else ret = conjugue(inf, p, t, m, v, pr, g, n);
+    if (!neg.isEmpty())
+    {
+        if (ret.contains(" "))
+        {
+            if (pr) ret.replace(QRegExp("(^\\w+\\s+\\w+\\s)(.*$)"),"\\1 "+neg+"\\2");
+            else ret.insert(ret.indexOf(" "), " "+neg);
+        }
+        else ret.append(" "+neg);
+    }
     return ret;
 }
 
