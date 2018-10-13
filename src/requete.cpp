@@ -568,11 +568,11 @@ void Requete::setValide(bool v)
     if (v)
     {
         // négation
-        if (_sub->lemme()->synt("neg"))
+        if (_sub->lemme()->synt("neg") && QString("wv").contains(_super->pos()))
         {
             _super->setNeg(true);
         }
-        if (_super->gr() == "nisi")
+        if (_super->gr() == "nisi" && QString("wv").contains(_sub->pos()))
         {
             _sub->setNeg(true);
         }
